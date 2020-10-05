@@ -1,0 +1,23 @@
+.top-line__social{
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  margin: 0 5px;
+  justify-content: space-between;
+}
+
+.top-line__phone{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  line-height: 14.06px;
+  line-height: 100%;
+  padding: 5px 0;
+}
+
+.top-line__soc-icons{
+  display: flex;
+  justify-content: space-around;
+}

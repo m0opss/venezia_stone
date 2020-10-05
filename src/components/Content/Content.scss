@@ -1,0 +1,23 @@
+.content-container {
+  padding-top: 20px;
+}
+
+.home-container {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+
+  h1 {
+    display: flex;
+    margin: auto;
+  }
+}
+
+.catalog-items-group {
+  width: 100%;
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 13fr 13fr 13fr;
+  // grid-template-columns: 30% 30% 30%;
+  grid-gap: 3em 2em;
+}

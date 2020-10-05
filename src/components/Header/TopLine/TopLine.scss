@@ -1,0 +1,33 @@
+.top-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+.top-line__search {
+  flex: 1;
+  margin: 0 5px;
+}
+
+.top-line__contacts {
+  margin: 0 5px;
+  flex: 0.5;
+  padding: 10px;
+  
+  background-color: #fff;
+  color: #000000;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  line-height: 14.06px;
+  text-align: center;
+
+  &:hover {
+    color: #c98505;
+  }
+  &.-active {
+    color: #000;
+    background-color: #DAC79F;
+  }
+}

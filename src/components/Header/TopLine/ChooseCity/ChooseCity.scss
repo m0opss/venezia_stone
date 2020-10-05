@@ -1,0 +1,26 @@
+.top-line__city {
+  display: flex;
+  flex: 1;
+  margin: 0 5px;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    color: #c98505;
+    cursor: pointer;
+  }
+}
+
+.MuiPopover-paper {
+  padding: 10px 30px;
+  border-top: 6px solid #DAC79F;
+  top: 55px !important;
+}
+
+
+.MuiList-root.MuiMenu-list.MuiList-padding {
+  a {
+    text-decoration: none;
+    color: black
+  }
+}
+

@@ -1,0 +1,15 @@
+.second-line {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 45px;
+    border: 1px solid black;
+    position: relative;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
