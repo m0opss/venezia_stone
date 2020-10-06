@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 import './Filter.scss'
 
-import './node_modules/antd/dist/antd.css'
+import 'antd/dist/antd.css'
 import { Menu, Button } from 'antd';
 
 import {

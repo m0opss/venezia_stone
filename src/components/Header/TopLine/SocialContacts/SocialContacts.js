@@ -15,12 +15,10 @@ const accentColor = "#C98505"
 
 const SocialContacts = props => {
   return (
-    <div className="top-line__social">
       <div className="top-line__phone">
         {/* <Icon icon={phoneInTalk} color={accentColor} width="1.5em" height="1.5em"/> */}
         +7 (499) 645-98-85
       </div>
-    </div>
   )
 }
 export default SocialContacts

@@ -9,6 +9,7 @@ import Material from './pages/Material'
 import Materiall from './pages/Materiall'
 
 import Footer from './components/Footer/Footer';
+import Content from './components/Content/Content';
 import Header from './components/Header/Header';
 
 import './App.scss';
@@ -27,19 +28,8 @@ const App = (props) => {
 
   return (
     <HashRouter>
-      <div className='container'>
-        <Header />
-        <div className='content-container'>
-          <Switch>
-            <Route path='/' exact render={() => <Home data={props.data} />} />
-            <Route path='/materials/:materialID' component={Material} />
-            <Route path='/material/:materialID/:slabID' component={Materiall} />;
-            <Route path='/contacts' component={Contacts} />
-            <Route path='/basket' component={MyBasket} />
-            <Route path='*'><Redirect to="/" /></Route>
-          </Switch>
-        </div>
-      </div>
+      <Header />
+      <Content data={props.data}/>
       <Footer />
     </HashRouter>
   )

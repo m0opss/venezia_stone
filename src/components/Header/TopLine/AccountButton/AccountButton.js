@@ -1,13 +1,19 @@
 import React from 'react';
 
-import {Icon} from '@iconify/react';
-import accountIcon from '@iconify/icons-mdi/account';
+import Authored from './AuthoredAccountButton/Authored'
+import Unauthored from './UnauthoredAccountButton/Unauthored'
+
 import "./AccountButton.scss"
 
 const AccountButton = props => {
+  let isLogging = true
   return (
     <div className="top-line__account">
-      <Icon icon={accountIcon} color="#C98505" width="2em" height="2em"/>
+      {isLogging
+        ? <Authored />
+        : <Unauthored />
+      }
+
     </div>
   )
 }

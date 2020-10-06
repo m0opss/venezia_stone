@@ -5,9 +5,12 @@ import TopLine from './TopLine/TopLine'
 import './Header.scss'
 
 const Header = () => (
-  <div className='header-container'>
-      <TopLine/>
-      <SecondLine />
+  <div className='container'>
+    <div className='header-container'>
+      <TopLine />
+      {/* <SecondLine /> */}
+    </div>
+
   </div>
 );
 

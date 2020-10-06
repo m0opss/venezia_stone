@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import NavbarMenu from './NavbarMenu'
-import Menu from "../../../Menu/Menu"
+// import Menu from "../../../Menu/Menu"
 
 import './Navbar.scss'
 
@@ -21,7 +21,7 @@ const plitka = {
 const PlitkaMenu = props => {
   return (
     <div className="navbar__plitka">
-      <Menu options={plitka} name='Плитка'/>
+      {/* <Menu options={plitka} name='Плитка'/> */}
     </div>
   )
 }

@@ -1,26 +1,30 @@
 .top-line__city {
   display: flex;
-  flex: 1;
-  margin: 0 5px;
   align-items: center;
-  justify-content: center;
-  &:hover {
-    color: #c98505;
-    cursor: pointer;
+  justify-content: space-around;
+  margin: 0px 15px;
+  
+  .top-line__title {
+    color: black;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    margin-left: 5px;
   }
 }
-
-.MuiPopover-paper {
-  padding: 10px 30px;
-  border-top: 6px solid #DAC79F;
-  top: 55px !important;
-}
-
 
 .MuiList-root.MuiMenu-list.MuiList-padding {
   a {
     text-decoration: none;
-    color: black
+    color: black;
   }
 }
 
+.MuiTypography-body2 {
+  color: black !important;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+}
