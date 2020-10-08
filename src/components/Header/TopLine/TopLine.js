@@ -19,7 +19,7 @@ const TopLine = (props) => (
       <ChooseCity />
     </div>
     <div className="top-line__right-block">
-      <AccountButton />
+      <AccountButton authArr={props.authArr}/>
       <Link to='/izbrannoe' className="izbrannoe-button">
         <img src={izbr} alt=""/>
       </Link>

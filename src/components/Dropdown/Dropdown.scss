@@ -1,0 +1,31 @@
+.ant-dropdown-menu-item,
+.ant-dropdown-menu-submenu-title {
+  cursor: unset;
+}
+.ant-dropdown-menu {
+  padding: 20px 20px;
+  border-radius: 5px;
+  border: 1px solid #d1d1d1;
+  font-family: Roboto Condensed;
+  font-style: normal;
+  font-weight: normal;
+  color: black;
+  font-size: 15px;
+  line-height: 16px;
+
+  .ant-dropdown-menu-item {
+    &.ant-dropdown-menu-item-active {
+      color: #c98505;
+      & > a {
+        color: #c98505;
+      }
+    }
+  }
+  .city {
+    cursor: pointer;
+  }
+}
+
+// .ant-dropdown-menu-item.ant-dropdown-menu-item-only-child {
+//   cursor: pointer;
+// }

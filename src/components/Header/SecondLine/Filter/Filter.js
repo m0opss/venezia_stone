@@ -13,7 +13,6 @@ const { SubMenu } = Menu;
 const Filter = () => {
 
   const handleClick = e => {
-    console.log('click ', e);
   };
 
   return (

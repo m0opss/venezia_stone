@@ -31,7 +31,7 @@ const cityOptions = [
 const menu = (
   // Object.keys(cityOptions).map((key, index) => (
   cityOptions.map((item, index) => (
-    <Menu.Item key={index}>{item}</Menu.Item>
+    <Menu.Item key={index}><div className="city">{item}</div></Menu.Item>
   ))
 )
 
@@ -39,7 +39,7 @@ const ChooseCity = props => {
   return (
     <div className="top-line__city">
       <Icon icon={mapMarker} width="1.5em" height="1.5em" color="#C98505" />
-      <Dropdown title={cityOptions[0]} menuList={menu} />
+      <Dropdown type='city' title={cityOptions[0]} menuList={menu} />
     </div>
   )
 }

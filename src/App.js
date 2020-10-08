@@ -1,12 +1,6 @@
 import React from 'react';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { HashRouter} from 'react-router-dom';
 import { connect } from 'react-redux'
-
-import Home from './pages/Home';
-import Contacts from './pages/Contacts';
-import MyBasket from './pages/MyBasket';
-import Material from './pages/Material'
-import Materiall from './pages/Materiall'
 
 import Footer from './components/Footer/Footer';
 import Content from './components/Content/Content';
@@ -16,6 +10,7 @@ import './App.scss';
 import './components/Content/Content.scss';
 
 import dataActions from './actions/dataAction'
+import authActions from './actions/authActions'
 
 import { allData } from './store/response'
 
@@ -28,7 +23,7 @@ const App = (props) => {
 
   return (
     <HashRouter>
-      <Header />
+      <Header authArr={[props.isAuth, props.setAuth, props.setToken]}/>
       <Content data={props.data}/>
       <Footer />
     </HashRouter>
@@ -36,15 +31,19 @@ const App = (props) => {
 };
 
 const mapStateToProps = store => {
+  
   return {
-    isLogging: store.isLogging.isLogging,
+    isAuth: store.isAuth.isAuth,
     data: store.data,
+    auth_token: store.isAuth.auth_token
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     getDataResponse: (data) => { dispatch(dataActions.getDataResponse(data)) },
+    setAuth: (data) => {dispatch(authActions.setAuth(data))},
+    setToken: (data) => {dispatch(authActions.setToken(data))},
   }
 }
 

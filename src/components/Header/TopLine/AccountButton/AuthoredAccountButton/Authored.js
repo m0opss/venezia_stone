@@ -14,7 +14,7 @@ const Authored = props => {
      </> 
   )
   return (
-    <Dropdown title={'Иванов Иван Иванович'} menuList={menu}/>
+    <Dropdown type='acc-menu' title={'Иванов Иван Иванович'} menuList={menu}/>
   )
 }
 export default Authored

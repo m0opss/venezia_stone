@@ -2,33 +2,20 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  cursor: pointer;
+  // cursor: pointer;
 
-  .top-line__title {
+  .-acc-menu, .-login {
     color: #c98505;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 21px;
-  }
-}
-.ant-dropdown-menu {
-  padding: 20px 20px;
-  border-radius: 5px;
-  border: 1px solid #d1d1d1;
-  font-family: Roboto Condensed;
-  font-style: normal;
-  font-weight: normal;
-  color: black;
-  font-size: 15px;
-  line-height: 16px;
-
-  .ant-dropdown-menu-item {
-    &.ant-dropdown-menu-item-active {
-      color:#c98505;
-      & > a {
-        color: #c98505;
-      }
+    display: flex;
+    align-items: center;
+    & a {
+      color: black;
     }
   }
+
 }
+

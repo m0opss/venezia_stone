@@ -5,45 +5,32 @@ import { Menu, Dropdown } from 'antd';
 
 import './Dropdown.scss'
 
-const MyDropdown = (props) => {
+const DropdownLogin = (props) => {
   const [state, setState] = React.useState({
     visible: false,
     title: props.title,
   })
 
-  const handleMenuClick = e => {
-    if (props.type == 'login') {
-      setState({
-        ...state,
-        visible: true
-      });
+  const setLoginPanel = () => {
+    props.setIsReg(false)
+  }
+
+  React.useEffect(()=>{
+    if (state.visible == false) {
+      setTimeout(setLoginPanel, 300)  
     }
-    if (props.type == 'city') {
-      setState({
-        ...state,
-        visible: false,
-        title: menu.props.children[e.key].props.children,
-        choosedCity: e.key
-      });
-    }
-    else {
-      setState({
-        ...state,
-        visible: false,
-        choosedCity: e.key
-      });
-    }
-  };
+  }, [state.visible])
 
   const handleVisibleChange = flag => {
     setState({
       ...state,
       visible: flag
     });
+    
   };
 
   const menu = (
-    <Menu onClick={handleMenuClick}>
+    <Menu>
       {props.menuList}
     </Menu>
   );
@@ -51,10 +38,11 @@ const MyDropdown = (props) => {
   return (
     <Dropdown
       overlay={menu}
-      
       onVisibleChange={handleVisibleChange}
       trigger={['click']}
+      overlayClassName='dropdown-login'
       visible={state.visible}
+      placement='bottomRight'
     >
       <a className={`-${props.type}`} onClick={e => e.preventDefault()}>
         {state.title} <CaretDownOutlined />
@@ -63,4 +51,4 @@ const MyDropdown = (props) => {
   );
 }
 
-export default MyDropdown
+export default DropdownLogin

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import { goodReducer } from './goodReducer'
-import { loginingReducer } from './loginingReducer'
+import { authReducer } from './authReducer'
 import { dataReducer } from './dataReducer';
 import { materialReducer } from './materialReducer';
 
@@ -9,8 +9,9 @@ import { materialReducer } from './materialReducer';
 const rootReducer = combineReducers({
     goodArray: goodReducer,
     data: dataReducer,
-    isLogging : loginingReducer,
-    material: materialReducer
+    isAuth : authReducer,
+    material: materialReducer,
+
 });
 
 export default rootReducer;

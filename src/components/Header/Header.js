@@ -4,10 +4,10 @@ import TopLine from './TopLine/TopLine'
 
 import './Header.scss'
 
-const Header = () => (
+const Header = (props) => (
   <div className='container'>
     <div className='header-container'>
-      <TopLine />
+      <TopLine authArr={props}/>
       {/* <SecondLine /> */}
     </div>
 
