@@ -2,11 +2,12 @@
 .ant-dropdown-menu-submenu-title {
   cursor: unset;
 }
+
 .ant-dropdown-menu {
   padding: 20px 20px;
   border-radius: 5px;
   border: 1px solid #d1d1d1;
-  font-family: Roboto Condensed;
+  font-family: 'Roboto Condensed', sans-serif;
   font-style: normal;
   font-weight: normal;
   color: black;
@@ -15,7 +16,7 @@
 
   .ant-dropdown-menu-item {
     &.ant-dropdown-menu-item-active {
-      color: #c98505;
+      // color: #c98505;
       & > a {
         color: #c98505;
       }
@@ -23,6 +24,9 @@
   }
   .city {
     cursor: pointer;
+    &:hover {
+      color: #c98505;
+    }
   }
 }
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 import SocialContacts from './SocialContacts/SocialContacts'
 import ChooseCity from './ChooseCity/ChooseCity'
-import Logo from './Logo/Logo'
+import Logo from 'components/Logo/Logo'
 import AccountButton from './AccountButton/AccountButton'
 import BasketButton from './BasketButton/BasketButton'
 import izbr from "images/izbrannoe_icon.png"
@@ -19,7 +19,7 @@ const TopLine = (props) => (
       <ChooseCity />
     </div>
     <div className="top-line__right-block">
-      <AccountButton authArr={props.authArr}/>
+      <AccountButton />
       <Link to='/izbrannoe' className="izbrannoe-button">
         <img src={izbr} alt=""/>
       </Link>

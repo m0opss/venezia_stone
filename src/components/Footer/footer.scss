@@ -1,0 +1,23 @@
+.footer__container {
+  padding: 35px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: row wrap;
+  
+  font-family: 'Roboto Condensed', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  
+  & > * {
+    margin: 10px;
+    padding: 5px;
+  }
+  a {
+    margin: 8px;
+    padding: 0;
+  }
+}
+

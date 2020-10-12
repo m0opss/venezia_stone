@@ -11,7 +11,6 @@ import Login from './Login/Login'
 
 const Unauthored = props => {
   
-  console.log(props)
   const [isReg, setIsReg] = React.useState(false)
 
   const menu = (

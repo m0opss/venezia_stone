@@ -7,8 +7,8 @@ import './Header.scss'
 const Header = (props) => (
   <div className='container'>
     <div className='header-container'>
-      <TopLine authArr={props}/>
-      {/* <SecondLine /> */}
+      <TopLine />
+      <SecondLine />
     </div>
 
   </div>

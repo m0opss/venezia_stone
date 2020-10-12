@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 import { Icon } from '@iconify/react';
 import mapMarker from '@iconify/icons-mdi/map-marker';
 
-import Dropdown from 'components/Dropdown/Dropdown'
+import MyDropdown from 'components/Dropdown/Dropdown'
 
 import "./ChooseCity.scss"
 
@@ -39,7 +39,7 @@ const ChooseCity = props => {
   return (
     <div className="top-line__city">
       <Icon icon={mapMarker} width="1.5em" height="1.5em" color="#C98505" />
-      <Dropdown type='city' title={cityOptions[0]} menuList={menu} />
+      <MyDropdown type='city' title={cityOptions[0]} menuList={menu} />
     </div>
   )
 }

@@ -1,29 +1,97 @@
-import React from 'react'
+import React from 'react';
 
-import Filter from './Filter/Filter'
-import BorderMenu from './Navbar/BorderMenu'
-import BruschatkaMenu from './Navbar/BruschatkaMenu'
-import Catalog from './Navbar/Catalog'
-import MozaikaMenu from './Navbar/MozaikaMenu'
-import PlitkaMenu from './Navbar/PlitkaMenu'
-import SpecialPrice from './Navbar/SpecialPrice'
-import StupeniMenu from './Navbar/StupeniMenu'
+import './SecondLine.scss';
+import 'antd/dist/antd.css';
+import find from 'images/find.png';
+import searchClear from 'images/searchClear.png';
 
-import './SecondLine.scss'
-
-const SecondLine = () => (
-  <div className="second-line">
-    <Filter />
-    <div className="navbar">
-      <Catalog />
-      <PlitkaMenu />
-      <StupeniMenu />
-      <BruschatkaMenu />
-      <MozaikaMenu />
-      <BorderMenu />
-      <SpecialPrice />
+const Search = props => {
+  return (
+    <div className="second-line__search">
+      <input placeholder="Поиск" defaultValue={props.searchVal} onChange={props.onChangeSearch}/>
+      <img src={find} alt="" />
+      <img src={searchClear} alt="" />
     </div>
-  </div>
-)
+  );
+};
 
-export default SecondLine
+const Burger = props => {
+  return (
+    <>
+      <div
+        id="0"
+        className="second-line__filter-button"
+        onClick={props.setFilterParam}
+      >
+        Слебы
+      </div>
+      <div
+        id="1"
+        className="second-line__filter-button"
+        onClick={props.setFilterParam}
+      >
+        Полоса
+      </div>
+      <div
+        id="2"
+        className="second-line__filter-button"
+        onClick={props.setFilterParam}
+      >
+        Плитка
+      </div>
+      <div
+        id="3"
+        className="second-line__filter-button"
+        onClick={props.setFilterParam}
+      >
+        Ступени
+      </div>
+      <div
+        id="4"
+        className="second-line__filter-button"
+        onClick={props.setFilterParam}
+      >
+        Брусчатка
+      </div>
+      <div
+        id="5"
+        className="second-line__filter-button"
+        onClick={props.setFilterParam}
+      >
+        Мозайка из камня
+      </div>
+      <div
+        id="6"
+        className="second-line__filter-button"
+        onClick={props.setFilterParam}
+      >
+        Бордюр
+      </div>
+      <div
+        id="7"
+        className="second-line__filter-button"
+        onClick={props.setFilterParam}
+      >
+        Прочее
+      </div>
+    </>
+  );
+};
+
+const SecondLine = props => {
+  const [searchVal, setSearchVal] = React.useState('');
+  const setFilterParam = e => {
+    console.log(e.target.id);
+  };
+  const onChangeSearch = e => {
+    console.log(e.target.value);
+  }
+
+  return (
+    <div className="second-line">
+      <Burger event={setFilterParam}/>
+      <Search searchVal={searchVal} onChangeSearch={onChangeSearch}/>
+    </div>
+  );
+};
+export default SecondLine;

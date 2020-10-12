@@ -4,6 +4,13 @@
   font-style: normal;
   font-weight: normal;
 
+  label {
+    color: red;
+    font-size: 11px;
+    line-height: 6px;
+    padding: 0 10px;
+  }
+
   input,
   .button {
     background: #ffffff;
@@ -15,10 +22,16 @@
     width: 100%;
     min-width: 200px;
   }
+  .-hovered {
+    &:hover {
+      background-color: #dac79f;
+    }
+  }
   .button {
     text-align: center;
     cursor: pointer;
   }
+
   .form-title {
     font-size: 16px;
     line-height: 19px;
@@ -28,6 +41,7 @@
     margin-bottom: 20px;
     color: #000000;
   }
+
   .login__form {
     width: 300px;
     height: 300px;
@@ -83,7 +97,7 @@
           padding-left: 10px;
         }
         .reg__check-use-data {
-          font-family: Roboto Condensed;
+          font-family: ' Roboto Condensed', sans-serif;
           font-style: normal;
           font-weight: normal;
           font-size: 12px;
@@ -92,19 +106,12 @@
           color: #c98505;
           display: flex;
           align-items: center;
-
         }
       }
     }
 
     .button {
       width: 49%;
-    }
-  }
-
-  .-hovered {
-    &:hover {
-      background-color: #dac79f;
     }
   }
 }

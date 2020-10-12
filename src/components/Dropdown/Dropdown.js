@@ -51,13 +51,12 @@ const MyDropdown = (props) => {
   return (
     <Dropdown
       overlay={menu}
-      
       onVisibleChange={handleVisibleChange}
       trigger={['click']}
       visible={state.visible}
     >
       <a className={`-${props.type}`} onClick={e => e.preventDefault()}>
-        {state.title} <CaretDownOutlined />
+        {state.title}
       </a>
     </Dropdown>
   );
