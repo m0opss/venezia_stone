@@ -1,0 +1,54 @@
+.filter {
+  position: absolute;
+  top: 160px;
+  left: 5px;
+}
+
+.ant-menu-submenu-title {
+  &:hover {
+    color: #c98505 !important;
+  }
+}
+
+.ant-menu-submenu-arrow {
+  display: none;
+}
+
+.filter__submenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+// <SubMenu key="izdelie" title="Изделие">
+// <Menu.Item key="9">Option 9</Menu.Item>
+// </SubMenu>
+// <SubMenu key="color" title="Цвет">
+// <Menu.Item key="9">Option 9</Menu.Item>
+// </SubMenu>
+// <SubMenu key="proc_type" title="Тип обработки">
+// <Menu.Item key="9">Option 9</Menu.Item>
+// </SubMenu>
+// <SubMenu key="size" title="Размеры">
+// <Menu.Item key="9">Option 9</Menu.Item>
+// </SubMenu>
+// <SubMenu key="thickness" title="Толщина">
+// <Menu.Item key="9">Option 9</Menu.Item>
+// </SubMenu>
+// <SubMenu key="cost" title="Цена">
+// <Menu.Item key="9">Option 9</Menu.Item>
+// </SubMenu>
+// <SubMenu key="city" title="Город">
+// <Menu.Item key="9">Option 9</Menu.Item>
+// </SubMenu>
+// <SubMenu key="bookmatch" title="Букматч">
+// <Menu.Item key="9">Option 9</Menu.Item>
+// </SubMenu>
+// <SubMenu key="light" title="Подсветка">
+// <Menu.Item key="9">Option 9</Menu.Item>
+// </SubMenu>
+// <SubMenu key="born_place" title="Месторождение">
+// <Menu.Item key="9">Option 9</Menu.Item>
+// </SubMenu>
+// <SubMenu key="status" title="Статус">
+// <Menu.Item key="9">Option 9</Menu.Item>
+// </SubMenu>

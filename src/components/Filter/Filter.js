@@ -1,9 +1,12 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { Children } from 'react';
+import { NavLink } from 'react-router-dom';
 
-import './Filter.scss'
+import './Filter.scss';
 
-import 'antd/dist/antd.css'
+import filter_icon from 'images/filter-icon.png';
+import arrow_icon from 'images/arrow.png';
+
+import 'antd/dist/antd.css';
 import { Menu, Button } from 'antd';
 
 import {
@@ -13,14 +16,28 @@ import {
   PieChartOutlined,
   DesktopOutlined,
   ContainerOutlined,
-  MailOutlined,
+  MailOutlined
 } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 
-const Filter = () => {
+const MySubMenu = props => {
+  return (
+    <SubMenu
+      key={props.key}
+      title={
+        <div className="filter__submenu">
+          {props.title} <img src={arrow_icon} />
+        </div>
+      }
+    >
+      {props.children}
+    </SubMenu>
+  );
+};
 
-  const [state, setState] = React.useState({ collapsed: false })
+const Filter = () => {
+  const [state, setState] = React.useState({ collapsed: false });
 
   const toggleCollapsed = () => {
     setState({
@@ -28,29 +45,147 @@ const Filter = () => {
     });
   };
 
-  return (
-    <div className='filter'>
-      <Menu
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        mode="inline"
-        theme="dark"
+  const handleClick = e => {
+    console.log('click ', e);
+  };
 
-        inlineCollapsed={state.collapsed}>
-        <SubMenu key="sub1" icon={< MailOutlined />} title="Фильтр">
-          <SubMenu key="sub2" icon={< AppstoreOutlined />} title="Navigation Two">
+  return (
+    <div className="filter">
+      <Menu
+        onClick={handleClick}
+        style={{ width: 267 }}
+        defaultSelectedKeys={['1']}
+        mode="inline"
+      >
+        <SubMenu
+          key="sub1"
+          icon={<img src={filter_icon} style={{ marginRight: 10 }} />}
+          title="Фильтр"
+        >
+          <SubMenu
+            key="material"
+            title={
+              <div className="filter__submenu">
+                Материал <img src={arrow_icon} alt="" />
+              </div>
+            }
+          >
             <Menu.Item key="9">Option 9</Menu.Item>
-            <Menu.Item key="10">Option 10</Menu.Item>
-            <SubMenu key="sub3" title="Submenu">
-              <Menu.Item key="11">Option 11</Menu.Item>
-              <Menu.Item key="12">Option 12</Menu.Item>
-            </SubMenu>
+          </SubMenu>
+          <SubMenu
+            key="izdelie"
+            title={
+              <div className="filter__submenu">
+                Изделие <img src={arrow_icon} alt="" />
+              </div>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="color"
+            title={
+              <div className="filter__submenu">
+                Цвет <img src={arrow_icon} alt="" />
+              </div>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="proc_type"
+            title={
+              <div className="filter__submenu">
+                Тип обработки <img src={arrow_icon} alt="" />
+              </div>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="size"
+            title={
+              <div className="filter__submenu">
+                Размеры <img src={arrow_icon} alt="" />
+              </div>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="thickness"
+            title={
+              <div className="filter__submenu">
+                Толщина <img src={arrow_icon} alt="" />
+              </div>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="cost"
+            title={
+              <div className="filter__submenu">
+                Цена <img src={arrow_icon} alt="" />
+              </div>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="city"
+            title={
+              <div className="filter__submenu">
+                Город <img src={arrow_icon} alt="" />
+              </div>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="bookmatch"
+            title={
+              <div className="filter__submenu">
+                Букматч <img src={arrow_icon} alt="" />
+              </div>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="light"
+            title={
+              <div className="filter__submenu">
+                Подсветка <img src={arrow_icon} alt="" />
+              </div>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="born_place"
+            title={
+              <div className="filter__submenu">
+                Месторождение <img src={arrow_icon} alt="" />
+              </div>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="status"
+            title={
+              <div className="filter__submenu">
+                Статус <img src={arrow_icon} alt="" />
+              </div>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
           </SubMenu>
         </SubMenu>
-
       </Menu>
     </div>
   );
-}
+};
 
-export default Filter
+export default Filter;
