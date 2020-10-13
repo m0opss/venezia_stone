@@ -1,6 +1,5 @@
-
 .top-line__basket {
-  flex: .4;
+  flex: 0.4;
   margin: 0 10px;
   height: 30px;
   display: flex;
@@ -11,8 +10,13 @@
 }
 
 .top-line__basket-icon {
-  flex: 1;
+  // flex: 1;
+  margin: 2px;
 }
 .top-line__basket-counter {
-
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
 }

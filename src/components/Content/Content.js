@@ -1,12 +1,14 @@
 import React from 'react';
 
-import Routes from './Routes'
+import Routes from './Routes';
 
-import './Content.scss'
+import './Content.scss';
 
-const Content = (props) => (
+const Content = props => (
   <div className="content">
-    <Routes data={props.data}/>
+    <div className="container">
+      <Routes data={props.data} />
+    </div>
   </div>
 );
 
