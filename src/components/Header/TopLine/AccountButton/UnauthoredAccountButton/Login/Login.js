@@ -85,14 +85,20 @@ const Login = props => {
     if (!validator.isEmail(inputValues.r_email, ['ru-RU'])) {
       setLabelValues({ ...labelValues, r_email: 'uncorrect!!' });
       flag = false;
+    } else {
+      setLabelValues({...labelValues, r_email :" "})
     }
     if (!validator.isMobilePhone(inputValues.r_phone, 'any', 'strictMode')) {
       setLabelValues({ ...labelValues, r_phone: 'uncorrect!!' });
       flag = false;
+    } else {
+      setLabelValues({...labelValues, r_phone :" "})
     }
     if (!validator.isLength(inputValues.r_pass, { min: 6, max: undefined })) {
       setLabelValues({ ...labelValues, r_pass: 'uncorrect!!' });
       flag = false;
+    } else {
+      setLabelValues({...labelValues, r_pass :" "})
     }
     if (
       !validator.isAlpha(inputValues.r_fname, ['ru-RU']) &&
@@ -100,6 +106,8 @@ const Login = props => {
     ) {
       setLabelValues({ ...labelValues, r_fname: 'uncorrect!!' });
       flag = false;
+    } else {
+      setLabelValues({...labelValues, r_fname :" "})
     }
     if (
       !validator.isAlpha(inputValues.r_lname, ['ru-RU']) &&
@@ -107,6 +115,8 @@ const Login = props => {
     ) {
       setLabelValues({ ...labelValues, r_lname: 'uncorrect!!' });
       flag = false;
+    } else {
+      setLabelValues({...labelValues, r_lname :" "})
     }
     if (
       !validator.isAlpha(inputValues.r_mname, ['ru-RU']) &&
@@ -114,6 +124,8 @@ const Login = props => {
     ) {
       setLabelValues({ ...labelValues, r_mname: 'uncorrect!!' });
       flag = false;
+    } else {
+      setLabelValues({...labelValues, r_mname :" "})
     }
 
     if (!flag) {
@@ -236,7 +248,7 @@ const Login = props => {
       <div className="reg__bottom">
         <div className="reg__captcha">
           <Reaptcha
-            sitekey="6LfSI9UZAAAAAAPmnX1YdULNQ-FJhugsTyCdCWmi"
+            sitekey="6Ld92NYZAAAAAGxOdWjx7wQ-CbTfhJDqmtRMY9on"
             onVerify={onVerifyCaptca}
           />
         </div>
@@ -261,5 +273,5 @@ const Login = props => {
 };
 
 export default Login;
-// 6LfSI9UZAAAAAAPmnX1YdULNQ-FJhugsTyCdCWmi
-// 6LfSI9UZAAAAAFAPE3a-HlHktZ5ZBAU9ZKfstYeV secret
+// 6Ld92NYZAAAAAGxOdWjx7wQ-CbTfhJDqmtRMY9on
+// 6Ld92NYZAAAAAKELvIbIOCmxEGAb3ffLurCncDEw secret
