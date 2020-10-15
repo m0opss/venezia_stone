@@ -1,7 +1,10 @@
-import {DATA_REQUEST} from '../actions/dataAction'
+import {DATA_REQUEST, SET_NUM_G} from '../actions/dataAction'
 
 const initialState = {
-  mts : []
+  mts : [],
+  eur: 0,
+  usd: 0,
+  num_gr: {}
 }
 
 export function dataReducer(state = initialState, action) {
@@ -9,8 +12,14 @@ export function dataReducer(state = initialState, action) {
     case DATA_REQUEST:
       return {
         ...state,
-        url: action.payload.photolink,
-        mts: action.payload.mts
+        mts: action.payload.mts,
+        usd: action.payload.usd,
+        eur: action.payload.eur
+      }
+    case SET_NUM_G:
+      return {
+        ...state,
+        num_gr: action.payload
       }
     default:
       return state

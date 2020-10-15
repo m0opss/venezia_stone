@@ -1,25 +1,33 @@
 
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-
+import { connect } from 'react-redux';
+import axios from 'axios';
 import Home from '../../pages/Home';
 import Contacts from '../../pages/Contacts';
 import MyBasket from '../../pages/MyBasket';
-import Material from '../../pages/Material'
-import Materiall from '../../pages/Materiall'
+import NumGroups from '../../pages/NumGroups';
+import Numenclature from '../../pages/Numenclature';
+import LK from '../../pages/LK';
 
-const Routes = (props) => (
-  <Switch>
-    <Route path='/' exact render={() => <Home data={props.data} />} />
-    <Route path='/materials/:materialID' component={Material} />
-    <Route path='/material/:materialID/:slabID' component={Materiall} />
-    <Route path='/contacts' component={Contacts} />
-    <Route path='/personal-data' component={MyBasket} />
-    <Route path='/history' component={MyBasket} />
-    <Route path='/izbrannoe' component={MyBasket} />
-    <Route path='/basket' component={MyBasket} />
-    <Route path='*'><Redirect to="/" /></Route>
-  </Switch>
-);
+import dataActions from 'actions/dataAction';
+
+const Routes = props => {
+  return (
+    <Switch>
+      <Route path="/" exact render={() => <Home />} />
+      <Route path="/:material" component={NumGroups} />
+      {/* <Route path="/:material/*" component={Numenclature} /> */}
+      <Route path="/contacts" component={Contacts} />
+      <Route path="/personal-data" component={LK} />
+      <Route path="/history" component={LK} />
+      <Route path="/izbrannoe" component={LK} />
+      <Route path="/basket" component={MyBasket} />
+      <Route path="*">
+        <Redirect to="/" />
+      </Route>
+    </Switch>
+  );
+};
 
 export default Routes;

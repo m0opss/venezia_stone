@@ -1,8 +1,12 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+import axios from 'axios';
+
 import Reaptcha from 'reaptcha';
 import { Checkbox } from 'antd';
 import validator from 'validator';
+import authActions from 'actions/authActions'
 
 import './Login.scss';
 
@@ -86,19 +90,19 @@ const Login = props => {
       setLabelValues({ ...labelValues, r_email: 'uncorrect!!' });
       flag = false;
     } else {
-      setLabelValues({...labelValues, r_email :" "})
+      setLabelValues({ ...labelValues, r_email: ' ' });
     }
-    if (!validator.isMobilePhone(inputValues.r_phone, 'any', 'strictMode')) {
+    if (!validator.isMobilePhone(inputValues.r_phone, 'any', ['strictMode'])) {
       setLabelValues({ ...labelValues, r_phone: 'uncorrect!!' });
       flag = false;
     } else {
-      setLabelValues({...labelValues, r_phone :" "})
+      setLabelValues({ ...labelValues, r_phone: ' ' });
     }
     if (!validator.isLength(inputValues.r_pass, { min: 6, max: undefined })) {
       setLabelValues({ ...labelValues, r_pass: 'uncorrect!!' });
       flag = false;
     } else {
-      setLabelValues({...labelValues, r_pass :" "})
+      setLabelValues({ ...labelValues, r_pass: ' ' });
     }
     if (
       !validator.isAlpha(inputValues.r_fname, ['ru-RU']) &&
@@ -107,7 +111,7 @@ const Login = props => {
       setLabelValues({ ...labelValues, r_fname: 'uncorrect!!' });
       flag = false;
     } else {
-      setLabelValues({...labelValues, r_fname :" "})
+      setLabelValues({ ...labelValues, r_fname: ' ' });
     }
     if (
       !validator.isAlpha(inputValues.r_lname, ['ru-RU']) &&
@@ -116,7 +120,7 @@ const Login = props => {
       setLabelValues({ ...labelValues, r_lname: 'uncorrect!!' });
       flag = false;
     } else {
-      setLabelValues({...labelValues, r_lname :" "})
+      setLabelValues({ ...labelValues, r_lname: ' ' });
     }
     if (
       !validator.isAlpha(inputValues.r_mname, ['ru-RU']) &&
@@ -125,17 +129,35 @@ const Login = props => {
       setLabelValues({ ...labelValues, r_mname: 'uncorrect!!' });
       flag = false;
     } else {
-      setLabelValues({...labelValues, r_mname :" "})
+      setLabelValues({ ...labelValues, r_mname: ' ' });
     }
 
     if (!flag) {
-      console.log('NOT Validated!');
+      return false;
     } else {
-      console.log('Validated!');
       onResetLabels();
+      return true;
     }
   };
 
+  const onPushReg = () => {
+    if (onRegValidate()) {
+      axios
+        .post('http://92.63.103.180:8000/account/register/', {
+          email: inputValues.r_email,
+          phone: inputValues.r_phone,
+          first_name: inputValues.r_fname,
+          last_name: inputValues.r_lname,
+          password: inputValues.r_pass
+        })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  };
   const login_form = (
     <div className="login__form">
       <p className="form-title">Bxoд в личный кабинет</p>
@@ -144,7 +166,7 @@ const Login = props => {
         className="login__log"
         type="text"
         defaultValue={inputValues.l_login}
-        onChange={ e =>
+        onChange={e =>
           setInputValues({ ...inputValues, l_login: e.target.value })
         }
         placeholder="Логин"
@@ -154,7 +176,7 @@ const Login = props => {
         className="login__pass"
         type="password"
         defaultValue={inputValues.l_pass}
-        onChange={ e =>
+        onChange={e =>
           setInputValues({ ...inputValues, l_pass: e.target.value })
         }
         placeholder="Пароль"
@@ -264,7 +286,7 @@ const Login = props => {
           </div>
         </div>
       </div>
-      <div className="button -hovered unselectable" onClick={onRegValidate}>
+      <div className="button -hovered unselectable" onClick={onPushReg}>
         Зарегистрироваться
       </div>
     </div>
@@ -272,6 +294,24 @@ const Login = props => {
   return props.isReg ? reg_form : login_form;
 };
 
-export default Login;
+const mapStateToProps = store => {
+  return {
+    auth_token: store.isAuth.auth_token,
+    isAuth: store.isAuth.isAuth,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setAuth: data => {
+      dispatch(authActions.setAuth(data));
+    },
+    setToken: data => {
+      dispatch(authActions.setToken(data));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 // 6Ld92NYZAAAAAGxOdWjx7wQ-CbTfhJDqmtRMY9on
 // 6Ld92NYZAAAAAKELvIbIOCmxEGAb3ffLurCncDEw secret

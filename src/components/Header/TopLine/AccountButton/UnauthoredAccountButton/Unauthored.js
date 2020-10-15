@@ -18,7 +18,6 @@ const Unauthored = props => {
       <Login
         isReg={isReg}
         setIsReg={setIsReg}
-        func={props.func}
       />
     </Menu.Item>
   )

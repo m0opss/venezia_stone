@@ -1,0 +1,49 @@
+.map {
+  width: 100%;
+}
+
+.city-cards {
+  margin-top: 40px;
+  width: 100%;
+  // display: flex;
+  // align-items: center;
+  // justify-content: space-between;
+  // flex-flow: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  grid-gap: 2em;
+}
+
+.city-card {
+
+  display: flex;
+  flex-flow: column wrap;
+  padding: 30px;
+  margin: 10px 5px;
+  border: 1px solid#DAC79F;
+  position: relative;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  &:hover {
+    h1 {
+      color: #BE9344;
+    }
+  }
+  color: #000000;
+  p {
+    margin: 3px;
+    white-space: pre-line;
+  }
+  .address-card__soc {
+    position: absolute;
+    bottom: 25px;
+    right: 30px;
+    a {
+      margin: 5px;
+    }
+  }
+}
