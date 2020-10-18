@@ -1,0 +1,38 @@
+.num-gr-items-group {
+  width: 100%;
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 13fr 13fr 13fr 13fr;
+  grid-gap: 3em 2em;
+
+  @media screen and (max-width: 1232px) {
+    grid-template-columns: 13fr 13fr 13fr;
+    grid-gap: 3em 2em;
+  }
+}
+.num-gr-options {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  align-items: center;
+  * {
+    margin: 0 5px;
+    cursor: pointer;
+    &:hover {
+      color: #c98505;
+    }
+  }
+
+  .-active-opt {
+    color: #c98505;
+  }
+  .num-gr-options__color_sort:hover {
+    img {
+      color: #c98505;
+    }
+  }
+}

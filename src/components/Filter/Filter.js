@@ -1,191 +1,110 @@
-import React, { Children } from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react';
 
-import './Filter.scss';
-
+import { connect } from 'react-redux';
 import filter_icon from 'images/filter-icon.png';
-import arrow_icon from 'images/arrow.png';
 
 import 'antd/dist/antd.css';
-import { Menu, Button } from 'antd';
+import './Filter.scss';
 
-import {
-  AppstoreOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  PieChartOutlined,
-  DesktopOutlined,
-  ContainerOutlined,
-  MailOutlined
-} from '@ant-design/icons';
+import filterActions from 'actions/filterActions';
+
+import { Menu } from 'antd';
+
+import colors from './filterColors.json';
+import materials from './filterMaterials.json';
+import { render } from 'react-testing-library';
 
 const { SubMenu } = Menu;
 
-const MySubMenu = props => {
-  return (
-    <SubMenu
-      key={props.key}
-      title={
-        <div className="filter__submenu">
-          {props.title} <img src={arrow_icon} />
-        </div>
-      }
-    >
-      {props.children}
-    </SubMenu>
-  );
-};
-
-const Filter = () => {
+const Filter = props => {
   const [state, setState] = React.useState({ collapsed: false });
-
-  const toggleCollapsed = () => {
-    setState({
-      collapsed: !state.collapsed
-    });
-  };
 
   const handleClick = e => {
     console.log('click ', e);
   };
-
+  console.log(materials.materials);
   return (
     <div className="filter">
       <Menu
         onClick={handleClick}
-        style={{ width: 267 }}
-        defaultSelectedKeys={['1']}
+        style={{ width: 327 }}
+        defaultSelectedKeys='sub1'
         mode="inline"
+        multiple={true}
       >
         <SubMenu
           key="sub1"
           icon={<img src={filter_icon} style={{ marginRight: 10 }} />}
           title="Фильтр"
         >
-          <SubMenu
-            key="material"
-            title={
-              <div className="filter__submenu">
-                Материал <img src={arrow_icon} alt="" />
-              </div>
-            }
-          >
+          <SubMenu key="material" title="Материал">
+            {materials.materials.map((material, index) =>  {return(
+              <Menu.Item
+                key={`1${index}`}
+                onClick={() => props.setChoosedMat(material)}
+              >
+                {material}
+              </Menu.Item>
+            )})}
+          </SubMenu>
+          {/* <SubMenu key="izdelie" title="Изделие">
+            <Menu.Item key="20">Option 9</Menu.Item>
+          </SubMenu> */}
+          <SubMenu key="color" title="Цвет">
+            {Object.keys(colors).map((color, index) => {
+              return(
+                <Menu.Item key={`3${index}`} style={{display:'flex', alignItems:'center'}}>
+                  <div className="filter__color" style={{background:colors[color]}}></div>
+                  {color}
+                </Menu.Item>
+              );
+            })}
+          </SubMenu>
+          {/*  
+          <SubMenu key="proc_type" title="Тип обработки">
             <Menu.Item key="9">Option 9</Menu.Item>
           </SubMenu>
-          <SubMenu
-            key="izdelie"
-            title={
-              <div className="filter__submenu">
-                Изделие <img src={arrow_icon} alt="" />
-              </div>
-            }
-          >
+          <SubMenu key="size" title="Размеры">
             <Menu.Item key="9">Option 9</Menu.Item>
           </SubMenu>
-          <SubMenu
-            key="color"
-            title={
-              <div className="filter__submenu">
-                Цвет <img src={arrow_icon} alt="" />
-              </div>
-            }
-          >
+          <SubMenu key="thickness" title="Толщина">
             <Menu.Item key="9">Option 9</Menu.Item>
           </SubMenu>
-          <SubMenu
-            key="proc_type"
-            title={
-              <div className="filter__submenu">
-                Тип обработки <img src={arrow_icon} alt="" />
-              </div>
-            }
-          >
+          <SubMenu key="cost" title="Цена">
             <Menu.Item key="9">Option 9</Menu.Item>
           </SubMenu>
-          <SubMenu
-            key="size"
-            title={
-              <div className="filter__submenu">
-                Размеры <img src={arrow_icon} alt="" />
-              </div>
-            }
-          >
+          <SubMenu key="city" title="Город">
             <Menu.Item key="9">Option 9</Menu.Item>
           </SubMenu>
-          <SubMenu
-            key="thickness"
-            title={
-              <div className="filter__submenu">
-                Толщина <img src={arrow_icon} alt="" />
-              </div>
-            }
-          >
+          <SubMenu key="bookmatch" title="Букматч">
             <Menu.Item key="9">Option 9</Menu.Item>
           </SubMenu>
-          <SubMenu
-            key="cost"
-            title={
-              <div className="filter__submenu">
-                Цена <img src={arrow_icon} alt="" />
-              </div>
-            }
-          >
+          <SubMenu key="light" title="Подсветка">
             <Menu.Item key="9">Option 9</Menu.Item>
           </SubMenu>
-          <SubMenu
-            key="city"
-            title={
-              <div className="filter__submenu">
-                Город <img src={arrow_icon} alt="" />
-              </div>
-            }
-          >
+          <SubMenu key="born_place" title="Месторождение">
             <Menu.Item key="9">Option 9</Menu.Item>
           </SubMenu>
-          <SubMenu
-            key="bookmatch"
-            title={
-              <div className="filter__submenu">
-                Букматч <img src={arrow_icon} alt="" />
-              </div>
-            }
-          >
+          <SubMenu key="status" title="Статус">
             <Menu.Item key="9">Option 9</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="light"
-            title={
-              <div className="filter__submenu">
-                Подсветка <img src={arrow_icon} alt="" />
-              </div>
-            }
-          >
-            <Menu.Item key="9">Option 9</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="born_place"
-            title={
-              <div className="filter__submenu">
-                Месторождение <img src={arrow_icon} alt="" />
-              </div>
-            }
-          >
-            <Menu.Item key="9">Option 9</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="status"
-            title={
-              <div className="filter__submenu">
-                Статус <img src={arrow_icon} alt="" />
-              </div>
-            }
-          >
-            <Menu.Item key="9">Option 9</Menu.Item>
-          </SubMenu>
+          </SubMenu> */}
         </SubMenu>
       </Menu>
     </div>
   );
 };
+const mapStateToProps = store => {
+  return {
+    choosedMat: store.filter.choosedMat,
+  };
+};
 
-export default Filter;
+const mapDispatchToProps = dispatch => {
+  return {
+    setChoosedMat: data => {
+      dispatch(filterActions.setChoosedMat(data));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);

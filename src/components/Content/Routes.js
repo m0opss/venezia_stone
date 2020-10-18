@@ -16,13 +16,14 @@ const Routes = props => {
   return (
     <Switch>
       <Route path="/" exact render={() => <Home />} />
-      <Route path="/:material" component={NumGroups} />
-      {/* <Route path="/:material/*" component={Numenclature} /> */}
-      <Route path="/contacts" component={Contacts} />
-      <Route path="/personal-data" component={LK} />
-      <Route path="/history" component={LK} />
-      <Route path="/izbrannoe" component={LK} />
-      <Route path="/basket" component={MyBasket} />
+      <Route exact path="/:material" component={NumGroups} />
+      <Route  path="/:material/:numGroups" component={Numenclature}/>
+      {/* <Route  path="/:material/:numGroups:num" component={MyBasket}/> */}
+      <Route  path="/contacts" component={Contacts} />
+      <Route  path="/personal-data" component={LK} />
+      <Route  path="/history" component={LK} />
+      <Route  path="/izbrannoe" component={LK} />
+      <Route  path="/basket" component={MyBasket} />
       <Route path="*">
         <Redirect to="/" />
       </Route>

@@ -11,15 +11,13 @@ import NumenclatureItem from '../components/Content/NumenclatureItem/Numenclatur
 
 
 const Numenclature = props => {
-  console.log(props)
   const [numemclature, setNumemclature] = React.useState([]);
   React.useEffect(() => {
     axios
       .get(`http://92.63.103.180:8000/api_v0${props.match.url}/`)
       .then(response => {
-        // props.setNumGroups(response.data);
-        // setNumGroups(response.data.grs);
         setNumemclature(response.data.itms)
+        console.log(response.data)
       })
       .catch(e => {
         console.log(e);
@@ -28,14 +26,15 @@ const Numenclature = props => {
 
   return (
     <div className="numenclature-container">
-      <div className="catalog-items-group">
+      <div className="num-gr-items-group">
         {numemclature.map((item, index) => (
           <NumenclatureItem
             key={item.id}
             img={item.photo}
             link={props.match.url + '/' + item.id}
             item={item}
-            itemName={item.gr}
+            tp={item.tp}
+            itemName={item.ct}
             id={item.id}
           />
         ))}
@@ -47,7 +46,7 @@ const Numenclature = props => {
 const mapStateToProps = store => {
   return {
     selectedMaterial: store.material.selectedMaterial,
-    data: store.data
+    // data: store.data
   };
 };
 

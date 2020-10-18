@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import materialActions from '../actions/materialAction';
-import goodActions from '../actions/goodAction';
+import filterActions from '../actions/filterActions';
 import dataActions from 'actions/dataAction';
 import MaterialItem from '../components/Content/MaterialItem/MaterialItem';
 
@@ -28,7 +28,7 @@ const Home = props => {
     <div className="home-container">
       <h1>Натуральный камень в наличии</h1>
       <div className="catalog-items-group">
-        {props.data.mts.map((item, index) => (
+        {props.data.mts.map((item) => (
           <MaterialItem
             img={item.photo_material}
             link={item.ph}
@@ -37,7 +37,6 @@ const Home = props => {
             key={item.mt}
           />
         ))}
-        
       </div>
       <div className="home-bottom-links">
         <div className="home-bottom-links__link">
@@ -53,7 +52,7 @@ const Home = props => {
 
 const mapStateToProps = store => {
   return {
-    data: store.data
+    data: store.data,
   };
 };
 
@@ -61,6 +60,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getDataResponse: data => {
       dispatch(dataActions.getDataResponse(data));
+    },
+    setMatList: data => {
+      dispatch(filterActions.setMatList(data));
     },
   };
 };

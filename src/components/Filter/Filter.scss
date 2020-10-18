@@ -1,54 +1,36 @@
 .filter {
   position: absolute;
+  z-index: 1110;
   top: 160px;
   left: 5px;
-}
 
-.ant-menu-submenu-title {
-  &:hover {
-    color: #c98505 !important;
+  .ant-menu-submenu-title:hover {
+    color: black;
+  }
+  .ant-menu-submenu-selected {
+    color: black;
+  }
+  .ant-menu-item-active {
+    color: #c98505;
+  }
+  .ant-menu-item-selected {
+    color: #c98505;
+  }
+  .ant-menu-submenu-inline
+    > .ant-menu-submenu-title:hover.ant-menu-submenu-arrow::after {
+    background: #000;
+  }
+
+  .filter__submenu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
-
-.ant-menu-submenu-arrow {
-  display: none;
+.filter__color {
+  width: 16px;
+  height: 16px;
+  border: 1px solid black;
+  border-radius: 100%; 
+  margin-right:10px;
 }
-
-.filter__submenu {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-// <SubMenu key="izdelie" title="Изделие">
-// <Menu.Item key="9">Option 9</Menu.Item>
-// </SubMenu>
-// <SubMenu key="color" title="Цвет">
-// <Menu.Item key="9">Option 9</Menu.Item>
-// </SubMenu>
-// <SubMenu key="proc_type" title="Тип обработки">
-// <Menu.Item key="9">Option 9</Menu.Item>
-// </SubMenu>
-// <SubMenu key="size" title="Размеры">
-// <Menu.Item key="9">Option 9</Menu.Item>
-// </SubMenu>
-// <SubMenu key="thickness" title="Толщина">
-// <Menu.Item key="9">Option 9</Menu.Item>
-// </SubMenu>
-// <SubMenu key="cost" title="Цена">
-// <Menu.Item key="9">Option 9</Menu.Item>
-// </SubMenu>
-// <SubMenu key="city" title="Город">
-// <Menu.Item key="9">Option 9</Menu.Item>
-// </SubMenu>
-// <SubMenu key="bookmatch" title="Букматч">
-// <Menu.Item key="9">Option 9</Menu.Item>
-// </SubMenu>
-// <SubMenu key="light" title="Подсветка">
-// <Menu.Item key="9">Option 9</Menu.Item>
-// </SubMenu>
-// <SubMenu key="born_place" title="Месторождение">
-// <Menu.Item key="9">Option 9</Menu.Item>
-// </SubMenu>
-// <SubMenu key="status" title="Статус">
-// <Menu.Item key="9">Option 9</Menu.Item>
-// </SubMenu>
