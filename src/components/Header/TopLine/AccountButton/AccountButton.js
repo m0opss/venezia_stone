@@ -24,7 +24,7 @@ const AccountButton = props => {
 
   return (
     <div className="top-line__account">
-      {props.isAuth ? (
+      {!props.isAuth ? (
         <Authored />
       ) : (
         <Unauthored />

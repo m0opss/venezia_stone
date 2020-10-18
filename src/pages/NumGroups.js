@@ -5,9 +5,14 @@ import axios from 'axios';
 import materialActions from '../actions/materialAction';
 import dataActions from 'actions/dataAction';
 import a_z from 'images/a-z.png';
-import arrow from 'images/arr.png';
+
 import listIcon from 'images/str.png';
 import pltk from 'images/pltk.png';
+import listIcon_a from 'images/str_a.png';
+import pltk_a from 'images/pltk_a.png';
+
+import { Icon } from '@iconify/react';
+import sortIcon from '@iconify/icons-dashicons/sort';
 
 import NumGroupItem from '../components/Content/NumGroupItem/NumGroupItem';
 
@@ -20,20 +25,23 @@ const sortArr = arr => {
       nameB = b.gr.toLowerCase();
     console.log(nameA, nameB);
     if (nameA < nameB)
-      //сортируем строки по возрастанию
       return -1;
     if (nameA > nameB) return 1;
-    return 0; // Никакой сортировки
+    return 0;
   });
   return tmp;
 };
 
 const NumGroups = props => {
   const [numGroups, setNumGroups] = React.useState([]);
-  const [sortOption, setSortOption] = React.useState(true);
+  const [style_pltk, setHover_pltk] = React.useState(true);
   const [actionOption1, setActionOption1] = React.useState('');
   const [actionOption2, setActionOption2] = React.useState('');
   const [actionOption3, setActionOption3] = React.useState('');
+
+  const [num_groups_items, setNum_groups_items] = React.useState(
+    'num-gr-items-group'
+  );
 
   React.useEffect(() => {
     axios
@@ -72,6 +80,15 @@ const NumGroups = props => {
     setNumGroups(tmp);
   };
 
+  const toggleStyle_pltk = () => {
+    setHover_pltk(true);
+    setNum_groups_items('num-gr-items-group');
+  };
+  const toggleStyle_list = () => {
+    setHover_pltk(false);
+    setNum_groups_items('num-gr-items-group-list');
+  };
+
   return (
     <>
       <div className="num-gr-options">
@@ -97,7 +114,12 @@ const NumGroups = props => {
           EUR
         </p>
         <div className="num-gr-options__color_sort">
-          <img src={arrow} />
+          <Icon
+            icon={sortIcon}
+            width="2.5em"
+            height="2.5em"
+            className="num-gr-options__color_icon"
+          />
         </div>
         <div
           className="num-gr-options__sort_alph"
@@ -105,22 +127,37 @@ const NumGroups = props => {
         >
           <img src={a_z} />
         </div>
-        <div className="num-gr-options__"></div>
-        <div className="num-gr-options__"></div>
-      </div>
-      <div className="num-groups-container">
-        <div className="num-gr-items-group">
-          {numGroups.map(item => (
-            <NumGroupItem
-              key={item.id}
-              img={item.photo}
-              link={props.match.url + '/' + item.id}
-              item={item}
-              itemName={item.gr}
-              id={item.id}
-            />
-          ))}
+        <div className="" onClick={() => toggleStyle_pltk()}>
+          <img src={style_pltk ? pltk_a : pltk} />
         </div>
+        <div className="" onClick={() => toggleStyle_list()}>
+          <img src={style_pltk ? listIcon : listIcon_a} />
+        </div>
+      </div>
+
+      <div className={num_groups_items}>
+        <div
+          className="num-gr-items-group-col"
+          style={style_pltk ? { display: 'none' } : { display: 'grid' }}
+        >
+          <p>Фото</p>
+          <p>Название</p>
+          <p>Количество SKU</p>
+          <p>Общая площадь</p>
+          <p>Цена от</p>
+        </div>
+
+        {numGroups.map(item => (
+          <NumGroupItem
+            pltk={style_pltk}
+            key={item.id}
+            img={item.photo}
+            link={props.match.url + '/' + item.id}
+            item={item}
+            itemName={item.gr}
+            id={item.id}
+          />
+        ))}
       </div>
     </>
   );
