@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import './NumGroupItem.scss';
 
 const MaterialItem = props => {
-  console.log(props.pltk)
   if (props.pltk) {
     return (
       <div key={props.id} className="num-gr-item" onClick={props.onClick}>
@@ -30,7 +29,7 @@ const MaterialItem = props => {
     );
   } else {
     return (
-      <Link to={props.link} key={props.id} className="num-gr-item" onClick={props.onClick}>
+      <div key={props.id} className="num-gr-item" onClick={props.onClick}>
         <div className="num-gr-item__img">
           <img src={props.img} alt="" className="num-gr-item__img" />
         </div>
@@ -39,7 +38,7 @@ const MaterialItem = props => {
         <div className="num-gr-item__sqrt">22 м<sup>2</sup></div>
         <div className="num-gr-item__cost">22 $</div>
         <Link to={props.link}>Подробнее</Link>
-      </Link>
+      </div>
     );
   }
 };

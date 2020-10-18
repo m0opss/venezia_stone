@@ -20,17 +20,17 @@
     > .ant-menu-submenu-title:hover.ant-menu-submenu-arrow::after {
     background: #000;
   }
-
-  .filter__submenu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
 }
 .filter__color {
   width: 16px;
   height: 16px;
   border: 1px solid black;
-  border-radius: 100%; 
-  margin-right:10px;
+  border-radius: 100%;
+  margin-right: 10px;
 }
+
+// добавить!
+
+// border: 1px solid #d3d3d3;
+// box-sizing: border-box;
+// border-radius: 4px;

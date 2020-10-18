@@ -84,6 +84,7 @@ const NumGroups = props => {
     setHover_pltk(true);
     setNum_groups_items('num-gr-items-group');
   };
+  
   const toggleStyle_list = () => {
     setHover_pltk(false);
     setNum_groups_items('num-gr-items-group-list');

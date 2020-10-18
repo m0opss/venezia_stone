@@ -47,9 +47,9 @@ const Filter = props => {
               </Menu.Item>
             )})}
           </SubMenu>
-          {/* <SubMenu key="izdelie" title="Изделие">
+          <SubMenu key="izdelie" title="Изделие">
             <Menu.Item key="20">Option 9</Menu.Item>
-          </SubMenu> */}
+          </SubMenu>
           <SubMenu key="color" title="Цвет">
             {Object.keys(colors).map((color, index) => {
               return(
