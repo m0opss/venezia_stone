@@ -1,0 +1,25 @@
+.top-line--mobile {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  position: relative;
+  > * { 
+    margin: 0 7px;
+  }
+  .top-line__logo {
+    flex: 0 1 65%;
+  }
+  .top-line__account {
+    flex: 0 1 7%;
+  }
+  .top-line__basket {
+    flex: 0 1 7%;
+  }
+  .izbrannoe-button {
+    flex: 0 1 7%;
+  }
+  .search-button {
+    flex: 0 1 7%;
+  }
+}

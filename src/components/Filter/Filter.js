@@ -17,7 +17,12 @@ import materials from './filterMaterials.json';
 const { SubMenu } = Menu;
 
 const Filter = props => {
-  const [state, setState] = React.useState({ collapsed: false });
+  let w, m;
+  if (document.documentElement.clientWidth >= 1000) w = false;
+  else w = true;
+  if (document.documentElement.clientWidth <= 800) m = true;
+
+  const [state, setState] = React.useState({ collapsed: w });
 
   const handleClick = e => {
     setState({ collapsed: !state.collapsed });
@@ -27,7 +32,7 @@ const Filter = props => {
   return (
     <div className="filter">
       <div className="filter__button">
-        {!state.collapsed ? (
+        {!state.collapsed && !m ? (
           <>
             <img src={filter_icon} />
             <img
@@ -37,12 +42,15 @@ const Filter = props => {
             />
           </>
         ) : (
-          <img src={filter_icon} className="filter__button-click" onClick={handleClick}/>
+          <img
+            src={filter_icon}
+            className="filter__button-click"
+            onClick={handleClick}
+          />
         )}
       </div>
       <Menu
         style={{ width: 327 }}
-        defaultSelectedKeys="sub1"
         mode="inline"
         multiple={true}
         inlineCollapsed={state.collapsed}

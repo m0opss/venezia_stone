@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Footer from './components/Footer/Footer';
 import Content from './components/Content/Content';
 import Header from './components/Header/Header';
-import Filter from 'components/Filter/Filter';
+
 import axios from 'axios';
 
 import './App.scss';
@@ -41,7 +41,6 @@ const App = props => {
   return (
     <HashRouter>
       <Header />
-      <Filter />
       <Content data={props.data} />
       <Footer />
     </HashRouter>

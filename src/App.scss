@@ -5,6 +5,9 @@ body {
     max-width: 1230px;
     padding: 0 15px;
     margin: auto;
+    @media screen and (max-width: 1000px) {
+        padding: 0 6px;
+    }
 }
 
 .unselectable {

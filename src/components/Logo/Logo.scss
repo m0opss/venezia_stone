@@ -1,4 +1,39 @@
 .top-line__logo {
-  // flex: 1.2;
   margin-right: 25px;
+  display: flex;
+  align-items: center;
+
+  .logo__text {
+    height: 40px;
+    margin-left: 10px;
+    p {
+      text-transform: uppercase;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-style: normal;
+      font-size: 19.6414px;
+      line-height: 90%;
+      margin-bottom: 0;
+    }
+    
+    .logo__line-1 {
+      font-weight: bold;
+      letter-spacing: 0.02em;
+      color: #000000;
+    }
+
+    .logo__line-2 {
+      font-weight: 300;
+      letter-spacing: -0.035em;
+      color: #000000;
+    }
+    .logo__line-3 {
+      font-weight: 300;
+      font-size: 6.75172px;
+      letter-spacing: 0.18em;
+      color: #be9344;
+    }
+    .-mobile {
+      font-size: 16.393px;
+    }
+  }
 }

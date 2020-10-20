@@ -1,14 +1,50 @@
 .filter {
-  position: absolute;
-  z-index: 1110;
-  top: 160px;
-  left: 15px;
+  @media screen and (min-width: 800px) {
+    position: absolute;
+    z-index: 1110;
+    top: 160px;
+    left: 15px;
+  }
+
   .ant-menu-inline-collapsed.ant-menu-root.ant-menu-vertical {
     display: none;
   }
   .ant-menu-inline-collapsed.ant-menu-root.ant-menu-inline {
     display: none;
   }
+  .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
+    @media screen and (max-width: 800px) {
+      position: absolute;
+      width: 99vw !important;
+      right: 0.3vw;
+      left: 0.2vw;
+      top: 70px;
+      z-index: 1000;
+      .ant-menu-submenu {
+        width: 70vw;
+      }
+    }
+  }
+  .ant-menu-submenu {
+    margin: 5px;
+    .ant-menu-submenu-title {
+      border: 1px solid #d3d3d3;
+      border-radius: 4px;
+    }
+  }
+  .ant-menu-submenu-open {
+    .ant-menu-submenu-title {
+      border: 1px solid #be9344;
+    }
+  }
+  .ant-menu-submenu-active {
+    .ant-menu-submenu-title {
+      .ant-menu-submenu-arrow::before,.ant-menu-submenu-arrow::after {
+        background:  #be9344;
+      }
+    }
+  }
+
   .ant-menu-submenu-title:hover {
     color: black;
   }
@@ -31,6 +67,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media screen and (max-width: 800px) {
+      width: unset;
+    }
     .filter__button-click {
       cursor: pointer;
       margin-right: 10px;

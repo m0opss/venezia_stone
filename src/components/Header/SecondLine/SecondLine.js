@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import './SecondLine.scss';
 import 'antd/dist/antd.css';
 
 import find from 'images/find.png';
 import searchClear from 'images/searchClear.png';
-
 
 const Search = props => {
   return (
@@ -63,7 +62,7 @@ const Burger = props => {
       </div>
       <div
         id="5"
-        className="second-line__filter-button"
+        className="second-line__filter-button -double-w"
         onClick={props.setFilterParam}
       >
         Мозайка из камня
@@ -91,12 +90,12 @@ const Burger = props => {
 
 const SecondLine = props => {
   const [searchVal, setSearchVal] = React.useState('');
-  const { match, history } = props
+  const { match, history } = props;
 
   const setFilterParam = e => {
     console.log(e.target.id);
 
-    history.push('/')
+    history.push('/');
   };
   const onChangeSearch = e => {
     console.log(e.target.value);
