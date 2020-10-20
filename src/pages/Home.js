@@ -1,10 +1,8 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import materialActions from '../actions/materialAction';
 import filterActions from '../actions/filterActions';
 import dataActions from 'actions/dataAction';
 import MaterialItem from '../components/Content/MaterialItem/MaterialItem';

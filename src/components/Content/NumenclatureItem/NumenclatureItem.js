@@ -15,10 +15,10 @@ const NumenclatureItem = props => {
         </Link>
         <div className="num-gr-item__descr -num">
           <div className="num-gr-item__line -f">
-            <p>SKU</p>
+            <p>Количество слэбов: 1111</p>
             <p>Цена от 45$</p>
           </div>
-          <p className="num-gr-item__line">Количество пачек</p>
+          <p className="num-gr-item__line">Количество пачек: 1111</p>
           <div className="num-gr-item__line --s">
             <p>
               Общая площадь: 22 м<sup>2</sup>

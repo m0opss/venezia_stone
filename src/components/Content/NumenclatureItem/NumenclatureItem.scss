@@ -1,8 +1,7 @@
 .num-gr-items-group-list {
-  margin-top: 30px;
+  margin-top: 5px;
   display: flex;
   flex-flow: column;
-
 
   .num-items-group-col {
     padding: 5px 20px;
@@ -12,10 +11,11 @@
     font-weight: bold;
     font-size: 16px;
     line-height: 16px;
+    display: flex;
     align-items: center;
     justify-content: space-around;
     color: #000000;
-
+  
     @media screen and (max-width: 1100px) {
       font-size: 14px;
       line-height: 14px;

@@ -23,7 +23,6 @@ const sortArr = arr => {
   tmp.sort((a, b) => {
     let nameA = a.gr.toLowerCase(),
       nameB = b.gr.toLowerCase();
-    console.log(nameA, nameB);
     if (nameA < nameB)
       return -1;
     if (nameA > nameB) return 1;
@@ -47,9 +46,7 @@ const NumGroups = props => {
     axios
       .get(`http://92.63.103.180:8000/api_v0/${props.match.params.material}/`)
       .then(response => {
-        // props.setNumGroups(response.data);
         setNumGroups(sortArr(response.data.grs));
-        // localStorage.setItem('material', `${response.data.mt} ${response.data.ph}`)
       })
       .catch(e => {
         console.log(e);

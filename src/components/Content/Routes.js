@@ -15,15 +15,14 @@ import dataActions from 'actions/dataAction';
 const Routes = props => {
   return (
     <Switch>
-      <Route path="/" exact render={() => <Home />} />
-      <Route exact path="/:material" component={NumGroups} />
-      <Route  path="/:material/:numGroups" component={Numenclature}/>
-      {/* <Route  path="/:material/:numGroups:num" component={MyBasket}/> */}
-      <Route  path="/contacts" component={Contacts} />
-      <Route  path="/personal-data" component={LK} />
-      <Route  path="/history" component={LK} />
-      <Route  path="/izbrannoe" component={LK} />
-      <Route  path="/basket" component={MyBasket} />
+      <Route path="/" exact component={Home} />
+      <Route exact path="/contacts" component={Contacts} />
+      <Route exact path="/personal-data" component={LK} />
+      <Route exact path="/history" component={LK} />
+      <Route exact path="/izbrannoe" component={LK} />
+      <Route exact path="/basket" component={MyBasket} />
+      <Route exact path="/:material"  component={NumGroups} />
+      <Route exact path="/:material/:numGroups" component={Numenclature}/>
       <Route path="*">
         <Redirect to="/" />
       </Route>

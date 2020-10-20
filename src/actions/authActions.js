@@ -8,6 +8,7 @@ const authActions = {
     }
   },
   setToken: (data) => {
+    localStorage.setItem('auth_token', data)
     return {
       type: 'SET_TOKEN',
       payload: data,

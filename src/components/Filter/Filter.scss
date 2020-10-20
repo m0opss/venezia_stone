@@ -2,8 +2,13 @@
   position: absolute;
   z-index: 1110;
   top: 160px;
-  left: 5px;
-
+  left: 15px;
+  .ant-menu-inline-collapsed.ant-menu-root.ant-menu-vertical {
+    display: none;
+  }
+  .ant-menu-inline-collapsed.ant-menu-root.ant-menu-inline {
+    display: none;
+  }
   .ant-menu-submenu-title:hover {
     color: black;
   }
@@ -19,6 +24,17 @@
   .ant-menu-submenu-inline
     > .ant-menu-submenu-title:hover.ant-menu-submenu-arrow::after {
     background: #000;
+  }
+  .filter__button {
+    margin-left: 10px;
+    width: 327px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .filter__button-click {
+      cursor: pointer;
+      margin-right: 10px;
+    }
   }
 }
 .filter__color {

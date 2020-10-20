@@ -3,52 +3,48 @@ import React from 'react';
 import { CaretDownOutlined } from '@ant-design/icons';
 import { Menu, Dropdown } from 'antd';
 
-import './Dropdown.scss'
+import './Dropdown.scss';
 
-const DropdownLogin = (props) => {
+const DropdownLogin = props => {
   const [state, setState] = React.useState({
-    visible: false,
-    title: props.title,
-  })
+    visible: props.visible,
+    title: props.title
+  });
 
   const setLoginPanel = () => {
-    props.setIsReg(false)
-  }
+    props.setIsReg(false);
+  };
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     if (state.visible == false) {
-      setTimeout(setLoginPanel, 300)  
+      setTimeout(setLoginPanel, 300);
     }
-  }, [state.visible])
+  }, [state.visible]);
 
   const handleVisibleChange = flag => {
     setState({
       ...state,
       visible: flag
     });
-    
+    props.setVisible(flag)
   };
 
-  const menu = (
-    <Menu>
-      {props.menuList}
-    </Menu>
-  );
+  const menu = <Menu>{props.menuList}</Menu>;
 
   return (
     <Dropdown
       overlay={menu}
       onVisibleChange={handleVisibleChange}
       trigger={['click']}
-      overlayClassName='dropdown-login'
-      visible={state.visible}
-      placement='bottomRight'
+      overlayClassName="dropdown-login"
+      visible={props.visible}
+      placement="bottomRight"
     >
       <a className={`-${props.type}`} onClick={e => e.preventDefault()}>
         {state.title} <CaretDownOutlined />
       </a>
     </Dropdown>
   );
-}
+};
 
-export default DropdownLogin
+export default DropdownLogin;

@@ -9,7 +9,7 @@ import { materialReducer } from './materialReducer';
 const rootReducer = combineReducers({
     filter: filterReducer,
     data: dataReducer,
-    isAuth : authReducer,
+    auth_data : authReducer,
     material: materialReducer,
 });
 

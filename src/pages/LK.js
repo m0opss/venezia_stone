@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import authActions from 'actions/authActions';
 
 import './LK.scss';
-import Title from 'antd/lib/skeleton/Title';
 
 const PersonalData = props => {
   return ( 
@@ -45,9 +44,10 @@ const LK = props => {
   const onExitModal = () => {
     console.log('exit');
     props.setAuth(false);
+    props.setToken('');
   };
 
-  if (!props.isAuth) {
+  if (props.isAuth) {
     return (
       <div className="lk-container">
         <div className="lk-top">
@@ -78,8 +78,8 @@ const LK = props => {
 
 const mapStateToProps = store => {
   return {
-    auth_token: store.isAuth.auth_token,
-    isAuth: store.isAuth.isAuth
+    auth_token: store.auth_data.auth_token,
+    isAuth: store.auth_data.isAuth
   };
 };
 

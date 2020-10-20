@@ -1,42 +1,31 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
 import axios from 'axios';
 
 import Reaptcha from 'reaptcha';
 import { Checkbox } from 'antd';
 import validator from 'validator';
-import authActions from 'actions/authActions'
 
-import './Login.scss';
-
-const Login = props => {
+const Register = props => {
   const [verified, setVerified] = React.useState(false);
   const [checked, setChecked] = React.useState(false);
+  let hoveredStyle = '';
 
   const [inputValues, setInputValues] = React.useState({
-    l_login: '',
-    l_pass: '',
     r_email: '',
     r_phone: '',
     r_pass: '',
     r_fname: '',
     r_lname: '',
-    r_mname: '',
-    r_pass: ''
+    r_mname: ''
   });
 
-  const [labelValues, setLabelValues] = React.useState({
-    l_login: '',
-    l_pass: '',
-    r_email: '',
-    r_phone: '',
-    r_pass: '',
-    r_fname: '',
-    r_lname: '',
-    r_mname: '',
-    r_pass: ''
-  });
+  const [labelValues_r_email, setLabelValues_r_email] = React.useState('');
+  const [labelValues_r_phone, setLabelValues_r_phone] = React.useState('');
+  const [labelValues_r_pass, setLabelValues_r_pass] = React.useState('');
+  const [labelValues_r_fname, setLabelValues_r_fname] = React.useState('');
+  const [labelValues_r_lname, setLabelValues_r_lname] = React.useState('');
+  const [labelValues_r_mname, setLabelValues_r_mname] = React.useState('');
 
   const onVerifyCaptca = () => {
     setVerified(true);
@@ -47,97 +36,72 @@ const Login = props => {
   };
 
   const onResetLabels = () => {
-    setLabelValues({
-      l_login: '',
-      l_pass: '',
-      r_email: '',
-      r_phone: '',
-      r_pass: '',
-      r_fname: '',
-      r_lname: '',
-      r_mname: '',
-      r_pass: ''
-    });
-  };
-
-  const onLogValidate = () => {
-    let flag = true;
-    if (!validator.isEmail(inputValues.l_login, ['ru-RU'])) {
-      setLabelValues({ ...labelValues, l_login: 'uncorrect!!' });
-      flag = false;
-    }
-    if (!validator.isLength(inputValues.l_pass, { min: 6, max: undefined })) {
-      setLabelValues({ ...labelValues, l_pass: 'uncorrect!!' });
-      flag = false;
-    }
-    if (!flag) {
-      console.log('NOT Validated!');
-    } else {
-      console.log(' Validated!');
-      onResetLabels();
-    }
+    setLabelValues_r_email('');
+    setLabelValues_r_phone('');
+    setLabelValues_r_pass('');
+    setLabelValues_r_fname('');
+    setLabelValues_r_lname('');
+    setLabelValues_r_mname('');
   };
 
   const onRegValidate = () => {
     let flag = true;
-    // if (verified && checked) {
+    // if (!verified && !checked) {
     if (!checked) {
       console.log('NOT checked!');
       return;
     }
 
-    if (!validator.isEmail(inputValues.r_email, ['ru-RU'])) {
-      setLabelValues({ ...labelValues, r_email: 'uncorrect!!' });
+    if (!validator.isEmail(inputValues.r_email)) {
+      setLabelValues_r_email('Неверный формат email');
       flag = false;
     } else {
-      setLabelValues({ ...labelValues, r_email: ' ' });
+      setLabelValues_r_email('');
     }
     if (!validator.isMobilePhone(inputValues.r_phone, 'any', ['strictMode'])) {
-      setLabelValues({ ...labelValues, r_phone: 'uncorrect!!' });
+      setLabelValues_r_phone('Неверный формат номера');
       flag = false;
     } else {
-      setLabelValues({ ...labelValues, r_phone: ' ' });
+      setLabelValues_r_phone('');
     }
     if (!validator.isLength(inputValues.r_pass, { min: 6, max: undefined })) {
-      setLabelValues({ ...labelValues, r_pass: 'uncorrect!!' });
+      setLabelValues_r_pass('Пароль не менее 5 символов');
       flag = false;
     } else {
-      setLabelValues({ ...labelValues, r_pass: ' ' });
+      setLabelValues_r_pass('');
     }
     if (
       !validator.isAlpha(inputValues.r_fname, ['ru-RU']) &&
       !validator.isAlpha(inputValues.r_fname, ['en-US'])
     ) {
-      setLabelValues({ ...labelValues, r_fname: 'uncorrect!!' });
+      setLabelValues_r_fname('Неверный формат имени');
       flag = false;
     } else {
-      setLabelValues({ ...labelValues, r_fname: ' ' });
+      setLabelValues_r_fname('');
     }
     if (
       !validator.isAlpha(inputValues.r_lname, ['ru-RU']) &&
       !validator.isAlpha(inputValues.r_lname, ['en-US'])
     ) {
-      setLabelValues({ ...labelValues, r_lname: 'uncorrect!!' });
+      setLabelValues_r_lname('Неверный формат имени');
       flag = false;
     } else {
-      setLabelValues({ ...labelValues, r_lname: ' ' });
+      setLabelValues_r_lname('');
     }
     if (
       !validator.isAlpha(inputValues.r_mname, ['ru-RU']) &&
       !validator.isAlpha(inputValues.r_mname, ['en-US'])
     ) {
-      setLabelValues({ ...labelValues, r_mname: 'uncorrect!!' });
+      setLabelValues_r_mname('Неверный формат имени');
       flag = false;
     } else {
-      setLabelValues({ ...labelValues, r_mname: ' ' });
+      setLabelValues_r_mname('');
     }
 
-    if (!flag) {
-      return false;
-    } else {
+    if (flag) {
       onResetLabels();
-      return true;
     }
+    return flag;
   };
 
   const onPushReg = () => {
@@ -147,63 +111,48 @@ const Login = props => {
           email: inputValues.r_email,
           phone: inputValues.r_phone,
           first_name: inputValues.r_fname,
+          middle_name: inputValues.r_mname,
           last_name: inputValues.r_lname,
           password: inputValues.r_pass
         })
         .then(response => {
-          console.log(response);
+          console.log(response.data);
+          props.setVisible(false)
         })
-        .catch(e => {
-          console.log(e);
+        .catch(err => {
+          if (err.response) {
+            if(err.response.data.hasOwnProperty('email')) {
+              setLabelValues_r_email(err.response.data.email[0]);
+            }
+            if(err.response.data.hasOwnProperty('error')) {
+              if(err.response.data.error.hasOwnProperty('email')) {
+                setLabelValues_r_email(err.response.data.error.email[0]);
+              }
+              if(err.response.data.error.hasOwnProperty('phone')) {
+                setLabelValues_r_phone(err.response.data.error.phone[0]);
+              }
+            }
+
+            console.log(1, err.response);
+          } else if (err.request) {
+            // client never received a response, or request never left
+            console.log(2, err.request);
+          } else {
+            // anything else
+            console.log(3, err);
+          }
         });
     }
   };
-  const login_form = (
-    <div className="login__form">
-      <p className="form-title">Bxoд в личный кабинет</p>
-      <label htmlFor="">{labelValues.l_login}</label>
-      <input
-        className="login__log"
-        type="text"
-        defaultValue={inputValues.l_login}
-        onChange={e =>
-          setInputValues({ ...inputValues, l_login: e.target.value })
-        }
-        placeholder="Логин"
-      />
-      <label htmlFor="">{labelValues.l_pass}</label>
-      <input
-        className="login__pass"
-        type="password"
-        defaultValue={inputValues.l_pass}
-        onChange={e =>
-          setInputValues({ ...inputValues, l_pass: e.target.value })
-        }
-        placeholder="Пароль"
-      />
-      <div className="button -hovered" onClick={onLogValidate}>
-        Войти
-      </div>
-      <p className="login__reset-pass" onClick={() => {}}>
-        Забыли пароль?
-      </p>
-      <div
-        className="button -hovered unselectable"
-        onClick={() => {
-          props.setIsReg(true);
-        }}
-      >
-        Зарегистрироваться
-      </div>
-    </div>
-  );
+  if (checked) hoveredStyle = '-hovered';
+  // if (verified && checked) hoveredStyle = '-hovered'
 
-  const reg_form = (
+  return (
     <div className="reg__form">
       <p className="form-title">Регистрация</p>
       <div className="input-form">
         <div className="input-form__block">
-          <label htmlFor="">{labelValues.r_email}</label>
+          <label htmlFor="">{labelValues_r_email}</label>
           <input
             className="reg__email"
             type="text"
@@ -213,7 +162,7 @@ const Login = props => {
             defaultValue={inputValues.r_email}
             placeholder="E-mail *"
           />
-          <label htmlFor="">{labelValues.r_phone}</label>
+          <label htmlFor="">{labelValues_r_phone}</label>
           <input
             className="reg__phone"
             type="text"
@@ -223,7 +172,7 @@ const Login = props => {
             defaultValue={inputValues.r_phone}
             placeholder="Телефон"
           />
-          <label htmlFor="">{labelValues.r_pass}</label>
+          <label htmlFor="">{labelValues_r_pass}</label>
           <input
             className="reg__pass"
             type="password"
@@ -235,7 +184,7 @@ const Login = props => {
           />
         </div>
         <div className="input-form__block">
-          <label htmlFor="">{labelValues.r_fname}</label>
+          <label htmlFor="">{labelValues_r_fname}</label>
           <input
             className="reg__fname"
             type="text"
@@ -245,7 +194,7 @@ const Login = props => {
             defaultValue={inputValues.r_fname}
             placeholder="Имя"
           />
-          <label htmlFor="">{labelValues.r_lname}</label>
+          <label htmlFor="">{labelValues_r_lname}</label>
           <input
             className="reg__lname"
             type="text"
@@ -255,7 +204,7 @@ const Login = props => {
             defaultValue={inputValues.r_lname}
             placeholder="Фамилия"
           />
-          <label htmlFor="">{labelValues.r_mname}</label>
+          <label htmlFor="">{labelValues_r_mname}</label>
           <input
             className="reg__mname"
             type="text"
@@ -286,32 +235,16 @@ const Login = props => {
           </div>
         </div>
       </div>
-      <div className="button -hovered unselectable" onClick={onPushReg}>
+      <div
+        className={`button ${hoveredStyle} unselectable`}
+        onClick={onPushReg}
+      >
         Зарегистрироваться
       </div>
     </div>
   );
-  return props.isReg ? reg_form : login_form;
 };
 
-const mapStateToProps = store => {
-  return {
-    auth_token: store.isAuth.auth_token,
-    isAuth: store.isAuth.isAuth,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setAuth: data => {
-      dispatch(authActions.setAuth(data));
-    },
-    setToken: data => {
-      dispatch(authActions.setToken(data));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Register;
 // 6Ld92NYZAAAAAGxOdWjx7wQ-CbTfhJDqmtRMY9on
 // 6Ld92NYZAAAAAKELvIbIOCmxEGAb3ffLurCncDEw secret

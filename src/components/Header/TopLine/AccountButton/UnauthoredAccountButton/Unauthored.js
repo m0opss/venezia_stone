@@ -5,25 +5,29 @@ import { Icon } from '@iconify/react';
 import accountIcon from '@iconify/icons-mdi/account';
 
 import DropdownLogin from 'components/Dropdown/DropdownLogin'
-import Login from './Login/Login'
+import Auth from './Auth/Auth'
 
 
 
 const Unauthored = props => {
   
   const [isReg, setIsReg] = React.useState(false)
+  const [visible, setVisible] = React.useState(false);
 
   const menu = (
     <Menu.Item key="1">
-      <Login
+      <Auth
         isReg={isReg}
         setIsReg={setIsReg}
+        setVisible={setVisible}
       />
     </Menu.Item>
   )
 
   return (
     <DropdownLogin
+      visible={visible}
+      setVisible={setVisible}
       type='login'
       setIsReg={setIsReg}
       title={

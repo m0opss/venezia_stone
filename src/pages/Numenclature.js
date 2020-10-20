@@ -15,6 +15,8 @@ import pltk_a from 'images/pltk_a.png';
 import { Icon } from '@iconify/react';
 import sortIcon from '@iconify/icons-dashicons/sort';
 
+import "./Numenclature.scss"
+
 import NumenclatureItem from '../components/Content/NumenclatureItem/NumenclatureItem';
 
 const sortArr = arr => {
@@ -31,6 +33,7 @@ const sortArr = arr => {
 };
 
 const Numenclature = props => {
+
   const [numenclature, setNumemclature] = React.useState([]);
   const [style_pltk, setHover_pltk] = React.useState(true);
   const [actionOption1, setActionOption1] = React.useState('');
@@ -44,7 +47,6 @@ const Numenclature = props => {
     axios
       .get(`http://92.63.103.180:8000/api_v0${props.match.url}/`)
       .then(response => {
-        console.log(response.data.itms);
         setNumemclature(sortArr(response.data.itms));
       })
       .catch(e => {
@@ -88,47 +90,56 @@ const Numenclature = props => {
 
   return (
     <>
-      <div className="num-gr-options">
-        <p
-          id="val-opt-1"
-          className={`num-gr-options__valuta ${actionOption1}`}
-          onClick={e => handleValOption(e)}
-        >
-          RUB
-        </p>
-        <p
-          id="val-opt-2"
-          className={`num-gr-options__valuta ${actionOption2}`}
-          onClick={e => handleValOption(e)}
-        >
-          USD
-        </p>
-        <p
-          id="val-opt-3"
-          className={`num-gr-options__valuta ${actionOption3}`}
-          onClick={e => handleValOption(e)}
-        >
-          EUR
-        </p>
-        <div className="num-gr-options__color_sort">
-          <Icon
-            icon={sortIcon}
-            width="2.5em"
-            height="2.5em"
-            className="num-gr-options__color_icon"
-          />
+      <div className="num-options">
+        <div className="filter-options">
+          <div className="filter-opt-1" onClick={() => {}}>Все</div>
+          <div className="filter-opt-2" onClick={() => {}}>Слэбы</div>
+          <div className="filter-opt-3" onClick={() => {}}>Полоса</div>
+          <div className="filter-opt-4" onClick={() => {}}>Плитка</div>
+          <div className="filter-opt-5" onClick={() => {}}>Другие изделия</div>
         </div>
-        <div
-          className="num-gr-options__sort_alph"
-          onClick={() => alphSorted(numGroups)}
-        >
-          <img src={a_z} />
-        </div>
-        <div className="" onClick={() => toggleStyle_pltk()}>
-          <img src={style_pltk ? pltk_a : pltk} />
-        </div>
-        <div className="" onClick={() => toggleStyle_list()}>
-          <img src={style_pltk ? listIcon : listIcon_a} />
+        <div className="other-options">
+          <p
+            id="val-opt-1"
+            className={`num-gr-options__valuta ${actionOption1}`}
+            onClick={e => handleValOption(e)}
+          >
+            RUB
+          </p>
+          <p
+            id="val-opt-2"
+            className={`num-gr-options__valuta ${actionOption2}`}
+            onClick={e => handleValOption(e)}
+          >
+            USD
+          </p>
+          <p
+            id="val-opt-3"
+            className={`num-gr-options__valuta ${actionOption3}`}
+            onClick={e => handleValOption(e)}
+          >
+            EUR
+          </p>
+          <div className="num-gr-options__color_sort">
+            <Icon
+              icon={sortIcon}
+              width="2.5em"
+              height="2.5em"
+              className="num-gr-options__color_icon"
+            />
+          </div>
+          <div
+            className="num-gr-options__sort_alph"
+            onClick={() => alphSorted(numGroups)}
+          >
+            <img src={a_z} />
+          </div>
+          <div className="" onClick={() => toggleStyle_pltk()}>
+            <img src={style_pltk ? pltk_a : pltk} />
+          </div>
+          <div className="" onClick={() => toggleStyle_list()}>
+            <img src={style_pltk ? listIcon : listIcon_a} />
+          </div>
         </div>
       </div>
 
