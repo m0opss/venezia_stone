@@ -1,11 +1,9 @@
 import React from 'react';
 
-import pass from 'images/pass.png';
 import edit from 'images/edit.png';
 import cedit from 'images/cancel-edit.png';
 
 const PersonalData = props => {
-  const [fvpass, set_fvpass] = React.useState(false);
   const [ronly, set_ronly] = React.useState(true);
 
   const [pd_lname, set_pd_lname] = React.useState(props.user_info.last_name);
@@ -13,11 +11,6 @@ const PersonalData = props => {
   const [pd_mname, set_pd_mname] = React.useState(props.user_info.middle_name);
   const [pd_email, set_pd_email] = React.useState(props.user_info.email);
   const [pd_phone, set_pd_phone] = React.useState(props.user_info.phone);
-  const [pd_pass, set_pd_pass] = React.useState('');
-
-  let vpass;
-  if (!fvpass) vpass = 'password';
-  else vpass = 'text';
 
   const setDefaultVal = () => {
     set_pd_lname(props.user_info.last_name);
@@ -117,10 +110,7 @@ const PersonalData = props => {
           readOnly
         />
       </div>
-      <div className="lk__pd-line -pass">
-        <input type={vpass} defaultValue={pd_pass} />
-        <img src={pass} onClick={() => set_fvpass(!fvpass)} />
-      </div>
+
       <div className="lk__pd-edit-buttons" onClick={onClickSave}>
         <div className="lk__pd-edit-button -bordered">Сохранить</div>
         <div className="lk__pd-edit-button" onClick={onClickEdit}>

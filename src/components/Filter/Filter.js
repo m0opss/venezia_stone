@@ -22,7 +22,7 @@ const Filter = props => {
   else w = true;
   if (document.documentElement.clientWidth <= 800) m = true;
 
-  const [state, setState] = React.useState({ collapsed: w });
+  const [state, setState] = React.useState({ collapsed: true });
 
   const handleClick = e => {
     setState({ collapsed: !state.collapsed });
