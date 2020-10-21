@@ -22,7 +22,11 @@ const Authored = props => {
         <Link to="/izbrannoe">Избранное</Link>
       </Menu.Item>
       <Menu.Item key="4">
-        <div className="exit-button" style={{cursor:"pointer"}} onClick={onExitModal}>
+        <div
+          className="exit-button"
+          style={{ cursor: 'pointer' }}
+          onClick={onExitModal}
+        >
           Выйти
         </div>
       </Menu.Item>

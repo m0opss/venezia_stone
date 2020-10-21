@@ -16,25 +16,27 @@ import authActions from './actions/authActions';
 const App = props => {
   React.useEffect(() => {
     if (localStorage.getItem('auth_token')) {
-      axios
-        .post('http://92.63.103.180:8000/account/get_user_info/', {
-          key: localStorage.getItem('auth_token')
-        })
-        .then(response => {
-          props.setAuth(true);
-        })
-        .catch(err => {
-          if (err.response) {
-            // client received an error response (5xx, 4xx)
-            console.log(1, err.response);
-          } else if (err.request) {
-            // client never received a response, or request never left
-            console.log(2, err.request);
-          } else {
-            // anything else
-            console.log(3, err);
-          }
-        });
+      props.setAuth(true); // убрать потом
+      // axios
+      //   .post('http://92.63.103.180:8000/account/get_user_info/', {
+      //     key: localStorage.getItem('auth_token')
+      //   })
+      //   .then(response => {
+      //     props.setAuth(true);
+      //   })
+      //   .catch(err => {
+      //     if (err.response) {
+      //       // client received an error response (5xx, 4xx)
+      //       console.log(1, err.response);
+      //       // props.setAuth(false);
+      //     } else if (err.request) {
+      //       // client never received a response, or request never left
+      //       console.log(2, err.request);
+      //     } else {
+      //       // anything else
+      //       console.log(3, err);
+      //     }
+      //   });
     }
   });
 

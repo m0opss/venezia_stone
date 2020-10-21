@@ -22,4 +22,14 @@
   .search-button {
     flex: 0 1 7%;
   }
+  .second-line__filter-button {
+    cursor: pointer;
+  }
+  .-icon {
+    width: auto;
+    max-width: 100%;
+  }
+
+  @media screen and (max-width: 470px) {
+  }
 }

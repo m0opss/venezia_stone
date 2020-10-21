@@ -8,7 +8,7 @@ const BasketButton = props => {
   return (
     <div className="top-line__basket">
       <Link to="/basket">
-        <img className="top-line__basket-counter" src={BasketIcon} alt="" />
+        <img className="top-line__basket-counter -icon" src={BasketIcon} />
       </Link>
       <div className="top-line__basket-counter">{props.basket_counter}</div>
     </div>

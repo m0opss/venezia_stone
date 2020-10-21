@@ -15,9 +15,8 @@
   .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
     @media screen and (max-width: 800px) {
       position: absolute;
-      width: 99vw !important;
-      right: 0.3vw;
-      left: 0.2vw;
+      width: 97vw !important;
+      left: 4px;
       top: 70px;
       z-index: 1000;
       .ant-menu-submenu {
@@ -85,8 +84,3 @@
   margin-right: 10px;
 }
 
-// добавить!
-
-// border: 1px solid #d3d3d3;
-// box-sizing: border-box;
-// border-radius: 4px;

@@ -1,8 +1,6 @@
 
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import axios from 'axios';
 import Home from '../../pages/Home';
 import Contacts from '../../pages/Contacts';
 import MyBasket from '../../pages/MyBasket';
@@ -10,7 +8,6 @@ import NumGroups from '../../pages/NumGroups';
 import Numenclature from '../../pages/Numenclature';
 import LK from '../../pages/LK';
 
-import dataActions from 'actions/dataAction';
 
 const Routes = props => {
   return (

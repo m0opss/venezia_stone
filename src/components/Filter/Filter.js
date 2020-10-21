@@ -34,7 +34,7 @@ const Filter = props => {
       <div className="filter__button">
         {!state.collapsed && !m ? (
           <>
-            <img src={filter_icon} />
+            <img src={filter_icon} className='-icon' />
             <img
               className="filter__button-click"
               src={filter_icon_hz}
@@ -44,7 +44,7 @@ const Filter = props => {
         ) : (
           <img
             src={filter_icon}
-            className="filter__button-click"
+            className="filter__button-click -icon"
             onClick={handleClick}
           />
         )}

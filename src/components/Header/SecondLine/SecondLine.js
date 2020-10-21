@@ -22,7 +22,7 @@ const Search = props => {
   );
 };
 
-const Burger = props => {
+export const Burger = props => {
   return (
     <>
       <div
@@ -94,9 +94,9 @@ const SecondLine = props => {
 
   const setFilterParam = e => {
     console.log(e.target.id);
-
     history.push('/');
   };
+  
   const onChangeSearch = e => {
     console.log(e.target.value);
   };

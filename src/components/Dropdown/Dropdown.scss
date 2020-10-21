@@ -16,7 +16,6 @@
 
   .ant-dropdown-menu-item {
     &.ant-dropdown-menu-item-active {
-      // color: #c98505;
       & > a {
         color: #c98505;
       }
@@ -30,6 +29,25 @@
   }
 }
 
-// .ant-dropdown-menu-item.ant-dropdown-menu-item-only-child {
-//   cursor: pointer;
-// }
+.dropdown-mobile {
+  position: absolute;
+  width: 97vw !important;
+  top: 70px !important;
+  z-index: 1000;
+  .ant-dropdown-menu-item.ant-dropdown-menu-item-only-child {
+    width: 70vw;
+  }
+  li {
+    cursor: pointer;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 26px;
+    margin-top: 20px;
+    color: #000000;
+    &:hover {
+      color: #c98505;
+    }
+  }
+}
