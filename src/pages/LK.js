@@ -3,20 +3,17 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import authActions from 'actions/authActions';
+import PersonalData from 'components/LK/PD'
 
 import './LK.scss';
 
-const PersonalData = props => {
-  return ( 
-  <div className="">
-    
-  </div>);
-};
+
 const Izbrannoe = props => {
-  return <div className="">izbr</div>;
+  return <div className="lk__izbrannoe"></div>;
 };
+
 const WatchHistori = props => {
-  return <div className="">history</div>;
+  return <div className="lk__history"></div>;
 };
 
 const LK = props => {
@@ -27,18 +24,18 @@ const LK = props => {
 
   if (props.match.url === '/personal-data') {
     pd = true;
-    modul = <PersonalData />;
-    title = <h1>Персональные данные</h1>
+    modul = <PersonalData user_info={props.user_info} />;
+    title = <>Персональные данные</>;
   }
   if (props.match.url === '/history') {
     h = true;
     modul = <WatchHistori />;
-    title = <h1>История просмотра</h1>
+    title = <>История просмотра</>;
   }
   if (props.match.url === '/izbrannoe') {
     i = true;
     modul = <Izbrannoe />;
-    title = <h1>Избранное</h1>
+    title = <>Избранное</>;
   }
 
   const onExitModal = () => {
@@ -79,7 +76,8 @@ const LK = props => {
 const mapStateToProps = store => {
   return {
     auth_token: store.auth_data.auth_token,
-    isAuth: store.auth_data.isAuth
+    isAuth: store.auth_data.isAuth,
+    user_info: store.user_data.user_info
   };
 };
 

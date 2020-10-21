@@ -35,5 +35,48 @@
     font-size: 32px;
     line-height: 37px;
   }
+}
 
+.lk__personal-data {
+  .lk__pd-line {
+    margin: 20px;
+    height: 40px;
+    border-bottom: 2px solid #fada9e;
+    max-width: 500px;
+    input {
+      height: 100%;
+      border: none;
+      width: 90%;
+    }
+  }
+  .lk__pd-edit-buttons {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    height: 40px;
+    max-width: 500px;
+
+    .lk__pd-edit-button {
+      margin-right: 30px;
+      cursor: pointer;
+    }
+    .-bordered {
+      border: 1px solid #be9344;
+      box-sizing: border-box;
+      box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 5px;
+      padding: 10px 45px;
+    }
+  }
+  .-pass {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .-readonly {
+    background: rgb(204, 201, 201);
+    input {
+      background: rgb(204, 201, 201);
+    }
+  }
 }

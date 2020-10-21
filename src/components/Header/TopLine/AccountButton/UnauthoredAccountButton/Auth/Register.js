@@ -117,18 +117,18 @@ const Register = props => {
         })
         .then(response => {
           console.log(response.data);
-          props.setVisible(false)
+          props.setVisible(false);
         })
         .catch(err => {
           if (err.response) {
-            if(err.response.data.hasOwnProperty('email')) {
+            if (err.response.data.hasOwnProperty('email')) {
               setLabelValues_r_email(err.response.data.email[0]);
             }
-            if(err.response.data.hasOwnProperty('error')) {
-              if(err.response.data.error.hasOwnProperty('email')) {
+            if (err.response.data.hasOwnProperty('error')) {
+              if (err.response.data.error.hasOwnProperty('email')) {
                 setLabelValues_r_email(err.response.data.error.email[0]);
               }
-              if(err.response.data.error.hasOwnProperty('phone')) {
+              if (err.response.data.error.hasOwnProperty('phone')) {
                 setLabelValues_r_phone(err.response.data.error.phone[0]);
               }
             }

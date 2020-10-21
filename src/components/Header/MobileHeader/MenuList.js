@@ -1,19 +1,26 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Menu } from 'antd';
 
 import authActions from 'actions/authActions';
+
+import MobileAuth from './MobileAuth';
+import Auth from '../TopLine/AccountButton/UnauthoredAccountButton/Auth/Auth';
 
 import './MobileHeader.scss';
 
 const MenuList = props => {
   const { setFilterParam, isAuth, setToken, setAuth, ...other } = props;
 
+  const [isReg, setIsReg] = React.useState(false);
+  const [visible, setVisible] = React.useState(false);
+
   const onExitModal = () => {
     setAuth(false);
     setToken('');
   };
+
 
   const burger = [
     'Слебы',
@@ -25,6 +32,12 @@ const MenuList = props => {
     'Бордюр',
     'Прочее'
   ];
+
+  const menu = (
+    <Menu.Item key="1">
+      <Auth isReg={isReg} setIsReg={setIsReg} setVisible={setVisible} />
+    </Menu.Item>
+  );
 
   return (
     <>
@@ -56,24 +69,18 @@ const MenuList = props => {
         </>
       ) : (
         <>
-          <Menu.Item {...other} key="21">
-            <div
-              className="second-line__filter-button"
-              style={{ cursor: 'pointer' }}
-              onClick={onExitModal}
-            >
+          <Menu.Item {...other} key="21"></Menu.Item>
+          <MobileAuth
+            visible={visible}
+            setVisible={setVisible}
+            setIsReg={setIsReg}
+            title={props.title}
+            menuList={menu}
+          >
+            <Menu.Item {...other} key="21">
               Войти
-            </div>
-          </Menu.Item>
-          <Menu.Item {...other} key="22">
-            <div
-              className="second-line__filter-button"
-              style={{ cursor: 'pointer' }}
-              onClick={onExitModal}
-            >
-              Зарегистрироваться
-            </div>
-          </Menu.Item>
+            </Menu.Item>
+          </MobileAuth>
         </>
       )}
       <br />

@@ -36,6 +36,12 @@
   z-index: 1000;
   .ant-dropdown-menu-item.ant-dropdown-menu-item-only-child {
     width: 70vw;
+    a {
+      color: black;
+      &:hover {
+        color: #c98505;
+      }
+    }
   }
   li {
     cursor: pointer;
@@ -48,6 +54,20 @@
     color: #000000;
     &:hover {
       color: #c98505;
+    }
+  }
+}
+.dropdown-mobile-auth {
+  position: absolute;
+  width: 97vw !important;
+  left: 4px !important;
+  top: 70px !important;
+  z-index: 1001;
+  .ant-dropdown-menu.ant-dropdown-menu-light.ant-dropdown-menu-root.ant-dropdown-menu-vertical {
+    width: 100%;
+    .ant-dropdown-menu-item.ant-dropdown-menu-item-only-child {
+      display: flex;
+      justify-content: center;
     }
   }
 }

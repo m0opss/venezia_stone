@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Menu, Dropdown } from 'antd';
-import { Link } from 'react-router-dom';
 
 import burger from 'images/burger.png';
 

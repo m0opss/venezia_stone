@@ -7,6 +7,7 @@ import MobileDropdown from 'components/Dropdown/MobileDropdown';
 import BasketButton from '../TopLine/BasketButton/BasketButton';
 import MenuList from './MenuList';
 
+
 import izbr from 'images/izbrannoe_icon.png';
 import search from 'images/search.png';
 

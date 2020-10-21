@@ -4,15 +4,28 @@ import Unauthored from './UnauthoredAccountButton/Unauthored';
 import { connect } from 'react-redux';
 
 import authActions from 'actions/authActions';
+import { Icon } from '@iconify/react';
+import accountIcon from '@iconify/icons-mdi/account';
+
 import './AccountButton.scss';
 
 const AccountButton = props => {
   return (
     <div className="top-line__account">
       {props.isAuth ? (
-        <Authored setAuth={props.setAuth} setToken={props.setToken} />
+        <Authored setAuth={props.setAuth} setToken={props.setToken} user_info={props.user_info}/>
       ) : (
-        <Unauthored />
+        <Unauthored
+          title={
+            <Icon
+              type="login"
+              icon={accountIcon}
+              color="#C98505"
+              width="2em"
+              height="2em"
+            />
+          }
+        />
       )}
     </div>
   );
@@ -20,7 +33,8 @@ const AccountButton = props => {
 
 const mapStateToProps = store => {
   return {
-    isAuth: store.auth_data.isAuth
+    isAuth: store.auth_data.isAuth,
+    user_info: store.user_data.user_info
   };
 };
 

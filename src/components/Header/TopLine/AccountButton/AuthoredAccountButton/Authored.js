@@ -10,6 +10,26 @@ const Authored = props => {
     props.setToken('');
   };
 
+  let userName = '';
+  const arr = [
+    props.user_info.last_name,
+    props.user_info.first_name,
+    props.user_info.middle_name
+  ]
+
+  arr.map((name) => {
+    if(name != null) {
+      userName += name + ' '
+    }
+  })
+  if(
+    props.user_info.last_name == null &&
+    !props.user_info.first_name == null &&
+    !props.user_info.middle_name == null
+  ) userName = props.user_info.email
+
+  console.log(userName)
+
   const menu = (
     <>
       <Menu.Item key="1">
@@ -32,8 +52,6 @@ const Authored = props => {
       </Menu.Item>
     </>
   );
-  return (
-    <Dropdown type="acc-menu" title={'Иванов Иван Иванович'} menuList={menu} />
-  );
+  return <Dropdown type="acc-menu" title={userName} menuList={menu} />;
 };
 export default Authored;

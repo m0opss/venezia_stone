@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { Menu } from 'antd';
-import { Icon } from '@iconify/react';
-import accountIcon from '@iconify/icons-mdi/account';
+
 
 import DropdownLogin from 'components/Dropdown/DropdownLogin'
 import Auth from './Auth/Auth'
@@ -30,14 +29,7 @@ const Unauthored = props => {
       setVisible={setVisible}
       type='login'
       setIsReg={setIsReg}
-      title={
-        <Icon
-          type='login'
-          icon={accountIcon}
-          color="#C98505"
-          width="2em"
-          height="2em"
-        />}
+      title={ props.title}
       menuList={menu}
     />
   )
