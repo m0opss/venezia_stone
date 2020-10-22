@@ -1,0 +1,136 @@
+.basket {
+  .basket__f-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 32px;
+      line-height: 37px;
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+    }
+    .f-line__valuta {
+      display: flex;
+      .-active {
+        color: #c98505;
+      }
+      span {
+        margin: 0 10px;
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 0%;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        &:hover {
+          color: #c98505;
+        }
+      }
+    }
+  }
+
+  .basket__items {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .basket-item {
+      flex: 0 1 49%;
+      margin-top: 20px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    }
+    .basket-item-typography {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-style: normal;
+      font-weight: normal;
+
+      .basket-item__name,
+      .basket-item__type {
+        font-size: 12px;
+        line-height: 100%;
+        margin-bottom: 10px;
+      }
+    }
+
+    .basket-item-root {
+      display: flex;
+      flex-flow: column wrap;
+      .basket-item__info {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        .basket-item__delete-button {
+          position: absolute;
+          bottom: 0px;
+          right: 0px;
+          cursor: pointer;
+        }
+        img {
+          flex: 0 1 33%;
+        }
+        .basket-item__text {
+          flex: 0 1 60%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .basket-item__line {
+          display: flex;
+          flex-wrap: wrap;
+          font-size: 15px;
+          line-height: 16px;
+          > * {
+            margin-right: 20px;
+          }
+        }
+        .-price {
+          font-size: 16px;
+          line-height: 19px;
+          color: #BE9344;
+          p {
+            margin-bottom: 0;
+          }
+          input {
+            width: 40px;
+            border: none;
+            border-bottom: 1px solid #c4c4c4;
+            text-align: center;
+          }
+          input::-webkit-outer-spin-button,
+          input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+          input[type='number'] {
+            -moz-appearance: textfield;
+          }
+          #cost {
+            color: black;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 720px) {
+    .basket__items {
+      justify-content: center;
+      .basket-item {
+        flex: 0 1 70%;
+        @media screen and (max-width: 450px) {
+          flex: 0 1 90%;
+        }
+      }
+    }
+  }
+}

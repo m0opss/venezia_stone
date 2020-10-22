@@ -9,6 +9,12 @@
     grid-template-columns: 13fr 13fr 13fr;
     grid-gap: 3em 2em;
   }
+  @media screen and (max-width: 912px) {
+    grid-gap: 1em 1em;
+  }
+  @media screen and (max-width: 912px) {
+    grid-template-columns: 13fr 13fr;
+  }
 }
 .num-gr-options {
   width: 100%;
