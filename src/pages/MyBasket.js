@@ -1,12 +1,13 @@
 import React from 'react';
 
 import BasketItem from 'components/MyBasket/BasketItem';
-
+import MyModal from 'components/Modal/Modal';
+import { connect } from 'react-redux';
 import './MyBasket.scss';
 import { isMobile, isTablet } from 'react-device-detect';
 
-const MyBasket = () => {
-  const [type, setType] = React.useState(true);
+const MyBasket = (props) => {
+  const [visibleModal, setVisibleModal] = React.useState(false);
 
   const [rub, set_rub] = React.useState(true);
   const [usd, set_usd] = React.useState(false);
@@ -17,23 +18,47 @@ const MyBasket = () => {
     eur: false
   });
 
-
   const onClickOrder = () => {
     if (props.isAuth) {
-      
+      setVisibleModal(true);
+    } else {
     }
-  } 
+  };
 
   const onToggleValute = e => {
     console.log(state);
   };
 
-  let style = ''
-  let buttonStyle = ''
-  if(!isTablet && isMobile) style = '-basket-mobile'
-  if(isMobile) buttonStyle = '-button-mobile'
+  const orderOk = e => {
+
+    setVisibleModal(false)
+  };
+
+  const orderCancel = e => {
+    setVisibleModal(false)
+  };
+  let modalContent = (
+    <div className="order-inputs">
+      <input type="text" placeholder='Имя' />
+      <input type="text" placeholder='Телефон*'/>
+      <input type="text" placeholder='Email*'/>
+    </div>
+  )
+
+  let style = '';
+  let buttonStyle = '';
+  if (!isTablet && isMobile) style = '-basket-mobile';
+  if (isMobile) buttonStyle = '-button-mobile';
   return (
     <div className="basket">
+      <MyModal
+        title="Оформить заказ"
+        handleOk={orderOk}
+        okText='Оформить заказ'
+        handleCancel={orderCancel}
+        visible={visibleModal}
+        content={modalContent}
+      />
       <div className={`basket__f-line ${style}`}>
         <h1>Корзина</h1>
         <div className="f-line__valuta">
@@ -61,11 +86,11 @@ const MyBasket = () => {
         </div>
       </div>
       <div className="basket__items">
-        <BasketItem kind='basket' type={true} />
-        <BasketItem kind='basket' type={false} />
-        <BasketItem kind='basket' type={false} />
-        <BasketItem kind='basket' type={true} />
-        <BasketItem kind='basket' type={true} />
+        <BasketItem kind="basket" type={true} />
+        <BasketItem kind="basket" type={false} />
+        <BasketItem kind="basket" type={false} />
+        <BasketItem kind="basket" type={true} />
+        <BasketItem kind="basket" type={true} />
       </div>
       <div className="basket__bottom-line">
         <div className="basket__total">
@@ -78,11 +103,14 @@ const MyBasket = () => {
           </div>
         </div>
         <div className="basket__buttons">
-          <div className={`basket__button ${buttonStyle} -hovered`}>Очистить все</div>
-          <div 
-            className={`basket__button ${buttonStyle} -hovered`} 
-            onClick={onClickOrder}>
-              Оформить заказ
+          <div className={`basket__button ${buttonStyle} -hovered`}>
+            Очистить все
+          </div>
+          <div
+            className={`basket__button ${buttonStyle} -hovered`}
+            onClick={onClickOrder}
+          >
+            Оформить заказ
           </div>
         </div>
       </div>
@@ -91,9 +119,8 @@ const MyBasket = () => {
 };
 const mapStateToProps = store => {
   return {
-    isAuth: store.auth_data.isAuth,
+    isAuth: store.auth_data.isAuth
   };
 };
-
 
 export default connect(mapStateToProps)(MyBasket);

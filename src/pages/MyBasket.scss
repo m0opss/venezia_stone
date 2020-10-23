@@ -107,7 +107,19 @@
   @media screen and (max-width: 631px) {
     .basket__items {
       justify-content: center;
-      
     }
+  }
+}
+
+.order-inputs {
+  display: flex;
+  flex-direction: column;
+  input {
+    background: #ffffff;
+    margin: 7px;
+    border: 1px solid #dac79f;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 10px 23px;
   }
 }
