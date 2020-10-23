@@ -2,7 +2,10 @@
 .ant-dropdown-menu-submenu-title {
   cursor: unset;
 }
-
+.ant-dropdown-trigger{
+  display: flex;
+  align-items: center;
+}
 .ant-dropdown-menu {
   padding: 20px 20px;
   border-radius: 5px;
@@ -32,6 +35,7 @@
 .dropdown-mobile {
   position: absolute;
   width: 97vw !important;
+  left: 4px !important;
   top: 70px !important;
   z-index: 1000;
   .ant-dropdown-menu-item.ant-dropdown-menu-item-only-child {

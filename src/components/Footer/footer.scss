@@ -1,23 +1,28 @@
 .footer__container {
   padding-top: 35px;
+  margin: 30px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-flow: row wrap;
-  
   font-family: 'Roboto Condensed', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 19px;
-  
+
+  flex-flow: row;
+  white-space: nowrap;
+
   & > * {
-    margin: 10px;
+    margin: 5px;
     padding: 5px;
   }
   a {
-    margin: 8px;
+    margin: 4px;
     padding: 0;
   }
 }
 
+.-mobile-footer {
+  flex-wrap: wrap;
+}

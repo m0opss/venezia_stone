@@ -6,7 +6,8 @@ import axios from 'axios';
 import filterActions from '../actions/filterActions';
 import dataActions from 'actions/dataAction';
 import MaterialItem from '../components/Content/MaterialItem/MaterialItem';
-
+import Filter from 'components/Filter/Filter';
+import { MobileView, BrowserView, isTablet } from 'react-device-detect';
 
 import './Home.scss';
 
@@ -24,9 +25,16 @@ const Home = props => {
 
   return (
     <div className="home-container">
+      {isTablet ? (
+        <Filter />
+      ) : (
+        <BrowserView>
+          <Filter />
+        </BrowserView>
+      )}
       <h1>Натуральный камень в наличии</h1>
       <div className="catalog-items-group">
-        {props.data.mts.map((item) => (
+        {props.data.mts.map(item => (
           <MaterialItem
             img={item.photo_material}
             link={item.ph}
@@ -43,14 +51,14 @@ const Home = props => {
         <div className="home-bottom-links__link">Новые поступления камня</div>
         <div className="home-bottom-links__link">Товары в поступления </div>
       </div>
-
+      {console.log(isTablet)}
     </div>
   );
 };
 
 const mapStateToProps = store => {
   return {
-    data: store.data,
+    data: store.data
   };
 };
 
@@ -61,7 +69,7 @@ const mapDispatchToProps = dispatch => {
     },
     setMatList: data => {
       dispatch(filterActions.setMatList(data));
-    },
+    }
   };
 };
 

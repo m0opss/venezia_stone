@@ -1,7 +1,7 @@
 .filter {
-  @media screen and (min-width: 800px) {
+  @media screen and (min-width: 768px) {
     position: absolute;
-    z-index: 1110;
+    z-index: 2;
     top: 160px;
     left: 15px;
   }
@@ -13,12 +13,13 @@
     display: none;
   }
   .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 767px) {
       position: absolute;
-      width: 97vw !important;
-      left: 4px;
-      top: 70px;
-      z-index: 1000;
+      width: 96vw !important;
+      left: -4px;
+      top: 55px;
+      z-index: 2;
+
       .ant-menu-submenu {
         width: 70vw;
       }

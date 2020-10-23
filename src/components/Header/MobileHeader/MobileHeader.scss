@@ -1,20 +1,28 @@
 .top-line--mobile {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin-bottom: 10px;
   position: relative;
-  > * { 
-    margin: 0 7px;
-  }
+
   .top-line__logo {
-    flex: 0 1 65%;
+    flex: 0 1 30%;
+    .logo__text {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+    }
   }
   .top-line__account {
     flex: 0 1 7%;
   }
   .top-line__basket {
     flex: 0 1 7%;
+    margin: 0;
+    img {
+      display: flex;
+      margin: auto;
+    }
   }
   .izbrannoe-button {
     flex: 0 1 7%;
@@ -22,12 +30,21 @@
   .search-button {
     flex: 0 1 7%;
   }
+
+  .filter__button {
+    margin-left: 0px;
+    .filter__button-click {
+      margin-right: 0px;
+    }
+  }
+
   .second-line__filter-button {
     cursor: pointer;
   }
   .-icon {
     width: auto;
-    max-width: 100%;
+    max-width: 25px;
+    max-height: 25px;
   }
 
   @media screen and (max-width: 470px) {

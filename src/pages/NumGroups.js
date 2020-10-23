@@ -17,14 +17,15 @@ import sortIcon from '@iconify/icons-dashicons/sort';
 import NumGroupItem from '../components/Content/NumGroupItem/NumGroupItem';
 
 import './NumGroups.scss';
+import Filter from 'components/Filter/Filter';
+import { MobileView, BrowserView, isTablet } from 'react-device-detect';
 
 const sortArr = arr => {
   let tmp = [...arr];
   tmp.sort((a, b) => {
     let nameA = a.gr.toLowerCase(),
       nameB = b.gr.toLowerCase();
-    if (nameA < nameB)
-      return -1;
+    if (nameA < nameB) return -1;
     if (nameA > nameB) return 1;
     return 0;
   });
@@ -81,7 +82,7 @@ const NumGroups = props => {
     setHover_pltk(true);
     setNum_groups_items('num-gr-items-group');
   };
-  
+
   const toggleStyle_list = () => {
     setHover_pltk(false);
     setNum_groups_items('num-gr-items-group-list');
@@ -89,6 +90,13 @@ const NumGroups = props => {
 
   return (
     <>
+      {isTablet ? (
+        <Filter />
+      ) : (
+        <BrowserView>
+          <Filter />
+        </BrowserView>
+      )}
       <div className="num-gr-options">
         <p
           id="val-opt-1"

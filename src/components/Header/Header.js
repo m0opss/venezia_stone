@@ -2,28 +2,44 @@ import React from 'react';
 import SecondLine from './SecondLine/SecondLine';
 import TopLine from './TopLine/TopLine';
 import MobileHeader from './MobileHeader/MobileHeader';
-import Filter from 'components/Filter/Filter';
+
 import './Header.scss';
+import {
+  MobileView,
+  BrowserView,
+  isTablet,
+} from 'react-device-detect';
 
 const Header = props => {
-  let header;
-
-  if (document.documentElement.clientWidth >= 800) {
-    header = (
-      <>
-        <TopLine />
-        <SecondLine />
-        <Filter />
-      </>
-    );
-  } else {
-    header = <MobileHeader />;
-  }
-
   return (
-    <div className="header-container">
-      <div className="container">{header}</div>
-    </div>
+    <>
+      {isTablet ? (
+        <div className="header-container">
+          <div className="container">
+            <TopLine />
+            <SecondLine />
+          </div>
+        </div>
+      ) : (
+        <>
+          <BrowserView>
+            <div className="header-container">
+              <div className="container">
+                <TopLine />
+                <SecondLine />
+              </div>
+            </div>
+          </BrowserView>
+          <MobileView>
+            <div className="header-container">
+              <div className="container">
+                <MobileHeader />
+              </div>
+            </div>
+          </MobileView>
+        </>
+      )}
+    </>
   );
 };
 export default Header;

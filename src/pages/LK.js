@@ -3,18 +3,18 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import authActions from 'actions/authActions';
-import PersonalData from 'components/LK/PD'
+import PersonalData from 'components/LK/PD';
+import Izbrannoe from 'components/LK/Izbrannoe';
+import WatchHistory from 'components/LK/WatchHistory';
 
 import './LK.scss';
 
-
-const Izbrannoe = props => {
-  return <div className="lk__izbrannoe"></div>;
-};
-
-const WatchHistori = props => {
-  return <div className="lk__history"></div>;
-};
+import {
+  MobileView,
+  BrowserView,
+  isMobile,
+  isTablet
+} from 'react-device-detect';
 
 const LK = props => {
   let pd = false;
@@ -29,7 +29,7 @@ const LK = props => {
   }
   if (props.match.url === '/history') {
     h = true;
-    modul = <WatchHistori />;
+    modul = <WatchHistory />;
     title = <>История просмотра</>;
   }
   if (props.match.url === '/izbrannoe') {
@@ -47,23 +47,30 @@ const LK = props => {
   if (props.isAuth) {
     return (
       <div className="lk-container">
-        <div className="lk-top">
-          <h1>{title}</h1>
-          <ul className="lk__navbar">
-            <li className={pd ? 'active' : ''}>
-              <Link to="/personal-data">Персональные данные</Link>
-            </li>
-            <li className={h ? 'active' : ''}>
-              <Link to="/history">История просмотров</Link>
-            </li>
-            <li className={i ? 'active' : ''}>
-              <Link to="/izbrannoe">Избранное</Link>
-            </li>
-            <li onClick={onExitModal} style={{ cursor: 'pointer' }}>
-              Выйти
-            </li>
-          </ul>
-        </div>
+        <BrowserView>
+          <div className="lk-top">
+            <h1>{title}</h1>
+            <ul className="lk__navbar">
+              <li className={pd ? 'active' : ''}>
+                <Link to="/personal-data">Персональные данные</Link>
+              </li>
+              <li className={h ? 'active' : ''}>
+                <Link to="/history">История просмотров</Link>
+              </li>
+              <li className={i ? 'active' : ''}>
+                <Link to="/izbrannoe">Избранное</Link>
+              </li>
+              <li onClick={onExitModal} style={{ cursor: 'pointer' }}>
+                Выйти
+              </li>
+            </ul>
+          </div>
+        </BrowserView>
+        <MobileView>
+          <div className="lk-top -mobile">
+            <h1>{title}</h1>
+          </div>
+        </MobileView>
 
         {modul}
       </div>

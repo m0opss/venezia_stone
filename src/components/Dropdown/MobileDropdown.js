@@ -36,7 +36,7 @@ const MobileDropdown = props => {
       overlayClassName='dropdown-mobile'
       visible={state.visible}
     >
-      <div className={`-${props.type}`} onClick={e => e.preventDefault()}>
+      <div className={`${props.type}`} onClick={e => e.preventDefault()}>
         <img src={burger} className='-icon'/>
       </div>
     </Dropdown>

@@ -36,17 +36,27 @@
     line-height: 37px;
   }
 }
+.lk-container {
+  .-mobile {
+    h1 {
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 140%;
+      margin: 20px;
+    }
+  }
+}
 
 .lk__personal-data {
   .lk__pd-line {
     margin: 20px;
     height: 40px;
     border-bottom: 2px solid #fada9e;
-    max-width: 500px;
+    max-width: 4500px;
     input {
       height: 100%;
       border: none;
-      width: 90%;
+      width: 100%;
     }
   }
   .lk__pd-edit-buttons {

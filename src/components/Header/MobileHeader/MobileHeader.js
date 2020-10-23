@@ -32,7 +32,7 @@ const MobileHeader = props => {
         <img className="-icon" src={search} />
       </div>
       <Filter />
-      <MobileDropdown menuList={<MenuList setFilterParam={setFilterParam}/>}  />
+      <MobileDropdown type='-mobile' menuList={<MenuList setFilterParam={setFilterParam}/>}  />
     </div>
   );
 };

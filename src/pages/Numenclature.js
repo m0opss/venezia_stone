@@ -15,9 +15,11 @@ import pltk_a from 'images/pltk_a.png';
 import { Icon } from '@iconify/react';
 import sortIcon from '@iconify/icons-dashicons/sort';
 
-import "./Numenclature.scss"
+import './Numenclature.scss';
 
 import NumenclatureItem from '../components/Content/NumenclatureItem/NumenclatureItem';
+import Filter from 'components/Filter/Filter';
+import { MobileView, BrowserView, isTablet } from 'react-device-detect';
 
 const sortArr = arr => {
   let tmp = [...arr];
@@ -33,7 +35,6 @@ const sortArr = arr => {
 };
 
 const Numenclature = props => {
-
   const [numenclature, setNumemclature] = React.useState([]);
   const [style_pltk, setHover_pltk] = React.useState(true);
   const [actionOption1, setActionOption1] = React.useState('');
@@ -90,13 +91,30 @@ const Numenclature = props => {
 
   return (
     <>
+      {isTablet ? (
+        <Filter />
+      ) : (
+        <BrowserView>
+          <Filter />
+        </BrowserView>
+      )}
       <div className="num-options">
         <div className="filter-options">
-          <div className="filter-opt-1" onClick={() => {}}>Все</div>
-          <div className="filter-opt-2" onClick={() => {}}>Слэбы</div>
-          <div className="filter-opt-3" onClick={() => {}}>Полоса</div>
-          <div className="filter-opt-4" onClick={() => {}}>Плитка</div>
-          <div className="filter-opt-5" onClick={() => {}}>Другие изделия</div>
+          <div className="filter-opt-1" onClick={() => {}}>
+            Все
+          </div>
+          <div className="filter-opt-2" onClick={() => {}}>
+            Слэбы
+          </div>
+          <div className="filter-opt-3" onClick={() => {}}>
+            Полоса
+          </div>
+          <div className="filter-opt-4" onClick={() => {}}>
+            Плитка
+          </div>
+          <div className="filter-opt-5" onClick={() => {}}>
+            Другие изделия
+          </div>
         </div>
         <div className="other-options">
           <p
@@ -142,7 +160,6 @@ const Numenclature = props => {
           </div>
         </div>
       </div>
-
       <div className={num_groups_items}>
         <div
           className="num-items-group-col"
