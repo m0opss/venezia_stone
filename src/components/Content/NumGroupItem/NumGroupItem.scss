@@ -1,13 +1,25 @@
 .num-gr-items-group {
   .num-gr-item {
-    width: 280px;
+    // width: 280px;
+    flex: 0 1 21%;
     display: flex;
     flex-flow: column;
     justify-content: flex-end;
+    margin: 10px;
+    @media screen and (max-width: 920px) {
+      flex: 0 1 30%;
+    }
+    @media screen and (max-width: 810px) {
+      flex: 0 1 47%;
+    }
+    @media screen and (max-width: 767px) {
+      flex: 0 1 80%;
+    }
     img {
-      width: 280px;
+      width: 100%;
       height: 220px;
     }
+
     .num-gr-item__name {
       padding: 10px 25px;
       text-align: center;
