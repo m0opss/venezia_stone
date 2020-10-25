@@ -41,9 +41,6 @@ body {
   max-width: 1230px;
   padding: 0 15px;
   margin: auto;
-  @media screen and (max-width: 1000px) {
-    padding: 0 6px;
-  }
 }
 
 .unselectable {
@@ -61,4 +58,23 @@ body {
     background-color: #be9344;
     color: white;
   }
+}
+
+
+.button {
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #be9344;
+  box-sizing: border-box;
+  box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.button-text {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 100%;
+  text-align: center;
 }

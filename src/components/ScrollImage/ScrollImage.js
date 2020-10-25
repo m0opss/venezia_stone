@@ -15,7 +15,7 @@ const ScrollImage = props => {
     return (
       <div className="scroll__item">
         <p>{props.title}</p>
-        <img src={props.img} />
+        <img src={props.img} onClick={() => {}} />
       </div>
     );
   };
@@ -23,7 +23,8 @@ const ScrollImage = props => {
   let im = 'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg';
   return (
     <Scrollbars
-      style={{ width: '99%', height: 440 }}
+      mobile
+      style={{ width: '99%', height: 440, maxWidth: 500 }}
       thumbSize={14}
       renderTrackVertical={props => (
         <div {...props} className="track-vertical" />
