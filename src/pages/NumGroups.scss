@@ -54,19 +54,15 @@
 
 .num-gr-items-group-list {
   margin-top: 30px;
-  display: grid;
-  // flex-flow: column;
-  // grid-template-columns: 10fr 10fr 8fr 9fr 7fr 6fr 5fr;
+  display: flex;
   .num-gr-items-group-col {
     padding: 5px 20px;
-    // display: flex;
-    grid-template-columns: 10fr 10fr 8fr 9fr 7fr 6fr 5fr;
     font-family: 'Roboto Condensed', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
     line-height: 16px;
-    align-items: center;
+    color: #000000;
     @media screen and (max-width: 1100px) {
       font-size: 14px;
       line-height: 14px;
@@ -75,8 +71,6 @@
       font-size: 12px;
       line-height: 12px;
     }
-    justify-content: space-around;
-    color: #000000;
     p {
       text-align: center;
     }

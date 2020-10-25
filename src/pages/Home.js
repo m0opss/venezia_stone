@@ -51,7 +51,6 @@ const Home = props => {
         <div className="home-bottom-links__link">Новые поступления камня</div>
         <div className="home-bottom-links__link">Товары в поступления </div>
       </div>
-      {console.log(isTablet)}
     </div>
   );
 };

@@ -30,7 +30,7 @@ const LK = props => {
   if (props.match.url === '/history') {
     h = true;
     modul = <WatchHistory />;
-    title = <>История просмотра</>;
+    title = <>История просмотров</>;
   }
   if (props.match.url === '/izbrannoe') {
     i = true;

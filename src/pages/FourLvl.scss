@@ -1,0 +1,32 @@
+.four-lvl-valute {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.four-lvl-item {
+  .item-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .item-info__left-block {
+      flex: 0 1 37%;
+    }
+    .item-info__right-block {
+      flex: 0 1 55%;
+    }
+
+    .item-info__title {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 22px;
+      line-height: 140%;
+    }
+    .item-info-scroll {
+      margin-top: 30px;
+      padding-top: 20px;
+    }
+    
+  }
+}

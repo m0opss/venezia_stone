@@ -18,7 +18,13 @@ import NumGroupItem from '../components/Content/NumGroupItem/NumGroupItem';
 
 import './NumGroups.scss';
 import Filter from 'components/Filter/Filter';
-import { MobileView, BrowserView, isTablet } from 'react-device-detect';
+import {
+  MobileView,
+  BrowserView,
+  isTablet,
+  isMobile,
+  isBrowser
+} from 'react-device-detect';
 
 const sortArr = arr => {
   let tmp = [...arr];
@@ -133,24 +139,31 @@ const NumGroups = props => {
         >
           <img src={a_z} />
         </div>
-        <div className="" onClick={() => toggleStyle_pltk()}>
-          <img src={style_pltk ? pltk_a : pltk} />
-        </div>
-        <div className="" onClick={() => toggleStyle_list()}>
-          <img src={style_pltk ? listIcon : listIcon_a} />
-        </div>
+        {isMobile && !isTablet ? (
+          <></>
+        ) : (
+          <>
+            <div className="" onClick={() => toggleStyle_pltk()}>
+              <img src={style_pltk ? pltk_a : pltk} />
+            </div>
+            <div className="" onClick={() => toggleStyle_list()}>
+              <img src={style_pltk ? listIcon : listIcon_a} />
+            </div>
+          </>
+        )}
       </div>
 
       <div className={num_groups_items}>
         <div
-          className="num-gr-items-group-col"
-          style={style_pltk ? { display: 'none' } : { display: 'grid' }}
+          className="num-gr-items-group-col num-gr-item-root"
+          style={style_pltk ? { display: 'none' } : {}}
         >
           <p>Фото</p>
           <p>Название</p>
           <p>Количество SKU</p>
           <p>Общая площадь</p>
           <p>Цена от</p>
+          <p></p>
         </div>
 
         {numGroups.map(item => (

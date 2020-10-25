@@ -23,7 +23,7 @@ const MenuList = props => {
 
 
   const burger = [
-    'Слебы',
+    'Слэбы',
     'Полоса',
     'Плитка',
     'Ступени',

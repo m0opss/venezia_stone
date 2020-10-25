@@ -30,7 +30,7 @@ export const Burger = props => {
         className="second-line__filter-button"
         onClick={props.setFilterParam}
       >
-        Слебы
+        Слэбы
       </div>
       <div
         id="1"

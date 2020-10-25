@@ -53,6 +53,7 @@
     height: 40px;
     border-bottom: 2px solid #fada9e;
     max-width: 4500px;
+    width: 45%;
     input {
       height: 100%;
       border: none;
@@ -84,9 +85,9 @@
     justify-content: space-between;
   }
   .-readonly {
-    background: rgb(204, 201, 201);
+    background: rgb(228, 225, 225);
     input {
-      background: rgb(204, 201, 201);
+      background: rgba(243, 241, 241, 0.74);
     }
   }
 }

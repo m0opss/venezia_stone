@@ -19,7 +19,12 @@ import './Numenclature.scss';
 
 import NumenclatureItem from '../components/Content/NumenclatureItem/NumenclatureItem';
 import Filter from 'components/Filter/Filter';
-import { MobileView, BrowserView, isTablet } from 'react-device-detect';
+import {
+  MobileView,
+  BrowserView,
+  isTablet,
+  isMobile
+} from 'react-device-detect';
 
 const sortArr = arr => {
   let tmp = [...arr];
@@ -45,14 +50,19 @@ const Numenclature = props => {
   );
 
   React.useEffect(() => {
+    let isSubscr = true;
+    
     axios
       .get(`http://92.63.103.180:8000/api_v0${props.match.url}/`)
       .then(response => {
-        setNumemclature(sortArr(response.data.itms));
+        if (isSubscr) {
+          setNumemclature(sortArr(response.data.itms));
+        }
       })
       .catch(e => {
         console.log(e);
       });
+      return () => isSubscr = false
   }, []);
 
   const handleValOption = e => {
@@ -98,24 +108,50 @@ const Numenclature = props => {
           <Filter />
         </BrowserView>
       )}
-      <div className="num-options">
-        <div className="filter-options">
-          <div className="filter-opt-1" onClick={() => {}}>
-            Все
+      <div
+        className={
+          isMobile && !isTablet
+            ? `num-options num-options-mobile`
+            : 'num-options'
+        }
+      >
+        {isMobile && !isTablet ? (
+          <div className="filter-options-mobile">
+            <div className="filter-opt-1" onClick={() => {}}>
+              Все
+            </div>
+            <div className="filter-opt-2" onClick={() => {}}>
+              Слэбы
+            </div>
+            <div className="filter-opt-3" onClick={() => {}}>
+              Полоса
+            </div>
+            <div className="filter-opt-4" onClick={() => {}}>
+              Плитка
+            </div>
+            <div className="filter-opt-5" onClick={() => {}}>
+              Другие изделия
+            </div>
           </div>
-          <div className="filter-opt-2" onClick={() => {}}>
-            Слэбы
+        ) : (
+          <div className="filter-options">
+            <div className="filter-opt-1" onClick={() => {}}>
+              Все
+            </div>
+            <div className="filter-opt-2" onClick={() => {}}>
+              Слэбы
+            </div>
+            <div className="filter-opt-3" onClick={() => {}}>
+              Полоса
+            </div>
+            <div className="filter-opt-4" onClick={() => {}}>
+              Плитка
+            </div>
+            <div className="filter-opt-5" onClick={() => {}}>
+              Другие изделия
+            </div>
           </div>
-          <div className="filter-opt-3" onClick={() => {}}>
-            Полоса
-          </div>
-          <div className="filter-opt-4" onClick={() => {}}>
-            Плитка
-          </div>
-          <div className="filter-opt-5" onClick={() => {}}>
-            Другие изделия
-          </div>
-        </div>
+        )}
         <div className="other-options">
           <p
             id="val-opt-1"
@@ -152,18 +188,24 @@ const Numenclature = props => {
           >
             <img src={a_z} />
           </div>
-          <div className="" onClick={() => toggleStyle_pltk()}>
-            <img src={style_pltk ? pltk_a : pltk} />
-          </div>
-          <div className="" onClick={() => toggleStyle_list()}>
-            <img src={style_pltk ? listIcon : listIcon_a} />
-          </div>
+          {isMobile && !isTablet ? (
+            <></>
+          ) : (
+            <>
+              <div className="" onClick={() => toggleStyle_pltk()}>
+                <img src={style_pltk ? pltk_a : pltk} />
+              </div>
+              <div className="" onClick={() => toggleStyle_list()}>
+                <img src={style_pltk ? listIcon : listIcon_a} />
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className={num_groups_items}>
         <div
-          className="num-items-group-col"
-          style={style_pltk ? { display: 'none' } : { display: 'grid' }}
+          className="num-items-group-col num-gr-item-root num-item"
+          style={style_pltk ? { display: 'none' } : {}}
         >
           <p>Фото</p>
           <p>Название</p>
@@ -171,6 +213,7 @@ const Numenclature = props => {
           <p>Количество слэбов</p>
           <p>Общая площадь</p>
           <p>Цена от</p>
+          <p></p>
         </div>
 
         {numenclature.map((item, index) => (

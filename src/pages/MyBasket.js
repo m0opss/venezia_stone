@@ -12,11 +12,7 @@ const MyBasket = (props) => {
   const [rub, set_rub] = React.useState(true);
   const [usd, set_usd] = React.useState(false);
   const [eur, set_eur] = React.useState(false);
-  const [state, setState] = React.useState({
-    rub: true,
-    usd: false,
-    eur: false
-  });
+
 
   const onClickOrder = () => {
     if (props.isAuth) {

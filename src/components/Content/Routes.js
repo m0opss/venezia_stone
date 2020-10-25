@@ -7,6 +7,7 @@ import MyBasket from '../../pages/MyBasket';
 import NumGroups from '../../pages/NumGroups';
 import Numenclature from '../../pages/Numenclature';
 import LK from '../../pages/LK';
+import FourLvl from '../../pages/FourLvl';
 
 
 const Routes = props => {
@@ -20,6 +21,7 @@ const Routes = props => {
       <Route exact path="/basket" component={MyBasket} />
       <Route exact path="/:material"  component={NumGroups} />
       <Route exact path="/:material/:numGroups" component={Numenclature}/>
+      <Route exact path="/:material/:numGroups/:num" component={FourLvl}/>
       <Route path="*">
         <Redirect to="/" />
       </Route>

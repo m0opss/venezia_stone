@@ -31,7 +31,7 @@ const NumenclatureItem = props => {
   }
   else {
     return (
-      <div key={props.id} className="num-gr-item" onClick={props.onClick}>
+      <div key={props.id} className="num-gr-item num-gr-item-root num-item" onClick={props.onClick}>
         <div className="num-gr-item__img">
           <img src={props.img} alt="" className="num-gr-item__img" />
         </div>

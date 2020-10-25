@@ -14,7 +14,9 @@ const Authored = props => {
   const arr = [
     props.user_info.last_name,
     props.user_info.first_name,
+    // props.user_info.first_name[0] + '.',
     props.user_info.middle_name
+    // props.user_info.middle_name[0] + '.'
   ]
 
   arr.map((name) => {

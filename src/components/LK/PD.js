@@ -25,11 +25,14 @@ const PersonalData = props => {
     set_pd_email(props.user_info.email);
     set_pd_phone(props.user_info.phone);
   };
-  const onClickSave = () => {};
+
+  const onClickSave = () => {
+
+  };
 
   const onClickCancel = () => {
-    set_ronly(true);
     setDefaultVal();
+    set_ronly(true);
   };
   const onClickEdit = () => {
     set_ronly(false);

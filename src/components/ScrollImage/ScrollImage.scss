@@ -1,0 +1,31 @@
+.scroll-root {
+  .scroll__wrapper {
+    // height: 90%;
+    padding: 0px 25px 10px 0px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .scroll__item {
+    flex: 0 1 45%;
+    margin-bottom: 20px;
+    img {
+      width: 100%;
+    }
+  }
+}
+.track-vertical {
+  background: #dadada;
+  border-radius: 3px;
+  height: 99%;
+  position: relative;
+  right: 5px;
+}
+.thumb-vertical {
+  background-color: #be9344;
+  width: 17px !important;
+  height: 17px !important;
+  border-radius: 100%;
+  right: 6px;
+}
