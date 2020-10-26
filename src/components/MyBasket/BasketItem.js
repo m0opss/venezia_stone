@@ -53,10 +53,10 @@ const BasketItem = props => {
               <div className="basket-item__line -price">
                 <div className="price-input">
                   <p> м<sup>2</sup> :
-                    <input type="number" defaultValue={'0.12'} step="0.01" />
+                    <input type="number" min='0' defaultValue={'0.12'} step="0.01" />
                   </p>
                   <p>шт : 
-                    <input type="number" defaultValue={'7'} />
+                    <input type="number" min='0' defaultValue={'7'} />
                   </p>
                 </div>
                 <div className="price-view">
