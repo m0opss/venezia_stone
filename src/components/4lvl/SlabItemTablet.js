@@ -10,30 +10,29 @@ import arr from 'images/arr-4lvl.png';
 import like from 'images/like-4lvl.png';
 import basket from 'images/basket-4lvl.png';
 
+import './SlabItemTablet.scss';
+
 const GroupItem = props => {
   return (
     <div className="slab-items-group-item">
       <div className="slab-items-group-item__img">
-        <img src={props.item.img} />
-        <img src={like} />
-        <img src={basket} />
+        <img className="slab-items-group-item__img-main" src={props.item.img} />
+        <div className="slab-items-group-item__img-icon -icons-1">
+          <img src={like} />
+        </div>
+        <div className="slab-items-group-item__img-icon -icons-2">
+          <img src={basket} />
+        </div>
       </div>
       <div className="slab-items-group-item__info">
+        <p className="slab-items-group-item__line">Слэб: {props.item.nmb}</p>
         <p className="slab-items-group-item__line">
-          Слэб: {props.item.nmb}
+          Размер: {props.item.l}x{props.item.w} =
+          {parseFloat((props.item.l * props.item.w).toFixed(2))} м<sup>2</sup>
         </p>
-        <p className="slab-items-group-item__line">
-          Размер: {props.item.l}x{props.item.w} = {props.item.l*props.item.w} м<sup>2</sup>
-        </p>
-        <p className="slab-items-group-item__line">
-        {props.item.nmb}
-        </p>
-        <p className="slab-items-group-item__line">
-        {props.item.nmb}
-        </p>
-        <p className="slab-items-group-item__line">
-        {props.item.nmb}
-        </p>
+        <p className="slab-items-group-item__line">Склад: {props.item.city}</p>
+        <p className="slab-items-group-item__line">Цена за м<sup>2</sup>: {props.item.cost}₽</p>
+        <p className="slab-items-group-item__line">Стоимость: {props.item.sum}₽</p>
       </div>
     </div>
   );
@@ -51,11 +50,11 @@ const SlabItemTablet = props => {
     '#402A02',
     '#402A02'
   ];
-let im =  'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg'
+  let im = 'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg';
   let item = {
-    city: 'Cfyrn-Gtnth,ehu',
+    city: 'Санкт-Петербург',
     nmb: '000000',
-    cnt: 12312,
+    sum: 12312,
     l: 1.5,
     w: 3.2,
     cost: 1231,
@@ -89,8 +88,6 @@ let im =  'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg'
         </div>
       </div>
       <div className="slab-items-group">
-        <GroupItem item={item} />
-        <GroupItem item={item} />
         <GroupItem item={item} />
         <GroupItem item={item} />
         <GroupItem item={item} />

@@ -29,6 +29,7 @@ const OtherTableRow = props => {
             <input
               type="number"
               defaultValue={S}
+              min='0'
               step="0.01"
               style={{ borderBottom: '1px solid black' }}
             />

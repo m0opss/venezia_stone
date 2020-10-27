@@ -8,7 +8,6 @@ const userActions = {
       payload: data
     };
   },
-
 };
 
 export default userActions;

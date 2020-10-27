@@ -23,7 +23,6 @@ const ScrollImage = props => {
   let im = 'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg';
   return (
     <Scrollbars
-      mobile
       style={{ width: '99%', height: 440, maxWidth: 500 }}
       thumbSize={14}
       renderTrackVertical={props => (

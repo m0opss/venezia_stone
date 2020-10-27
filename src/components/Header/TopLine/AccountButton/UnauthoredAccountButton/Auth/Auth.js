@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import authActions from 'actions/authActions';
+import userActions from 'actions/userActions';
 import Login from './Log';
 import Register from './Register';
 
@@ -17,6 +18,7 @@ const Auth = props =>
       setToken={props.setToken}
       setVisible={props.setVisible}
       setIsReg={props.setIsReg}
+      setUserInfo={props.setUserInfo}
     />
   );
 
@@ -34,6 +36,9 @@ const mapDispatchToProps = dispatch => {
     },
     setToken: data => {
       dispatch(authActions.setToken(data));
+    },
+    setUserInfo: data => {
+      dispatch(userActions.setUserInfo(data));
     }
   };
 };

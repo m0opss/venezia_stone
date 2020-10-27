@@ -47,16 +47,38 @@ const Login = props => {
         })
         .then(response => {
           props.setVisible(false);
-          props.setToken(response.data.key);
+          localStorage.setItem('auth_token', response.data.key)
           props.setAuth(true);
+          props.setToken(response.data.key);
+          axios
+          .post('https://catalog-veneziastone.ru/account/get_user_info/', {
+            token: response.data.key
+          })
+          .then(res=> {
+            console.log(123, res.data)
+            props.setUserInfo(res.data)
+          })
+          .catch(err => {
+            if (err.response) {
+              // client received an error response (5xx, 4xx)
+              console.log(1, err.response);
+              // props.setAuth(false);
+            } else if (err.request) {
+              // client never received a response, or request never left
+              console.log(2, err.request);
+            } else {
+              // anything else
+              console.log(3, err);
+            }
+          });
         })
         .catch(err => {
           if (err.response) {
             console.log(1, err.response);
-            if(err.response.data.hasOwnProperty('non_field_errors')) {
+            if (err.response.data.hasOwnProperty('non_field_errors')) {
               setLabelValues_l_email(err.response.data.non_field_errors[0]);
             }
-            if(err.response.data.hasOwnProperty('email')) {
+            if (err.response.data.hasOwnProperty('email')) {
               setLabelValues_l_email(err.response.data.email[0]);
             }
           } else if (err.request) {
@@ -64,7 +86,6 @@ const Login = props => {
           } else {
             // anything else
             console.log(3, err);
-            
           }
         });
     }

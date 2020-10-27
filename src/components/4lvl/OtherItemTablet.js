@@ -32,8 +32,8 @@ const GroupItem = props => {
       <div className="other-items-group__line">
         <p className="other-items-group_first-col">Заказать</p>
         <div className="other-items-group__centered">
-          <input type="number" defaultValue={cnt} step="1"/>
-          <input type="number" defaultValue={S} step="0.01"/>
+          <input type="number" min='0' defaultValue={cnt} step="1"/>
+          <input type="number" min='0' defaultValue={S} step="0.01"/>
         </div>
       </div>
       <div className="other-items-group__line">
