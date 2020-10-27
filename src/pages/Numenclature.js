@@ -53,7 +53,7 @@ const Numenclature = props => {
     let isSubscr = true;
     
     axios
-      .get(`http://92.63.103.180:8000/api_v0${props.match.url}/`)
+      .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
       .then(response => {
         if (isSubscr) {
           setNumemclature(sortArr(response.data.itms));

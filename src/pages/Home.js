@@ -14,7 +14,7 @@ import './Home.scss';
 const Home = props => {
   React.useEffect(() => {
     axios
-      .get('http://92.63.103.180:8000/api_v0/getMaterials/')
+      .get('https://catalog-veneziastone.ru/api_v0/getMaterials/')
       .then(response => {
         props.getDataResponse(response.data);
       })

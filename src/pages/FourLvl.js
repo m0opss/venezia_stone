@@ -26,7 +26,7 @@ const FourLvl = props => {
   //       console.log(e);
   //     });
   // }, []);
-  let type = 'sla';
+  let type = 'slab';
   return (
     <div className="four-lvl-container">
       <div className="four-lvl-valute">

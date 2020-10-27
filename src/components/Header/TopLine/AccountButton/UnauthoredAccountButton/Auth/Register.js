@@ -107,7 +107,7 @@ const Register = props => {
   const onPushReg = () => {
     if (onRegValidate()) {
       axios
-        .post('http://92.63.103.180:8000/account/register/', {
+        .post('https://catalog-veneziastone.ru/account/register/', {
           email: inputValues.r_email,
           phone: inputValues.r_phone,
           first_name: inputValues.r_fname,

@@ -41,7 +41,7 @@ const Login = props => {
   const onPushLog = () => {
     if (onLogValidate()) {
       axios
-        .post('http://92.63.103.180:8000/account/login/', {
+        .post('https://catalog-veneziastone.ru/account/login/', {
           email: inputValues.l_email,
           password: inputValues.l_pass
         })

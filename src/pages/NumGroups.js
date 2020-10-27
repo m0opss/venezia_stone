@@ -51,7 +51,7 @@ const NumGroups = props => {
 
   React.useEffect(() => {
     axios
-      .get(`http://92.63.103.180:8000/api_v0/${props.match.params.material}/`)
+      .get(`https://catalog-veneziastone.ru/api_v0/${props.match.params.material}/`)
       .then(response => {
         setNumGroups(sortArr(response.data.grs));
       })

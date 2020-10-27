@@ -18,7 +18,7 @@ const App = props => {
   React.useEffect(() => {
     if (localStorage.getItem('auth_token')) {
       axios
-        .post('http://92.63.103.180:8000/account/get_user_info/', {
+        .post('https://catalog-veneziastone.ru/account/get_user_info/', {
           token: localStorage.getItem('auth_token')
         })
         .then(response => {
