@@ -20,12 +20,17 @@
     }
   }
 }
-
-.ant-modal-close {
-  display: none;
+.nobuttons {
+  button {
+    display: none;
+  }
 }
+// .ant-modal-close {
+//   display: none;
+// }
+
 .ant-modal {
-  width: 280px !important;
+  // width: 280px !important;
   .ant-modal-content {
     text-align: center;
     .ant-modal-header {

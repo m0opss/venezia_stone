@@ -2,17 +2,9 @@
   width: 100%;
   margin-top: 15px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  @media screen and (max-width: 1230px) {
-    justify-content: space-around;
-  }
-  // @media screen and (max-width: 912px) {
-  //   grid-gap: 1em 1em;
-  // }
-  // @media screen and (max-width: 912px) {
-  //   grid-template-columns: 13fr 13fr;
-  // }
+
 }
 .num-gr-options {
   width: 100%;

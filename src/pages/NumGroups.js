@@ -50,14 +50,21 @@ const NumGroups = props => {
   );
 
   React.useEffect(() => {
+    let isSubscr = true;
     axios
-      .get(`https://catalog-veneziastone.ru/api_v0/${props.match.params.material}/`)
+      .get(
+        `https://catalog-veneziastone.ru/api_v0/${props.match.params.material}/`
+      )
       .then(response => {
-        setNumGroups(sortArr(response.data.grs));
+        if (isSubscr) {
+          setNumGroups(response.data.mts[0].grs);
+        }
+
       })
       .catch(e => {
         console.log(e);
       });
+    return () => (isSubscr = false);
   }, []);
 
   const handleValOption = e => {
@@ -170,8 +177,12 @@ const NumGroups = props => {
           <NumGroupItem
             pltk={style_pltk}
             key={item.id}
-            img={item.photo}
-            link={props.match.url + '/' + item.id}
+            sku={item.sku}
+            pr={item.pr}
+            cur={item.cur}
+            kw={item.kw}
+            img={item.file}
+            link={props.match.url + '/' + item.ps}
             item={item}
             itemName={item.gr}
             id={item.id}

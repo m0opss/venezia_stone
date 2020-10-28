@@ -15,30 +15,52 @@ const NumenclatureItem = props => {
         </Link>
         <div className="num-gr-item__descr -num">
           <div className="num-gr-item__line -f">
-            <p>Количество слэбов: 1111</p>
-            <p>Цена от 45$</p>
+            {props.item.izd === 'Плитка' ? (
+              <p></p>
+            ) : (
+              <p>Количество слэбов: {props.cs}</p>
+            )}
+
+            <p>
+              Цена от {props.pr}
+              {props.cur}
+            </p>
           </div>
-          <p className="num-gr-item__line">Количество пачек: 1111</p>
+          {props.cp != 0 ? (
+            <p className="num-gr-item__line">Количество пачек: {props.cp}</p>
+          ) : (
+            <p className="num-gr-item__line"></p>
+          )}
+
           <div className="num-gr-item__line --s">
             <p>
-              Общая площадь: 22 м<sup>2</sup>
+              Общая площадь: {props.kw} м<sup>2</sup>
             </p>
             <Link to={props.link}>Подробнее</Link>
           </div>
         </div>
       </div>
     );
-  }
-  else {
+  } else {
     return (
-      <div key={props.id} className="num-gr-item num-gr-item-root num-item" onClick={props.onClick}>
+      <div
+        key={props.id}
+        className="num-gr-item num-gr-item-root num-item"
+        onClick={props.onClick}
+      >
         <div className="num-gr-item__img">
           <img src={props.img} alt="" className="num-gr-item__img" />
         </div>
         <div className="num-gr-item__name">{props.itemName}</div>
-        <div className="num-gr-item__pach">1111</div>
-        <div className="num-gr-item__slabs">1111</div>
-        <div className="num-gr-item__sqrt">22 м<sup>2</sup></div>
+        <div className="num-gr-item__pach">
+          {props.cp != 0 ? props.cp : '-'}
+        </div>
+        <div className="num-gr-item__slabs">
+          {props.item.izd === 'Плитка' ? '-' : props.cs}
+        </div>
+        <div className="num-gr-item__sqrt">
+          {props.kw} м<sup>2</sup>
+        </div>
         <div className="num-gr-item__cost">22 $</div>
         <Link to={props.link}>Подробнее</Link>
       </div>

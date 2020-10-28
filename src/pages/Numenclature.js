@@ -51,12 +51,13 @@ const Numenclature = props => {
 
   React.useEffect(() => {
     let isSubscr = true;
-    
     axios
       .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
       .then(response => {
+        console.log(response);
         if (isSubscr) {
-          setNumemclature(sortArr(response.data.itms));
+          setNumemclature(response.data.grs[0].itms);
+          // setNumemclature(sortArr(response.data.itms));
         }
       })
       .catch(e => {
@@ -219,12 +220,17 @@ const Numenclature = props => {
         {numenclature.map((item, index) => (
           <NumenclatureItem
             pltk={style_pltk}
-            key={item.id}
+            cp={item.cp}
+            cs={item.cs}
+            kw={item.kw}
+            pr={item.pr}
+            cur={item.cur}
+            key={item.ps}
             img={item.photo}
-            link={props.match.url + '/' + item.id}
+            link={props.match.url + '/' + item.ps}
             item={item}
             tp={item.tp}
-            itemName={item.ct}
+            itemName={item.name}
             id={item.id}
           />
         ))}

@@ -22,28 +22,31 @@ const SlabTableRow = props => {
   return (
     <div className="good-items-table__item ">
       <div className="table-row__item">
-        <p>{props.item.num}</p>
+        <p>{props.item.bl}</p>
       </div>
       <div className="table-row__item table-row__item_s">
-        <p>{props.item.l}</p>
+        <p>{props.item.le}</p>
       </div>
       <div className="table-row__item table-row__item_s">
-        <p>{props.item.w}</p>
+        <p>{props.item.he}</p>
       </div>
       <div className="table-row__item table-row__item_s">
-        <p>{props.item.s}</p>
+        <p>{props.item.os}</p>
       </div>
       <div className="table-row__item table-row__item_s">
-        <p>{props.item.sk}</p>
+        <p>{props.item.sco == '0' ? 'нет' : 'да'}</p>
       </div>
       <div className="table-row__item table-row__item_l">
         <p>{props.item.skl}</p>
       </div>
       <div className="table-row__item table-row__item_l">
-        <p>{props.item.cost}</p>
+        <p>{props.item.cnt} ₽</p>
       </div>
       <div className="table-row__item table-row__item_l">
-        <p>{props.item.sum}</p>
+        <p>
+          {(parseFloat(props.item.cnt) * parseFloat(props.item.os)).toFixed(2)}{' '}
+          ₽
+        </p>
       </div>
       <div className="table-row__item good-items-table__title-icons">
         <img src={like} />
@@ -56,6 +59,8 @@ const SlabTableRow = props => {
 };
 
 const SlabItem = props => {
+  const [selectedEl, setSelectedEl] = React.useState(props.item.prs[0]);
+
   let colors = [
     '#2C1D02',
     '#402A02',
@@ -67,100 +72,98 @@ const SlabItem = props => {
     '#402A02',
     '#402A02'
   ];
-  let im = 'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg';
 
-  let itemTable = {
-    num: '0000000',
-    l: '3 02',
-    w: ' 20 2',
-    s: '12 01',
-    sk: 'нет',
-    skl: 'Санкт-Петербург',
-    cost: '1 000 001.11₽',
-    sum: '1 000 001.11₽'
-  };
+  let images = [
+    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
+    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
+    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
+    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
+    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg'
+  ];
   if (isBrowser) {
     return (
       <div className="slab-item">
         <div className="slab-item-info">
           <div className="slab-item-info__top">
-            <h1 className="slab-item-info__title">TAN BROWN 30 мм</h1>
-            <ButtonsPanel />
+            <h1 className="slab-item-info__title">{props.item.name}</h1>
+            <ButtonsPanel images={images} />
           </div>
           <div className="slab-item-info__bottom">
             <div className="slab-item-info__left-block">
-              <ScrollImage scrollStyle="slab-item-info-scroll" />
+              <ScrollImage
+                scrollStyle="slab-item-info-scroll"
+                selectItem={setSelectedEl}
+                elements={props.item.prs}
+              />
             </div>
             <div className="slab-item-info__right-block">
               <div className="slab-item-info__rb-top">
-                <div className="slab-item-info__slab-title">Пачка BML 1284</div>
+                <div className="slab-item-info__slab-title">
+                  {selectedEl.bl}
+                </div>
                 <div className="slab-item-info__options">
                   <img src={lamp} />
                   <img src={book} />
                 </div>
               </div>
               <div className="slab-item-info__slab-img">
-                <img src={im} />
+                <img src={selectedEl.photobl} />
                 <ColorRange colors={colors} />
               </div>
             </div>
           </div>
         </div>
-        <div className="good-items-table">
-          <div className="good-items-table__item slabs-title">
-            <div className="table-row__item">
-              <p>Слэб</p>
+        <div className="hidescroll">
+          <div className="good-items-table">
+            <div className="good-items-table__item slabs-title">
+              <div className="table-row__item">
+                <p>Слэб</p>
+              </div>
+              <div className="table-row__item table-row__item_s">
+                <p>Длина,м</p>
+              </div>
+              <div className="table-row__item table-row__item_s">
+                <p>Высота</p>
+              </div>
+              <div className="table-row__item table-row__item_s">
+                <p>
+                  Площадь,м<sup>2</sup>
+                </p>
+              </div>
+              <div className="table-row__item table-row__item_s">
+                <p>Скол</p>
+              </div>
+              <div className="table-row__item table-row__item_l">
+                <p>Склад</p>
+              </div>
+              <div className="table-row__item table-row__item_l">
+                <p>
+                  Цена за м<sup>2</sup>
+                </p>
+              </div>
+              <div className="table-row__item table-row__item_l">
+                <p>Стоимость</p>
+              </div>
+              <div className="table-row__item good-items-table__title-icons">
+                <img src={arr} />
+                <img src={like} />
+              </div>
+              <div className="table-row__item good-items-table__title-icons">
+                <img src={arr} />
+                <img src={basket} />
+              </div>
             </div>
-            <div className="table-row__item table-row__item_s">
-              <p>Длина,м</p>
-            </div>
-            <div className="table-row__item table-row__item_s">
-              <p>Высота</p>
-            </div>
-            <div className="table-row__item table-row__item_s">
-              <p>
-                Площадь,м<sup>2</sup>
-              </p>
-            </div>
-            <div className="table-row__item table-row__item_s">
-              <p>Скол</p>
-            </div>
-            <div className="table-row__item table-row__item_l">
-              <p>Склад</p>
-            </div>
-            <div className="table-row__item table-row__item_l">
-              <p>
-                Цена за м<sup>2</sup>
-              </p>
-            </div>
-            <div className="table-row__item table-row__item_l">
-              <p>Стоимость</p>
-            </div>
-            <div className="table-row__item good-items-table__title-icons">
-              <img src={arr} />
-              <img src={like} />
-            </div>
-            <div className="table-row__item good-items-table__title-icons">
-              <img src={arr} />
-              <img src={basket} />
-            </div>
+            {props.item.prs.map(item => (
+              <SlabTableRow item={item} />
+            ))}
           </div>
-          <SlabTableRow item={itemTable} />
-          <SlabTableRow item={itemTable} />
-          <SlabTableRow item={itemTable} />
-          <SlabTableRow item={itemTable} />
         </div>
       </div>
     );
-  }else if (isTablet) {
-    return (
-      <SlabItemTablet />
-    )
-  }
-  else {
-    return (
-      <div className=""></div>
-    )
+  } else if (isTablet) {
+    return <SlabItemTablet item={props.item}/>;
+  } else {
+    return <div className=""></div>;
   }
 };
 

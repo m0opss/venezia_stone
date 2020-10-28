@@ -17,6 +17,7 @@ import userActions from './actions/userActions';
 const App = props => {
   React.useEffect(() => {
     if (localStorage.getItem('auth_token')) {
+      
       axios
         .post('https://catalog-veneziastone.ru/account/get_user_info/', {
           token: localStorage.getItem('auth_token')

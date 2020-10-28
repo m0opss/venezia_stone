@@ -16,23 +16,29 @@ import SlabItem from '../components/4lvl/SlabItem';
 import OtherItem from '../components/4lvl/OtherItem';
 
 const FourLvl = props => {
-  // React.useEffect(() => {
-  //   axios
-  //     .get('http://92.63.103.180:8000/api_v0/getMaterials/')
-  //     .then(response => {
-  //       props.getDataResponse(response.data);
-  //     })
-  //     .catch(e => {
-  //       console.log(e);
-  //     });
-  // }, []);
-  let type = 'slb';
+  const [item, setItem] = React.useState({});
+
+  React.useEffect(() => {
+    axios
+      .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
+      .then(response => {
+        setItem(response.data.itms[0]);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }, []);
+
   return (
     <div className="four-lvl-container">
       <div className="four-lvl-valute">
         <Valute />
       </div>
-      {type === 'slab' ? <SlabItem /> : <OtherItem />}
+      {item.izd === 'Слэбы' ? (
+        <SlabItem type={item.izd} item={item} />
+      ) : (
+        <OtherItem type={item.izd} item={item} />
+      )}
     </div>
   );
 };
@@ -47,9 +53,6 @@ const mapDispatchToProps = dispatch => {
   return {
     getDataResponse: data => {
       dispatch(dataActions.getDataResponse(data));
-    },
-    setMatList: data => {
-      dispatch(filterActions.setMatList(data));
     }
   };
 };

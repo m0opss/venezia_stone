@@ -15,12 +15,16 @@ const MaterialItem = props => {
         </Link>
         <div className="num-gr-item__descr">
           <div className="num-gr-item__line -f">
-            <p>SKU</p>
-            <p>Цена от 45$</p>
+            <p>SKU {props.sku}</p>
+            <p>
+              {/* Цена от  */}
+              {props.pr}
+              {props.cur}
+            </p>
           </div>
           <div className="num-gr-item__line -s">
             <p>
-              Общая площадь: 22 м<sup>2</sup>
+              Общая площадь: {props.kw} м<sup>2</sup>
             </p>
             <Link to={props.link}>Подробнее</Link>
           </div>
@@ -29,14 +33,23 @@ const MaterialItem = props => {
     );
   } else {
     return (
-      <div key={props.id} className="num-gr-item num-gr-item-root" onClick={props.onClick}>
+      <div
+        key={props.id}
+        className="num-gr-item num-gr-item-root"
+        onClick={props.onClick}
+      >
         <div className="num-gr-item__img">
-          <img src={props.img} alt="" className="num-gr-item__img" />
+          <img src={props.img} className="num-gr-item__img" />
         </div>
         <div className="num-gr-item__name">{props.itemName}</div>
-        <div className="num-gr-item__sku">1111</div>
-        <div className="num-gr-item__sqrt">22 м<sup>2</sup></div>
-        <div className="num-gr-item__cost">22 $</div>
+        <div className="num-gr-item__sku">{props.sku}</div>
+        <div className="num-gr-item__sqrt">
+          {props.kw} м<sup>2</sup>
+        </div>
+        <div className="num-gr-item__cost">
+          {props.pr}
+          {props.cur}
+        </div>
         <Link to={props.link}>Подробнее</Link>
       </div>
     );

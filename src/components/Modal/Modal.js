@@ -3,7 +3,6 @@ import { Modal } from 'antd';
 import './Modal.scss';
 
 const MyModal = props => {
-  let content = <div className="">asdasas</div>;
 
   return (
     <>
@@ -14,7 +13,7 @@ const MyModal = props => {
         onCancel={props.handleCancel}
         okText={props.okText}
       >
-        {props.content}
+        {props.children}
       </Modal>
     </>
   );

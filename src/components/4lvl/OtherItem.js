@@ -13,8 +13,7 @@ import arr from 'images/arr-4lvl.png';
 import like from 'images/like-4lvl.png';
 import basket from 'images/basket-4lvl.png';
 
-
-const PlitkaMainImg = (props) => {
+const PlitkaMainImg = props => {
   return (
     <div className="other-item-info__main-images">
       <div id="img-1" className="other-item-info__main-image -plitka-img">
@@ -38,7 +37,7 @@ const PlitkaMainImg = (props) => {
     </div>
   );
 };
-const OtherMainImg = (props) => {
+const OtherMainImg = props => {
   return (
     <div className="other-item-info__main-images">
       <div id="img-1" className="other-item-info__main-image -other-img">
@@ -56,7 +55,7 @@ const OtherMainImg = (props) => {
     </div>
   );
 };
-const StupeniMainImg = (props) => {
+const StupeniMainImg = props => {
   return (
     <div className="other-item-info__main-images">
       <div id="img-1" className="other-item-info__main-image -stupeni-img">
@@ -68,9 +67,27 @@ const StupeniMainImg = (props) => {
     </div>
   );
 };
-
+const MainImg = props => {
+  if (props.type == 'Ступени') {
+    return <StupeniMainImg img={props.img} />;
+  } else if (props.type == 'Плитка') {
+    return <PlitkaMainImg img={props.img} />;
+  } else {
+    return <OtherMainImg img={props.img} />;
+  }
+};
 
 const OtherItem = props => {
+  const [item, setItem] = React.useState({});
+  React.useEffect(() => {
+    let isSubscr = true;
+    if (props.item.prs && isSubscr) {
+      setItem(props.item.prs[0]);
+    }
+    return () => isSubscr = false
+  });
+  console.log(item);
+
   let colors = [
     '#2C1D02',
     '#402A02',
@@ -97,20 +114,20 @@ const OtherItem = props => {
       <div className="slab-item">
         <div className="slab-item-info">
           <div className="slab-item-info__top">
-            <h1 className="slab-item-info__title">TAN BROWN 30 мм</h1>
+            <h1 className="slab-item-info__title">{props.item.name}</h1>
             <ButtonsPanel />
           </div>
           <div className="slab-item-info__bottom">
             <div className="slab-item-info__left-block slab-item-info__left-block_other">
               <div className="slab-item-info__parameters">
-                <p>Общая площадь</p>
-                <p>Количество</p>
-                <p>Сумма</p>
+                <p>Общая площадь: {item.os} </p>
+                <p>Количество: {item.os} </p>
+                <p>Сумма: {item.cnt} ₽</p>
               </div>
               <ColorRange colors={colors} />
             </div>
             <div className="slab-item-info__right-block">
-              <StupeniMainImg img={im}/>
+              <MainImg img={item.photobl} />
             </div>
           </div>
         </div>
@@ -118,11 +135,11 @@ const OtherItem = props => {
         <div className="good-items-table">
           <div className="good-items-table__item slabs-title other-title">
             <div className="table-row__item table-row__item_l">
-              <p>Склад</p>
+              <p>Склад: {item.skl} </p>
             </div>
             <div className="table-row__item table-row__item_l">
               <p>
-                Цена за м<sup>2</sup>
+                Цена за м<sup>2</sup>: {item.cnt}
               </p>
             </div>
             <div className="table-row__item">

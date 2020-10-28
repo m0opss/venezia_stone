@@ -8,7 +8,7 @@ const Authored = props => {
   const [userInfo, setUserInfo] = React.useState(props.user_info);
 
   React.useEffect(() => {
-    console.log(userName);
+    // console.log(userName);
   }, [userInfo]);
 
   const onExitModal = () => {

@@ -3,24 +3,15 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import './ScrollImage.scss';
 
 const ScrollImage = props => {
-  // let styleScroll = {
-  //   height: '90%',
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   flexWrap: 'wrap',
-  //   justifyContent: 'space-between',
-  // }
-
+  console.log(props)
   const ScrollItem = props => {
     return (
-      <div className="scroll__item">
-        <p>{props.title}</p>
-        <img src={props.img} onClick={() => {}} />
+      <div className="scroll__item" onClick={()=>props.selectItem(props.item)}>
+        <p>{props.item.bl}</p>
+        <img src={props.item.photobl} />
       </div>
     );
   };
-
-  let im = 'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg';
   return (
     <Scrollbars
       style={{ width: '99%', height: 440, maxWidth: 500 }}
@@ -34,13 +25,9 @@ const ScrollImage = props => {
     >
       <div className={`scroll-root ${props.scrollStyle}`}>
         <div id="scroll__wrapper" className="scroll__wrapper">
-          <ScrollItem title="123123" img={im} />
-          <ScrollItem title="12312312" img={im} />
-          <ScrollItem title="1311231" img={im} />
-          <ScrollItem title="1231" img={im} />
-          <ScrollItem title="1123" img={im} />
-          <ScrollItem title="1 12312314124 12341" img={im} />
-          <p>Some great content...</p>
+          {props.elements.map(item => (
+            item.photobl ? <ScrollItem item={item} selectItem={props.selectItem}/> : <></>
+          ))}
         </div>
       </div>
     </Scrollbars>
