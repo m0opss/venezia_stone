@@ -2,6 +2,8 @@
   background: #e5e5e5;
   // background: red;
   width: 100%;
+  position: relative;
+  bottom: -20px;
   // height: 180px;
 }
 .footer__container {
@@ -32,16 +34,20 @@
 
 .-mobile-footer {
   flex-wrap: wrap;
+  @media screen and (max-width: 410px) {
+    flex-direction: column;
+  }
   & > * {
     &:nth-child(1) {
-      flex: 0 1 45%;
+      flex: 0 1 40%;
+      margin-top: 30px;
     }
     &:nth-child(2) {
-      flex: 0 1 50%;
+      flex: 0 1 45%;
       display: flex;
       align-items: center;
       justify-content: center;
-      // text-align: center;
+      margin-top: 30px;
     }
     &:nth-child(3) {
       flex: 0 1 40%;

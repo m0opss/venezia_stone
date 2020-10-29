@@ -3,13 +3,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import filter_icon from 'images/filter-icon.png';
 import filter_icon_hz from 'images/filter-icon_hz.png';
-
-import 'antd/dist/antd.css';
-import './Filter.scss';
-
-import filterActions from 'actions/filterActions';
+import close_icon from 'images/close.png';
 
 import { Menu } from 'antd';
+
+import filterActions from 'actions/filterActions';
+import {
+  MobileView,
+  BrowserView,
+  isTablet,
+  isMobile
+} from 'react-device-detect';
+import './Filter.scss';
+import 'antd/dist/antd.css';
 
 import colors from './filterColors.json';
 import materials from './filterMaterials.json';
@@ -17,12 +23,10 @@ import materials from './filterMaterials.json';
 const { SubMenu } = Menu;
 
 const Filter = props => {
-  let w, m;
-  if (document.documentElement.clientWidth >= 1000) w = false;
-  else w = true;
-  if (document.documentElement.clientWidth <= 800) m = true;
-
   const [state, setState] = React.useState({ collapsed: true });
+
+  let m;
+  if (document.documentElement.clientWidth <= 800) m = true;
 
   const handleClick = e => {
     setState({ collapsed: !state.collapsed });
@@ -34,7 +38,7 @@ const Filter = props => {
       <div className="filter__button">
         {!state.collapsed && !m ? (
           <>
-            <img src={filter_icon} className='-icon' />
+            <img src={filter_icon} className="-icon" />
             <img
               className="filter__button-click"
               src={filter_icon_hz}
@@ -55,6 +59,11 @@ const Filter = props => {
         multiple={true}
         inlineCollapsed={state.collapsed}
       >
+        {isMobile && !isTablet ? (
+          <img src={close_icon} className="close-filter" onClick={()=>setState({ collapsed: !state.collapsed })}/>
+        ) : (
+          <></>
+        )}
         <SubMenu key="material" title="Материал">
           {materials.materials.map((material, index) => {
             return (

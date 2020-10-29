@@ -59,6 +59,10 @@ const AddressCard = props => {
   );
 };
 const Contacts = () => {
+  const [center, setCenter] = React.useState([52.721219, 41.452274]);
+  const [zoom, setZoom] = React.useState(4);
+  const [active, setActive] = React.useState(0);
+  
   return (
     <div className="contacts-container">
       <h1 className="contacts-h1">Контакты</h1>
@@ -66,14 +70,18 @@ const Contacts = () => {
         <YMaps>
           <Map
             width="100%"
-            height="530px"
+            height="550px"
             defaultState={{
-              center: [55.751574, 37.573856],
-              zoom: 4
+              center: center,
+              zoom: zoom
             }}
           >
-            <Placemark geometry={[55.684758, 37.738521]} />
-            <Placemark geometry={[45.684758, 32.738521]} />
+            <Placemark geometry={[55.602576, 37.436086]} />
+            <Placemark geometry={[45.055212, 39.293164]} />
+            <Placemark geometry={[56.908104, 60.630532]} />
+            <Placemark geometry={[59.869955, 30.49139]} />
+            <Placemark geometry={[55.938667, 49.320851]} />
+            <Placemark geometry={[45.389194, 33.993751]} />
           </Map>
         </YMaps>
       </div>
