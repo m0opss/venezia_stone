@@ -21,6 +21,10 @@
   font-size: 12px;
   line-height: 140%;
   flex: 0 1 48%;
+  @media screen and (max-width: 670px) {
+    flex: 0 1 70%;
+    justify-content: flex-start;
+  }
   p {
     margin: 0;
   }
@@ -32,6 +36,7 @@
   .slab-items-group-item__img-main {
     height: 100%;
     width: 100%;
+    min-width: 125px;
   }
   .slab-items-group-item__img-icon {
     background-color: white;

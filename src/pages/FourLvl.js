@@ -9,7 +9,12 @@ import filterActions from '../actions/filterActions';
 import dataActions from 'actions/dataAction';
 
 import Filter from 'components/Filter/Filter';
-import { MobileView, BrowserView, isTablet } from 'react-device-detect';
+import {
+  MobileView,
+  BrowserView,
+  isTablet,
+  isBrowser
+} from 'react-device-detect';
 
 import './FourLvl.scss';
 import SlabItem from '../components/4lvl/SlabItem';
@@ -32,7 +37,7 @@ const FourLvl = props => {
   return (
     <div className="four-lvl-container">
       <div className="four-lvl-valute">
-        <Valute />
+        {isTablet || isBrowser ? <Valute /> : <></>}
       </div>
       {item.izd === 'Слэбы' ? (
         <SlabItem type={item.izd} item={item} />

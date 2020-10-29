@@ -3,3 +3,13 @@
 .buttons-panel__modal {
   display: flex;
 }
+.buttons-panel_mob {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  .slab-item-info__button {
+    flex: 0 1 47%;
+    margin-top: 15px;
+    padding: 15px 10px;
+  }
+}

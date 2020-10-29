@@ -4,6 +4,7 @@ import ColorRange from 'components/ColorRange/ColorRange';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import OtherTableRow from 'components/4lvl/OtherTableRow';
 import OtherItemTablet from 'components/4lvl/OtherItemTablet';
+import OtherItemMobile from 'components/4lvl/OtherItemMobile';
 
 import { isTablet, isBrowser } from 'react-device-detect';
 
@@ -120,7 +121,7 @@ const OtherItem = props => {
           <div className="slab-item-info__bottom">
             <div className="slab-item-info__left-block slab-item-info__left-block_other">
               <div className="slab-item-info__parameters">
-                <p>Общая площадь: {item.os} </p>
+              <p>Общая площадь: {item.os} </p>
                 <p>Количество: {item.os} </p>
                 <p>Сумма: {item.cnt} ₽</p>
               </div>
@@ -178,9 +179,9 @@ const OtherItem = props => {
       </div>
     );
   } else if (isTablet) {
-    return <OtherItemTablet />;
+    return <OtherItemTablet item={props.item}/>;
   } else {
-    return <div className="">mob</div>;
+    return <OtherItemMobile item={props.item} />;
   }
 };
 

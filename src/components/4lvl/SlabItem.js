@@ -4,6 +4,8 @@ import ScrollImage from 'components/ScrollImage/ScrollImage';
 import ColorRange from 'components/ColorRange/ColorRange';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import SlabItemTablet from 'components/4lvl/SlabItemTablet';
+import SlabItemMobile from 'components/4lvl/SlabItemMobile';
+
 
 import {
   MobileView,
@@ -163,7 +165,7 @@ const SlabItem = props => {
   } else if (isTablet) {
     return <SlabItemTablet item={props.item}/>;
   } else {
-    return <div className=""></div>;
+    return <SlabItemMobile item={props.item}/>;
   }
 };
 

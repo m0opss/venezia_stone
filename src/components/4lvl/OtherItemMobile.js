@@ -1,10 +1,13 @@
 import React from 'react';
+import lamp from 'images/lamp.png';
+import book from 'images/book.png';
 
-import ColorRange from 'components/ColorRange/ColorRange';
+import Valute from 'components/Valute/Valute';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
-import './OtherItemTablet.scss';
+import Slider from 'react-slick';
 import like from 'images/like.png';
 import basket_icon from 'images/basket_icon.png';
+import './OtherItemMobile.scss';
 
 const GroupItem = props => {
   const [S, setS] = React.useState(0);
@@ -32,8 +35,8 @@ const GroupItem = props => {
       <div className="other-items-group__line">
         <p className="other-items-group_first-col">Заказать</p>
         <div className="other-items-group__centered">
-          <input type="number" min='0' defaultValue={cnt} step="1"/>
-          <input type="number" min='0' defaultValue={S} step="0.01"/>
+          <input type="number" min="0" defaultValue={cnt} step="1" />
+          <input type="number" min="0" defaultValue={S} step="0.01" />
         </div>
       </div>
       <div className="other-items-group__line">
@@ -63,25 +66,17 @@ const GroupItem = props => {
 };
 
 const OtherItemTablet = props => {
+  const [_item, setItem] = React.useState({'prs': []});
   const [selectedEl, setSelectedEl] = React.useState({});
+
   React.useEffect(() => {
     let isSubscr = true;
-    if (props.item.prs && isSubscr) {
-      setSelectedEl(props.item.prs[0]);
+    if (!(Object.entries(props.item).length === 0 && props.item.constructor) === Object && isSubscr) {
+      setItem(props.item);
+      setSelectedEl(item.prs[0]);
     }
-    return () => isSubscr = false
+    return () => (isSubscr = false);
   });
-  let colors = [
-    '#2C1D02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02'
-  ];
   let im = 'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg';
   let item = {
     city: 'Cfyrn-Gtnth,ehu',
@@ -89,26 +84,39 @@ const OtherItemTablet = props => {
     S: 12312.12,
     cost: 1231
   };
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1
+  };
   return (
-    <div className="slab-item">
-      <div className="slab-item-info">
-        <div className="slab-item-info__top slab-item-info__top-tablet">
-          <ButtonsPanel />
-        </div>
-        <div className="slab-item-info__bottom">
-          <div className="slab-item-info__left-block slab-item-info__left-block_other slab-item-info__left-block_other-tablet">
-            <h1 className="slab-item-info__title">TAN BROWN 30 мм</h1>
-            <div className="slab-item-info__parameters">
-              <p>Общая площадь</p>
-              <p>Количество</p>
-              <p>Сумма</p>
-            </div>
+    <div className="slab-item-mobile">
+      <div className="slab-item-mobile__main-title">{selectedEl.bl}</div>
+      <ButtonsPanel />
+      <Slider {...settings}>
+                
+      {_item.prs.map(item => (
+          <div className="slab-item-carousel__item" selectItem={setSelectedEl}>
+            <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
           </div>
-          <div className="slab-item-info__slab-img">
-            <img src={im} />
-            <ColorRange colors={colors} />
-          </div>
+        ))}
+      </Slider>
+      <div className="slab-item-mobile__main">
+        <div className="slab-item-info__options">
+          <img src={lamp} />
+          <img src={book} />
         </div>
+        <div className="slab-item-mobile__main-img">
+          {/* <img src={selectedEl.photobl} /> */}
+          <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
+        </div>
+      </div>
+
+      <div className="slab-item-mobile__options-group">
+        <div className=""></div>
+        <Valute />
       </div>
       <div className="other-items-group">
         <GroupItem item={item} />

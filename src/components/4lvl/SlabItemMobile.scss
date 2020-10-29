@@ -1,0 +1,71 @@
+.slab-item-mobile {
+  display: flex;
+  flex-direction: column;
+}
+.slab-item-carousel__item {
+  height: 120px;
+  margin-top: 40px;
+  padding: 5px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.slab-item-mobile__main {
+  margin-top: 40px;
+  .slab-item-mobile__main-title {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 140%;
+  }
+  .slab-item-mobile__main-img {
+    width: 100%;
+    height: 240px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+.slab-item-mobile__options-group {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.slick-dots {
+  display: flex !important;
+  justify-content: center;
+}
+.slick-dots li {
+  display: none;
+}
+/* only displaying the active bullets and the 2 bullets next to it */
+.slick-dots li.slick-active,
+.slick-dots li.slick-active + li,
+.slick-dots li.slick-active + li + li {
+  display: block;
+}
+/* displaying the last three bullets when slick-active class isn't applied to any li before them  */
+.slick-dots li:nth-last-child(1),
+.slick-dots li:nth-last-child(2),
+.slick-dots li:nth-last-child(3) {
+  display: block;
+}
+/* hiding the last three bullets if slick-active exist before them */
+.slick-dots li.slick-active ~ li:nth-last-child(1),
+.slick-dots li.slick-active ~ li:nth-last-child(2),
+.slick-dots li.slick-active ~ li:nth-last-child(3) {
+  display: none;
+}
+/* specific conditions to always display the last three bullets */
+.slick-dots li.slick-active + li + li:nth-last-child(3),
+.slick-dots li.slick-active + li + li:nth-last-child(2),
+.slick-dots li.slick-active + li + li:nth-last-child(1),
+.slick-dots li.slick-active + li:nth-last-child(3),
+.slick-dots li.slick-active + li:nth-last-child(2),
+.slick-dots li.slick-active + li:nth-last-child(1) {
+  display: block;
+}

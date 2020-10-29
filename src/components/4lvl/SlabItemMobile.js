@@ -3,15 +3,15 @@ import React from 'react';
 import ScrollImage from 'components/ScrollImage/ScrollImage';
 import ColorRange from 'components/ColorRange/ColorRange';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
+import Valute from 'components/Valute/Valute';
 
 import lamp from 'images/lamp.png';
 import book from 'images/book.png';
 import like from 'images/like-4lvl.png';
 import basket from 'images/basket-4lvl.png';
+import Slider from 'react-slick';
 
-
-
-import './SlabItemTablet.scss';
+import './SlabItemMobile.scss';
 
 const GroupItem = props => {
   return (
@@ -47,9 +47,9 @@ const GroupItem = props => {
   );
 };
 
-const SlabItemTablet = props => {
+const SlabItemMobile = props => {
   const [selectedEl, setSelectedEl] = React.useState(props.item.prs[0]);
-
+  console.log(props.item);
   let colors = [
     '#2C1D02',
     '#402A02',
@@ -61,43 +61,39 @@ const SlabItemTablet = props => {
     '#402A02',
     '#402A02'
   ];
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1
-  }
+
+
+  let images = [
+    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
+    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
+    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
+    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
+    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg'
+  ];
 
   return (
-    <div className="slab-item">
-      <div className="slab-item-info">
-        <div className="slab-item-info__top">
-          <h1 className="slab-item-info__title">{props.item.name}</h1>
-          <ButtonsPanel />
-        </div>
-        <div className="slab-item-info__bottom">
-          <div className="slab-item-info__left-block">
-            <ScrollImage
-              scrollStyle="slab-item-info-scroll"
-              selectItem={setSelectedEl}
-              elements={props.item.prs}
-            />
+    <div className="slab-item-mobile">
+      <ButtonsPanel images={images} />
+      <Slider {...settings}>
+        {props.item.prs.map(item => (
+          <div className="slab-item-carousel__item" selectItem={setSelectedEl}>
+            <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
+            {/* <img src={item.photobl} /> */}
           </div>
-          <div className="slab-item-info__right-block">
-            <div className="slab-item-info__rb-top">
-              <div className="slab-item-info__slab-title">{selectedEl.bl}</div>
-              <div className="slab-item-info__options">
-                <img src={lamp} />
-                <img src={book} />
-              </div>
-            </div>
-            <div className="slab-item-info__slab-img">
-              <img src={selectedEl.photobl} />
-              <ColorRange colors={colors} />
-            </div>
-          </div>
+        ))}
+      </Slider>
+      <div className="slab-item-mobile__main">
+        <div className="slab-item-mobile__main-title">{selectedEl.bl}</div>
+        <div className="slab-item-mobile__main-img">
+          {/* <img src={selectedEl.photobl} /> */}
+          <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
         </div>
+      </div>
+      <ColorRange colors={colors} />
+
+      <div className="slab-item-mobile__options-group">
+        <div className=""></div>
+        <Valute />
       </div>
       <div className="hidescroll">
         <div className="slab-items-group">
@@ -110,4 +106,4 @@ const SlabItemTablet = props => {
   );
 };
 
-export default SlabItemTablet;
+export default SlabItemMobile;
