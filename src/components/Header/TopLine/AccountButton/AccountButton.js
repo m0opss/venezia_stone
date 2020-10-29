@@ -13,9 +13,10 @@ const AccountButton = props => {
   return (
     <div className="top-line__account">
       {props.isAuth ? (
-        <Authored setAuth={props.setAuth} setToken={props.setToken} user_info={props.user_info}/>
+        <Authored setAuth={props.setAuth} setToken={props.setToken} user_name={props.user_name} user_info={props.user_info}/>
       ) : (
         <Unauthored
+        setUserName={props.setUserName}
           title={
             <Icon
               type="login"
@@ -34,7 +35,8 @@ const AccountButton = props => {
 const mapStateToProps = store => {
   return {
     isAuth: store.auth_data.isAuth,
-    user_info: store.user_data.user_info
+    user_info: store.user_data.user_info,
+    user_name: store.user_data.user_name,
   };
 };
 
@@ -45,6 +47,9 @@ const mapDispatchToProps = dispatch => {
     },
     setToken: data => {
       dispatch(authActions.setToken(data));
+    },
+    setUserName: data => {
+      dispatch(userActions.setUserName(data));
     }
   };
 };

@@ -4,41 +4,42 @@ import { Link } from 'react-router-dom';
 
 import Dropdown from 'components/Dropdown/Dropdown';
 
+function ucFirst(str) {
+  if (!str) return str;
+  return str[0].toUpperCase() + str.slice(1);
+}
+const createUserName = arr => {
+  let userName = '';
+  Object.keys(arr).map(name => {
+    if (arr[name] != null) {
+      if (name === 'last') userName += ucFirst(arr[name]) + ' ';
+      else userName += arr[name][0].toUpperCase() + '. ';
+    }
+  });
+
+  return userName;
+};
 const Authored = props => {
-  const [userInfo, setUserInfo] = React.useState(props.user_info);
+  const [userName, setUserName] = React.useState('');
+
+  const arr = {
+    last: props.user_info.last_name,
+    first: props.user_info.first_name,
+    middle: props.user_info.middle_name
+  };
 
   React.useEffect(() => {
-    // console.log(userName);
-  }, [userInfo]);
+    let name;
+    if ((createUserName(arr) == '')) name = props.user_info.email;
+    else name = createUserName(arr);
+    setUserName(name);
+  });
 
   const onExitModal = () => {
     props.setAuth(false);
     props.setToken('');
   };
 
-  let userName = '';
-  const arr = [
-    props.user_info.last_name,
-    props.user_info.first_name,
-    // props.user_info.first_name[0] + '.',
-    props.user_info.middle_name
-    // props.user_info.middle_name[0] + '.'
-  ];
-
-  arr.map(name => {
-    if (name != null) {
-      userName += name + ' ';
-    }
-  });
-
-  if (
-    props.user_info.last_name == null &&
-    !props.user_info.first_name == null &&
-    !props.user_info.middle_name == null
-  )
-    userName = props.user_info.email;
-
-  // console.log(userName, userName);
   const menu = (
     <>
       <Menu.Item key="1">

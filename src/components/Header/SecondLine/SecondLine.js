@@ -9,15 +9,36 @@ import find from 'images/find.png';
 import searchClear from 'images/searchClear.png';
 
 const Search = props => {
+  const [searchActive, setsearchActive] = React.useState(false);
+  const [searchVisible, setSearchVisible] = React.useState(true);
+  const [styleVisible, setStyleVisible] = React.useState('');
+
+  const onClickMinimize = () => {
+    setSearchVisible(false);
+    setStyleVisible('second-line__search-unvisible')
+  };
+  const onClickSearch = () => {
+    if (searchVisible) console.log('Searching...')
+    setSearchVisible(true);
+    setStyleVisible('');
+  };
+
   return (
-    <div className="second-line__search">
+    <div
+      className={`second-line__search ${
+        searchActive ? 'second-line__search-active' : ''
+      } ${styleVisible} 
+      `}
+    >
       <input
         placeholder="Поиск"
         defaultValue={props.searchVal}
         onChange={props.onChangeSearch}
+        onFocus={() => setsearchActive(true)}
+        onBlur={() => setsearchActive(false)}
       />
-      <img src={find} alt="" />
-      <img src={searchClear} alt="" />
+      <img src={find} onClick={onClickSearch} />
+      <img src={searchClear} onClick={onClickMinimize} />
     </div>
   );
 };
@@ -96,7 +117,7 @@ const SecondLine = props => {
     console.log(e.target.id);
     history.push('/');
   };
-  
+
   const onChangeSearch = e => {
     console.log(e.target.value);
   };

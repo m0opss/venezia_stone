@@ -50,6 +50,7 @@ const Login = props => {
           localStorage.setItem('auth_token', response.data.key)
           props.setAuth(true);
           props.setToken(response.data.key);
+          
           axios
           .post('https://catalog-veneziastone.ru/account/get_user_info/', {
             token: response.data.key

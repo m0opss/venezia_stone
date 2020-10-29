@@ -8,6 +8,12 @@ const userActions = {
       payload: data
     };
   },
+  setUserName: data => {
+    return {
+      type: 'SET_USER_NAME',
+      payload: data
+    };
+  },
 };
 
 export default userActions;
