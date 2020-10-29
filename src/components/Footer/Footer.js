@@ -23,53 +23,60 @@ const Footer = props => {
   let style = '';
   if (!isTablet && isMobile) style = '-mobile-footer';
   return (
-    <div className="container">
-      <div className={`footer__container ${style}`}>
-        <Logo />
-        <div className="footer__contacts-info">
-          Единый бесплатный номер:
-          <br />8 (800) 100-5-888
-        </div>
-        <div className="footer__copyright">
-          Copyright © 2011 – 2020. <br />
-          Все права защищены.
-        </div>
-        <div className="footer__social">
-          <Link to="#">
-            <Icon
-              icon={viberIcon}
-              color="#6F3FAA"
-              width="1.5em"
-              height="1.5em"
-            />
-          </Link>
-          <Link to="#">
-            <Icon icon={vkIcon} color="#4D76A1" width="1.5em" height="1.5em" />
-          </Link>
-          <Link to="#">
-            <Icon
-              icon={facebookIcon}
-              color="#3B5998"
-              width="1.5em"
-              height="1.5em"
-            />
-          </Link>
-          <Link to="#">
-            <Icon
-              icon={telegramIcon}
-              color="#039BE5"
-              width="1.5em"
-              height="1.5em"
-            />
-          </Link>
-          <Link to="#">
-            <Icon
-              icon={whatsappIcon}
-              color="#4CAF50"
-              width="1.5em"
-              height="1.5em"
-            />
-          </Link>
+    <div className="footer__wrapper">
+      <div className="container">
+        <div className={`footer__container ${style}`}>
+          <Logo />
+          <div className="footer__contacts-info">
+            Единый бесплатный номер:
+            <br />8 (800) 100-5-888
+          </div>
+          <div className="footer__copyright">
+            Copyright © 2011 – 2020. <br />
+            Все права защищены.
+          </div>
+          <div className="footer__social">
+            <Link to="#">
+              <Icon
+                icon={viberIcon}
+                color="#6F3FAA"
+                width="1.5em"
+                height="1.5em"
+              />
+            </Link>
+            <Link to="#">
+              <Icon
+                icon={vkIcon}
+                color="#4D76A1"
+                width="1.5em"
+                height="1.5em"
+              />
+            </Link>
+            <Link to="#">
+              <Icon
+                icon={facebookIcon}
+                color="#3B5998"
+                width="1.5em"
+                height="1.5em"
+              />
+            </Link>
+            <Link to="#">
+              <Icon
+                icon={telegramIcon}
+                color="#039BE5"
+                width="1.5em"
+                height="1.5em"
+              />
+            </Link>
+            <Link to="#">
+              <Icon
+                icon={whatsappIcon}
+                color="#4CAF50"
+                width="1.5em"
+                height="1.5em"
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </div>
