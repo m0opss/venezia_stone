@@ -50,7 +50,7 @@ const Filter = props => {
         )}
       </div>
       <Menu
-        style={{ width: 327 }}
+        style={{ width: 320 }}
         mode="inline"
         multiple={true}
         inlineCollapsed={state.collapsed}
