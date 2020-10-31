@@ -4,8 +4,6 @@ import axios from 'axios';
 
 import materialActions from '../actions/materialAction';
 import dataActions from 'actions/dataAction';
-import a_z from 'images/a-z.png';
-import arrow from 'images/arr.svg';
 
 import listIcon from 'images/str.png';
 import pltk from 'images/pltk.png';
@@ -15,7 +13,8 @@ import pltk_a from 'images/pltk_a.png';
 import { Icon } from '@iconify/react';
 import sortIcon from '@iconify/icons-dashicons/sort';
 import Valute from 'components/Valute/Valute';
-import NumGroupItem from '../components/Content/NumGroupItem/NumGroupItem';
+import Sort from 'components/Sort/Sort';
+import NumGroupItem from 'components/Content/NumGroupItem/NumGroupItem';
 
 import './NumGroups.scss';
 import Filter from 'components/Filter/Filter';
@@ -27,37 +26,10 @@ import {
   isBrowser
 } from 'react-device-detect';
 
-const AlphSortArr = arr => {
-  let tmp = [...arr];
-  tmp.sort((a, b) => {
-    let nameA = a.gr.toLowerCase(),
-      nameB = b.gr.toLowerCase();
-    if (nameA < nameB) return -1;
-    if (nameA > nameB) return 1;
-    return 0;
-  });
-  return tmp;
-};
-const ColorSortArr = arr => {
-  let tmp = [...arr];
-  tmp.sort((a, b) => {
-    let nameA = a.id_color,
-      nameB = b.id_color;
-    if (nameA < nameB) return -1;
-    if (nameA > nameB) return 1;
-    return 0;
-  });
-  return tmp;
-};
-
 const NumGroups = props => {
   const [numGroups, setNumGroups] = React.useState([]);
-  const [initialArr, setInitialArr] = React.useState([]);
-  const [alphSorted, setAlphSorted] = React.useState([]);
-  const [colorSorted, setColorSorted] = React.useState([]);
-
-  const [IsColorSorted, setIsColorSorted] = React.useState(false);
-  const [IsAlphSorted, setIsAlphSorted] = React.useState(false);
+  const [defGroups, setdefNumGroups] = React.useState([]);
+  const [sortOn, setSortOn] = React.useState(false);
 
   const [style_pltk, setHover_pltk] = React.useState(true);
   const [num_groups_items, setNum_groups_items] = React.useState(
@@ -72,10 +44,8 @@ const NumGroups = props => {
       )
       .then(response => {
         if (isSubscr) {
-          setInitialArr(response.data.mts[0].grs);
           setNumGroups(response.data.mts[0].grs);
-          setColorSorted(ColorSortArr(response.data.mts[0].grs));
-          setAlphSorted(AlphSortArr(response.data.mts[0].grs));
+          setdefNumGroups(response.data.mts[0].grs)
         }
       })
       .catch(e => {
@@ -83,25 +53,6 @@ const NumGroups = props => {
       });
     return () => (isSubscr = false);
   }, []);
-
-  const AlphSort = () => {
-    console.log(IsAlphSorted);
-    setIsAlphSorted(!IsAlphSorted);
-    if (IsAlphSorted) setNumGroups(alphSorted);
-    else setNumGroups(initialArr);
-  };
-
-  const ColorSort = () => {
-    setIsColorSorted(!IsColorSorted);
-    let object = document.getElementsByTagName('object'); //получаем элмент object
-    console.log(object)
-    if (IsColorSorted) {
-      setNumGroups(colorSorted);
-      // let svgDocument = object.contentDocument; //получаем svg элемент внутри object
-      // let svgElement = svgDocument.getElementsByTagName('path'); //получаем любой элемент внутри svg
-      // svgElement.setAttribute('fill', 'red');
-    } else setNumGroups(initialArr);
-  };
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -112,7 +63,10 @@ const NumGroups = props => {
     setHover_pltk(false);
     setNum_groups_items('num-gr-items-group-list');
   };
-
+  const setArr = (arr) => {
+    console.log(arr)
+    setNumGroups(arr)
+  }
   return (
     <>
       {isTablet ? (
@@ -124,13 +78,7 @@ const NumGroups = props => {
       )}
       <div className="num-gr-options">
         <Valute />
-        <div className="num-gr-options__color_sort" onClick={ColorSort}>
-          <object type="image/svg+xml" data={arrow}>
-          </object>
-        </div>
-        <div className="num-gr-options__sort_alph" onClick={AlphSort}>
-          <img src={a_z} />
-        </div>
+        <Sort defArr={defGroups} arr={numGroups} setArr={setArr} on={sortOn} setSortOn={setSortOn}/>
         {isMobile && !isTablet ? (
           <></>
         ) : (

@@ -1,10 +1,10 @@
 .filter {
-  // @media screen and (min-width: 768px) {
-  //   position: absolute;
-  //   z-index: 2;
-  //   top: 160px;
-  //   left: 15px;
-  // }
+  @media screen and (min-width: 768px) {
+    position: absolute;
+    z-index: 2;
+    top: 160px;
+    left: 15px;
+  }
 
   .ant-menu-inline-collapsed.ant-menu-root.ant-menu-vertical {
     display: none;
@@ -13,25 +13,25 @@
     display: none;
   }
   .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
-    > li {
-      &:nth-child(2) {
-        margin-top: 20px !important;
-      }
-    }
+    // > li {
+    //   &:nth-child(2) {
+    //     margin-top: 20px !important;
+    //   }
+    // }
     @media screen and (max-width: 885px) {
       width: 48vw !important;
     }
-    // @media screen and (max-width: 767px) {
-    //   position: absolute;
-    //   width: 96vw !important;
-    //   left: -4px;
-    //   top: 55px;
-    //   z-index: 2;
+    @media screen and (max-width: 767px) {
+      position: absolute;
+      width: 96vw !important;
+      left: -4px;
+      top: 55px;
+      z-index: 2;
 
-    //   .ant-menu-submenu {
-    //     width: 70vw;
-    //   }
-    // }
+      .ant-menu-submenu {
+        width: 70vw;
+      }
+    }
   }
   .ant-menu-submenu {
     margin: 5px;

@@ -6,6 +6,7 @@ import axios from 'axios';
 import materialActions from '../actions/materialAction';
 import dataActions from 'actions/dataAction';
 import Valute from 'components/Valute/Valute';
+
 import a_z from 'images/a-z.png';
 import listIcon from 'images/str.png';
 import pltk from 'images/pltk.png';
@@ -66,23 +67,6 @@ const Numenclature = props => {
       return () => isSubscr = false
   }, []);
 
-  const handleValOption = e => {
-    if (e.target.id === 'val-opt-1') {
-      setActionOption1('-active-opt');
-      setActionOption2('');
-      setActionOption3('');
-    }
-    if (e.target.id === 'val-opt-2') {
-      setActionOption2('-active-opt');
-      setActionOption1('');
-      setActionOption3('');
-    }
-    if (e.target.id === 'val-opt-3') {
-      setActionOption3('-active-opt');
-      setActionOption1('');
-      setActionOption2('');
-    }
-  };
 
   const alphSorted = numGroups => {
     let tmp = [...numGroups];
@@ -154,27 +138,7 @@ const Numenclature = props => {
           </div>
         )}
         <div className="other-options">
-          <p
-            id="val-opt-1"
-            className={`num-gr-options__valuta ${actionOption1}`}
-            onClick={e => handleValOption(e)}
-          >
-            RUB
-          </p>
-          <p
-            id="val-opt-2"
-            className={`num-gr-options__valuta ${actionOption2}`}
-            onClick={e => handleValOption(e)}
-          >
-            USD
-          </p>
-          <p
-            id="val-opt-3"
-            className={`num-gr-options__valuta ${actionOption3}`}
-            onClick={e => handleValOption(e)}
-          >
-            EUR
-          </p>
+          <Valute />
           <div className="num-gr-options__color_sort">
             <Icon
               icon={sortIcon}

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import './MaterialItem.scss';
 
 const MaterialItem = props => {
-  console.log(props.sku);
   return (
     <div className="catalog-item" onClick={props.onClick}>
       <Link to={props.link}>

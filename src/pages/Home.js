@@ -11,7 +11,8 @@ import {
   MobileView,
   BrowserView,
   isTablet,
-  TabletView
+  TabletView,
+  isBrowser
 } from 'react-device-detect';
 
 import './Home.scss';
@@ -21,6 +22,13 @@ const Home = props => {
   const [dropdownSales, setDropdownSales] = React.useState(false);
   const [dropdownNew, setDropdownNew] = React.useState(false);
   const [dropdownRoad, setDropdownRoad] = React.useState(false);
+
+  const [dropClassMain, setDropClassMain] = React.useState(
+    'home-bottom-links__link-active'
+  );
+  const [dropClassSales, setDropClassSales] = React.useState('');
+  const [dropClassNew, setDropClassNew] = React.useState('');
+  const [dropClassRoad, setDropClassRoad] = React.useState('');
 
   React.useEffect(() => {
     axios
@@ -32,8 +40,22 @@ const Home = props => {
         console.log(e);
       });
   }, []);
+  const resetStyle = () => {
+    setDropClassMain('');
+    setDropClassSales('');
+    setDropClassNew('');
+    setDropClassRoad('');
+  };
 
   const openListMain = () => {
+    if (!dropdownMain) {
+      setDropClassMain('home-bottom-links__link-active');
+      setDropClassSales('');
+      setDropClassNew('');
+      setDropClassRoad('');
+    } else {
+      resetStyle();
+    }
     setDropdownMain(!dropdownMain);
     setDropdownSales(false);
     setDropdownNew(false);
@@ -42,6 +64,14 @@ const Home = props => {
     // el.scrollIntoView({ behavior: 'smooth' });
   };
   const openListSales = () => {
+    if (!dropdownSales) {
+      setDropClassMain('');
+      setDropClassSales('home-bottom-links__link-active');
+      setDropClassNew('');
+      setDropClassRoad('');
+    } else {
+      resetStyle();
+    }
     setDropdownMain(false);
     setDropdownSales(!dropdownSales);
     setDropdownNew(false);
@@ -50,6 +80,14 @@ const Home = props => {
     // el.scrollIntoView({ behavior: 'smooth' });
   };
   const openListNew = () => {
+    if (!dropdownNew) {
+      setDropClassMain('');
+      setDropClassSales('');
+      setDropClassNew('home-bottom-links__link-active');
+      setDropClassRoad('');
+    } else {
+      resetStyle();
+    }
     setDropdownMain(false);
     setDropdownSales(false);
     setDropdownNew(!dropdownNew);
@@ -59,6 +97,14 @@ const Home = props => {
     // el.scrollIntoView({ behavior: 'smooth' });
   };
   const openListRoad = () => {
+    if (!dropdownRoad) {
+      setDropClassMain('');
+      setDropClassSales('');
+      setDropClassNew('');
+      setDropClassRoad('home-bottom-links__link-active');
+    } else {
+      resetStyle();
+    }
     setDropdownMain(false);
     setDropdownSales(false);
     setDropdownNew(false);
@@ -68,23 +114,18 @@ const Home = props => {
   };
 
   return (
-    <div className="content-wrapper">
-        <TabletView>
-          <Filter />
-        </TabletView>
-        <BrowserView>
-          <Filter />
-        </BrowserView>
+    <div className="">
       <div className="home-container">
+        {isTablet || isBrowser ? <Filter /> : <></>}
         <div
           id="main"
-          className="home-bottom-links__link"
+          className={`home-bottom-links__link ${dropClassMain}`}
           onClick={openListMain}
         >
           Натуральный камень в наличии
         </div>
         <div className="catalog-items-group">
-          {dropdownMain ? (
+          {dropdownMain && props.data ? (
             props.data.mts.map(item => (
               <MaterialItem
                 img={item.photo_material}
@@ -100,13 +141,13 @@ const Home = props => {
         </div>
         <div
           id="sales"
-          className="home-bottom-links__link"
+          className={`home-bottom-links__link ${dropClassSales}`}
           onClick={openListSales}
         >
           <span>Распродажа</span>
         </div>
         <div className="catalog-items-group">
-          {dropdownSales ? (
+          {dropdownSales && props.data ? (
             props.data.mts.map(item => (
               <MaterialItem
                 img={item.photo_material}
@@ -120,11 +161,15 @@ const Home = props => {
             <></>
           )}
         </div>
-        <div id="new" className="home-bottom-links__link" onClick={openListNew}>
+        <div
+          id="new"
+          className={`home-bottom-links__link ${dropClassNew}`}
+          onClick={openListNew}
+        >
           Новые поступления камня
         </div>
         <div className="catalog-items-group">
-          {dropdownNew ? (
+          {dropdownNew && props.data ? (
             props.data.mts.map(item => (
               <MaterialItem
                 img={item.photo_material}
@@ -140,13 +185,13 @@ const Home = props => {
         </div>
         <div
           id="road"
-          className="home-bottom-links__link"
+          className={`home-bottom-links__link ${dropClassRoad}`}
           onClick={openListRoad}
         >
           Товары в пути
         </div>
         <div className="catalog-items-group">
-          {dropdownRoad ? (
+          {dropdownRoad && props.data ? (
             props.data.mts.map(item => (
               <MaterialItem
                 img={item.photo_material}
