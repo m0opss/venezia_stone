@@ -80,14 +80,17 @@ const MainImg = props => {
 
 const OtherItem = props => {
   const [item, setItem] = React.useState({});
+  console.log('other', props.item);
+
   React.useEffect(() => {
     let isSubscr = true;
     if (props.item.prs && isSubscr) {
       setItem(props.item.prs[0]);
     }
-    return () => isSubscr = false
+    return () => (isSubscr = false);
   });
-  console.log(item);
+
+
 
   let colors = [
     '#2C1D02',
@@ -101,15 +104,6 @@ const OtherItem = props => {
     '#402A02'
   ];
 
-  let im = 'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg';
-
-  let itemTable = {
-    skl: 'Санкт-Петербург',
-    cost: '10 000.11₽',
-    s: '20 100',
-    cnt: '00010'
-  };
-
   if (isBrowser) {
     return (
       <div className="slab-item">
@@ -121,14 +115,14 @@ const OtherItem = props => {
           <div className="slab-item-info__bottom">
             <div className="slab-item-info__left-block slab-item-info__left-block_other">
               <div className="slab-item-info__parameters">
-              <p>Общая площадь: {item.os} </p>
+                <p>Общая площадь: {item.os} </p>
                 <p>Количество: {item.os} </p>
                 <p>Сумма: {item.cnt} ₽</p>
               </div>
               <ColorRange colors={colors} />
             </div>
             <div className="slab-item-info__right-block">
-              <MainImg img={item.photobl} />
+              <MainImg type={props.type} img={item.photobl} />
             </div>
           </div>
         </div>
@@ -171,17 +165,22 @@ const OtherItem = props => {
               <img src={basket} />
             </div>
           </div>
-          <OtherTableRow item={itemTable} />
-          <OtherTableRow item={itemTable} />
-          <OtherTableRow item={itemTable} />
-          <OtherTableRow item={itemTable} />
+          {props.item.prs.map(item => (
+            <OtherTableRow
+              cur={props.cur}
+              key={item.ps}
+              type={props.item.izd}
+              item={item}
+              addGood={props.addGood}
+            />
+          ))}
         </div>
       </div>
     );
   } else if (isTablet) {
-    return <OtherItemTablet item={props.item}/>;
+    return <OtherItemTablet item={props.item} cur={props.cur} />;
   } else {
-    return <OtherItemMobile item={props.item} />;
+    return <OtherItemMobile item={props.item} cur={props.cur} />;
   }
 };
 

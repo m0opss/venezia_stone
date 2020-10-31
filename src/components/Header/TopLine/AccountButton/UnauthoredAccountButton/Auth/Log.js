@@ -46,8 +46,8 @@ const Login = props => {
           password: inputValues.l_pass
         })
         .then(response => {
-          props.setVisible(false);
           localStorage.setItem('auth_token', response.data.key)
+          props.setVisible(false);
           props.setAuth(true);
           props.setToken(response.data.key);
           

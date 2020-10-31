@@ -5,6 +5,7 @@ import axios from 'axios';
 import materialActions from '../actions/materialAction';
 import dataActions from 'actions/dataAction';
 import a_z from 'images/a-z.png';
+import arrow from 'images/arr.svg';
 
 import listIcon from 'images/str.png';
 import pltk from 'images/pltk.png';
@@ -13,7 +14,7 @@ import pltk_a from 'images/pltk_a.png';
 
 import { Icon } from '@iconify/react';
 import sortIcon from '@iconify/icons-dashicons/sort';
-
+import Valute from 'components/Valute/Valute';
 import NumGroupItem from '../components/Content/NumGroupItem/NumGroupItem';
 
 import './NumGroups.scss';
@@ -26,7 +27,7 @@ import {
   isBrowser
 } from 'react-device-detect';
 
-const sortArr = arr => {
+const AlphSortArr = arr => {
   let tmp = [...arr];
   tmp.sort((a, b) => {
     let nameA = a.gr.toLowerCase(),
@@ -37,14 +38,28 @@ const sortArr = arr => {
   });
   return tmp;
 };
+const ColorSortArr = arr => {
+  let tmp = [...arr];
+  tmp.sort((a, b) => {
+    let nameA = a.id_color,
+      nameB = b.id_color;
+    if (nameA < nameB) return -1;
+    if (nameA > nameB) return 1;
+    return 0;
+  });
+  return tmp;
+};
 
 const NumGroups = props => {
   const [numGroups, setNumGroups] = React.useState([]);
-  const [style_pltk, setHover_pltk] = React.useState(true);
-  const [actionOption1, setActionOption1] = React.useState('');
-  const [actionOption2, setActionOption2] = React.useState('');
-  const [actionOption3, setActionOption3] = React.useState('');
+  const [initialArr, setInitialArr] = React.useState([]);
+  const [alphSorted, setAlphSorted] = React.useState([]);
+  const [colorSorted, setColorSorted] = React.useState([]);
 
+  const [IsColorSorted, setIsColorSorted] = React.useState(false);
+  const [IsAlphSorted, setIsAlphSorted] = React.useState(false);
+
+  const [style_pltk, setHover_pltk] = React.useState(true);
   const [num_groups_items, setNum_groups_items] = React.useState(
     'num-gr-items-group'
   );
@@ -57,9 +72,11 @@ const NumGroups = props => {
       )
       .then(response => {
         if (isSubscr) {
+          setInitialArr(response.data.mts[0].grs);
           setNumGroups(response.data.mts[0].grs);
+          setColorSorted(ColorSortArr(response.data.mts[0].grs));
+          setAlphSorted(AlphSortArr(response.data.mts[0].grs));
         }
-
       })
       .catch(e => {
         console.log(e);
@@ -67,28 +84,23 @@ const NumGroups = props => {
     return () => (isSubscr = false);
   }, []);
 
-  const handleValOption = e => {
-    if (e.target.id === 'val-opt-1') {
-      setActionOption1('-active-opt');
-      setActionOption2('');
-      setActionOption3('');
-    }
-    if (e.target.id === 'val-opt-2') {
-      setActionOption2('-active-opt');
-      setActionOption1('');
-      setActionOption3('');
-    }
-    if (e.target.id === 'val-opt-3') {
-      setActionOption3('-active-opt');
-      setActionOption1('');
-      setActionOption2('');
-    }
+  const AlphSort = () => {
+    console.log(IsAlphSorted);
+    setIsAlphSorted(!IsAlphSorted);
+    if (IsAlphSorted) setNumGroups(alphSorted);
+    else setNumGroups(initialArr);
   };
 
-  const alphSorted = numGroups => {
-    let tmp = [...numGroups];
-    tmp.reverse();
-    setNumGroups(tmp);
+  const ColorSort = () => {
+    setIsColorSorted(!IsColorSorted);
+    let object = document.getElementsByTagName('object'); //получаем элмент object
+    console.log(object)
+    if (IsColorSorted) {
+      setNumGroups(colorSorted);
+      // let svgDocument = object.contentDocument; //получаем svg элемент внутри object
+      // let svgElement = svgDocument.getElementsByTagName('path'); //получаем любой элемент внутри svg
+      // svgElement.setAttribute('fill', 'red');
+    } else setNumGroups(initialArr);
   };
 
   const toggleStyle_pltk = () => {
@@ -111,39 +123,12 @@ const NumGroups = props => {
         </BrowserView>
       )}
       <div className="num-gr-options">
-        <p
-          id="val-opt-1"
-          className={`num-gr-options__valuta ${actionOption1}`}
-          onClick={e => handleValOption(e)}
-        >
-          RUB
-        </p>
-        <p
-          id="val-opt-2"
-          className={`num-gr-options__valuta ${actionOption2}`}
-          onClick={e => handleValOption(e)}
-        >
-          USD
-        </p>
-        <p
-          id="val-opt-3"
-          className={`num-gr-options__valuta ${actionOption3}`}
-          onClick={e => handleValOption(e)}
-        >
-          EUR
-        </p>
-        <div className="num-gr-options__color_sort">
-          <Icon
-            icon={sortIcon}
-            width="2.5em"
-            height="2.5em"
-            className="num-gr-options__color_icon"
-          />
+        <Valute />
+        <div className="num-gr-options__color_sort" onClick={ColorSort}>
+          <object type="image/svg+xml" data={arrow}>
+          </object>
         </div>
-        <div
-          className="num-gr-options__sort_alph"
-          onClick={() => alphSorted(numGroups)}
-        >
+        <div className="num-gr-options__sort_alph" onClick={AlphSort}>
           <img src={a_z} />
         </div>
         {isMobile && !isTablet ? (

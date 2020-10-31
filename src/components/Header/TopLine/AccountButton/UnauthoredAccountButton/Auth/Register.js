@@ -107,7 +107,7 @@ const Register = props => {
   const onPushReg = () => {
     if (onRegValidate()) {
       axios
-        .post('https://catalog-veneziastone.ru/account/register/', {
+        .post('https://catalog-veneziastone.ru/account/djoser/users/', {
           email: inputValues.r_email,
           phone: inputValues.r_phone,
           first_name: inputValues.r_fname,
@@ -217,21 +217,21 @@ const Register = props => {
         </div>
       </div>
       <div className="reg__bottom">
-        <div className="reg__captcha">
-          <Reaptcha
-            sitekey="6Ld92NYZAAAAAGxOdWjx7wQ-CbTfhJDqmtRMY9on"
-            onVerify={onVerifyCaptca}
-          />
-        </div>
+        <Reaptcha
+          // size="compact"
+          className="g-recaptcha"
+          sitekey="6Ld92NYZAAAAAGxOdWjx7wQ-CbTfhJDqmtRMY9on"
+          onVerify={onVerifyCaptca}
+        />
         <div className="reg_bottom-text">
           <p>* обязательные поля</p>
           <div className="reg__check-use-data">
             <Checkbox checked={checked} onChange={onChangeCheckDog} />
-            <span className="check-text">
+            <a className="check-text">
               Согласие на обработку
               <br />
               персональных данных
-            </span>
+            </a>
           </div>
         </div>
       </div>

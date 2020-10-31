@@ -6,7 +6,6 @@ import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import SlabItemTablet from 'components/4lvl/SlabItemTablet';
 import SlabItemMobile from 'components/4lvl/SlabItemMobile';
 
-
 import {
   MobileView,
   BrowserView,
@@ -42,11 +41,13 @@ const SlabTableRow = props => {
         <p>{props.item.skl}</p>
       </div>
       <div className="table-row__item table-row__item_l">
-        <p>{props.item.cnt} ₽</p>
+        <p>{props.item.cntRUB} ₽</p>
       </div>
       <div className="table-row__item table-row__item_l">
         <p>
-          {(parseFloat(props.item.cnt) * parseFloat(props.item.os)).toFixed(2)}{' '}
+          {(parseFloat(props.item.cntRUB) * parseFloat(props.item.os)).toFixed(
+            2
+          )}
           ₽
         </p>
       </div>
@@ -54,7 +55,12 @@ const SlabTableRow = props => {
         <img src={like} />
       </div>
       <div className="table-row__item good-items-table__title-icons">
-        <img src={basket} />
+        <img
+          src={basket}
+          onClick={() => {
+            props.addGood(props.item);
+          }}
+        />
       </div>
     </div>
   );
@@ -62,7 +68,7 @@ const SlabTableRow = props => {
 
 const SlabItem = props => {
   const [selectedEl, setSelectedEl] = React.useState(props.item.prs[0]);
-
+  console.log('slab', props.item);
   let colors = [
     '#2C1D02',
     '#402A02',
@@ -156,16 +162,22 @@ const SlabItem = props => {
               </div>
             </div>
             {props.item.prs.map(item => (
-              <SlabTableRow item={item} />
+              <SlabTableRow
+                cur={props.cur}
+                key={item.ps}
+                type={props.item.izd}
+                item={item}
+                addGood={props.addGood}
+              />
             ))}
           </div>
         </div>
       </div>
     );
   } else if (isTablet) {
-    return <SlabItemTablet item={props.item}/>;
+    return <SlabItemTablet item={props.item} />;
   } else {
-    return <SlabItemMobile item={props.item}/>;
+    return <SlabItemMobile item={props.item} />;
   }
 };
 

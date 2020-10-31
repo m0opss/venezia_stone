@@ -13,10 +13,9 @@ const AccountButton = props => {
   return (
     <div className="top-line__account">
       {props.isAuth ? (
-        <Authored setAuth={props.setAuth} setToken={props.setToken} user_name={props.user_name} user_info={props.user_info}/>
+        <Authored setAuth={props.setAuth} setToken={props.setToken} user_info={props.user_info}/>
       ) : (
         <Unauthored
-        setUserName={props.setUserName}
           title={
             <Icon
               type="login"

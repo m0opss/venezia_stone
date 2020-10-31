@@ -1,3 +1,6 @@
+.content-wrapper {
+  display: flex;
+}
 .home-container {
   display: flex;
   flex-flow: column;
@@ -9,7 +12,7 @@
     font-family: 'Roboto Condensed', sans-serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 32px;
+    font-size: 32px;  
     line-height: 37px;
     @media screen and (max-width: 550px) {
       font-size: 22px;
@@ -25,8 +28,6 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  // grid-template-columns: 13fr 13fr 13fr;
-  // grid-gap: 3em 2em;
 }
 
 .home-bottom-links {

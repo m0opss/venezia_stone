@@ -5,6 +5,9 @@
 .ant-dropdown-trigger{
   display: flex;
   align-items: center;
+  img {
+    height: 25px;
+  }
 }
 .ant-dropdown-menu {
   padding: 20px 20px;
@@ -38,6 +41,7 @@
   left: 4px !important;
   top: 70px !important;
   z-index: 1000;
+
   .ant-dropdown-menu-item.ant-dropdown-menu-item-only-child {
     width: 70vw;
     a {

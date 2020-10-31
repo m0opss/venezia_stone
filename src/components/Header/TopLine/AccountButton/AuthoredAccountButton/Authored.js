@@ -20,24 +20,40 @@ const createUserName = arr => {
   return userName;
 };
 const Authored = props => {
-  const [userName, setUserName] = React.useState('');
-
-  const arr = {
-    last: props.user_info.last_name,
-    first: props.user_info.first_name,
-    middle: props.user_info.middle_name
-  };
+  const [email, setEmail] = React.useState(null);
+  const [first_name, setFName] = React.useState(null);
+  const [last_name, setLName] = React.useState(null);
+  const [middle_name, setMName] = React.useState(null);
+  const [user_name, setUserName] = React.useState(null);
 
   React.useEffect(() => {
+    setEmail(localStorage.getItem('email'));
+    setFName(localStorage.getItem('first_name'));
+    setLName(localStorage.getItem('last_name'));
+    setMName(localStorage.getItem('middle_name'));
+    setMName(localStorage.getItem('middle_name'));
     let name;
-    if ((createUserName(arr) == '')) name = props.user_info.email;
-    else name = createUserName(arr);
+    if (
+      createUserName({
+        last: last_name,
+        first: first_name,
+        middle: middle_name
+      }) == ''
+    )
+      name = email;
+    else
+      name = createUserName({
+        last: last_name,
+        first: first_name,
+        middle: middle_name
+      });
     setUserName(name);
   });
 
   const onExitModal = () => {
     props.setAuth(false);
     props.setToken('');
+    
   };
 
   const menu = (
@@ -62,7 +78,8 @@ const Authored = props => {
       </Menu.Item>
     </>
   );
-  return <Dropdown type="acc-menu" title={userName} menuList={menu} />;
+  if(user_name != null) return <Dropdown type="acc-menu" title={user_name} menuList={menu} />;
+  else return <></>
   // return <Dropdown type="acc-menu" title={'Rfkfiybrjd Bdfy Dbnfkmtdbx'} menuList={menu} />;
 };
 export default Authored;

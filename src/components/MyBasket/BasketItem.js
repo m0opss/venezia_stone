@@ -13,7 +13,7 @@ const BasketItem = props => {
   if (props.kind == 'basket') {
     block = (
       <div className="basket-item__buttons">
-        <img src={deleteItem} />
+        <img src={deleteItem} onClick={() => props.deleteItem(props.ps)} />
       </div>
     );
   } else if (props.kind == 'izbr') {
@@ -31,6 +31,15 @@ const BasketItem = props => {
       </div>
     );
   }
+
+  const kwChange = e => {
+    console.log(e.target.value);
+    // props.editGood()
+  };
+  const cntChange = e => {
+    console.log(e.target.value);
+  };
+
   return (
     <div className="basket-item basket-item-root basket-item-typography">
       <div className="basket-item__name">Гранит TAR BROWN</div>
@@ -43,20 +52,39 @@ const BasketItem = props => {
               <div className="basket-item__line-wrapper">
                 <div className="basket-item__line">
                   <p>Склад: Краснодар</p>
-                  <p>Цена за м<sup>2</sup>: 4500₽</p>
+                  <p>
+                    Цена за м<sup>2</sup>: 4500₽
+                  </p>
                 </div>
                 <div className="basket-item__line">
-                  <p> Наличие, м<sup>2</sup>: 8888</p>
+                  <p>
+                    {' '}
+                    Наличие, м<sup>2</sup>: 8888
+                  </p>
                   <p>Наличие, шт: 450 </p>
                 </div>
               </div>
               <div className="basket-item__line -price">
                 <div className="price-input">
-                  <p> м<sup>2</sup> :
-                    <input type="number" min='0' defaultValue={'0.12'} step="0.01" />
+                  <p>
+                    {' '}
+                    м<sup>2</sup> :
+                    <input
+                      type="number"
+                      min="0"
+                      defaultValue={'0.12'}
+                      step="0.01"
+                      onBlur={kwChange}
+                    />
                   </p>
-                  <p>шт : 
-                    <input type="number" min='0' defaultValue={'7'} />
+                  <p>
+                    шт :
+                    <input
+                      type="number"
+                      min="0"
+                      defaultValue={'7'}
+                      onBlur={cntChange}
+                    />
                   </p>
                 </div>
                 <div className="price-view">
@@ -88,7 +116,6 @@ const BasketItem = props => {
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

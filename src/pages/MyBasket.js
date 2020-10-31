@@ -1,18 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { isMobile, isTablet } from 'react-device-detect';
+import { connect } from 'react-redux';
 
 import BasketItem from 'components/MyBasket/BasketItem';
 import MyModal from 'components/Modal/Modal';
-import { connect } from 'react-redux';
+import Valute from 'components/Valute/Valute';
+import basketActions from 'actions/basketActions';
+
 import './MyBasket.scss';
-import { isMobile, isTablet } from 'react-device-detect';
 
-const MyBasket = (props) => {
+const MyBasket = props => {
   const [visibleModal, setVisibleModal] = React.useState(false);
-
-  const [rub, set_rub] = React.useState(true);
-  const [usd, set_usd] = React.useState(false);
-  const [eur, set_eur] = React.useState(false);
-
+  const [basket, setBasket] = React.useState([]);
 
   const onClickOrder = () => {
     if (props.isAuth) {
@@ -21,73 +20,69 @@ const MyBasket = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (localStorage.getItem('basket') !== null && props.basket.length == 0) {
+      setBasket(JSON.parse(localStorage.getItem('basket')));
+    } else {
+      setBasket(props.basket);
+    }
+
+  }, [basket]);
+
+
   const onToggleValute = e => {
     console.log(state);
   };
 
   const orderOk = e => {
-
-    setVisibleModal(false)
+    setVisibleModal(false);
   };
 
   const orderCancel = e => {
-    setVisibleModal(false)
+    setVisibleModal(false);
   };
   let modalContent = (
     <div className="order-inputs">
-      <input type="text" placeholder='Имя' />
-      <input type="text" placeholder='Телефон*'/>
-      <input type="text" placeholder='Email*'/>
+      <input type="text" placeholder="Имя" />
+      <input type="text" placeholder="Телефон*" />
+      <input type="text" placeholder="Email*" />
     </div>
-  )
+  );
 
   let style = '';
   let buttonStyle = '';
   if (!isTablet && isMobile) style = '-basket-mobile';
   if (isMobile) buttonStyle = '-button-mobile';
+
   return (
     <div className="basket">
       <MyModal
         title="Оформить заказ"
         handleOk={orderOk}
-        okText='Оформить заказ'
+        okText="Оформить заказ"
         handleCancel={orderCancel}
         visible={visibleModal}
         content={modalContent}
       />
       <div className={`basket__f-line ${style}`}>
         <h1>Корзина</h1>
-        <div className="f-line__valuta">
-          <span
-            id="rub"
-            className={rub ? '-active' : ''}
-            onClick={onToggleValute}
-          >
-            RUB
-          </span>
-          <span
-            id="usd"
-            className={usd ? '-active' : ''}
-            onClick={onToggleValute}
-          >
-            USD
-          </span>
-          <span
-            id="eur"
-            className={eur ? '-active' : ''}
-            onClick={onToggleValute}
-          >
-            EUR
-          </span>
-        </div>
+        <Valute />
       </div>
       <div className="basket__items">
-        <BasketItem kind="basket" type={true} />
-        <BasketItem kind="basket" type={false} />
-        <BasketItem kind="basket" type={false} />
-        <BasketItem kind="basket" type={true} />
-        <BasketItem kind="basket" type={true} />
+        {basket.map(item => {
+          return (
+            <BasketItem
+              kind="basket"
+              item={item}
+              type={item.izd == 'Плитка' ? true : false}
+              addGood={props.addGood}
+              deleteGood={props.deleteGood}
+              editGood={props.editGood}
+            />
+          );
+        })}
       </div>
+
       <div className="basket__bottom-line">
         <div className="basket__total">
           <div className="">
@@ -112,11 +107,27 @@ const MyBasket = (props) => {
       </div>
     </div>
   );
+
 };
 const mapStateToProps = store => {
   return {
-    isAuth: store.auth_data.isAuth
+    isAuth: store.auth_data.isAuth,
+    basket: store.basket_data.basket
   };
 };
 
-export default connect(mapStateToProps)(MyBasket);
+const mapDispatchToProps = dispatch => {
+  return {
+    addGood: data => {
+      dispatch(basketActions.addGood(data));
+    },
+    editGood: data => {
+      dispatch(basketActions.editGood(data));
+    },
+    deleteGood: data => {
+      dispatch(basketActions.deleteGood(data));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyBasket);

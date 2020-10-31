@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import materialActions from '../actions/materialAction';
 import dataActions from 'actions/dataAction';
-
+import Valute from 'components/Valute/Valute';
 import a_z from 'images/a-z.png';
 import listIcon from 'images/str.png';
 import pltk from 'images/pltk.png';
@@ -223,7 +223,9 @@ const Numenclature = props => {
             cp={item.cp}
             cs={item.cs}
             kw={item.kw}
-            pr={item.pr}
+            pr={item.prrub}
+            prusd={item.prusd}
+            preur={item.preur}
             cur={item.cur}
             key={item.ps}
             img={item.photo}

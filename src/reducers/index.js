@@ -6,7 +6,7 @@ import { dataReducer } from './dataReducer';
 import { materialReducer } from './materialReducer';
 import { userReducer } from './userReducer';
 import { valuteReducer } from './valuteReducer';
-
+import { basketReducer } from './basketReducer';
 
 const rootReducer = combineReducers({
     filter: filterReducer,
@@ -15,6 +15,7 @@ const rootReducer = combineReducers({
     material: materialReducer,
     user_data: userReducer,
     valute_data: valuteReducer,
+    basket_data: basketReducer,
 });
 
 export default rootReducer;

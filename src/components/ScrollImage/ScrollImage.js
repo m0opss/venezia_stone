@@ -3,10 +3,12 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import './ScrollImage.scss';
 
 const ScrollImage = props => {
-  console.log(props)
   const ScrollItem = props => {
     return (
-      <div className="scroll__item" onClick={()=>props.selectItem(props.item)}>
+      <div
+        className="scroll__item"
+        onClick={() => props.selectItem(props.item)}
+      >
         <p>{props.item.bl}</p>
         <img src={props.item.photobl} />
       </div>
@@ -25,9 +27,17 @@ const ScrollImage = props => {
     >
       <div className={`scroll-root ${props.scrollStyle}`}>
         <div id="scroll__wrapper" className="scroll__wrapper">
-          {props.elements.map(item => (
-            item.photobl ? <ScrollItem item={item} selectItem={props.selectItem}/> : <></>
-          ))}
+          {props.elements.map(item =>
+            item.photobl ? (
+              <ScrollItem
+                key={item.ps}
+                item={item}
+                selectItem={props.selectItem}
+              />
+            ) : (
+              <></>
+            )
+          )}
         </div>
       </div>
     </Scrollbars>

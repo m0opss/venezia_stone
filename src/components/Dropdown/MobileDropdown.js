@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Menu, Dropdown } from 'antd';
 
-import burger from 'images/burger.png';
+import burger from 'images/burger.svg';
 
 import './Dropdown.scss';
 

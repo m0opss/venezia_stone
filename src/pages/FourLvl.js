@@ -7,6 +7,7 @@ import Valute from 'components/Valute/Valute';
 
 import filterActions from '../actions/filterActions';
 import dataActions from 'actions/dataAction';
+import basketActions from 'actions/basketActions';
 
 import Filter from 'components/Filter/Filter';
 import {
@@ -27,6 +28,7 @@ const FourLvl = props => {
     axios
       .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
       .then(response => {
+        // console.log(response.data)
         setItem(response.data.itms[0]);
       })
       .catch(e => {
@@ -40,9 +42,14 @@ const FourLvl = props => {
         {isTablet || isBrowser ? <Valute /> : <></>}
       </div>
       {item.izd === 'Слэбы' ? (
-        <SlabItem type={item.izd} item={item} />
+        <SlabItem type={item.izd} item={item} addGood={props.addGood} cur={props.cur}/>
       ) : (
-        <OtherItem type={item.izd} item={item} />
+        <></>
+      )}
+      {item.izd !== 'Слэбы' && item.izd ? (
+        <OtherItem type={item.izd} item={item} addGood={props.addGood} cur={props.cur} />
+      ) : (
+        <></>
       )}
     </div>
   );
@@ -50,7 +57,8 @@ const FourLvl = props => {
 
 const mapStateToProps = store => {
   return {
-    data: store.data
+    data: store.data,
+    cur: store.valute_data.valute
   };
 };
 
@@ -58,6 +66,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getDataResponse: data => {
       dispatch(dataActions.getDataResponse(data));
+    },
+    addGood: data => {
+      dispatch(basketActions.addGood(data));
     }
   };
 };
