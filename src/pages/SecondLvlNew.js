@@ -26,7 +26,7 @@ import {
   isBrowser
 } from 'react-device-detect';
 
-const NumGroups = props => {
+const SecondLvlSale = props => {
   const [numGroups, setNumGroups] = React.useState([]);
   const [defGroups, setdefNumGroups] = React.useState([]);
   const [sortOn, setSortOn] = React.useState(false);
@@ -40,7 +40,7 @@ const NumGroups = props => {
     let isSubscr = true;
     axios
       .get(
-        `https://catalog-veneziastone.ru/api_v0/${props.match.params.material}/`
+        `https://catalog-veneziastone.ru/api_v0/new/${props.match.params.material}/`
       )
       .then(response => {
         if (isSubscr) {
@@ -106,10 +106,16 @@ const NumGroups = props => {
         {numGroups.map(item => (
           <NumGroupItem
             pltk={style_pltk}
-            key={item.ps}
+            key={item.id}
+            sku={item.sku}
+            pr={item.pr}
+            cur={item.cur}
+            kw={item.kw}
+            img={item.file}
             link={props.match.url + '/' + item.ps}
             item={item}
-            cur={props.cur}
+            itemName={item.gr}
+            id={item.id}
           />
         ))}
       </div>
@@ -119,8 +125,7 @@ const NumGroups = props => {
 
 const mapStateToProps = store => {
   return {
-    cur: store.valute_data.valute
-
+    selectedMaterial: store.material.selectedMaterial
   };
 };
 
@@ -135,4 +140,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NumGroups);
+export default connect(mapStateToProps, mapDispatchToProps)(SecondLvlSale);

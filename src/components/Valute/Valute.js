@@ -6,15 +6,19 @@ import valuteActions from 'actions/valuteActions';
 import './Valute.scss';
 
 const Valute = props => {
-  const [customStyleRoot, setCustomRoot] = React.useState(props.rootStyle ? props.rootStyle : '')
-  const [customStyleSpan, setCustomSpan] = React.useState(props.spanStyle ? props.spanStyle : '')
+  const [customStyleRoot, setCustomRoot] = React.useState(
+    props.rootStyle ? props.rootStyle : ''
+  );
+  const [customStyleSpan, setCustomSpan] = React.useState(
+    props.spanStyle ? props.spanStyle : ''
+  );
 
   React.useEffect(() => {
-    ['rub', 'eur', 'usd'].map((val) => {
-      document.getElementById(val).setAttribute('style', 'color: black')
-      if(val === props.valute) document.getElementById(val).setAttribute('style', 'color: #c98505')
-    })
-
+    ['rub', 'eur', 'usd'].map(val => {
+      document.getElementById(val).setAttribute('style', 'color: black');
+      if (val === props.valute)
+        document.getElementById(val).setAttribute('style', 'color: #c98505');
+    });
   });
 
   const onToggleValute = e => {
@@ -22,17 +26,29 @@ const Valute = props => {
   };
 
   return (
-      <div className={`valute-line ${customStyleRoot}`}>
-        <span id="rub" className={`valute-line-item ${customStyleSpan}`} onClick={onToggleValute}>
-          RUB
-        </span>
-        <span id="usd" className={`valute-line-item ${customStyleSpan}`} onClick={onToggleValute}>
-          USD
-        </span>
-        <span id="eur" className={`valute-line-item ${customStyleSpan}`} onClick={onToggleValute}>
-          EUR
-        </span>
-      </div>
+    <div className={`valute-line ${customStyleRoot}`}>
+      <span
+        id="rub"
+        className={`valute-line-item ${customStyleSpan}`}
+        onClick={onToggleValute}
+      >
+        RUB
+      </span>
+      <span
+        id="usd"
+        className={`valute-line-item ${customStyleSpan}`}
+        onClick={onToggleValute}
+      >
+        USD
+      </span>
+      <span
+        id="eur"
+        className={`valute-line-item ${customStyleSpan}`}
+        onClick={onToggleValute}
+      >
+        EUR
+      </span>
+    </div>
   );
 };
 

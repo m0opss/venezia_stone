@@ -20,7 +20,6 @@ const OtherTableRow = props => {
           {props.cur === 'rub' ? props.item.cntRUB : ''}
           {props.cur === 'usd' ? props.item.cntUSD : ''}
           {props.cur === 'eur' ? props.item.cntEUR : ''}
-        
         </p>
       </div>
       <div className="table-row__item">

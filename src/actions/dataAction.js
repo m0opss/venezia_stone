@@ -8,12 +8,6 @@ const dataActions = {
       type: DATA_REQUEST,
       payload: data,
     }
-  },
-  setNumGroups: data => {
-    return {
-      type: SET_NUM_G,
-      payload: data
-    };
   }
 }
 

@@ -4,7 +4,8 @@ const initialState = {
   mts : [],
   eur: 0,
   usd: 0,
-  num_gr: {}
+  sale: [],
+  new: []
 }
 
 export function dataReducer(state = initialState, action) {
@@ -14,12 +15,9 @@ export function dataReducer(state = initialState, action) {
         ...state,
         mts: action.payload.mts,
         usd: action.payload.usd,
-        eur: action.payload.eur
-      }
-    case SET_NUM_G:
-      return {
-        ...state,
-        num_gr: action.payload
+        eur: action.payload.eur,
+        sale: action.payload.sale,
+        new: action.payload.new,
       }
     default:
       return state

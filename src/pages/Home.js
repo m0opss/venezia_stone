@@ -30,6 +30,9 @@ const Home = props => {
   const [dropClassNew, setDropClassNew] = React.useState('');
   const [dropClassRoad, setDropClassRoad] = React.useState('');
 
+  const [dataSale, setDataSale] = React.useState([]);
+  const [dataNew, setDataNew] = React.useState([]);
+
   React.useEffect(() => {
     axios
       .get('https://catalog-veneziastone.ru/api_v0/getMaterials/')
@@ -148,10 +151,10 @@ const Home = props => {
         </div>
         <div className="catalog-items-group">
           {dropdownSales && props.data ? (
-            props.data.mts.map(item => (
+            props.data.sale.map(item => (
               <MaterialItem
                 img={item.photo_material}
-                link={item.ph}
+                link={'sale/' + item.ph}
                 item={item}
                 itemName={item.mt}
                 key={item.mt}
@@ -170,10 +173,10 @@ const Home = props => {
         </div>
         <div className="catalog-items-group">
           {dropdownNew && props.data ? (
-            props.data.mts.map(item => (
+            props.data.new.map(item => (
               <MaterialItem
                 img={item.photo_material}
-                link={item.ph}
+                link={'new/' + item.ph}
                 item={item}
                 itemName={item.mt}
                 key={item.mt}

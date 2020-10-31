@@ -6,35 +6,40 @@ import './NumenclatureItem.scss';
 const NumenclatureItem = props => {
   if (props.pltk) {
     return (
-      <div key={props.id} className="num-gr-item" onClick={props.onClick}>
+      <div key={props.ps} className="num-gr-item">
         <Link to={props.link}>
           <div className="num-gr-item__img">
-            <img src={props.img} alt="" className="num-gr-item__img" />
+            <img src={props.item.photo_item} className="num-gr-item__img" />
           </div>
-          <div className="num-gr-item__name">{`${props.itemName}`}</div>
+          <div className="num-gr-item__name">{`${props.item.name}`}</div>
         </Link>
         <div className="num-gr-item__descr -num">
           <div className="num-gr-item__line -f">
             {props.item.izd === 'Плитка' ? (
               <p></p>
             ) : (
-              <p>Количество слэбов: {props.cs}</p>
+              <p>Количество слэбов: {props.item.cs}</p>
             )}
 
             <p>
-              Цена от {props.pr}
-              {props.cur}
+              Цена от {props.cur === 'rub' ? `${props.item.prRUB}₽` : ''}
+              {props.cur === 'usd' ? `${props.item.prUSD}$` : ''}
+              {props.cur === 'eur' ? `${props.item.prEUR}€` : ''}
             </p>
           </div>
-          {props.cp != 0 ? (
-            <p className="num-gr-item__line">Количество пачек: {props.cp}</p>
+          {props.item.cp != 0 ? (
+            <p className="num-gr-item__line">
+              Количество пачек: {props.item.cp}
+            </p>
           ) : (
-            <p className="num-gr-item__line"></p>
+            <p className="num-gr-item__line" style={{ color: 'white' }}>
+              .
+            </p>
           )}
 
           <div className="num-gr-item__line --s">
             <p>
-              Общая площадь: {props.kw} м<sup>2</sup>
+              Общая площадь: {props.item.kw} м<sup>2</sup>
             </p>
             <Link to={props.link}>Подробнее</Link>
           </div>
@@ -44,24 +49,27 @@ const NumenclatureItem = props => {
   } else {
     return (
       <div
-        key={props.id}
+        key={props.item.ps}
         className="num-gr-item num-gr-item-root num-item"
-        onClick={props.onClick}
       >
         <div className="num-gr-item__img">
-          <img src={props.img} alt="" className="num-gr-item__img" />
+          <img src={props.item.photo_item} className="num-gr-item__img" />
         </div>
-        <div className="num-gr-item__name">{props.itemName}</div>
+        <div className="num-gr-item__name">{props.item.name}</div>
         <div className="num-gr-item__pach">
-          {props.cp != 0 ? props.cp : '-'}
+          {props.item.cp != 0 ? props.item.cp : '-'}
         </div>
         <div className="num-gr-item__slabs">
-          {props.item.izd === 'Плитка' ? '-' : props.cs}
+          {props.item.izd === 'Плитка' ? '-' : props.item.cs}
         </div>
         <div className="num-gr-item__sqrt">
-          {props.kw} м<sup>2</sup>
+          {props.item.kw} м<sup>2</sup>
         </div>
-        <div className="num-gr-item__cost">22 $</div>
+        <div className="num-gr-item__cost">
+          {props.cur === 'rub' ? `${props.item.prRUB}₽` : ''}
+          {props.cur === 'usd' ? `${props.item.prUSD}$` : ''}
+          {props.cur === 'eur' ? `${props.item.prEUR}€` : ''}
+        </div>
         <Link to={props.link}>Подробнее</Link>
       </div>
     );
