@@ -41,7 +41,7 @@ const MaterialItem = props => {
         onClick={props.onClick}
       >
         <div className="num-gr-item__img">
-          <img src={props.img} className="num-gr-item__img" />
+          <img src={props.item.file} className="num-gr-item__img" />
         </div>
         <div className="num-gr-item__name">{props.item.gr}</div>
         <div className="num-gr-item__sku">{props.item.sku}</div>
