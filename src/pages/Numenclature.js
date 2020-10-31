@@ -6,15 +6,11 @@ import axios from 'axios';
 import materialActions from '../actions/materialAction';
 import dataActions from 'actions/dataAction';
 import Valute from 'components/Valute/Valute';
-
-import a_z from 'images/a-z.png';
+import Sort from 'components/Sort/Sort';
 import listIcon from 'images/str.png';
 import pltk from 'images/pltk.png';
 import listIcon_a from 'images/str_a.png';
 import pltk_a from 'images/pltk_a.png';
-
-import { Icon } from '@iconify/react';
-import sortIcon from '@iconify/icons-dashicons/sort';
 
 import './Numenclature.scss';
 
@@ -27,25 +23,11 @@ import {
   isMobile
 } from 'react-device-detect';
 
-const sortArr = arr => {
-  let tmp = [...arr];
-  tmp.sort((a, b) => {
-    let nameA = a.id.toLowerCase(),
-      nameB = b.id.toLowerCase();
-    console.log(nameA, nameB);
-    if (nameA < nameB) return -1;
-    if (nameA > nameB) return 1;
-    return 0;
-  });
-  return tmp;
-};
-
 const Numenclature = props => {
   const [numenclature, setNumemclature] = React.useState([]);
+  const [defNum, setdefNum] = React.useState([]);
+  const [sortOn, setSortOn] = React.useState(false);
   const [style_pltk, setHover_pltk] = React.useState(true);
-  const [actionOption1, setActionOption1] = React.useState('');
-  const [actionOption2, setActionOption2] = React.useState('');
-  const [actionOption3, setActionOption3] = React.useState('');
   const [num_groups_items, setNum_groups_items] = React.useState(
     'num-gr-items-group'
   );
@@ -55,24 +37,17 @@ const Numenclature = props => {
     axios
       .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
       .then(response => {
-        console.log(response);
         if (isSubscr) {
           setNumemclature(response.data.grs[0].itms);
-          // setNumemclature(sortArr(response.data.itms));
+          setdefNum(response.data.grs[0].itms);
+          console.log(response.data.grs[0].itms)
         }
       })
       .catch(e => {
         console.log(e);
       });
-      return () => isSubscr = false
+    return () => (isSubscr = false);
   }, []);
-
-
-  const alphSorted = numGroups => {
-    let tmp = [...numGroups];
-    tmp.reverse();
-    setNumGroups(tmp);
-  };
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -83,6 +58,24 @@ const Numenclature = props => {
     setHover_pltk(false);
     setNum_groups_items('num-gr-items-group-list');
   };
+
+  const filterIzd = (e) => {
+    if(e.targer.id === 'filter-opt-1') {
+      
+    }
+    if(e.targer.id === 'filter-opt-2') {
+
+    }
+    if(e.targer.id === 'filter-opt-3') {
+
+    }
+    if(e.targer.id === 'filter-opt-4') {
+
+    }
+    if(e.targer.id === 'filter-opt-5') {
+
+    }
+  }
 
   return (
     <>
@@ -102,57 +95,50 @@ const Numenclature = props => {
       >
         {isMobile && !isTablet ? (
           <div className="filter-options-mobile">
-            <div className="filter-opt-1" onClick={() => {}}>
+            <div id="filter-opt-1" onClick={() => {}}>
               Все
             </div>
-            <div className="filter-opt-2" onClick={() => {}}>
+            <div id="filter-opt-2" onClick={() => {}}>
               Слэбы
             </div>
-            <div className="filter-opt-3" onClick={() => {}}>
+            <div id="filter-opt-3" onClick={() => {}}>
               Полоса
             </div>
-            <div className="filter-opt-4" onClick={() => {}}>
+            <div id="filter-opt-4" onClick={() => {}}>
               Плитка
             </div>
-            <div className="filter-opt-5" onClick={() => {}}>
+            <div id="filter-opt-5" onClick={() => {}}>
               Другие изделия
             </div>
           </div>
         ) : (
           <div className="filter-options">
-            <div className="filter-opt-1" onClick={() => {}}>
+            <div id="filter-opt-1" onClick={() => {}}>
               Все
             </div>
-            <div className="filter-opt-2" onClick={() => {}}>
+            <div id="filter-opt-2" onClick={() => {}}>
               Слэбы
             </div>
-            <div className="filter-opt-3" onClick={() => {}}>
-              Полоса
+            <div id="filter-opt-3" onClick={() => {}}>
+              Полосы
             </div>
-            <div className="filter-opt-4" onClick={() => {}}>
+            <div id="filter-opt-4" onClick={() => {}}>
               Плитка
             </div>
-            <div className="filter-opt-5" onClick={() => {}}>
+            <div id="filter-opt-5" onClick={() => {}}>
               Другие изделия
             </div>
           </div>
         )}
         <div className="other-options">
           <Valute />
-          <div className="num-gr-options__color_sort">
-            <Icon
-              icon={sortIcon}
-              width="2.5em"
-              height="2.5em"
-              className="num-gr-options__color_icon"
-            />
-          </div>
-          <div
-            className="num-gr-options__sort_alph"
-            onClick={() => alphSorted(numGroups)}
-          >
-            <img src={a_z} />
-          </div>
+          <Sort
+            defArr={defNum}
+            arr={numenclature}
+            setArr={setNumemclature}
+            on={sortOn}
+            setSortOn={setSortOn}
+          />
           {isMobile && !isTablet ? (
             <></>
           ) : (
@@ -208,7 +194,6 @@ const Numenclature = props => {
 const mapStateToProps = store => {
   return {
     selectedMaterial: store.material.selectedMaterial
-    // data: store.data
   };
 };
 

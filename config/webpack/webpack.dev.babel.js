@@ -32,7 +32,7 @@ module.exports = {
         historyApiFallback: true
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
         new Jarvis({
             port: 1337
         })

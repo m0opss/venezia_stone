@@ -63,10 +63,7 @@ const NumGroups = props => {
     setHover_pltk(false);
     setNum_groups_items('num-gr-items-group-list');
   };
-  const setArr = (arr) => {
-    console.log(arr)
-    setNumGroups(arr)
-  }
+
   return (
     <>
       {isTablet ? (
@@ -78,7 +75,7 @@ const NumGroups = props => {
       )}
       <div className="num-gr-options">
         <Valute />
-        <Sort defArr={defGroups} arr={numGroups} setArr={setArr} on={sortOn} setSortOn={setSortOn}/>
+        <Sort defArr={defGroups} arr={numGroups} setArr={setNumGroups} on={sortOn} setSortOn={setSortOn}/>
         {isMobile && !isTablet ? (
           <></>
         ) : (
