@@ -1,8 +1,18 @@
 import React from 'react';
+import FullScreenDialog from 'components/FullScreenDialog/FullScreenDialog'
 
 const OptionLine = props => {
+
+  const openBook = () => {
+    let img = props.img
+
+  }
+
   return (
     <div className="option-line">
+      <FullScreenDialog>
+        
+      </FullScreenDialog>
       <div className="option-line__item">
         <svg
           width="24"
@@ -30,7 +40,7 @@ const OptionLine = props => {
           />
         </svg>
       </div>
-      <div className="option-line__item">
+      <div className="option-line__item" onClick={openBook}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="26"

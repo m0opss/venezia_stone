@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import filterActions from '../actions/filterActions';
 import basketActions from 'actions/basketActions';
-
+import ImageGallery from 'react-image-gallery';
 import Valute from 'components/Valute/Valute';
 import Filter from 'components/Filter/Filter';
 import OptionLine from 'components/5lvl/OptionLine';
@@ -23,6 +23,7 @@ import Slider from 'react-slick';
 
 const FifthLvl = props => {
   const [item, setItem] = React.useState({});
+  const [currentItemInd, setCurrentItemInd ] = React.useState(0);
 
   // React.useEffect(() => {
   //   axios
@@ -48,7 +49,17 @@ const FifthLvl = props => {
   };
 
   let _item = { color: 'red', name: 'RAL 1231' };
-
+  const imagess = [
+    {
+      original: 'https://picsum.photos/id/1018/1000/600/'
+    },
+    {
+      original: 'https://picsum.photos/id/1015/1000/600/'
+    },
+    {
+      original: 'https://picsum.photos/id/1019/1000/600/'
+    }
+  ];
   return (
     <div className="fifth-lvl-container">
       {isBrowser ? (
@@ -88,7 +99,8 @@ const FifthLvl = props => {
               </div>
             </div>
             <div className="main-content__right">
-              <OptionLine />
+              <OptionLine img={imagess[0].original} />
+              <ImageGallery items={imagess} showThumbnails={false} />
             </div>
           </div>
         </div>
