@@ -2,17 +2,15 @@ import React from 'react';
 import FullScreenDialog from 'components/FullScreenDialog/FullScreenDialog'
 
 const OptionLine = props => {
-
+  const [open, setOpen] = React.useState(false);
   const openBook = () => {
-    let img = props.img
-
+    setOpen(true)
+    
   }
 
   return (
     <div className="option-line">
-      <FullScreenDialog>
-        
-      </FullScreenDialog>
+      <FullScreenDialog open={open} img={props.img}/>
       <div className="option-line__item">
         <svg
           width="24"
