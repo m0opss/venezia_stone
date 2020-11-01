@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import BasketItem from 'components/MyBasket/BasketItem';
 import MyModal from 'components/Modal/Modal';
 import Valute from 'components/Valute/Valute';
+import BackArrow from 'components/BackArrow/BackArrow';
 import basketActions from 'actions/basketActions';
 
 import './MyBasket.scss';
@@ -21,14 +22,10 @@ const MyBasket = props => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('basket') !== null && props.basket.length == 0) {
-      setBasket(JSON.parse(localStorage.getItem('basket')));
-    } else {
-      setBasket(props.basket);
-    }
-
-  }, [basket]);
-
+    console.log(props.basket, basket)
+    props.getGoods()
+    setBasket(props.basket);
+  });
 
   const onToggleValute = e => {
     console.log(state);
@@ -64,6 +61,7 @@ const MyBasket = props => {
         visible={visibleModal}
         content={modalContent}
       />
+      <BackArrow history={props.history} />
       <div className={`basket__f-line ${style}`}>
         <h1>Корзина</h1>
         <Valute />
@@ -73,6 +71,7 @@ const MyBasket = props => {
           return (
             <BasketItem
               kind="basket"
+              cur={props.cur}
               item={item}
               type={item.izd == 'Плитка' ? true : false}
               addGood={props.addGood}
@@ -94,7 +93,10 @@ const MyBasket = props => {
           </div>
         </div>
         <div className="basket__buttons">
-          <div className={`basket__button ${buttonStyle} -hovered`}>
+          <div
+            className={`basket__button ${buttonStyle} -hovered`}
+            onClick={props.deleteAll}
+          >
             Очистить все
           </div>
           <div
@@ -107,12 +109,12 @@ const MyBasket = props => {
       </div>
     </div>
   );
-
 };
 const mapStateToProps = store => {
   return {
     isAuth: store.auth_data.isAuth,
-    basket: store.basket_data.basket
+    basket: store.basket_data.basket,
+    cur: store.valute_data.valute
   };
 };
 
@@ -121,11 +123,17 @@ const mapDispatchToProps = dispatch => {
     addGood: data => {
       dispatch(basketActions.addGood(data));
     },
+    getGoods: () => {
+      dispatch(basketActions.getGoods());
+    },
     editGood: data => {
       dispatch(basketActions.editGood(data));
     },
     deleteGood: data => {
       dispatch(basketActions.deleteGood(data));
+    },
+    deleteAll: data => {
+      dispatch(basketActions.deleteAll(data));
     }
   };
 };

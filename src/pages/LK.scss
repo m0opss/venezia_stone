@@ -48,16 +48,24 @@
 }
 
 .lk__personal-data {
+  width: 500px;
+  @media screen and (max-width: 650px) {
+    width: 400px;
+  }
+  @media screen and (max-width: 500px) {
+    width: 80%;
+  }
   .lk__pd-line {
     margin: 20px;
     height: 40px;
     border-bottom: 2px solid #fada9e;
     max-width: 4500px;
-    width: 45%;
+    width: 100%;
     input {
       height: 100%;
       border: none;
       width: 100%;
+      padding: 0 10px;
     }
   }
   .lk__pd-edit-buttons {

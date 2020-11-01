@@ -12,7 +12,10 @@ body {
     background-color: #dadada;
 
   }
-
+  .back-arr {
+    cursor: pointer;
+    margin-top: 20px;
+  }
   /* ползунок скроллбара */
   ::-webkit-scrollbar-thumb {
     background-color: #be9344;

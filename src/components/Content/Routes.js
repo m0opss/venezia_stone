@@ -14,6 +14,8 @@ import ThirdLvlNew from '../../pages/ThirdLvlNew';
 import FourLvlNew from '../../pages/FourLvlNew';
 import LK from '../../pages/LK';
 import FourLvl from '../../pages/FourLvl';
+import FifthLvl from '../../pages/FifthLvl';
+import ResetPass from '../../pages/ResetPass';
 
 
 const Routes = props => {
@@ -22,9 +24,10 @@ const Routes = props => {
       <Route path="/" exact component={Home} />
       <Route exact path="/contacts" component={Contacts} />
       <Route exact path="/personal-data" component={LK} />
-      <Route exact path="/history" component={LK} />
       <Route exact path="/izbrannoe" component={LK} />
+      <Route exact path="/history" component={LK} />
       <Route exact path="/basket" component={MyBasket} />
+      <Route exact path="/password/*" component={ResetPass}/>
       <Route exact path="/:material"  component={NumGroups} />
       <Route exact path="/sale/:material"  component={SecondLvlSale} />
       <Route exact path="/new/:material"  component={SecondLvlNew} />
@@ -34,6 +37,7 @@ const Routes = props => {
       <Route exact path="/sale/:material/:numGroups/:num" component={FourLvlSale}/>
       <Route exact path="/new/:material/:numGroups/:num" component={FourLvlNew}/>
       <Route exact path="/:material/:numGroups/:num" component={FourLvl}/>
+      <Route exact path="/:material/:numGroups/:num/:last" component={FifthLvl}/>
       <Route path="*">
         <Redirect to="/" />
       </Route>

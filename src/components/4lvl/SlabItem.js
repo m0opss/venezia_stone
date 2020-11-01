@@ -41,7 +41,15 @@ const SlabTableRow = props => {
         <p>{props.item.skl}</p>
       </div>
       <div className="table-row__item table-row__item_l">
-        <p>{props.item.cntRUB} ₽</p>
+        <p>
+          {props.cur === 'rub'
+            ? `${props.item.cntRUB}₽`
+            : props.cur === 'usd'
+            ? `${props.item.cntUSD}$`
+            : props.cur === 'eur'
+            ? `${props.item.cntEUR}€`
+            : ''}
+        </p>
       </div>
       <div className="table-row__item table-row__item_l">
         <p>

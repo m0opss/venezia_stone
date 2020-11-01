@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import authActions from 'actions/authActions';
 import PersonalData from 'components/LK/PD';
 import Izbrannoe from 'components/LK/Izbrannoe';
+import BackArrow from 'components/BackArrow/BackArrow';
 import WatchHistory from 'components/LK/WatchHistory';
 
 import './LK.scss';
@@ -44,7 +45,7 @@ const LK = props => {
     props.setToken('');
   };
 
-  if (props.isAuth) {
+  if (!props.isAuth) {
     return (
       <div className="lk-container">
         <BrowserView>
@@ -67,6 +68,7 @@ const LK = props => {
           </div>
         </BrowserView>
         <MobileView>
+          <BackArrow history={props.history}/>
           <div className="lk-top -mobile">
             <h1>{title}</h1>
           </div>

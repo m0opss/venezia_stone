@@ -4,11 +4,14 @@
   font-style: normal;
   font-weight: normal;
 
-  label {
+  .reg_label {
     color: red;
     font-size: 11px;
-    line-height: 6px;
+    line-height: 10px;
     padding: 0 10px;
+    display: flex;
+    align-items: flex-end;
+    white-space: normal;
   }
 
   input,
@@ -137,5 +140,5 @@
   height: 100px !important;
 }
 .rc-anchor-normal {
-   width: 100% !important;
+  width: 100% !important;
 }

@@ -18,10 +18,14 @@ const MaterialItem = props => {
           <div className="num-gr-item__line -f">
             <p>SKU {props.item.sku}</p>
             <p>
-              Цена от {' '}
-              {props.cur === 'rub' ? `${props.item.prRUB}₽` : ''}
-              {props.cur === 'usd' ? `${props.item.prUSD}$` : ''}
-              {props.cur === 'eur' ? `${props.item.prEUR}€` : ''}
+              Цена от{' '}
+              {props.cur === 'rub'
+                ? `${props.item.cntRUB}₽`
+                : props.cur === 'usd'
+                ? `${props.item.cntUSD}$`
+                : props.cur === 'eur'
+                ? `${props.item.cntEUR}€`
+                : ''}
             </p>
           </div>
           <div className="num-gr-item__line -s">
@@ -49,9 +53,13 @@ const MaterialItem = props => {
           {props.item.kw} м<sup>2</sup>
         </div>
         <div className="num-gr-item__cost">
-          {props.cur === 'rub' ? `${props.item.prRUB}₽` : ''}
-          {props.cur === 'usd' ? `${props.item.prUSD}$` : ''}
-          {props.cur === 'eur' ? `${props.item.prEUR}€` : ''}
+          {props.cur === 'rub'
+            ? `${props.item.cntRUB}₽`
+            : props.cur === 'usd'
+            ? `${props.item.cntUSD}$`
+            : props.cur === 'eur'
+            ? `${props.item.cntEUR}€`
+            : ''}
         </div>
         <Link to={props.link}>Подробнее</Link>
       </div>

@@ -34,7 +34,7 @@ const FourLvl = props => {
         console.log(e);
       });
   }, []);
-
+  if(item)
   return (
     <div className="four-lvl-container">
       <div className="four-lvl-valute">

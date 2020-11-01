@@ -1,4 +1,7 @@
+
+
 .basket {
+
   .basket__f-line {
     display: flex;
     justify-content: space-between;
@@ -18,10 +21,10 @@
   }
 
   .-basket-mobile {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    border: none;
+    // flex-direction: column;
+    // justify-content: flex-start;
+    // align-items: flex-start;
+    // border: none;
 
     h1 {
       margin-left: 15px;

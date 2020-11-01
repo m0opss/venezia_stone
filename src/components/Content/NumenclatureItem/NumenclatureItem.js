@@ -22,9 +22,14 @@ const NumenclatureItem = props => {
             )}
 
             <p>
-              Цена от {props.cur === 'rub' ? `${props.item.prRUB}₽` : ''}
-              {props.cur === 'usd' ? `${props.item.prUSD}$` : ''}
-              {props.cur === 'eur' ? `${props.item.prEUR}€` : ''}
+              Цена от{' '}
+              {props.cur === 'rub'
+                ? `${props.item.cntRUB}₽`
+                : props.cur === 'usd'
+                ? `${props.item.cntUSD}$`
+                : props.cur === 'eur'
+                ? `${props.item.cntEUR}€`
+                : ''}
             </p>
           </div>
           {props.item.cp != 0 ? (
@@ -66,9 +71,13 @@ const NumenclatureItem = props => {
           {props.item.kw} м<sup>2</sup>
         </div>
         <div className="num-gr-item__cost">
-          {props.cur === 'rub' ? `${props.item.prRUB}₽` : ''}
-          {props.cur === 'usd' ? `${props.item.prUSD}$` : ''}
-          {props.cur === 'eur' ? `${props.item.prEUR}€` : ''}
+          {props.cur === 'rub'
+            ? `${props.item.cntRUB}₽`
+            : props.cur === 'usd'
+            ? `${props.item.cntUSD}$`
+            : props.cur === 'eur'
+            ? `${props.item.cntEUR}€`
+            : ''}
         </div>
         <Link to={props.link}>Подробнее</Link>
       </div>

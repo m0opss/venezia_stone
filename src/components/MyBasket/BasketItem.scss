@@ -47,12 +47,21 @@
       justify-content: space-between;
       height: 100%;
     }
+    .basket-item__line-wrapper {
+      .basket-item__line {
+        @media screen and (max-width: 850px) {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    }
     .basket-item__line {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       font-size: 15px;
       line-height: 16px;
+
       > p {
         margin-right: 20px;
       }

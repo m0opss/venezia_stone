@@ -58,11 +58,15 @@ const Register = props => {
     } else {
       setLabelValues_r_email('');
     }
-    if (!validator.isMobilePhone(inputValues.r_phone, 'any', ['strictMode'])) {
-      setLabelValues_r_phone('Неверный формат номера');
-      flag = false;
-    } else {
-      setLabelValues_r_phone('');
+    if (inputValues.r_phone > 0) {
+      if (
+        !validator.isMobilePhone(inputValues.r_phone, 'any', ['strictMode'])
+      ) {
+        setLabelValues_r_phone('Неверный формат номера');
+        flag = false;
+      } else {
+        setLabelValues_r_phone('');
+      }
     }
     if (!validator.isLength(inputValues.r_pass, { min: 6, max: undefined })) {
       setLabelValues_r_pass('Пароль не менее 5 символов');
@@ -70,34 +74,39 @@ const Register = props => {
     } else {
       setLabelValues_r_pass('');
     }
-    if (
-      !validator.isAlpha(inputValues.r_fname, ['ru-RU']) &&
-      !validator.isAlpha(inputValues.r_fname, ['en-US'])
-    ) {
-      setLabelValues_r_fname('Неверный формат имени');
-      flag = false;
-    } else {
-      setLabelValues_r_fname('');
+    if (inputValues.r_fname > 0) {
+      if (
+        !validator.isAlpha(inputValues.r_fname, ['ru-RU']) &&
+        !validator.isAlpha(inputValues.r_fname, ['en-US'])
+      ) {
+        setLabelValues_r_fname('Неверный формат имени');
+        flag = false;
+      } else {
+        setLabelValues_r_fname('');
+      }
     }
-    if (
-      !validator.isAlpha(inputValues.r_lname, ['ru-RU']) &&
-      !validator.isAlpha(inputValues.r_lname, ['en-US'])
-    ) {
-      setLabelValues_r_lname('Неверный формат имени');
-      flag = false;
-    } else {
-      setLabelValues_r_lname('');
+    if (inputValues.r_lname > 0) {
+      if (
+        !validator.isAlpha(inputValues.r_lname, ['ru-RU']) &&
+        !validator.isAlpha(inputValues.r_lname, ['en-US'])
+      ) {
+        setLabelValues_r_lname('Неверный формат имени');
+        flag = false;
+      } else {
+        setLabelValues_r_lname('');
+      }
     }
-    if (
-      !validator.isAlpha(inputValues.r_mname, ['ru-RU']) &&
-      !validator.isAlpha(inputValues.r_mname, ['en-US'])
-    ) {
-      setLabelValues_r_mname('Неверный формат имени');
-      flag = false;
-    } else {
-      setLabelValues_r_mname('');
+    if (inputValues.r_mname > 0) {
+      if (
+        !validator.isAlpha(inputValues.r_mname, ['ru-RU']) &&
+        !validator.isAlpha(inputValues.r_mname, ['en-US'])
+      ) {
+        setLabelValues_r_mname('Неверный формат имени');
+        flag = false;
+      } else {
+        setLabelValues_r_mname('');
+      }
     }
-
     if (flag) {
       onResetLabels();
     }
@@ -118,19 +127,91 @@ const Register = props => {
         .then(response => {
           console.log(response.data);
           props.setVisible(false);
+          document.getElementsByClassName('reg_label')[0].style.height = '0px';
+          document.getElementsByClassName('reg_label')[1].style.height = '0px';
+          document.getElementsByClassName('reg_label')[2].style.height = '0px';
+          document.getElementsByClassName('reg_label')[3].style.height = '0px';
+          document.getElementsByClassName('reg_label')[4].style.height = '0px';
+          document.getElementsByClassName('reg_label')[5].style.height = '0px';
         })
         .catch(err => {
           if (err.response) {
+            document.getElementsByClassName('reg_label')[0].style.height =
+              '20px';
+            document.getElementsByClassName('reg_label')[1].style.height =
+              '20px';
+            document.getElementsByClassName('reg_label')[2].style.height =
+              '20px';
+            document.getElementsByClassName('reg_label')[3].style.height =
+              '20px';
+            document.getElementsByClassName('reg_label')[4].style.height =
+              '20px';
+            document.getElementsByClassName('reg_label')[5].style.height =
+              '20px';
             if (err.response.data.hasOwnProperty('email')) {
-              setLabelValues_r_email(err.response.data.email[0]);
-            }
-            if (err.response.data.hasOwnProperty('error')) {
+              if (
+                err.response.data.email[0] ==
+                'user with this Email address already exists.'
+              ) {
+                setLabelValues_r_email(
+                  'Пользователь с таким почтовым ящиком уже существует.'
+                );
+              } else {
+                setLabelValues_r_email(err.response.data.email[0]);
+              }
+            } else if (err.response.data.hasOwnProperty('password')) {
+              if (
+                err.response.data.password[0] ==
+                'This password is too short. It must contain at least 8 characters.'
+              ) {
+                setLabelValues_r_pass(
+                  'Пароль должен быть длиной минимум 8 символов.'
+                );
+              } else if (
+                err.response.data.password[0] == 'This password is too common.'
+              ) {
+                setLabelValues_r_pass(
+                  'Введённый пароль слишком распространён.'
+                );
+              } else if (
+                err.response.data.password[0] ==
+                'This password is entirely numeric.'
+              ) {
+                setLabelValues_r_pass(
+                  'Пароль состоит только из цифр, необходимо добавить буквы.'
+                );
+              } else {
+                setLabelValues_r_pass(err.response.data.password[0]);
+              }
+            } else if (err.response.data.hasOwnProperty('error')) {
               if (err.response.data.error.hasOwnProperty('email')) {
                 setLabelValues_r_email(err.response.data.error.email[0]);
               }
               if (err.response.data.error.hasOwnProperty('phone')) {
-                setLabelValues_r_phone(err.response.data.error.phone[0]);
+                if (
+                  err.response.data.email[0] ==
+                  'The phone number entered is not valid.'
+                ) {
+                  setLabelValues_r_email(
+                    'Введённый телефонный номер не корректен (+7)'
+                  );
+                } else {
+                  setLabelValues_r_phone(err.response.data.error.phone[0]);
+                }
               }
+            } else if (err.response.data.hasOwnProperty('phone')) {
+              if (
+                err.response.data.phone[0] ==
+                'The phone number entered is not valid.'
+              ) {
+                setLabelValues_r_phone(
+                  'Введённый телефонный номер не корректен (+7)'
+                );
+              } else {
+                setLabelValues_r_phone(err.response.data.phone[0]);
+              }
+            } else {
+              setLabelValues_r_phone(err.response.data[0]);
             }
 
             console.log(1, err.response);
@@ -152,7 +233,9 @@ const Register = props => {
       <p className="form-title">Регистрация</p>
       <div className="input-form">
         <div className="input-form__block">
-          <label htmlFor="">{labelValues_r_email}</label>
+          <label className="reg_label" htmlFor="">
+            {labelValues_r_email}
+          </label>
           <input
             className="reg__email"
             type="text"
@@ -162,7 +245,9 @@ const Register = props => {
             defaultValue={inputValues.r_email}
             placeholder="E-mail *"
           />
-          <label htmlFor="">{labelValues_r_phone}</label>
+          <label className="reg_label" htmlFor="">
+            {labelValues_r_phone}
+          </label>
           <input
             className="reg__phone"
             type="text"
@@ -172,7 +257,9 @@ const Register = props => {
             defaultValue={inputValues.r_phone}
             placeholder="Телефон"
           />
-          <label htmlFor="">{labelValues_r_pass}</label>
+          <label className="reg_label" htmlFor="">
+            {labelValues_r_pass}
+          </label>
           <input
             className="reg__pass"
             type="password"
@@ -184,7 +271,9 @@ const Register = props => {
           />
         </div>
         <div className="input-form__block">
-          <label htmlFor="">{labelValues_r_fname}</label>
+          <label className="reg_label" htmlFor="">
+            {labelValues_r_fname}
+          </label>
           <input
             className="reg__fname"
             type="text"
@@ -194,7 +283,9 @@ const Register = props => {
             defaultValue={inputValues.r_fname}
             placeholder="Имя"
           />
-          <label htmlFor="">{labelValues_r_lname}</label>
+          <label className="reg_label" htmlFor="">
+            {labelValues_r_lname}
+          </label>
           <input
             className="reg__lname"
             type="text"
@@ -204,7 +295,9 @@ const Register = props => {
             defaultValue={inputValues.r_lname}
             placeholder="Фамилия"
           />
-          <label htmlFor="">{labelValues_r_mname}</label>
+          <label className="reg_label" htmlFor="">
+            {labelValues_r_mname}
+          </label>
           <input
             className="reg__mname"
             type="text"

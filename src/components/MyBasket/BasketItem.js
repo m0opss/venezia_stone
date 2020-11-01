@@ -9,11 +9,19 @@ import basket_icon from 'images/basket_icon.png';
 import './BasketItem.scss';
 
 const BasketItem = props => {
+  if (!props.item) {
+    return (
+      <div style={{flex:"100%"}}>
+        Нет данных о товаре
+        <br />
+      </div>
+    );
+  }
   let block;
   if (props.kind == 'basket') {
     block = (
       <div className="basket-item__buttons">
-        <img src={deleteItem} onClick={() => props.deleteItem(props.ps)} />
+        <img src={deleteItem} onClick={() => props.deleteGood(props.item.ps)} />
       </div>
     );
   } else if (props.kind == 'izbr') {
@@ -42,7 +50,7 @@ const BasketItem = props => {
 
   return (
     <div className="basket-item basket-item-root basket-item-typography">
-      <div className="basket-item__name">Гранит TAR BROWN</div>
+      <div className="basket-item__name">Гранит TAR BROWN {props.item.ps}</div>
       <div className="basket-item__type">Плитка</div>
       <div className="basket-item__info">
         <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
@@ -51,15 +59,22 @@ const BasketItem = props => {
             <div className="basket-item__text">
               <div className="basket-item__line-wrapper">
                 <div className="basket-item__line">
-                  <p>Склад: Краснодар</p>
+                  <p>Склад: {props.item.skl}</p>
                   <p>
-                    Цена за м<sup>2</sup>: 4500₽
+                    Цена за м<sup>2</sup>:{' '}
+                    {props.cur === 'rub'
+                      ? `${props.item.cntRUB}₽`
+                      : props.cur === 'usd'
+                      ? `${props.item.cntUSD}$`
+                      : props.cur === 'eur'
+                      ? `${props.item.cntEUR}€`
+                      : ''}
                   </p>
                 </div>
                 <div className="basket-item__line">
                   <p>
                     {' '}
-                    Наличие, м<sup>2</sup>: 8888
+                    Наличие, м<sup>2</sup>: {props.item.os}
                   </p>
                   <p>Наличие, шт: 450 </p>
                 </div>
@@ -72,7 +87,7 @@ const BasketItem = props => {
                     <input
                       type="number"
                       min="0"
-                      defaultValue={'0.12'}
+                      defaultValue={props.item.os}
                       step="0.01"
                       onBlur={kwChange}
                     />
@@ -88,7 +103,25 @@ const BasketItem = props => {
                   </p>
                 </div>
                 <div className="price-view">
-                  <p id="cost">Сумма: 23 112₽</p>
+                  <p id="cost">
+                    Сумма:{' '}
+                    {props.cur === 'rub'
+                      ? `${(
+                          parseFloat(props.item.cntRUB) *
+                          parseFloat(props.item.os)
+                        ).toFixed(2)} ₽`
+                      : props.cur === 'usd'
+                      ? `${(
+                          parseFloat(props.item.cntUSD) *
+                          parseFloat(props.item.os)
+                        ).toFixed(2)} $`
+                      : props.cur === 'eur'
+                      ? `${(
+                          parseFloat(props.item.cntEUR) *
+                          parseFloat(props.item.os)
+                        ).toFixed(2)} €`
+                      : 1}
+                  </p>
                   {block}
                 </div>
               </div>
@@ -98,20 +131,19 @@ const BasketItem = props => {
           <div className="basket-item__text">
             <div className="basket-item__line-wrapper">
               <div className="basket-item__line">
-                <p>Склад: Краснодар</p>
-                <p>Длина: 1.5.м</p>
-                <p>Ширина: 1.5.м</p>
+                <p>Склад: {props.item.skl}</p>
+                <p>Длина: {props.item.le} м</p>
+                <p>Ширина: {props.item.he} м</p>
               </div>
               <div className="basket-item__line">
                 <p>
-                  Площадь, м<sup>2</sup>: 5.2
+                  Площадь, м<sup>2</sup>: {props.item.os}
                 </p>
-                <p>Пачка BML 2091</p>
-                <p>№49375</p>
+                <p>Пачка {props.item.bl}</p>
               </div>
             </div>
             <div className="basket-item__line -price">
-              <p id="cost">Сумма: 23 112₽</p>
+              <p id="cost">Сумма:</p>
               {block}
             </div>
           </div>
