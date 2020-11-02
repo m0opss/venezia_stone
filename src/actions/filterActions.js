@@ -8,7 +8,24 @@ const filterActions = {
         payload: data,
       }
     },
-
+    setFilters: (data) => {
+      return {
+        type: 'SET_FILTERS',
+        payload: data,
+      }
+    },
+    setDefaultFields: (data) => {
+      return {
+        type: 'SET_DEFAULT_FILTER_FIELDS',
+        payload: data,
+      }
+    },
+    setFilterField: (data) => {
+      return {
+        type: 'SET_FIELD',
+        payload: data,
+      }
+    },
   }
   
   export default filterActions

@@ -9,7 +9,7 @@ import { valuteReducer } from './valuteReducer';
 import { basketReducer } from './basketReducer';
 
 const rootReducer = combineReducers({
-    filter: filterReducer,
+    filter_data: filterReducer,
     data: dataReducer,
     auth_data : authReducer,
     material: materialReducer,
