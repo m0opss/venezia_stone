@@ -19,8 +19,6 @@ import {
 
 import './FifthLvl.scss';
 
-import Slider from 'react-slick';
-
 const FifthLvl = props => {
   const [item, setItem] = React.useState({});
   const [currentItemInd, setCurrentItemInd ] = React.useState(0);
@@ -101,6 +99,7 @@ const FifthLvl = props => {
             <div className="main-content__right">
               <OptionLine img={imagess[0].original} />
               <ImageGallery items={imagess} showThumbnails={false} />
+            
             </div>
           </div>
         </div>
