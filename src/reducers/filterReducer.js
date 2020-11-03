@@ -2,15 +2,16 @@ import {  SET_CH_MT } from '../actions/filterActions';
 
 const initialState = {
   filters: {},
-  activeFilter: {}
+  activeFilter: {},
+  activeFields: []
 };
 
 export function filterReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_CH_MT:
+    case 'SET_ACTIVE_FIELDS':
       return {
         ...state,
-        choosedMat: action.payload
+        activeFields: action.payload
       };
     case 'SET_FILTERS':
       return {

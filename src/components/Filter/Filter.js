@@ -30,7 +30,6 @@ const Filter = props => {
   useEffect(() => {
     let isSubscr = true;
     if (isSubscr) {
-
       if (localStorage.getItem('filters') !== null) {
         props.setFilters(localStorage.getItem('filters'));
         // setFilters(localStorage.getItem('filters'));
@@ -56,7 +55,9 @@ const Filter = props => {
           });
       }
       if(localStorage.getItem('activeFieldKeys') !== null) {
-        setActiveFields(localStorage.getItem('activeFieldKeys'))
+        props.setActiveFields(JSON.parse(localStorage.getItem('activeFieldKeys')))
+        console.log(1, props.activeFields)
+        console.log(11, JSON.parse(localStorage.getItem('activeFieldKeys')))
       }
     }
     return () => (isSubscr = false);
@@ -69,23 +70,22 @@ const Filter = props => {
     setState({ collapsed: !state.collapsed });
   };
   const setFieldsActive = (fields) => {
-    setActiveFields(fields)
-    localStorage.setItem('activeFieldKeys', fields)
-    
+    props.setActiveFields(fields)
+    localStorage.setItem('activeFieldKeys', JSON.stringify(fields))
+    console.log(12, typeof(fields), fields)
   }
   const filterItemClicked = (e) => {
-    let t = [...activeFields]
-    if(activeFields.indexOf(e.key) !== -1)
-    t.splice(activeFields.indexOf(e.key), 1)
+    let t = [...props.activeFields]
+    console.log(2, props.activeFields)
+    console.log(22, t)
+    if(t.indexOf(e.key) !== -1)
+      t.splice(t.indexOf(e.key), 1)
     else t.push(e.key)
     setFieldsActive(t)
 
     let f = Object.keys(props.filters)[parseFloat(e.key[0])]
     let param = props.filters[f][parseFloat(e.key.length > 2 ? e.key[1]+e.key[2]: e.key[1])]
     
-    console.log(parseFloat(e.key.length > 2 ? e.key[1]+e.key[2]: e.key[1]))
-    console.log(f)
-    console.log(param)
     Object.keys(props.activeFilter).map(field => {
       if( f == field) {
         let tmp = {...props.activeFilter}
@@ -123,7 +123,7 @@ const Filter = props => {
         mode="inline"
         multiple={true}
         inlineCollapsed={state.collapsed}
-        selectedKeys={activeFields}
+        selectedKeys={props.activeFields}
       >
         {isMobile && !isTablet ? (
           <img
@@ -177,7 +177,8 @@ const mapStateToProps = store => {
   return {
     choosedMat: store.filter_data.choosedMat,
     filters: store.filter_data.filters,
-    activeFilter: store.filter_data.activeFilter
+    activeFilter: store.filter_data.activeFilter,
+    activeFields: store.filter_data.activeFields,
   };
 };
 
@@ -194,6 +195,9 @@ const mapDispatchToProps = dispatch => {
     },
     setFilterField: data => {
       dispatch(filterActions.setFilterField(data));
+    },
+    setActiveFields: data => {
+      dispatch(filterActions.setActiveFields(data));
     }
   };
 };

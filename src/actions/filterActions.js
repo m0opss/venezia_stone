@@ -26,6 +26,12 @@ const filterActions = {
         payload: data,
       }
     },
+    setActiveFields: (data) => {
+      return {
+        type: 'SET_ACTIVE_FIELDS',
+        payload: data,
+      }
+    },
   }
   
   export default filterActions
