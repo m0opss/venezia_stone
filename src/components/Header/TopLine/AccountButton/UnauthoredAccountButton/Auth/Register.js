@@ -114,7 +114,16 @@ const Register = props => {
   };
 
   const onPushReg = () => {
+    console.log('reg');
     if (onRegValidate()) {
+      console.log({
+        email: inputValues.r_email,
+        phone: inputValues.r_phone,
+        first_name: inputValues.r_fname,
+        middle_name: inputValues.r_mname,
+        last_name: inputValues.r_lname,
+        password: inputValues.r_pass
+      });
       axios
         .post('https://catalog-veneziastone.ru/account/djoser/users/', {
           email: inputValues.r_email,

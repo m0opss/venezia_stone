@@ -1,8 +1,7 @@
-import {  SET_CH_MT } from '../actions/filterActions';
 
 const initialState = {
   filters: {},
-  activeFilter: {},
+  activeFilters: {},
   activeFields: []
 };
 
@@ -18,15 +17,10 @@ export function filterReducer(state = initialState, action) {
         ...state,
         filters: action.payload
       };
-    case 'SET_DEFAULT_FILTER_FIELDS':
+    case 'SET_ACTIVE_FILTERS':
       return {
         ...state,
-        activeFilter: action.payload
-      };
-    case 'SET_FILTER_FIELD':
-      return {
-        ...state,
-        activeFilter: action.payload
+        activeFilters: action.payload
       };
     default:
       return state;

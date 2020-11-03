@@ -35,7 +35,7 @@ const LK = props => {
   }
   if (props.match.url === '/izbrannoe') {
     i = true;
-    modul = <Izbrannoe />;
+    modul = <Izbrannoe token={props.auth_token}/>;
     title = <>Избранное</>;
   }
 
@@ -45,7 +45,7 @@ const LK = props => {
     props.setToken('');
   };
 
-  if (!props.isAuth) {
+  if (props.isAuth) {
     return (
       <div className="lk-container">
         <BrowserView>

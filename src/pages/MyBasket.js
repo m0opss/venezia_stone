@@ -22,14 +22,11 @@ const MyBasket = props => {
   };
 
   useEffect(() => {
-    console.log(props.basket, basket)
-    props.getGoods()
-    setBasket(props.basket);
-  });
-
-  const onToggleValute = e => {
-    console.log(state);
-  };
+    if (props.basket.length === 0 && localStorage.getItem('basket') !== null) {
+      props.setBasket(JSON.parse(localStorage.getItem('basket')));
+      console.log('baset', props.basket);
+    }
+  }, []);
 
   const orderOk = e => {
     setVisibleModal(false);
@@ -67,9 +64,11 @@ const MyBasket = props => {
         <Valute />
       </div>
       <div className="basket__items">
-        {basket.map(item => {
+        {
+        props.basket.length > 0 ? props.basket.map(item => {
           return (
             <BasketItem
+              key={item.ps}
               kind="basket"
               cur={props.cur}
               item={item}
@@ -79,7 +78,7 @@ const MyBasket = props => {
               editGood={props.editGood}
             />
           );
-        })}
+        }) :<></>}
       </div>
 
       <div className="basket__bottom-line">
@@ -120,14 +119,11 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setBasket: data => {
+      dispatch(basketActions.setBasket(data));
+    },
     addGood: data => {
       dispatch(basketActions.addGood(data));
-    },
-    getGoods: () => {
-      dispatch(basketActions.getGoods());
-    },
-    editGood: data => {
-      dispatch(basketActions.editGood(data));
     },
     deleteGood: data => {
       dispatch(basketActions.deleteGood(data));

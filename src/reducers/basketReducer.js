@@ -4,16 +4,13 @@ const initialState = {
 
 export function basketReducer(state = initialState, { type, payload }) {
   switch (type) {
-    case 'GOODS:GET_ALL': {
-      if (state.basket.length > 0) {
-        return state;
-      } else if (localStorage.getItem('basket') !== null) {
-        return {
-          ...state,
-          basket: [...JSON.parse(localStorage.getItem('basket'))]
-        };
-      }
+    case 'GOODS:SET_ALL': {
+      return {
+        ...state,
+        basket: payload
+      };
     }
+
     case 'GOODS:DELETE_ALL': {
       localStorage.setItem('basket', JSON.stringify([]));
       return {
@@ -21,6 +18,7 @@ export function basketReducer(state = initialState, { type, payload }) {
         basket: []
       };
     }
+
     case 'GOOD:ADD': {
       let newbasket = [];
       if (state.basket.length > 0) {
@@ -31,6 +29,7 @@ export function basketReducer(state = initialState, { type, payload }) {
           newbasket = [...JSON.parse(localStorage.getItem('basket')), payload];
         } else {
           newbasket = [payload];
+          localStorage.setItem('basket', JSON.stringify(newbasket));
         }
       }
       return {
@@ -40,9 +39,12 @@ export function basketReducer(state = initialState, { type, payload }) {
     }
 
     case 'GOOD:DELETE': {
+      let newbasket = state.basket.filter(n => n.ps !== payload.ps);
+      console.log('delete', newbasket, payload);
+      localStorage.setItem('basket', JSON.stringify(newbasket));
       return {
         ...state,
-        basket: state.basket.filter(n => n.ps !== payload.ps)
+        basket: newbasket
       };
     }
 

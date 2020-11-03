@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import BasketIcon from 'images/basket_icon.svg';
 import './BasketButton.scss';
 import { isMobile } from 'react-device-detect';
+import { connect } from 'react-redux';
 
 const BasketButton = props => {
+  let basket_counter = props.basket.length
   return (
     <>
       <div className="top-line__basket">
@@ -15,10 +17,15 @@ const BasketButton = props => {
         {isMobile ? (
           <></>
         ) : (
-          <div className="top-line__basket-counter">{props.basket_counter}</div>
+          <div className="top-line__basket-counter">{basket_counter}</div>
         )}
       </div>
     </>
   );
 };
-export default BasketButton;
+const mapStateToProps = store => {
+  return {
+    basket: store.basket_data.basket
+  };
+};
+export default connect(mapStateToProps)(BasketButton);

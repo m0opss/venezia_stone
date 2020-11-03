@@ -9,9 +9,10 @@ import basket_icon from 'images/basket_icon.png';
 import './BasketItem.scss';
 
 const BasketItem = props => {
+  console.log(props.item);
   if (!props.item) {
     return (
-      <div style={{flex:"100%"}}>
+      <div style={{ flex: '100%' }}>
         Нет данных о товаре
         <br />
       </div>
@@ -21,7 +22,7 @@ const BasketItem = props => {
   if (props.kind == 'basket') {
     block = (
       <div className="basket-item__buttons">
-        <img src={deleteItem} onClick={() => props.deleteGood(props.item.ps)} />
+        <img src={deleteItem} onClick={() => props.deleteGood(props.item)} />
       </div>
     );
   } else if (props.kind == 'izbr') {
@@ -50,11 +51,13 @@ const BasketItem = props => {
 
   return (
     <div className="basket-item basket-item-root basket-item-typography">
-      <div className="basket-item__name">Гранит TAR BROWN {props.item.ps}</div>
-      <div className="basket-item__type">Плитка</div>
+      <div className="basket-item__name">
+        {props.name} {props.id}
+      </div>
+      <div className="basket-item__type">{props.type}</div>
       <div className="basket-item__info">
         <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
-        {props.type ? (
+        {props.type == 'Слэб' ? (
           <>
             <div className="basket-item__text">
               <div className="basket-item__line-wrapper">

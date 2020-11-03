@@ -39,6 +39,7 @@ const Login = props => {
   };
 
   const onPushLog = () => {
+    console.log('log')
     if (onLogValidate()) {
       axios
         .post('https://catalog-veneziastone.ru/account/login/', {

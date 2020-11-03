@@ -8,8 +8,8 @@ import BasketButton from '../TopLine/BasketButton/BasketButton';
 import MenuList from './MenuList';
 
 
-import izbr from "images/izbrannoe_icon.svg"
-// import izbr from "images/izbrannoe_icon.png"
+// import izbr from "images/izbrannoe_icon.svg"
+import izbr from "images/izbrannoe_icon.png"
 import search from 'images/search.png';
 
 import './MobileHeader.scss';

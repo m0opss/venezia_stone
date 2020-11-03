@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import './NumGroupItem.scss';
 
 const MaterialItem = props => {
-  console.log(props.item);
   if (props.pltk) {
     return (
       <div key={props.item.ps} className="num-gr-item">
@@ -20,11 +19,11 @@ const MaterialItem = props => {
             <p>
               Цена от{' '}
               {props.cur === 'rub'
-                ? `${props.item.cntRUB}₽`
+                ? `${props.item.prRUB}₽`
                 : props.cur === 'usd'
-                ? `${props.item.cntUSD}$`
+                ? `${props.item.prUSD}$`
                 : props.cur === 'eur'
-                ? `${props.item.cntEUR}€`
+                ? `${props.item.prEUR}€`
                 : ''}
             </p>
           </div>
@@ -39,30 +38,28 @@ const MaterialItem = props => {
     );
   } else {
     return (
-      <div
-        key={props.id}
-        className="num-gr-item num-gr-item-root"
-        onClick={props.onClick}
-      >
-        <div className="num-gr-item__img">
-          <img src={props.item.file} className="num-gr-item__img" />
+      <Link to={props.link}>
+        <div key={props.id} className="num-gr-item num-gr-item-root">
+          <div className="num-gr-item__img">
+            <img src={props.item.file} className="num-gr-item__img" />
+          </div>
+          <div className="num-gr-item__name">{props.item.gr}</div>
+          <div className="num-gr-item__sku">{props.item.sku}</div>
+          <div className="num-gr-item__sqrt">
+            {props.item.kw} м<sup>2</sup>
+          </div>
+          <div className="num-gr-item__cost">
+            {props.cur === 'rub'
+              ? `${props.item.prRUB}₽`
+              : props.cur === 'usd'
+              ? `${props.item.prUSD}$`
+              : props.cur === 'eur'
+              ? `${props.item.prEUR}€`
+              : ''}
+          </div>
+          <span>Подробнее</span>
         </div>
-        <div className="num-gr-item__name">{props.item.gr}</div>
-        <div className="num-gr-item__sku">{props.item.sku}</div>
-        <div className="num-gr-item__sqrt">
-          {props.item.kw} м<sup>2</sup>
-        </div>
-        <div className="num-gr-item__cost">
-          {props.cur === 'rub'
-            ? `${props.item.cntRUB}₽`
-            : props.cur === 'usd'
-            ? `${props.item.cntUSD}$`
-            : props.cur === 'eur'
-            ? `${props.item.cntEUR}€`
-            : ''}
-        </div>
-        <Link to={props.link}>Подробнее</Link>
-      </div>
+      </Link>
     );
   }
 };

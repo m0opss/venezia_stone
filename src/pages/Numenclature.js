@@ -103,43 +103,28 @@ const Numenclature = props => {
             : 'num-options'
         }
       >
-        {isMobile && !isTablet ? (
-          <div className="filter-options-mobile">
-            <div id="filter-opt-1" onClick={() => {}}>
-              Все
-            </div>
-            <div id="filter-opt-2" onClick={() => {}}>
-              Слэбы
-            </div>
-            <div id="filter-opt-3" onClick={() => {}}>
-              Полоса
-            </div>
-            <div id="filter-opt-4" onClick={() => {}}>
-              Плитка
-            </div>
-            <div id="filter-opt-5" onClick={() => {}}>
-              Другие изделия
-            </div>
+        <div
+          className={
+            isMobile && !isTablet ? 'filter-options-mobile' : `filter-options`
+          }
+        >
+          <div id="Все" onClick={filterIzd}>
+            Все
           </div>
-        ) : (
-          <div className="filter-options">
-            <div id="Все" onClick={filterIzd}>
-              Все
-            </div>
-            <div id="Слэбы" onClick={filterIzd}>
-              Слэбы
-            </div>
-            <div id="Полоса" onClick={filterIzd}>
-              Полоса
-            </div>
-            <div id="Плитка" onClick={filterIzd}>
-              Плитка
-            </div>
-            <div id="Другие" onClick={filterIzd}>
-              Другие изделия
-            </div>
+          <div id="Слэбы" onClick={filterIzd}>
+            Слэбы
           </div>
-        )}
+          <div id="Полоса" onClick={filterIzd}>
+            Полоса
+          </div>
+          <div id="Плитка" onClick={filterIzd}>
+            Плитка
+          </div>
+          <div id="Другие" onClick={filterIzd}>
+            Другие изделия
+          </div>
+        </div>
+
         <div className="other-options">
           <Valute />
           <Sort
@@ -168,13 +153,13 @@ const Numenclature = props => {
           className="num-items-group-col num-gr-item-root num-item"
           style={style_pltk ? { display: 'none' } : {}}
         >
-          <p>Фото</p>
-          <p>Название</p>
-          <p>Количество пачек</p>
-          <p>Количество слэбов</p>
-          <p>Общая площадь</p>
-          <p>Цена от</p>
-          <p></p>
+          <div style={{ height: 'unset' }}>Фото</div>
+          <div>Название</div>
+          <div>Пачек</div>
+          <div>Слэбов</div>
+          <div>Общая площадь</div>
+          <div>Цена от</div>
+          <div></div>
         </div>
 
         {numenclature.map((item, index) => (

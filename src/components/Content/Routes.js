@@ -16,6 +16,7 @@ import LK from '../../pages/LK';
 import FourLvl from '../../pages/FourLvl';
 import FifthLvl from '../../pages/FifthLvl';
 import ResetPass from '../../pages/ResetPass';
+import Test from '../../pages/test';
 
 
 const Routes = props => {
@@ -23,6 +24,7 @@ const Routes = props => {
     <Switch>
       <Route path="/" exact component={Home} />
       <Route exact path="/contacts" component={Contacts} />
+      <Route exact path="/test" component={Test} />
       <Route exact path="/personal-data" component={LK} />
       <Route exact path="/izbrannoe" component={LK} />
       <Route exact path="/history" component={LK} />

@@ -95,7 +95,7 @@ const NumGroups = props => {
           className="num-gr-items-group-col num-gr-item-root"
           style={style_pltk ? { display: 'none' } : {}}
         >
-          <p>Фото</p>
+          <p style={{height:"unset"}}>Фото</p>
           <p>Название</p>
           <p>Количество SKU</p>
           <p>Общая площадь</p>

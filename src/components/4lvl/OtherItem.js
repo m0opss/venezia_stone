@@ -5,14 +5,17 @@ import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import OtherTableRow from 'components/4lvl/OtherTableRow';
 import OtherItemTablet from 'components/4lvl/OtherItemTablet';
 import OtherItemMobile from 'components/4lvl/OtherItemMobile';
+import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
+import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 
 import { isTablet, isBrowser } from 'react-device-detect';
 
 import lamp from 'images/lamp.png';
 import book from 'images/book.png';
-import arr from 'images/arr-4lvl.png';
 import like from 'images/like-4lvl.png';
 import basket from 'images/basket-4lvl.png';
+
+import arr from 'images/arr-4lvl.png';
 
 const PlitkaMainImg = props => {
   return (
@@ -79,19 +82,7 @@ const MainImg = props => {
 };
 
 const OtherItem = props => {
-  const [item, setItem] = React.useState({});
-  console.log('other', props.item);
-
-  React.useEffect(() => {
-    let isSubscr = true;
-    if (props.item.prs && isSubscr) {
-      setItem(props.item.prs[0]);
-    }
-    return () => (isSubscr = false);
-  });
-
-
-
+  console.log(props.item);
   let colors = [
     '#2C1D02',
     '#402A02',
@@ -115,14 +106,28 @@ const OtherItem = props => {
           <div className="slab-item-info__bottom">
             <div className="slab-item-info__left-block slab-item-info__left-block_other">
               <div className="slab-item-info__parameters">
-                <p>Общая площадь: {item.os} </p>
-                <p>Количество: {item.os} </p>
-                <p>Сумма: {item.cnt} ₽</p>
+                <p>
+                  Общая площадь, м<sup>2</sup> : {props.item.prs[0].os}
+                </p>
+                <p>Количество, шт: {props.item.prs[0].kolvo} </p>
+                <p>
+                  Сумма:{' '}
+                  {props.cur === 'rub'
+                    ? `${props.item.prs[0].cntRUB}₽`
+                    : props.cur === 'usd'
+                    ? `${props.item.prs[0].cntUSD}$`
+                    : props.cur === 'eur'
+                    ? `${props.item.prs[0].cntEUR}€`
+                    : ''}
+                </p>
               </div>
               <ColorRange colors={colors} />
             </div>
             <div className="slab-item-info__right-block">
-              <MainImg type={props.type} img={item.photobl} />
+              <MainImg
+                type={props.type}
+                img={props.item.prs[0].photo_product}
+              />
             </div>
           </div>
         </div>
@@ -130,20 +135,20 @@ const OtherItem = props => {
         <div className="good-items-table">
           <div className="good-items-table__item slabs-title other-title">
             <div className="table-row__item table-row__item_l">
-              <p>Склад: {item.skl} </p>
+              <p>Склад: {props.item.prs[0].sklad}</p>
             </div>
             <div className="table-row__item table-row__item_l">
               <p>
-                Цена за м<sup>2</sup>: {item.cnt}
+                Цена за м<sup>2</sup>
               </p>
             </div>
             <div className="table-row__item">
               <p>
-                Наличие,м<sup>2</sup>
+                Наличие, м<sup>2</sup>
               </p>
             </div>
             <div className="table-row__item">
-              <p>Наличие,шт</p>
+              <p>Наличие, шт</p>
             </div>
             <div className="table-row__item table-row__item-count">
               <div className="table-row__item-count_title-t">Рассчитать</div>
@@ -171,7 +176,6 @@ const OtherItem = props => {
               key={item.ps}
               type={props.item.izd}
               item={item}
-              addGood={props.addGood}
             />
           ))}
         </div>

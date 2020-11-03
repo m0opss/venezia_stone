@@ -1,4 +1,10 @@
 const basketActions = {
+  setBasket: data => {
+    return {
+      type: 'GOODS:SET_ALL',
+      payload: data
+    };
+  },
   addGood: data => {
     return {
       type: 'GOOD:ADD',
@@ -11,11 +17,7 @@ const basketActions = {
       payload: data
     };
   },
-  getGoods: () => {
-    return {
-      type: 'GOODS:GET_ALL',
-    };
-  },
+
   deleteAll: data => {
     return {
       type: 'GOODS:DELETE_ALL',
@@ -29,4 +31,4 @@ const basketActions = {
     };
   }
 };
-export default basketActions
+export default basketActions;

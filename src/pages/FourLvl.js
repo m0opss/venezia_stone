@@ -6,10 +6,10 @@ import axios from 'axios';
 import Valute from 'components/Valute/Valute';
 
 import filterActions from '../actions/filterActions';
+import Filter from 'components/Filter/Filter';
 import dataActions from 'actions/dataAction';
 import basketActions from 'actions/basketActions';
 
-import Filter from 'components/Filter/Filter';
 import {
   MobileView,
   BrowserView,
@@ -25,51 +25,39 @@ const FourLvl = props => {
   const [item, setItem] = React.useState({});
 
   React.useEffect(() => {
-    axios
-      .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
-      .then(response => {
-        setItem(response.data.itms[0]);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    let isSubscr = true;
+    if (isSubscr) {
+      axios
+        .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
+        .then(response => {
+          setItem(response.data.itms[0]);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+    return () => (isSubscr = false);
   }, []);
-  if(item)
-  return (
-    <div className="four-lvl-container">
-      <div className="four-lvl-valute">
-        {isTablet || isBrowser ? <Valute /> : <></>}
+  if (Object.keys(item).length != 0) {
+    return (
+      <div className="four-lvl-container">
+        <div className="four-lvl-valute">
+          {isTablet || isBrowser ? <Valute /> : <></>}
+        </div>
+        {item.izd === 'Слэбы' ? (
+          <SlabItem type={item.izd} item={item} cur={props.cur} />
+        ) : (
+          <OtherItem type={item.izd} item={item} cur={props.cur} />
+        )}
       </div>
-      {item.izd === 'Слэбы' ? (
-        <SlabItem type={item.izd} item={item} addGood={props.addGood} cur={props.cur}/>
-      ) : (
-        <></>
-      )}
-      {item.izd !== 'Слэбы' && item.izd ? (
-        <OtherItem type={item.izd} item={item} addGood={props.addGood} cur={props.cur} />
-      ) : (
-        <></>
-      )}
-    </div>
-  );
+    );
+  } else return <></>;
 };
 
 const mapStateToProps = store => {
   return {
-    data: store.data,
     cur: store.valute_data.valute
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getDataResponse: data => {
-      dispatch(dataActions.getDataResponse(data));
-    },
-    addGood: data => {
-      dispatch(basketActions.addGood(data));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FourLvl);
+export default connect(mapStateToProps)(FourLvl);

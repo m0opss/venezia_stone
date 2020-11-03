@@ -5,8 +5,8 @@ import book from 'images/book.png';
 import Valute from 'components/Valute/Valute';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import Slider from 'react-slick';
-import like from 'images/like.png';
-import basket_icon from 'images/basket_icon.png';
+import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
+import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import './OtherItemMobile.scss';
 
 const GroupItem = props => {
@@ -57,8 +57,8 @@ const GroupItem = props => {
       </div>
       <div className="other-items-group__line basket-item__buttons">
         <div className="">
-          <img src={like} />
-          <img src={basket_icon} />
+          <ItemAddIzbr item={props.item} />
+          <ItemAddBasket item={props.item} />
         </div>
       </div>
     </div>
@@ -66,12 +66,16 @@ const GroupItem = props => {
 };
 
 const OtherItemTablet = props => {
-  const [_item, setItem] = React.useState({'prs': []});
+  const [_item, setItem] = React.useState({ prs: [] });
   const [selectedEl, setSelectedEl] = React.useState({});
 
   React.useEffect(() => {
     let isSubscr = true;
-    if (!(Object.entries(props.item).length === 0 && props.item.constructor) === Object && isSubscr) {
+    if (
+      !(Object.entries(props.item).length === 0 && props.item.constructor) ===
+        Object &&
+      isSubscr
+    ) {
       setItem(props.item);
       setSelectedEl(item.prs[0]);
     }
@@ -96,8 +100,7 @@ const OtherItemTablet = props => {
       <div className="slab-item-mobile__main-title">{selectedEl.bl}</div>
       <ButtonsPanel />
       <Slider {...settings}>
-                
-      {_item.prs.map(item => (
+        {_item.prs.map(item => (
           <div className="slab-item-carousel__item" selectItem={setSelectedEl}>
             <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
           </div>

@@ -18,12 +18,16 @@ const App = props => {
   React.useEffect(() => {
     let isSubscr = true;
     if (isSubscr) {
-      if (localStorage.getItem('auth_token')) {
+      if(localStorage.getItem('basket') !== null) {
+
+      }
+      if (localStorage.getItem('auth_token') !== null) {
         axios
           .post('https://catalog-veneziastone.ru/account/get_user_info/', {
             token: localStorage.getItem('auth_token')
           })
           .then(response => {
+            props.setToken(localStorage.getItem('auth_token'));
             props.setUserInfo(response.data);
             props.setAuth(true);
           })
@@ -43,7 +47,7 @@ const App = props => {
           });
       }
     }
-    return () => isSubscr = false
+    return () => (isSubscr = false);
   });
 
   return (
@@ -59,12 +63,16 @@ const mapStateToProps = store => {
   return {
     data: store.data,
     isAuth: store.auth_data.isAuth,
-    auth_token: store.auth_data.auth_token
+    auth_token: store.auth_data.auth_token,
+    basket: store.basket_data.basket,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    setBasket: data => {
+      dispatch(basketActions.setBasket(data));
+    },
     getDataResponse: data => {
       dispatch(dataActions.getDataResponse(data));
     },

@@ -2,6 +2,8 @@ import React from 'react';
 
 import ScrollImage from 'components/ScrollImage/ScrollImage';
 import ColorRange from 'components/ColorRange/ColorRange';
+import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
+import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import SlabItemTablet from 'components/4lvl/SlabItemTablet';
 import SlabItemMobile from 'components/4lvl/SlabItemMobile';
@@ -60,15 +62,11 @@ const SlabTableRow = props => {
         </p>
       </div>
       <div className="table-row__item good-items-table__title-icons">
-        <img src={like} />
+        {/* <img src={like} /> */}
+        <ItemAddIzbr item={props.item} />
       </div>
       <div className="table-row__item good-items-table__title-icons">
-        <img
-          src={basket}
-          onClick={() => {
-            props.addGood(props.item);
-          }}
-        />
+        <ItemAddBasket item={props.item} />
       </div>
     </div>
   );

@@ -4,11 +4,12 @@ import ScrollImage from 'components/ScrollImage/ScrollImage';
 import ColorRange from 'components/ColorRange/ColorRange';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import Valute from 'components/Valute/Valute';
+import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
+import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 
 import lamp from 'images/lamp.png';
 import book from 'images/book.png';
-import like from 'images/like-4lvl.png';
-import basket from 'images/basket-4lvl.png';
+
 import Slider from 'react-slick';
 
 import './SlabItemMobile.scss';
@@ -22,10 +23,10 @@ const GroupItem = props => {
           src={props.item.photobl}
         />
         <div className="slab-items-group-item__img-icon -icons-1">
-          <img src={like} />
+        <ItemAddIzbr item={props.item} />
         </div>
         <div className="slab-items-group-item__img-icon -icons-2">
-          <img src={basket} />
+        <ItemAddBasket item={props.item} />
         </div>
       </div>
       <div className="slab-items-group-item__info">

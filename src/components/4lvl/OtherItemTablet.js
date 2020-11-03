@@ -3,8 +3,8 @@ import React from 'react';
 import ColorRange from 'components/ColorRange/ColorRange';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import './OtherItemTablet.scss';
-import like from 'images/like.png';
-import basket_icon from 'images/basket_icon.png';
+import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
+import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 
 const GroupItem = props => {
   const [S, setS] = React.useState(0);
@@ -32,8 +32,8 @@ const GroupItem = props => {
       <div className="other-items-group__line">
         <p className="other-items-group_first-col">Заказать</p>
         <div className="other-items-group__centered">
-          <input type="number" min='0' defaultValue={cnt} step="1"/>
-          <input type="number" min='0' defaultValue={S} step="0.01"/>
+          <input type="number" min="0" defaultValue={cnt} step="1" />
+          <input type="number" min="0" defaultValue={S} step="0.01" />
         </div>
       </div>
       <div className="other-items-group__line">
@@ -54,8 +54,8 @@ const GroupItem = props => {
       </div>
       <div className="other-items-group__line basket-item__buttons">
         <div className="">
-          <img src={like} />
-          <img src={basket_icon} />
+          <ItemAddIzbr item={props.item} />
+          <ItemAddBasket item={props.item} />
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@ const OtherItemTablet = props => {
     if (props.item.prs && isSubscr) {
       setSelectedEl(props.item.prs[0]);
     }
-    return () => isSubscr = false
+    return () => (isSubscr = false);
   });
   let colors = [
     '#2C1D02',
