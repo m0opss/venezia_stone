@@ -24,6 +24,7 @@ const FifthLvl = props => {
   const [currentItemInd, setCurrentItemInd ] = React.useState(0);
 
   // React.useEffect(() => {
+    // window.scrollTo(0, 0);
   //   axios
   //     .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
   //     .then(response => {

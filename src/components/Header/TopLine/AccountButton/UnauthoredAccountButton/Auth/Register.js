@@ -61,6 +61,7 @@ const Register = props => {
     if (inputValues.r_phone > 0) {
       if (
         !validator.isMobilePhone(inputValues.r_phone, 'any', ['strictMode'])
+        || (inputValues.r_phone[0] == "8" && inputValues.r_phone.length == 11)
       ) {
         setLabelValues_r_phone('Неверный формат номера');
         flag = false;
@@ -276,7 +277,7 @@ const Register = props => {
               setInputValues({ ...inputValues, r_pass: e.target.value })
             }
             defaultValue={inputValues.r_pass}
-            placeholder="Пароль"
+            placeholder="Пароль *"
           />
         </div>
         <div className="input-form__block">

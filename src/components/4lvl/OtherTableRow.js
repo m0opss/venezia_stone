@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
+import { Link } from 'react-router-dom';
 
 const OtherTableRow = props => {
   const [kw, setKw] = React.useState(props.type == 'Плитка' ? 0 : undefined);
@@ -16,7 +17,6 @@ const OtherTableRow = props => {
       else if (props.cur === 'eur') pr = props.item.cntEUR;
       setSum(cnt * pr);
     } else {
-      
       setSum(kw * cnt);
     }
   });

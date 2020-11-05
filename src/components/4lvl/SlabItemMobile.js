@@ -13,6 +13,7 @@ import book from 'images/book.png';
 import Slider from 'react-slick';
 
 import './SlabItemMobile.scss';
+import { Link } from 'react-router-dom';
 
 const GroupItem = props => {
   return (
@@ -23,34 +24,63 @@ const GroupItem = props => {
           src={props.item.photobl}
         />
         <div className="slab-items-group-item__img-icon -icons-1">
-        <ItemAddIzbr item={props.item} />
+          <ItemAddIzbr item={props.item} />
         </div>
         <div className="slab-items-group-item__img-icon -icons-2">
-        <ItemAddBasket item={props.item} />
+          <ItemAddBasket item={props.item} />
         </div>
       </div>
-      <div className="slab-items-group-item__info">
-        <p className="slab-items-group-item__line">Слэб: {props.item.bl}</p>
-        <p className="slab-items-group-item__line">
-          Размер: {props.item.le}x{props.item.he} ={props.item.os} м<sup>2</sup>
-        </p>
-        <p className="slab-items-group-item__line">Склад: {props.item.skl}</p>
-        <p className="slab-items-group-item__line">
-          Цена за м<sup>2</sup>: {props.item.cnt}₽
-        </p>
-        <p className="slab-items-group-item__line">
-          Стоимость:{' '}
-          {(parseFloat(props.item.cnt) * parseFloat(props.item.os)).toFixed(2)}{' '}
-          ₽
-        </p>
-      </div>
+      <Link to={`${props.url}/${props.item.bl}`}>
+        <div className="slab-items-group-item__info">
+          <p className="slab-items-group-item__line">Слэб: {props.item.bl}</p>
+          <p className="slab-items-group-item__line">
+            Размер: {props.item.le}x{props.item.he} ={props.item.os} м
+            <sup>2</sup>
+          </p>
+          <p className="slab-items-group-item__line">
+            Склад: {props.item.sklad}
+          </p>
+          <p className="slab-items-group-item__line">
+            Цена за м<sup>2</sup>: {' '}
+            {props.cur === 'rub'
+              ? `${props.item.cntRUB}₽`
+              : props.cur === 'usd'
+              ? `${props.item.cntUSD}$`
+              : props.cur === 'eur'
+              ? `${props.item.cntEUR}€`
+              : ''}
+          </p>
+          <p className="slab-items-group-item__line">
+            Стоимость:{' '}
+            {props.cur === 'rub'
+              ? `${(
+                  parseFloat(props.item.cntRUB) * parseFloat(props.item.os)
+                ).toFixed(2)} ₽`
+              : props.cur === 'usd'
+              ? `${(
+                  parseFloat(props.item.cntUSD) * parseFloat(props.item.os)
+                ).toFixed(2)} $`
+              : props.cur === 'eur'
+              ? `${(
+                  parseFloat(props.item.cntEUR) * parseFloat(props.item.os)
+                ).toFixed(2)} €`
+              : '-'}
+          </p>
+        </div>
+      </Link>
     </div>
   );
 };
 
 const SlabItemMobile = props => {
   const [selectedEl, setSelectedEl] = React.useState(props.item.prs[0]);
-  console.log(props.item);
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1
+  };
   let colors = [
     '#2C1D02',
     '#402A02',
@@ -62,7 +92,6 @@ const SlabItemMobile = props => {
     '#402A02',
     '#402A02'
   ];
-
 
   let images = [
     'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
@@ -99,7 +128,7 @@ const SlabItemMobile = props => {
       <div className="hidescroll">
         <div className="slab-items-group">
           {props.item.prs.map(item => (
-            <GroupItem item={item} />
+            <GroupItem key={item.ps} item={item} url={props.url} cur={props.cur}/>
           ))}
         </div>
       </div>

@@ -25,7 +25,7 @@ import basket from 'images/basket-4lvl.png';
 
 const SlabTableRow = props => {
   return (
-    <Link to={`/`}>
+    <Link to={`${props.url}/${props.item.bl}`}>
       <div className="good-items-table__item ">
         <div className="table-row__item">
           <p>{props.item.bl}</p>
@@ -58,14 +58,22 @@ const SlabTableRow = props => {
         </div>
         <div className="table-row__item table-row__item_l">
           <p>
-            {(
-              parseFloat(props.item.cntRUB) * parseFloat(props.item.os)
-            ).toFixed(2)}
-            ₽
+            {props.cur === 'rub'
+              ? `${(
+                  parseFloat(props.item.cntRUB) * parseFloat(props.item.os)
+                ).toFixed(2)} ₽`
+              : props.cur === 'usd'
+              ? `${(
+                  parseFloat(props.item.cntUSD) * parseFloat(props.item.os)
+                ).toFixed(2)} $`
+              : props.cur === 'eur'
+              ? `${(
+                  parseFloat(props.item.cntEUR) * parseFloat(props.item.os)
+                ).toFixed(2)} €`
+              : 1}
           </p>
         </div>
         <div className="table-row__item good-items-table__title-icons">
-          {/* <img src={like} /> */}
           <ItemAddIzbr item={props.item} />
         </div>
         <div className="table-row__item good-items-table__title-icons">
@@ -78,7 +86,6 @@ const SlabTableRow = props => {
 
 const SlabItem = props => {
   const [selectedEl, setSelectedEl] = React.useState(props.item.prs[0]);
-  console.log('slab', props.item);
   let colors = [
     '#2C1D02',
     '#402A02',
@@ -177,6 +184,7 @@ const SlabItem = props => {
                 key={item.ps}
                 type={props.item.izd}
                 item={item}
+                url={props.url}
                 addGood={props.addGood}
               />
             ))}
@@ -185,9 +193,9 @@ const SlabItem = props => {
       </div>
     );
   } else if (isTablet) {
-    return <SlabItemTablet item={props.item} />;
+    return <SlabItemTablet item={props.item} url={props.url} cur={props.cur}/>;
   } else {
-    return <SlabItemMobile item={props.item} />;
+    return <SlabItemMobile item={props.item} url={props.url} cur={props.cur}/>;
   }
 };
 

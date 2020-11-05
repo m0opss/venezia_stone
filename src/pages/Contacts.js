@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
@@ -15,7 +15,9 @@ const AddressCard = props => {
   return (
     <div className="city-card">
       <div className="city-card__wrapper">
-        <h1>{props.city}</h1>
+        <h1 className="city-card__city" id={props.city} onClick={props.onClick}>
+          {props.city}
+        </h1>
         <p className="address-card__address">{props.address}</p>
         <p className="address-card__sklad-address">{props.skladAddress}</p>
         <p className="address-card__tel">{props.tel}</p>
@@ -61,8 +63,34 @@ const AddressCard = props => {
 const Contacts = () => {
   const [center, setCenter] = React.useState([52.721219, 41.452274]);
   const [zoom, setZoom] = React.useState(4);
-  const [active, setActive] = React.useState(0);
-  
+  const [active, setActive] = React.useState([55.602576, 37.436086]);
+
+  useEffect(() => {
+    setCenter(active);
+  });
+
+  const onSetCity = e => {
+    setZoom(13);
+    let list = document.getElementsByClassName('city-card__city')
+    for (let i of list) {
+      i.style.color = "black";
+    }
+    document.getElementById(e.target.id).style.color = '#be9344';
+    if (e.target.id == 'Москва') {
+      setActive([55.602576, 37.436086]);
+    } else if (e.target.id == 'Краснодар') {
+      setActive([45.055212, 39.293164]);
+    } else if (e.target.id == 'Екатеринбург') {
+      setActive([56.908104, 60.630532]);
+    } else if (e.target.id == 'Санкт-Петербург') {
+      setActive([59.869955, 30.49139]);
+    } else if (e.target.id == 'Казань') {
+      setActive([55.938667, 49.320851]);
+    } else if (e.target.id == 'Крым') {
+      setActive([45.389194, 33.993751]);
+    }
+  };
+
   return (
     <div className="contacts-container">
       <h1 className="contacts-h1">Контакты</h1>
@@ -71,7 +99,7 @@ const Contacts = () => {
           <Map
             width="100%"
             height="550px"
-            defaultState={{
+            state={{
               center: center,
               zoom: zoom
             }}
@@ -87,6 +115,7 @@ const Contacts = () => {
       </div>
       <div className="city-cards">
         <AddressCard
+          onClick={onSetCity}
           city="Москва"
           socLinks=""
           address={
@@ -130,6 +159,7 @@ const Contacts = () => {
           }
         />
         <AddressCard
+          onClick={onSetCity}
           city="Краснодар"
           address={
             <p>
@@ -165,6 +195,7 @@ const Contacts = () => {
           }
         />
         <AddressCard
+          onClick={onSetCity}
           city="Екатеринбург"
           socLinks=""
           address={
@@ -200,6 +231,7 @@ const Contacts = () => {
           }
         />
         <AddressCard
+          onClick={onSetCity}
           city="Санкт-Петербург"
           socLinks=""
           address={
@@ -235,6 +267,7 @@ const Contacts = () => {
           }
         />
         <AddressCard
+          onClick={onSetCity}
           city="Казань"
           socLinks=""
           address={
@@ -272,6 +305,7 @@ const Contacts = () => {
           }
         />
         <AddressCard
+          onClick={onSetCity}
           city="Крым"
           socLinks=""
           address={

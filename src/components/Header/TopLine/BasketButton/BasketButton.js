@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
-import BasketIcon from 'images/basket_icon.svg';
+import BasketIcon from 'images/basket_icon_black.svg';
 import './BasketButton.scss';
 import { isMobile } from 'react-device-detect';
 import { connect } from 'react-redux';

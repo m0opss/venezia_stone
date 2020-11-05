@@ -5,8 +5,6 @@ import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import OtherTableRow from 'components/4lvl/OtherTableRow';
 import OtherItemTablet from 'components/4lvl/OtherItemTablet';
 import OtherItemMobile from 'components/4lvl/OtherItemMobile';
-import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
-import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 
 import { isTablet, isBrowser } from 'react-device-detect';
 
@@ -109,7 +107,7 @@ const OtherItem = props => {
                 <p>
                   Общая площадь, м<sup>2</sup> : {props.item.prs[0].os}
                 </p>
-                <p>Количество, шт: {props.item.prs[0].kolvo} </p>
+                <p>Количество, шт: </p>
                 <p>
                   Сумма:{' '}
                   {props.cur === 'rub'
@@ -173,6 +171,7 @@ const OtherItem = props => {
           {props.item.prs.map(item => (
             <OtherTableRow
               cur={props.cur}
+              url={props.url}
               key={item.ps}
               type={props.item.izd}
               item={item}

@@ -23,8 +23,8 @@ import OtherItem from '../components/4lvl/OtherItem';
 
 const FourLvl = props => {
   const [item, setItem] = React.useState({});
-
   React.useEffect(() => {
+    window.scrollTo(0, 0);
     let isSubscr = true;
     if (isSubscr) {
       axios
@@ -38,6 +38,7 @@ const FourLvl = props => {
     }
     return () => (isSubscr = false);
   }, []);
+  
   if (Object.keys(item).length != 0) {
     return (
       <div className="four-lvl-container">
@@ -46,9 +47,9 @@ const FourLvl = props => {
         </div>
         {/* {item.izd === 'Слэбы' || item.izd === 'Полоса'? ( */}
         {item.izd === 'Слэбы' ? (
-          <SlabItem type={item.izd} item={item} cur={props.cur} />
+          <SlabItem type={item.izd} item={item} cur={props.cur} url={props.match.url}/>
         ) : (
-          <OtherItem type={item.izd} item={item} cur={props.cur} />
+          <OtherItem type={item.izd} item={item} cur={props.cur} url={props.match.url}/>
         )}
       </div>
     );

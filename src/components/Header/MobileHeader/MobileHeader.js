@@ -10,7 +10,7 @@ import MenuList from './MenuList';
 
 // import izbr from "images/izbrannoe_icon.svg"
 import izbr from "images/izbrannoe_icon.png"
-import search from 'images/search.png';
+import search from 'images/search.svg';
 
 import './MobileHeader.scss';
 

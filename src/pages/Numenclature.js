@@ -33,6 +33,7 @@ const Numenclature = props => {
   );
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
     let isSubscr = true;
     axios
       .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)

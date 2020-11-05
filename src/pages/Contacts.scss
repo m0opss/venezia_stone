@@ -17,6 +17,8 @@
   }
 }
 
+
+
 .city-card {
   flex: 0 1 48%;
   display: flex;
@@ -34,12 +36,18 @@
   line-height: 140%;
 
   h1 {
+    cursor: pointer;
+    color: #000;
     @media screen and (max-width: 900px) {
       font-weight: bold;
       font-size: 16px;
       line-height: 19px;
     }
   }
+  .city-active{
+    color: #be9344;
+  }
+
   &:hover {
     h1 {
       color: #be9344;

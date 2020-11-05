@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './NumGroupItem.scss';
 
 const MaterialItem = props => {
-  console.log(props.item);
+
   if (props.pltk) {
     return (
       <div key={props.item.ps} className="num-gr-item">

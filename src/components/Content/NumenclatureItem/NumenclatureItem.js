@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 import './NumenclatureItem.scss';
 
 const NumenclatureItem = props => {
+  console.log(props.item);
   if (props.pltk) {
     return (
       <div key={props.ps} className="num-gr-item">
         <Link to={props.link}>
           <div className="num-gr-item__img">
-          {props.item.onSale == null ? (
+          {props.item.onSale != null ? (
               <div className="item-label item-label-new">Новинка</div>
             ) : (
               <></>

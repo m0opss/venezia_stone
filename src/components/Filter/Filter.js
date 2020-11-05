@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 
 import { connect } from 'react-redux';
-import filter_icon from 'images/filter-icon.png';
+import filter_icon from 'images/filter-icon.svg';
 import filter_icon_hz from 'images/filter-icon_hz.png';
 import close_icon from 'images/close.png';
 

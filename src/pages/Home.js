@@ -34,6 +34,7 @@ const Home = props => {
   const [dataNew, setDataNew] = React.useState([]);
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
     axios
       .get('https://catalog-veneziastone.ru/api_v0/getMaterials/')
       .then(response => {

@@ -12,7 +12,9 @@ body {
   // min-width: 100%;
   margin: auto;
 }
-
+a {
+  color: #000;
+}
 .unselectable {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Chrome/Safari/Opera */

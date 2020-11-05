@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 
-import a_z from 'images/a-z.png';
-import arrow from 'images/arr.svg';
+import a_z from 'images/a_z.svg';
+import a_z_active from 'images/a_z_active.svg';
+import arrow from 'images/color.svg';
+import arrow_active from 'images/color_active.svg';
 
 import './Sort.scss';
 
@@ -16,6 +18,7 @@ const AlphSortArr = arr => {
   });
   return tmp;
 };
+
 const ColorSortArr = arr => {
   let tmp = [...arr];
   tmp.sort((a, b) => {
@@ -30,37 +33,44 @@ const ColorSortArr = arr => {
 
 const Sort = props => {
   let customStyleRoot = props.rootStyle ? props.rootStyle : '';
+  const [active, setActive] = React.useState('');
+
+  // useEffect(() => {});
 
   const ArrSort = e => {
+    console.log(props.on)
     if (!props.on) {
       props.setSortOn(true);
       if (e.target.id === 'alph') {
         props.setArr(AlphSortArr(props.arr));
+        setActive('alph');
       }
       if (e.target.id === 'color') {
         props.setArr(ColorSortArr(props.arr));
+        setActive('color');
       }
     } else {
       props.setArr(props.defArr);
       props.setSortOn(false);
+      setActive('');
     }
   };
-
-  // const ColorSort = () => {
-  //   // let object = document.getElementsByTagName('object'); //получаем элмент object
-  //   // let svgDocument = object.contentDocument; //получаем svg элемент внутри object
-  //   // let svgElement = svgDocument.getElementsByTagName('path'); //получаем любой элемент внутри svg
-  //   // svgElement.setAttribute('fill', 'red');
-  // };
 
   return (
     <div className={`sort-line ${customStyleRoot}`}>
       <div id="color" className="num-gr-options__color_sort" onClick={ArrSort}>
-        {/* <object type="image/svg+xml" data={arrow}></object> */}
-        <img id="color" src={arrow} />
+        {active === 'color' ? (
+          <img id="color" src={arrow_active} />
+        ) : (
+          <img id="color" src={arrow} />
+        )}
       </div>
       <div id="alph" className="num-gr-options__sort_alph" onClick={ArrSort}>
-        <img id="alph" src={a_z} />
+        {active === 'alph' ? (
+          <img id="alph" src={a_z_active} />
+        ) : (
+          <img id="alph" src={a_z} />
+        )}
       </div>
     </div>
   );

@@ -6,3 +6,22 @@
     cursor: pointer;
   }
 }
+.slab-item-mobile__country {
+  display: flex;
+  align-items: center;
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 140%;
+  color: #000000;
+}
+.slab-item-mobile__main-title {
+  margin-top: 20px;
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 140%;
+  text-align: center;
+}

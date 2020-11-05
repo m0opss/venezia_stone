@@ -25,6 +25,7 @@ const FourLvl = props => {
   const [item, setItem] = React.useState({});
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
     axios
       .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
       .then(response => {

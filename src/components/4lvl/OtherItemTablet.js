@@ -14,7 +14,7 @@ const GroupItem = props => {
   return (
     <div className="other-items-group__item">
       <div className="other-items-group__line">
-        <p className="other-items-group_first-col -city">{props.item.city}</p>
+        <p className="other-items-group_first-col -city">{props.item.sklad}</p>
         <div className="other-items-group__centered">
           <p>шт</p>
           <p>
@@ -25,8 +25,8 @@ const GroupItem = props => {
       <div className="other-items-group__line">
         <p className="other-items-group_first-col">Наличие</p>
         <div className="other-items-group__centered">
-          <p>{props.item.cnt}</p>
-          <p>{props.item.S}</p>
+          <p>{props.item.ossht}</p>
+          <p>{props.item.os}</p>
         </div>
       </div>
       <div className="other-items-group__line">
@@ -41,14 +41,30 @@ const GroupItem = props => {
           Цена за м<sup>2</sup>
         </p>
         <div className="other-items-group__centered">
-          <p>{props.item.cost} ₽</p>
+          <p>
+            {props.cur === 'rub'
+              ? `${props.item.cntRUB}₽`
+              : props.cur === 'usd'
+              ? `${props.item.cntUSD}$`
+              : props.cur === 'eur'
+              ? `${props.item.cntEUR}€`
+              : ''}
+          </p>
           <p></p>
         </div>
       </div>
       <div className="other-items-group__line ">
         <p className="other-items-group_first-col">Стоимость</p>
         <div className="other-items-group__centered">
-          <p>{sum} ₽</p>
+          <p>
+            {props.cur === 'rub'
+              ? `${sum} ₽`
+              : props.cur === 'usd'
+              ? `${sum} $`
+              : props.cur === 'eur'
+              ? `${sum} €`
+              : '-'}
+          </p>
           <p></p>
         </div>
       </div>
@@ -111,16 +127,9 @@ const OtherItemTablet = props => {
         </div>
       </div>
       <div className="other-items-group">
-        <GroupItem item={item} />
-        <GroupItem item={item} />
-        <GroupItem item={item} />
-        <GroupItem item={item} />
-        <GroupItem item={item} />
-        <GroupItem item={item} />
-        <GroupItem item={item} />
-        <GroupItem item={item} />
-        <GroupItem item={item} />
-        <GroupItem item={item} />
+        {props.item.prs.map(item => (
+          <GroupItem item={item} key={item.ps} cur={props.cur} />
+        ))}
       </div>
     </div>
   );
