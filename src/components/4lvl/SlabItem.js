@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import ScrollImage from 'components/ScrollImage/ScrollImage';
 import ColorRange from 'components/ColorRange/ColorRange';
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
@@ -23,52 +25,54 @@ import basket from 'images/basket-4lvl.png';
 
 const SlabTableRow = props => {
   return (
-    <div className="good-items-table__item ">
-      <div className="table-row__item">
-        <p>{props.item.bl}</p>
+    <Link to={`/`}>
+      <div className="good-items-table__item ">
+        <div className="table-row__item">
+          <p>{props.item.bl}</p>
+        </div>
+        <div className="table-row__item table-row__item_s">
+          <p>{props.item.le}</p>
+        </div>
+        <div className="table-row__item table-row__item_s">
+          <p>{props.item.he}</p>
+        </div>
+        <div className="table-row__item table-row__item_s">
+          <p>{props.item.os}</p>
+        </div>
+        <div className="table-row__item table-row__item_s">
+          <p>{props.item.sco == '0' ? 'нет' : 'да'}</p>
+        </div>
+        <div className="table-row__item table-row__item_l">
+          <p>{props.item.sklad}</p>
+        </div>
+        <div className="table-row__item table-row__item_l">
+          <p>
+            {props.cur === 'rub'
+              ? `${props.item.cntRUB}₽`
+              : props.cur === 'usd'
+              ? `${props.item.cntUSD}$`
+              : props.cur === 'eur'
+              ? `${props.item.cntEUR}€`
+              : ''}
+          </p>
+        </div>
+        <div className="table-row__item table-row__item_l">
+          <p>
+            {(
+              parseFloat(props.item.cntRUB) * parseFloat(props.item.os)
+            ).toFixed(2)}
+            ₽
+          </p>
+        </div>
+        <div className="table-row__item good-items-table__title-icons">
+          {/* <img src={like} /> */}
+          <ItemAddIzbr item={props.item} />
+        </div>
+        <div className="table-row__item good-items-table__title-icons">
+          <ItemAddBasket item={props.item} />
+        </div>
       </div>
-      <div className="table-row__item table-row__item_s">
-        <p>{props.item.le}</p>
-      </div>
-      <div className="table-row__item table-row__item_s">
-        <p>{props.item.he}</p>
-      </div>
-      <div className="table-row__item table-row__item_s">
-        <p>{props.item.os}</p>
-      </div>
-      <div className="table-row__item table-row__item_s">
-        <p>{props.item.sco == '0' ? 'нет' : 'да'}</p>
-      </div>
-      <div className="table-row__item table-row__item_l">
-        <p>{props.item.skl}</p>
-      </div>
-      <div className="table-row__item table-row__item_l">
-        <p>
-          {props.cur === 'rub'
-            ? `${props.item.cntRUB}₽`
-            : props.cur === 'usd'
-            ? `${props.item.cntUSD}$`
-            : props.cur === 'eur'
-            ? `${props.item.cntEUR}€`
-            : ''}
-        </p>
-      </div>
-      <div className="table-row__item table-row__item_l">
-        <p>
-          {(parseFloat(props.item.cntRUB) * parseFloat(props.item.os)).toFixed(
-            2
-          )}
-          ₽
-        </p>
-      </div>
-      <div className="table-row__item good-items-table__title-icons">
-        {/* <img src={like} /> */}
-        <ItemAddIzbr item={props.item} />
-      </div>
-      <div className="table-row__item good-items-table__title-icons">
-        <ItemAddBasket item={props.item} />
-      </div>
-    </div>
+    </Link>
   );
 };
 

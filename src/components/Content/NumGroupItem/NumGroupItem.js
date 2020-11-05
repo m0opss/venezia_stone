@@ -4,13 +4,30 @@ import { Link } from 'react-router-dom';
 import './NumGroupItem.scss';
 
 const MaterialItem = props => {
+  console.log(props.item);
   if (props.pltk) {
     return (
       <div key={props.item.ps} className="num-gr-item">
         <Link to={props.link}>
           <div className="num-gr-item__name">{props.item.gr}</div>
           <div className="num-gr-item__img">
-            <img src={props.item.file} className="num-gr-item__img" />
+            {props.item.onSale != null ? (
+              <div className="item-label item-label-new">Новинка</div>
+            ) : (
+              <></>
+            )}
+            {props.item.onSale != null ? (
+              <div className="item-label item-label-order">Под заказ</div>
+            ) : (
+              <></>
+            )}
+            {props.item.onSale != null ? (
+              <div className="item-label item-label-sale">Распродажа</div>
+            ) : (
+              <></>
+            )}
+
+            <img src={props.item.file} />
           </div>
         </Link>
         <div className="num-gr-item__descr">

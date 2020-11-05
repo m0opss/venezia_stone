@@ -44,6 +44,7 @@ const FourLvl = props => {
         <div className="four-lvl-valute">
           {isTablet || isBrowser ? <Valute /> : <></>}
         </div>
+        {/* {item.izd === 'Слэбы' || item.izd === 'Полоса'? ( */}
         {item.izd === 'Слэбы' ? (
           <SlabItem type={item.izd} item={item} cur={props.cur} />
         ) : (

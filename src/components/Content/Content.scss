@@ -1,5 +1,58 @@
 .content {
-  border-top: 1px solid rgba(0, 0, 0, 0.3);;
-  padding-top:10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  padding-top: 10px;
   min-height: calc(100vh - 255px);
+}
+.item-label {
+
+  width: 130px;
+  height: 25px;
+  position: absolute;
+  right: -10px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: black;
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    z-index: -1;
+    right: 0px;
+    border: 10px solid transparent;
+  }
+}
+
+.item-label-new {
+  top: 70px;
+  background: rgba(158, 250, 178, 0.85);
+  &::before {
+    border-left: 10px solid #A6F4B6;;
+    border-top: 10px solid #A6F4B6;
+  }
+}
+
+.item-label-order {
+  top: 40px;
+  background: rgba(158, 217, 250, 0.85);
+  &::before {
+    border-left: 10px solid#8ABCD7;
+    border-top: 10px solid #8ABCD7;
+  } 
+}
+
+.item-label-sale {
+  top: 10px;
+  background: rgba(252, 90, 90, 0.85);
+  color: white;
+  &::before {
+    border-left: 10px solid #FC6E61;
+    border-top: 10px solid #FC6E61;
+  }
 }

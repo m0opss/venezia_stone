@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 
 const OtherTableRow = props => {
-  console.log(props.item);
-  const [type, setType] = React.useState(props.type);
-  const [kw, setKw] = React.useState(1);
-  const [cnt, setCnt] = React.useState(1);
-  const [sum, setSum] = React.useState(1);
+  const [kw, setKw] = React.useState(props.type == 'Плитка' ? 0 : undefined);
+  const [cnt, setCnt] = React.useState(0);
+  const [sum, setSum] = React.useState(0);
+
+  useEffect(() => {
+    if (kw == undefined) {
+      let pr;
+      if (props.cur === 'rub') pr = props.item.cntRUB;
+      else if (props.cur === 'usd') pr = props.item.cntUSD;
+      else if (props.cur === 'eur') pr = props.item.cntEUR;
+      setSum(cnt * pr);
+    } else {
+      
+      setSum(kw * cnt);
+    }
+  });
 
   const onChangeVal = e => {
     if (e.target.id == 'cnt') {
@@ -42,11 +53,12 @@ const OtherTableRow = props => {
       </div>
       <div className="table-row__item table-row__item_count-panel">
         <div className="table-count-input">
-          {type == 'Плитка' ? (
+          {props.type == 'Плитка' ? (
             <input
               cnt="kw"
               type="number"
               min="0"
+              max={parseFloat(props.item.os)}
               step="0.01"
               defaultValue={kw}
               style={{ borderBottom: '1px solid black' }}
@@ -62,13 +74,14 @@ const OtherTableRow = props => {
             type="number"
             step="1"
             min="0"
+            max={parseFloat(props.item.ossht)}
             defaultValue={cnt}
             style={{ borderBottom: '1px solid black' }}
             onBlur={onChangeVal}
           />
         </div>
         <div className="table-row__item">
-          <p>{sum}₽</p>
+          <p>{sum}</p>
         </div>
       </div>
 

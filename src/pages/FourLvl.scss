@@ -117,6 +117,7 @@
   text-align: center;
   border-bottom: 1px solid #be9344;
   height: 65px;
+  color: black;
   &:hover {
     color: #be9344;
   }
@@ -311,6 +312,9 @@
     height: 50%;
     width: 30%;
     text-align: center;
+    &:focus {
+      outline: none;
+    }
   }
 }
 .table-row__item_count-panel {
