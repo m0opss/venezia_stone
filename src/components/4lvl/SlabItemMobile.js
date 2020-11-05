@@ -106,7 +106,7 @@ const SlabItemMobile = props => {
       <ButtonsPanel images={images} />
       <Slider {...settings}>
         {props.item.prs.map(item => (
-          <div className="slab-item-carousel__item" selectItem={setSelectedEl}>
+          <div key={item.ps} className="slab-item-carousel__item" onClick={() =>setSelectedEl(item)}>
             <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
             {/* <img src={item.photobl} /> */}
           </div>

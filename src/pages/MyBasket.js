@@ -24,22 +24,48 @@ const MyBasket = props => {
   useEffect(() => {
     if (props.basket.length === 0 && localStorage.getItem('basket') !== null) {
       props.setBasket(JSON.parse(localStorage.getItem('basket')));
-      console.log('baset', props.basket);
     }
-  }, []);
+  }, [basket.length]);
 
   const orderOk = e => {
+    console.log(123123);
+
     setVisibleModal(false);
   };
 
   const orderCancel = e => {
     setVisibleModal(false);
   };
+
   let modalContent = (
     <div className="order-inputs">
-      <input type="text" placeholder="Имя" />
-      <input type="text" placeholder="Телефон*" />
-      <input type="text" placeholder="Email*" />
+      <input
+        type="text"
+        placeholder="Имя"
+        defaultValue={
+          localStorage.getItem('first_name') !== null
+            ? localStorage.getItem('first_name')
+            : ''
+        }
+      />
+      <input
+        type="text"
+        placeholder="Телефон"
+        defaultValue={
+          localStorage.getItem('phone') !== null
+            ? localStorage.getItem('phone')
+            : ''
+        }
+      />
+      <input
+        type="text"
+        placeholder="Email*"
+        defaultValue={
+          localStorage.getItem('email') !== null
+            ? localStorage.getItem('email')
+            : ''
+        }
+      />
     </div>
   );
 
@@ -52,33 +78,38 @@ const MyBasket = props => {
     <div className="basket">
       <MyModal
         title="Оформить заказ"
-        handleOk={orderOk}
         okText="Оформить заказ"
-        handleCancel={orderCancel}
+        onOk={orderOk}
+        onCancel={orderCancel}
         visible={visibleModal}
-        content={modalContent}
-      />
+        buttonVision={true}
+      >
+        {modalContent}
+      </MyModal>
       <BackArrow history={props.history} />
       <div className={`basket__f-line ${style}`}>
         <h1>Корзина</h1>
         <Valute />
       </div>
       <div className="basket__items">
-        {
-        props.basket.length > 0 ? props.basket.map(item => {
-          return (
-            <BasketItem
-              key={item.ps}
-              kind="basket"
-              cur={props.cur}
-              item={item}
-              type={item.izd == 'Плитка' ? true : false}
-              addGood={props.addGood}
-              deleteGood={props.deleteGood}
-              editGood={props.editGood}
-            />
-          );
-        }) :<></>}
+        {props.basket.length > 0 ? (
+          props.basket.map(item => {
+            return (
+              <BasketItem
+                key={item.ps}
+                kind="basket"
+                cur={props.cur}
+                item={item}
+                type={item.izd == 'Плитка' ? true : false}
+                addGood={props.addGood}
+                deleteGood={props.deleteGood}
+                editGood={props.editGood}
+              />
+            );
+          })
+        ) : (
+          <></>
+        )}
       </div>
 
       <div className="basket__bottom-line">

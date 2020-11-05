@@ -83,12 +83,11 @@ const Filter = props => {
   };
 
   const setActiveFields = fields => {
-
     localStorage.setItem('activeFieldKeys', JSON.stringify(fields));
   };
 
   const fetchFilters = () => {
-    console.log(props.activeFields)
+    console.log(props.activeFields);
     localStorage.setItem('activeFilters', JSON.stringify(props.activeFilters));
   };
 
@@ -96,9 +95,8 @@ const Filter = props => {
     let t = [...props.activeFields];
     if (t.indexOf(e.key) !== -1) t.splice(t.indexOf(e.key), 1);
     else t.push(e.key);
-    props.setActiveFields(t); 
-
-    // setActiveFields(t);
+    props.setActiveFields(t);
+    setActiveFields(t);
 
     let f = Object.keys(props.filters)[parseFloat(e.key[0])];
     let param =

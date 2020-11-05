@@ -1,0 +1,42 @@
+.search {
+  border: 1px solid #be9344;
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 1 15%;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 100px;
+  transition: 0.6s;
+  padding: 6px 6px 6px 10px;
+  input {
+    border: none;
+    box-sizing: border-box;
+    border-radius: 100px;
+    outline: none;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    width: 100%;
+  }
+  img {
+    cursor: pointer;
+    margin-right: 8px;
+  }
+}
+.search-active {
+  flex: 0 1 30%;
+}
+.search-unvisible{
+  flex: 0 1 2%;
+  input {
+    display: none;
+  }
+  img {
+    &:nth-child(3) {
+      display: none;
+    }
+  }
+}

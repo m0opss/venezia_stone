@@ -20,6 +20,14 @@
     }
   }
 }
+.info-modal {
+  width: 40% !important;
+  .ant-modal-footer {
+    button {
+      display: none;
+    }
+  }
+}
 .nobuttons {
   button {
     display: none;

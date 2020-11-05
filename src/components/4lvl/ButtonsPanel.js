@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import MyModal from 'components/Modal/Modal';
 import ImageGallery from 'react-image-gallery';
@@ -30,9 +30,18 @@ const ButtonsPanel = props => {
   const [visiblePhotos, setVisiblePhotos] = React.useState(false);
   const [visibleVideo, setVisibleVideo] = React.useState(false);
   const [visibleComments, setVisibleComments] = React.useState(false);
+  const [visibleOrder, setVisibleOrder] = React.useState(false);
+  
+  const changePhotoCancel = () => {
+    console.log(123)
+    setVisiblePhotos(false);
+  };
 
-  const changePhotoButton = () => {
-    setVisiblePhotos(!visiblePhotos);
+  const changeCommentButton = () => {
+    setVisibleComments(!visibleComments);
+  };
+  const changeOrderButton = () => {
+    setVisibleOrder(!visibleOrder);
   };
 
   const PhotoContent = () => {
@@ -42,27 +51,52 @@ const ButtonsPanel = props => {
       </div>
     );
   };
+  const CommentsContent = () => {
+    return <div className="">{props.komment}</div>;
+  };
+  const OrderModalContent = () => {
+    return <div className="">Отправить</div>;
+  };
 
   return (
-    <div className={`buttons-panel ${isMobile && !isTablet ? "buttons-panel_mob" : ''}`}>
+    <div
+      className={`buttons-panel ${
+        isMobile && !isTablet ? 'buttons-panel_mob' : ''
+      }`}
+    >
       <div
         className="button button-text slab-item-info__button"
-        onClick={changePhotoButton}
+        onClick={() => setVisiblePhotos(true)}
       >
         Больше фото
-        <MyModal visible={visiblePhotos} onCancel={changePhotoButton}>
+        <MyModal visible={visiblePhotos} onCancel={() => changePhotoCancel()}>
           <PhotoContent />
         </MyModal>
       </div>
       <div className="button button-text slab-item-info__button">
         Видео
-        <MyModal />
+        <MyModal visible={visibleVideo}>
+          <div className=""></div>
+        </MyModal>
       </div>
-      <div className="button button-text slab-item-info__button">
+      <div
+        className="button button-text slab-item-info__button"
+        onClick={changeCommentButton}
+      >
         Комментарии
-        <MyModal />
+        <MyModal visible={visibleComments} onCancel={changeCommentButton}>
+          <CommentsContent />
+        </MyModal>
       </div>
-      <div className="button button-text slab-item-info__button">Отправить</div>
+      <div
+        className="button button-text slab-item-info__button"
+        onClick={changeOrderButton}
+      >
+        Отправить
+        <MyModal visible={visibleOrder} onCancel={changeOrderButton}>
+          <OrderModalContent />
+        </MyModal>
+      </div>
     </div>
   );
 };

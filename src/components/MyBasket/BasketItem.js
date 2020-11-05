@@ -79,7 +79,7 @@ const BasketItem = props => {
                     {' '}
                     Наличие, м<sup>2</sup>: {props.item.os}
                   </p>
-                  <p>Наличие, шт: 450 </p>
+                  <p>Наличие, шт: {props.item.ossht} </p>
                 </div>
               </div>
               <div className="basket-item__line -price">
@@ -90,7 +90,8 @@ const BasketItem = props => {
                     <input
                       type="number"
                       min="0"
-                      defaultValue={props.item.os}
+                      max={parseFloat(props.item.os)}
+                      defaultValue={parseFloat(props.item.os)}
                       step="0.01"
                       onBlur={kwChange}
                     />
@@ -100,7 +101,8 @@ const BasketItem = props => {
                     <input
                       type="number"
                       min="0"
-                      defaultValue={'7'}
+                      max={parseFloat(props.item.ossht)}
+                      defaultValue={parseFloat(props.item.ossht)}
                       onBlur={cntChange}
                     />
                   </p>

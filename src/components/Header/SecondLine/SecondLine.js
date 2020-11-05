@@ -1,47 +1,13 @@
 import React from 'react';
 
 import { Link, withRouter } from 'react-router-dom';
+import Search from 'components/Search/Search'
 
 import './SecondLine.scss';
 import 'antd/dist/antd.css';
 
-import find from 'images/find.png';
-import searchClear from 'images/searchClear.png';
 
-const Search = props => {
-  const [searchActive, setsearchActive] = React.useState(false);
-  const [searchVisible, setSearchVisible] = React.useState(true);
-  const [styleVisible, setStyleVisible] = React.useState('');
 
-  const onClickMinimize = () => {
-    setSearchVisible(false);
-    setStyleVisible('second-line__search-unvisible')
-  };
-  const onClickSearch = () => {
-    if (searchVisible) console.log('Searching...')
-    setSearchVisible(true);
-    setStyleVisible('');
-  };
-
-  return (
-    <div
-      className={`second-line__search ${
-        searchActive ? 'second-line__search-active' : ''
-      } ${styleVisible} 
-      `}
-    >
-      <input
-        placeholder="Поиск"
-        defaultValue={props.searchVal}
-        onChange={props.onChangeSearch}
-        onFocus={() => setsearchActive(true)}
-        onBlur={() => setsearchActive(false)}
-      />
-      <img src={find} onClick={onClickSearch} />
-      <img src={searchClear} onClick={onClickMinimize} />
-    </div>
-  );
-};
 
 export const Burger = props => {
   return (
@@ -110,7 +76,6 @@ export const Burger = props => {
 };
 
 const SecondLine = props => {
-  const [searchVal, setSearchVal] = React.useState('');
   const { match, history } = props;
 
   const setFilterParam = e => {
@@ -125,7 +90,7 @@ const SecondLine = props => {
   return (
     <div className="second-line">
       <Burger setFilterParam={setFilterParam} />
-      <Search searchVal={searchVal} onChangeSearch={onChangeSearch} />
+      <Search  onChangeSearch={onChangeSearch} />
     </div>
   );
 };
