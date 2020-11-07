@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import edit from 'images/edit.png';
 import cedit from 'images/cancel-edit.png';
@@ -12,12 +12,13 @@ import {
 
 const PersonalData = props => {
   const [ronly, set_ronly] = React.useState(true);
-
-  const [pd_lname, set_pd_lname] = React.useState(props.user_info.last_name);
-  const [pd_fname, set_pd_fname] = React.useState(props.user_info.first_name);
-  const [pd_mname, set_pd_mname] = React.useState(props.user_info.middle_name);
-  const [pd_email, set_pd_email] = React.useState(props.user_info.email);
-  const [pd_phone, set_pd_phone] = React.useState(props.user_info.phone);
+  const [canceled, setCanceled] = React.useState(false);
+  
+  const [pd_lname, set_pd_lname] = React.useState('');
+  const [pd_fname, set_pd_fname] = React.useState('');
+  const [pd_mname, set_pd_mname] = React.useState('');
+  const [pd_email, set_pd_email] = React.useState('');
+  const [pd_phone, set_pd_phone] = React.useState('');
 
   const setDefaultVal = () => {
     set_pd_lname(props.user_info.last_name);
@@ -27,10 +28,18 @@ const PersonalData = props => {
     set_pd_phone(props.user_info.phone);
   };
 
+  useEffect(() => {
+    setDefaultVal()
+  }, [canceled])
+  
+  
   const onClickSave = () => {};
-
+  
   const onClickCancel = () => {
-    setDefaultVal();
+    console.log(pd_lname)
+    setCanceled(!canceled)
+    set_pd_lname(props.user_info.last_name);
+    setDefaultVal()
     set_ronly(true);
   };
   const onClickEdit = () => {

@@ -87,8 +87,12 @@ const Filter = props => {
   };
 
   const fetchFilters = () => {
-    console.log(props.activeFields);
     localStorage.setItem('activeFilters', JSON.stringify(props.activeFilters));
+    axios
+      .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
+        ...props.activeFilters,
+        level: [props.level]
+      })
   };
 
   const filterItemClicked = e => {
@@ -214,7 +218,8 @@ const mapStateToProps = store => {
   return {
     filters: store.filter_data.filters,
     activeFilters: store.filter_data.activeFilters,
-    activeFields: store.filter_data.activeFields
+    activeFields: store.filter_data.activeFields,
+    level: store.filter_data.level  
   };
 };
 
@@ -229,6 +234,7 @@ const mapDispatchToProps = dispatch => {
     setActiveFields: data => {
       dispatch(filterActions.setActiveFields(data));
     }
+
   };
 };
 

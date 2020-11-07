@@ -1,17 +1,34 @@
 import React from 'react';
 import FullScreenDialog from 'components/FullScreenDialog/FullScreenDialog';
+import CropperBook from 'components/Cropper/CropperBook';
 import MyCropper from 'components/Cropper/MyCropper';
+import './OptionLine.scss'
+
 
 const OptionLine = props => {
-  const [open, setOpen] = React.useState(false);
+  const [isOpen, setOpen] = React.useState(false);
+  const [isOpenBook, setOpenBook] = React.useState(false);
+
   const openBook = () => {
+    setOpenBook(true);
+  };
+  const openCrop = () => {
     setOpen(true);
   };
 
   return (
     <div className="option-line">
-      <FullScreenDialog open={open} setVisible={setOpen}>
-        <MyCropper img={props.img} />
+      <FullScreenDialog open={isOpenBook} setVisible={setOpenBook}>
+        <div className="dialog-wrapper">
+          <CropperBook img={props.img} />
+          <div className="dialog-wrapper__button button" onClick={()=>setOpenBook(false)} >Закрыть</div>
+        </div>
+      </FullScreenDialog>
+      <FullScreenDialog open={isOpen} setVisible={setOpen}>
+        <div className="dialog-wrapper">
+          <MyCropper img={props.img} />
+          <div className="dialog-wrapper__button" onClick={()=>setOpen(false)}>Закрыть</div>
+        </div>
       </FullScreenDialog>
       <div className="option-line__item">
         <svg
@@ -54,18 +71,8 @@ const OptionLine = props => {
           />
         </svg>
       </div>
-      <div className="option-line__item">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="23"
-          fill="#BE9344"
-          viewBox="0 0 24 23"
-        >
-          <path d="M21.414 18.586l2.586-2.586v8h-8l2.586-2.586-5.172-5.172 2.828-2.828 5.172 5.172zm-13.656-8l2.828-2.828-5.172-5.172 2.586-2.586h-8v8l2.586-2.586 5.172 5.172zm10.828-8l-2.586-2.586h8v8l-2.586-2.586-5.172 5.172-2.828-2.828 5.172-5.172zm-8 13.656l-2.828-2.828-5.172 5.172-2.586-2.586v8h8l-2.586-2.586 5.172-5.172z" />
-        </svg>
-      </div>
-      <div className="option-line__item">
+      {props.fullscreen}
+      <div className="option-line__item" onClick={openCrop}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="26"

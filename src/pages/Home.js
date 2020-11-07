@@ -35,6 +35,8 @@ const Home = props => {
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
+    // console.log(props)
+    props.setLvl(1)
     axios
       .get('https://catalog-veneziastone.ru/api_v0/getMaterials/')
       .then(response => {
@@ -227,6 +229,9 @@ const mapDispatchToProps = dispatch => {
     },
     setMatList: data => {
       dispatch(filterActions.setMatList(data));
+    },
+    setLvl: data => {
+      dispatch(filterActions.setLvl(data));
     }
   };
 };

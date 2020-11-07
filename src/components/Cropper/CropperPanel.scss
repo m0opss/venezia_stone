@@ -9,7 +9,14 @@
 }
 .cropper-panel__item {
   margin: 10px;
-  &>* {
+  cursor: pointer;
+  &:hover {
+    color: #be9344;
+  }
+  & > * {
     cursor: pointer;
+    &:hover {
+      color: #be9344;
+    }
   }
 }

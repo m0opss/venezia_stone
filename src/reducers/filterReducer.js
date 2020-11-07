@@ -2,7 +2,8 @@
 const initialState = {
   filters: {},
   activeFilters: {},
-  activeFields: []
+  activeFields: [],
+  level: 0
 };
 
 export function filterReducer(state = initialState, action) {
@@ -16,6 +17,11 @@ export function filterReducer(state = initialState, action) {
       return {
         ...state,
         filters: action.payload
+      };
+    case 'SET_LVL':
+      return {
+        ...state,
+        level: action.payload
       };
     case 'SET_ACTIVE_FILTERS':
       return {

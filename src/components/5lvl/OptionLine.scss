@@ -1,0 +1,13 @@
+.dialog-wrapper {
+  display: flex;
+  align-items: center;
+}
+.dialog-wrapper__button {
+  margin-right: 40px;
+  border-radius: 5px;
+  padding: 10px 30px;
+  border: 1px solid #be9344;
+  box-sizing: border-box;
+  box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer; 
+}

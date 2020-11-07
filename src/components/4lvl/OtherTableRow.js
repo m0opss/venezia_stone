@@ -32,7 +32,7 @@ const OtherTableRow = props => {
   return (
     <div className="good-items-table__item ">
       <div className="table-row__item table-row__item_l">
-        <p>{props.item.sklad}</p>
+        <p>{props.item.skl}</p>
       </div>
       <div className="table-row__item table-row__item_l">
         <p>

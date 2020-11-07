@@ -29,7 +29,7 @@
 .search-active {
   flex: 0 1 30%;
 }
-.search-unvisible{
+.search-unvisible {
   flex: 0 1 2%;
   input {
     display: none;
@@ -38,5 +38,37 @@
     &:nth-child(3) {
       display: none;
     }
+  }
+}
+.search-drop-lines {
+  display: flex !important;
+  flex-direction: column !important;
+  // justify-content: space-between;
+}
+.dropdown-serch {
+  width: 300px !important;
+  padding: 20px !important; 
+}
+.search-drop-line {
+  padding: 5px;
+  margin: 10px 0;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: black;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 2px;
+  display: flex;
+  justify-content: space-between;
+  &:hover {
+    color: #be9344;
+  }
+
+  span {
+    font-size: 12px;
+    color: gray;
+    font-style: italic;
+    margin-left: 10px;
   }
 }

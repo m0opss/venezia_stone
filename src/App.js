@@ -13,15 +13,36 @@ import './components/Content/Content.scss';
 import dataActions from './actions/dataAction';
 import authActions from './actions/authActions';
 import userActions from './actions/userActions';
+import izbrActions from './actions/izbrActions';
 
 const App = props => {
   React.useEffect(() => {
     let isSubscr = true;
     if (isSubscr) {
-      if(localStorage.getItem('basket') !== null) {
-
-      }
       if (localStorage.getItem('auth_token') !== null) {
+        axios
+          .post(
+            `https://catalog-veneziastone.ru/api_v0/showSelectedFavourite/`,
+            {
+              token: localStorage.getItem('auth_token')
+            }
+          )
+          .then(response => {
+            props.setIzbrPs(response.data.products);
+          })
+          .catch(err => {
+            if (err.response) {
+              // client received an error response (5xx, 4xx)
+              console.log(1, err.response);
+              // props.setAuth(false);
+            } else if (err.request) {
+              // client never received a response, or request never left
+              console.log(2, err.request);
+            } else {
+              // anything else
+              console.log(3, err);
+            }
+          });
         axios
           .post('https://catalog-veneziastone.ru/account/get_user_info/', {
             token: localStorage.getItem('auth_token')
@@ -64,7 +85,7 @@ const mapStateToProps = store => {
     data: store.data,
     isAuth: store.auth_data.isAuth,
     auth_token: store.auth_data.auth_token,
-    basket: store.basket_data.basket,
+    basket: store.basket_data.basket
   };
 };
 
@@ -84,6 +105,9 @@ const mapDispatchToProps = dispatch => {
     },
     setUserInfo: data => {
       dispatch(userActions.setUserInfo(data));
+    },
+    setIzbrPs: data => {
+      dispatch(izbrActions.setIzbrPs(data));
     }
   };
 };

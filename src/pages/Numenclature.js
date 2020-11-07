@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import materialActions from '../actions/materialAction';
+import filterActions from '../actions/filterActions';
 import dataActions from 'actions/dataAction';
 import Valute from 'components/Valute/Valute';
 import Sort from 'components/Sort/Sort';
@@ -33,6 +34,7 @@ const Numenclature = props => {
   );
 
   React.useEffect(() => {
+    props.setLvl(3)
     window.scrollTo(0, 0);
     let isSubscr = true;
     axios
@@ -191,6 +193,9 @@ const mapDispatchToProps = dispatch => {
     },
     setNumGroups: data => {
       dispatch(dataActions.setNumGroups(data));
+    },
+    setLvl: data => {
+      dispatch(filterActions.setLvl(data));
     }
   };
 };

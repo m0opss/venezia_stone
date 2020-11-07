@@ -22,7 +22,6 @@ const Izbrannoe = props => {
         if (err.response) {
           // client received an error response (5xx, 4xx)
           console.log(1, err.response);
-          // props.setAuth(false);
         } else if (err.request) {
           // client never received a response, or request never left
           console.log(2, err.request);
@@ -39,6 +38,7 @@ const Izbrannoe = props => {
     <div className="lk__izbrannoe basket">
       <div className="basket__items">
         {Object.keys(izbr).map((ps, index) => (
+          
           <IzbrItem
             key={index}
             kind="izbr"

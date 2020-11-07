@@ -5,6 +5,12 @@ const filterActions = {
       payload: data
     };
   },
+  setLvl: data => {
+    return {
+      type: 'SET_LVL',
+      payload: data
+    };
+  },
   setFilters: data => {
     return {
       type: 'SET_FILTERS',

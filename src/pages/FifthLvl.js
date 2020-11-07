@@ -20,11 +20,12 @@ import {
 import './FifthLvl.scss';
 
 const FifthLvl = props => {
+  props.setLvl(5);
   const [item, setItem] = React.useState({});
-  const [currentItemInd, setCurrentItemInd ] = React.useState(0);
-
+  const [currentItemInd, setCurrentItemInd] = React.useState(0);
+  const myRef = React.createRef();
   // React.useEffect(() => {
-    // window.scrollTo(0, 0);
+  // window.scrollTo(0, 0);
   //   axios
   //     .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
   //     .then(response => {
@@ -50,15 +51,28 @@ const FifthLvl = props => {
   let _item = { color: 'red', name: 'RAL 1231' };
   const imagess = [
     {
-      original: 'https://picsum.photos/id/1018/1000/600/'
+      original:
+        'https://picsum.photos/id/1015/1000/600/',
+      fullscreen:
+        'https://storage.yandexcloud.net/venezia-photo/materials/Soapstone.jpg',
+      originalClass: 'img-gallery-sizes'
     },
     {
-      original: 'https://picsum.photos/id/1015/1000/600/'
+      original:
+        'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
+      fullscreen:
+        'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
+      originalClass: 'img-gallery-sizes'
     },
     {
-      original: 'https://picsum.photos/id/1019/1000/600/'
+      original:
+        'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
+      fullscreen:
+        'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
+      originalClass: 'img-gallery-sizes'
     }
   ];
+
   return (
     <div className="fifth-lvl-container">
       {isBrowser ? (
@@ -98,9 +112,8 @@ const FifthLvl = props => {
               </div>
             </div>
             <div className="main-content__right">
-              <OptionLine img={imagess[0].original} />
+              <OptionLine img={imagess[0].original} fullscreen={<></>} />
               <ImageGallery items={imagess} showThumbnails={false} />
-            
             </div>
           </div>
         </div>
@@ -127,6 +140,9 @@ const mapDispatchToProps = dispatch => {
   return {
     addGood: data => {
       dispatch(basketActions.addGood(data));
+    },
+    setLvl: data => {
+      dispatch(filterActions.setLvl(data));
     }
   };
 };

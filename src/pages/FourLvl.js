@@ -22,6 +22,7 @@ import SlabItem from '../components/4lvl/SlabItem';
 import OtherItem from '../components/4lvl/OtherItem';
 
 const FourLvl = props => {
+  props.setLvl(4)
   const [item, setItem] = React.useState({});
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -62,4 +63,12 @@ const mapStateToProps = store => {
   };
 };
 
-export default connect(mapStateToProps)(FourLvl);
+const mapDispatchToProps = dispatch => {
+  return {
+    setLvl: data => {
+      dispatch(filterActions.setLvl(data));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FourLvl);

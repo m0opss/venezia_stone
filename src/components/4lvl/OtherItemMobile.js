@@ -17,7 +17,7 @@ const GroupItem = props => {
   return (
     <div className="other-items-group__item">
       <div className="other-items-group__line">
-        <p className="other-items-group_first-col -city">{props.item.sklad}</p>
+        <p className="other-items-group_first-col -city">{props.item.skl}</p>
         <div className="other-items-group__centered">
           <p>шт</p>
           <p>
@@ -94,8 +94,6 @@ const GroupItem = props => {
 };
 
 const OtherItemTablet = props => {
-  const [_item, setItem] = React.useState({ prs: [] });
-  const [selectedEl, setSelectedEl] = React.useState({});
 
   React.useEffect(() => {
     let isSubscr = true;
@@ -109,13 +107,7 @@ const OtherItemTablet = props => {
     }
     return () => (isSubscr = false);
   });
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1
-  };
+
   return (
     <div className="slab-item-mobile">
       <div className="slab-item-mobile__main-title">{props.item.name}</div>

@@ -4,14 +4,13 @@ import axios from 'axios';
 
 import materialActions from '../actions/materialAction';
 import dataActions from 'actions/dataAction';
+import filterActions from 'actions/filterActions';
 
 import listIcon from 'images/str.png';
 import pltk from 'images/pltk.png';
 import listIcon_a from 'images/str_a.png';
 import pltk_a from 'images/pltk_a.png';
 
-import { Icon } from '@iconify/react';
-import sortIcon from '@iconify/icons-dashicons/sort';
 import Valute from 'components/Valute/Valute';
 import Sort from 'components/Sort/Sort';
 import NumGroupItem from 'components/Content/NumGroupItem/NumGroupItem';
@@ -27,6 +26,7 @@ import {
 } from 'react-device-detect';
 
 const NumGroups = props => {
+
   const [numGroups, setNumGroups] = React.useState([]);
   const [defGroups, setdefNumGroups] = React.useState([]);
   const [sortOn, setSortOn] = React.useState(false);
@@ -37,6 +37,7 @@ const NumGroups = props => {
   );
 
   React.useEffect(() => {
+    props.setLvl(2)
     window.scrollTo(0, 0);
     let isSubscr = true;
     axios
@@ -132,6 +133,9 @@ const mapDispatchToProps = dispatch => {
     },
     setNumGroups: data => {
       dispatch(dataActions.setNumGroups(data));
+    },
+    setLvl: data => {
+      dispatch(filterActions.setLvl(data));
     }
   };
 };

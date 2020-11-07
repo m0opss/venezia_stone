@@ -109,7 +109,13 @@
   max-height: 400px;
   position: relative;
 }
-
+.good-items-table__title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  flex: 0 1 86%;
+}
 .good-items-table__item {
   display: flex;
   justify-content: space-between;
@@ -118,9 +124,18 @@
   border-bottom: 1px solid #be9344;
   height: 65px;
   color: black;
-  &:hover {
-    color: #be9344;
+
+  a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    &:hover {
+      color: #be9344;
+    }
+    flex: 0 1 86%;
   }
+
   p {
     margin: 0;
     height: 100%;

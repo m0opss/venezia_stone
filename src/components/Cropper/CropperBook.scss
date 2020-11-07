@@ -1,0 +1,54 @@
+.dialog-cropper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+}
+.cropper-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+  flex: 0 1 70%;
+}
+
+.cropper {
+  position: relative;
+  width: 50%;
+}
+.dialog-cropper__res {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+  flex: 0 1 28%;
+}
+.dialog-cropper__preview-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.dialog-cropper__preview-item {
+  width: 220px;
+  height: 180px;
+  overflow: hidden;
+  img {
+    width: 100% ;
+    height: 100%;
+  }
+}
+.dialog-cropper__res-img {
+  margin-top: 25px;
+  width: 220px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}

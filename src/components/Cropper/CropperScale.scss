@@ -1,9 +1,10 @@
 .dialog-cropper {
   .dialog-cropper__preview-item {
-    // flex: 0 1 50%;
-    // display: none;
+    flex: 0 1 50%;
+    display: none;
   }
   .-two {
+    width: 400px;
     .dialog-cropper__preview-item {
       &:nth-child(1) {
         -moz-transform: scaleX(-1);
@@ -23,6 +24,7 @@
   }
 
   .-four {
+    width: 400px;
     .dialog-cropper__preview-item {
       &:nth-child(1) {
         display: block;

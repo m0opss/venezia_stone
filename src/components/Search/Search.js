@@ -29,11 +29,32 @@ const Search = props => {
   };
 
   const checkresponse = result => {
-    let arr = Object.keys(result).map((k, index) => {
-      // return {}
-    });
-    let menu = <div className=""></div>;
-
+    let arr = Object.keys(result).map (
+      (k, index) =>
+        k == 'mts' ? (
+          <Link to="/" className="search-drop-line">
+            Материалы <span>совпадений - {result[k].length}</span>
+          </Link>
+        ) : k == 'grs' ? (
+          <Link to="/" className="search-drop-line">
+            Номенклатурные группы <span>совпадений - {result[k].length}</span>
+          </Link>
+        ) : k == 'itms' ? (
+          <Link to="/" className="search-drop-line">
+            Номенклатуры <span>совпадений - {result[k].length}</span>
+          </Link>
+        ) : k == 'prs' ? (
+          <Link to="/" className="search-drop-line">
+            Продукты <span>совпадений - {result[k].length}</span>
+          </Link>
+        ) : (
+          <></>
+        )
+    );
+    let menu = <div className="search-drop-lines">
+      {arr}
+    </div>
+    
     setMenu(menu);
     setDropVisible(true);
   };

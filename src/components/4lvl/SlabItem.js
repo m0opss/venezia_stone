@@ -25,8 +25,8 @@ import basket from 'images/basket-4lvl.png';
 
 const SlabTableRow = props => {
   return (
-    <Link to={`${props.url}/${props.item.bl}`}>
-      <div className="good-items-table__item ">
+    <div className="good-items-table__item">
+      <Link to={`${props.url}/${props.item.bl}`}>
         <div className="table-row__item">
           <p>{props.item.bl}</p>
         </div>
@@ -43,7 +43,7 @@ const SlabTableRow = props => {
           <p>{props.item.sco == '0' ? 'нет' : 'да'}</p>
         </div>
         <div className="table-row__item table-row__item_l">
-          <p>{props.item.sklad}</p>
+          <p>{props.item.skl}</p>
         </div>
         <div className="table-row__item table-row__item_l">
           <p>
@@ -73,14 +73,14 @@ const SlabTableRow = props => {
               : 1}
           </p>
         </div>
-        <div className="table-row__item good-items-table__title-icons">
-          <ItemAddIzbr item={props.item} />
-        </div>
-        <div className="table-row__item good-items-table__title-icons">
-          <ItemAddBasket item={props.item} />
-        </div>
+      </Link>
+      <div className="table-row__item good-items-table__title-icons">
+        <ItemAddIzbr item={props.item} />
       </div>
-    </Link>
+      <div className="table-row__item good-items-table__title-icons">
+        <ItemAddBasket item={props.item} />
+      </div>
+    </div>
   );
 };
 
@@ -141,33 +141,35 @@ const SlabItem = props => {
         <div className="hidescroll">
           <div className="good-items-table">
             <div className="good-items-table__item slabs-title">
-              <div className="table-row__item">
-                <p>Слэб</p>
-              </div>
-              <div className="table-row__item table-row__item_s">
-                <p>Длина,м</p>
-              </div>
-              <div className="table-row__item table-row__item_s">
-                <p>Высота</p>
-              </div>
-              <div className="table-row__item table-row__item_s">
-                <p>
-                  Площадь,м<sup>2</sup>
-                </p>
-              </div>
-              <div className="table-row__item table-row__item_s">
-                <p>Скол</p>
-              </div>
-              <div className="table-row__item table-row__item_l">
-                <p>Склад</p>
-              </div>
-              <div className="table-row__item table-row__item_l">
-                <p>
-                  Цена за м<sup>2</sup>
-                </p>
-              </div>
-              <div className="table-row__item table-row__item_l">
-                <p>Стоимость</p>
+              <div className="good-items-table__title-wrapper">
+                <div className="table-row__item">
+                  <p>Слэб</p>
+                </div>
+                <div className="table-row__item table-row__item_s">
+                  <p>Длина,м</p>
+                </div>
+                <div className="table-row__item table-row__item_s">
+                  <p>Высота</p>
+                </div>
+                <div className="table-row__item table-row__item_s">
+                  <p>
+                    Площадь,м<sup>2</sup>
+                  </p>
+                </div>
+                <div className="table-row__item table-row__item_s">
+                  <p>Скол</p>
+                </div>
+                <div className="table-row__item table-row__item_l">
+                  <p>Склад</p>
+                </div>
+                <div className="table-row__item table-row__item_l">
+                  <p>
+                    Цена за м<sup>2</sup>
+                  </p>
+                </div>
+                <div className="table-row__item table-row__item_l">
+                  <p>Стоимость</p>
+                </div>
               </div>
               <div className="table-row__item good-items-table__title-icons">
                 <img src={arr} />
@@ -193,9 +195,9 @@ const SlabItem = props => {
       </div>
     );
   } else if (isTablet) {
-    return <SlabItemTablet item={props.item} url={props.url} cur={props.cur}/>;
+    return <SlabItemTablet item={props.item} url={props.url} cur={props.cur} />;
   } else {
-    return <SlabItemMobile item={props.item} url={props.url} cur={props.cur}/>;
+    return <SlabItemMobile item={props.item} url={props.url} cur={props.cur} />;
   }
 };
 

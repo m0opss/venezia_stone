@@ -79,14 +79,6 @@ const GroupItem = props => {
 };
 
 const OtherItemTablet = props => {
-  const [selectedEl, setSelectedEl] = React.useState({});
-  React.useEffect(() => {
-    let isSubscr = true;
-    if (props.item.prs && isSubscr) {
-      setSelectedEl(props.item.prs[0]);
-    }
-    return () => (isSubscr = false);
-  });
   let colors = [
     '#2C1D02',
     '#402A02',
@@ -99,12 +91,7 @@ const OtherItemTablet = props => {
     '#402A02'
   ];
   let im = 'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg';
-  let item = {
-    city: 'Cfyrn-Gtnth,ehu',
-    cnt: 12312,
-    S: 12312.12,
-    cost: 1231
-  };
+
   return (
     <div className="slab-item">
       <div className="slab-item-info">
@@ -113,11 +100,11 @@ const OtherItemTablet = props => {
         </div>
         <div className="slab-item-info__bottom">
           <div className="slab-item-info__left-block slab-item-info__left-block_other slab-item-info__left-block_other-tablet">
-            <h1 className="slab-item-info__title">TAN BROWN 30 мм</h1>
+            <h1 className="slab-item-info__title">{props.item.name}</h1>
             <div className="slab-item-info__parameters">
-              <p>Общая площадь</p>
-              <p>Количество</p>
-              <p>Сумма</p>
+              <p>Общая площадь: {``} </p>
+              <p>Количество: {``} </p>
+              <p>Сумма: {``} </p>
             </div>
           </div>
           <div className="slab-item-info__slab-img">

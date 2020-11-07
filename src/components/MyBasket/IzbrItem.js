@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
-
+import { Link } from "react-router-dom"
 import './BasketItem.scss';
 
 const IzbrItem = props => {
@@ -22,7 +22,7 @@ const IzbrItem = props => {
   };
 
   return (
-    <div className="basket-item basket-item-root basket-item-typography">
+    <Link to={`/`} className="basket-item basket-item-root basket-item-typography">
       <div className="basket-item__name">
         {props.name} {props.id}
       </div>
@@ -107,7 +107,7 @@ const IzbrItem = props => {
           </div>
         )}
       </div>
-    </div>
+    </Link>
   );
 };
 
