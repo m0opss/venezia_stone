@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import './BasketItem.scss';
 
 const IzbrItem = props => {
+  // console.log(props)
   const [summ, setSumm] = React.useState(0);
   const [cnt, setCnt] = React.useState(1);
   const [kw, setKw] = React.useState(1);
@@ -20,9 +21,9 @@ const IzbrItem = props => {
     console.log(e.target.value);
     setKw(parseFloat(e.target.value));
   };
-
+  const link = props.item.route.split('#')[1]
   return (
-    <Link to={`/`} className="basket-item basket-item-root basket-item-typography">
+    <Link to={link} className="basket-item basket-item-root basket-item-typography">
       <div className="basket-item__name">
         {props.name} {props.id}
       </div>

@@ -1,12 +1,10 @@
 .dialog-cropper {
   .dialog-cropper__preview-item {
-    flex: 0 1 50%;
     display: none;
   }
   .-two {
-    width: 400px;
     .dialog-cropper__preview-item {
-      &:nth-child(1) {
+      &:nth-child(2) {
         -moz-transform: scaleX(-1);
         -o-transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
@@ -24,26 +22,44 @@
   }
 
   .-four {
-    width: 400px;
     .dialog-cropper__preview-item {
       &:nth-child(1) {
         display: block;
       }
       &:nth-child(2) {
         display: block;
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: 'FlipH';
       }
       &:nth-child(3) {
         display: block;
+        -moz-transform: scaleY(-1);
+        -o-transform: scaleY(-1);
+        -webkit-transform: scaleY(-1);
+        transform: scaleY(-1);
+        filter: FlipH;
+        -ms-filter: 'FlipH';
       }
       &:nth-child(4) {
         display: block;
+        -moz-transform: scale(-1);
+        -o-transform: scale(-1);
+        -webkit-transform: scale(-1);
+        transform: scale(-1);
+        // filter: FlipH;
+        // -ms-filter: 'FlipH';
       }
     }
   }
   .-six {
-    max-width: 900px;
     .dialog-cropper__preview-item {
-      flex: 0 1 33.333%;
+      width: 200px;
+    }
+    .dialog-cropper__preview-item {
       &:nth-child(1) {
         display: block;
       }

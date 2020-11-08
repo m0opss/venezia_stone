@@ -29,8 +29,13 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
+  transition: opacity 1s linear;
+  will-change: transform;
+  transform: translateZ(0);
 }
-
+.hidden-group {
+  opacity: 0;
+}
 .home-bottom-links__link {
   margin-top: 50px;
   font-family: 'Roboto Condensed', sans-serif;
@@ -62,7 +67,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 110px;
+  padding: 20px 110px;
+  border: 1px solid #e5e5e5;
 
   @media screen and (min-width: 550px) {
     &::before,
@@ -83,6 +89,12 @@
   }
 }
 .home-bottom-links__link-active {
+  border: unset;
+  justify-content: center;
+  &::before,
+  &::after {
+    display: none;
+  }
   @media screen and (min-width: 550px) {
     &::before,
     &::after {

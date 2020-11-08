@@ -11,7 +11,7 @@ import 'cropperjs/dist/cropper.css';
 const MyCropper = props => {
   const [cropData, setCropData] = React.useState('#');
   const [cropper, setCropper] = React.useState();
-  const [mode, setMode] = React.useState('-two');
+  const [mode, setMode] = React.useState('-one');
 
   const getCropData = () => {
     if (typeof cropper !== 'undefined') {
@@ -20,10 +20,9 @@ const MyCropper = props => {
   };
   const pushOnServer = () => {
     if (typeof cropper !== 'undefined') {
-      localStorage.setItem('croppedImage', cropData)
+      localStorage.setItem('croppedImage', cropData);
       console.log('data', cropData);
       // console.log(cropper.getCroppedCanvas().toDataURL());
-
     }
   };
 
@@ -32,10 +31,10 @@ const MyCropper = props => {
       <div className="cropper-crop">
         <Cropper
           src={props.img}
-          style={{ height: 600, width: '100%' }}
+          style={{ height: 600 }}
           initialAspectRatio={1 / 1}
-          initialAspectRatio={3}
-          viewMode={3}
+          initialAspectRatio={1}
+          viewMode={2}
           guides={true}
           minCropBoxHeight={50}
           minCropBoxWidth={50}

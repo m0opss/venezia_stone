@@ -35,8 +35,8 @@ const Home = props => {
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
-    // console.log(props)
-    props.setLvl(1)
+    props.setLvl(1);
+
     axios
       .get('https://catalog-veneziastone.ru/api_v0/getMaterials/')
       .then(response => {
@@ -46,14 +46,18 @@ const Home = props => {
         console.log(e);
       });
   }, []);
+
   const resetStyle = () => {
     setDropClassMain('');
+    // const successMsg = document.getElementById('main-group')
+    // successMsg.classList.remove('hidden-group')
     setDropClassSales('');
     setDropClassNew('');
     setDropClassRoad('');
   };
 
   const openListMain = () => {
+
     if (!dropdownMain) {
       setDropClassMain('home-bottom-links__link-active');
       setDropClassSales('');
@@ -130,14 +134,14 @@ const Home = props => {
         >
           Натуральный камень в наличии
         </div>
-        <div className="catalog-items-group">
+        <div id="main-group" className="catalog-items-group">
           {dropdownMain && props.data ? (
             props.data.mts.map(item => (
               <MaterialItem
                 img={item.photo_material}
                 link={item.ph}
                 item={item}
-                itemName={item.mt}
+                itemName={item.mt}  
                 key={item.mt}
               />
             ))

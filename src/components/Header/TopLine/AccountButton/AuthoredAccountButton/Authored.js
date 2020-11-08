@@ -80,6 +80,5 @@ const Authored = props => {
   );
   if(user_name != null) return <Dropdown type="acc-menu" title={user_name} menuList={menu} />;
   else return <></>
-  // return <Dropdown type="acc-menu" title={'Rfkfiybrjd Bdfy Dbnfkmtdbx'} menuList={menu} />;
 };
 export default Authored;

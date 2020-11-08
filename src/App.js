@@ -29,6 +29,7 @@ const App = props => {
           )
           .then(response => {
             props.setIzbrPs(response.data.products);
+            localStorage.setItem('selectedFavourite', JSON.stringify(response.data.products))
           })
           .catch(err => {
             if (err.response) {

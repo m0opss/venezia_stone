@@ -4,28 +4,29 @@ import { Link } from 'react-router-dom';
 import './NumenclatureItem.scss';
 
 const NumenclatureItem = props => {
-
   if (props.pltk) {
     return (
       <div key={props.ps} className="num-gr-item">
         <Link to={props.link}>
           <div className="num-gr-item__img">
-            {props.item.nw != null ? (
-              <div className="item-label item-label-new">Новинка</div>
-            ) : (
-              <></>
-            )}
-            {props.item.onSale != null ? (
-              <div className="item-label item-label-sale">Распродажа</div>
-            ) : (
-              <></>
-            )}
-            {props.item.pz != null ? (
-              <div className="item-label item-label-order">Под заказ</div>
-            ) : (
-              <></>
-            )}
-            <img src={props.item.photo_item} className="num-gr-item__img" />
+            <div className="num-gr-item__labels">
+              {props.item.nw != null ? (
+                <div className="item-label item-label-new">Новинка</div>
+              ) : (
+                <></>
+              )}
+              {props.item.onSale != null ? (
+                <div className="item-label item-label-sale">Распродажа</div>
+              ) : (
+                <></>
+              )}
+              {props.item.pz != null ? (
+                <div className="item-label item-label-order">Под заказ</div>
+              ) : (
+                <></>
+              )}
+            </div>
+            <img src={props.item.photo_item} />
           </div>
           <div className="num-gr-item__name">{`${props.item.name}`}</div>
         </Link>

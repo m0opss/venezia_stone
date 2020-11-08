@@ -3,6 +3,7 @@ import Slide from '@material-ui/core/Slide';
 import Cropper from 'react-cropper';
 import axios from 'axios';
 
+
 import CropperPanel from 'components/Cropper/CropperPanel';
 import './CropperBook.scss';
 import './CropperScale.scss';
@@ -20,7 +21,7 @@ const CropperBook = props => {
     }
   };
   const getCropper = () => {
-    if (typeof cropper !== 'undefined' ) {
+    if (typeof cropper !== 'undefined') {
       // setBookImg(cropper.getCroppedCanvas().toDataURL());
     }
     console.log(cropper);
@@ -30,33 +31,22 @@ const CropperBook = props => {
     if (typeof cropper !== 'undefined') {
       console.log('data', cropData);
       console.log(cropper.getCroppedCanvas().toDataURL());
-      // axios
-      //   .post(`https://catalog-veneziastone.ru/api_v0/bookmatch`, {
-      //     img: cropData
-      //   })
-      //   .then(response => {
-      //     setItem(response.data.itms[0]);
-      //   })
-      //   .catch(e => {
-      //     console.log(e);
-      //   });
     }
   };
 
   return (
     <div className="dialog-cropper">
       <div className="cropper-wrapper">
-        <div className="cropper">
+        <div className="cropper-crop">
           <Cropper
             src={props.img}
-            style={{ height: 400, width: '100%' }}
-            initialAspectRatio={4 / 3}
+            initialAspectRatio={1 / 1}
             // preview=".dialog-cropper__preview-item"
             initialAspectRatio={2}
             viewMode={3}
             guides={true}
-            minCropBoxHeight={220}
-            minCropBoxWidth={180}
+            minCropBoxHeight={50}
+            minCropBoxWidth={50}
             background={false}
             responsive={true}
             autoCropArea={1}
@@ -73,18 +63,16 @@ const CropperBook = props => {
             setMode={setMode}
           />
         </div>
-        <div className={`dialog-cropper__preview-group ${mode}`} onClick={getCropper()}>
+        <div
+          className={`dialog-cropper__res ${mode}`}
+          onClick={getCropper()}
+        >
           <img className="dialog-cropper__preview-item" src={cropData} />
           <img className="dialog-cropper__preview-item" src={cropData} />
           <img className="dialog-cropper__preview-item" src={cropData} />
           <img className="dialog-cropper__preview-item" src={cropData} />
           <img className="dialog-cropper__preview-item" src={cropData} />
           <img className="dialog-cropper__preview-item" src={cropData} />
-        </div>
-      </div>
-      <div className="dialog-cropper__res">
-        <div className="dialog-cropper__res-img">
-          <img style={{ width: '100%' }} src={cropData} alt="cropped" />
         </div>
       </div>
     </div>

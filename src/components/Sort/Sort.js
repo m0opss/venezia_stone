@@ -9,7 +9,9 @@ import './Sort.scss';
 
 const AlphSortArr = arr => {
   let tmp = [...arr];
+  
   tmp.sort((a, b) => {
+    // console.log(a.gr, b.gr)
     let nameA = a.gr.toLowerCase(),
       nameB = b.gr.toLowerCase();
     if (nameA < nameB) return -1;
@@ -32,6 +34,7 @@ const ColorSortArr = arr => {
 };
 
 const Sort = props => {
+  // console.log(props)
   let customStyleRoot = props.rootStyle ? props.rootStyle : '';
   const [active, setActive] = React.useState('');
 

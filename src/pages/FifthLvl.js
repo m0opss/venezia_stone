@@ -20,21 +20,23 @@ import {
 import './FifthLvl.scss';
 
 const FifthLvl = props => {
-  props.setLvl(5);
   const [item, setItem] = React.useState({});
   const [currentItemInd, setCurrentItemInd] = React.useState(0);
   const myRef = React.createRef();
-  // React.useEffect(() => {
-  // window.scrollTo(0, 0);
-  //   axios
-  //     .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
-  //     .then(response => {
-  //       setItem(response.data.itms[0]);
-  //     })
-  //     .catch(e => {
-  //       console.log(e);
-  //     });
-  // }, []);
+
+  React.useEffect(() => {
+    props.setLvl(5);
+    window.scrollTo(0, 0);
+    axios
+      .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
+      .then(response => {
+        console.log(response.data.itms[0]);
+        setItem(response.data.itms[0]);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }, []);
 
   const ColorsItem = props => {
     return (
@@ -51,8 +53,7 @@ const FifthLvl = props => {
   let _item = { color: 'red', name: 'RAL 1231' };
   const imagess = [
     {
-      original:
-        'https://picsum.photos/id/1015/1000/600/',
+      original: 'https://picsum.photos/id/1015/1000/600/',
       fullscreen:
         'https://storage.yandexcloud.net/venezia-photo/materials/Soapstone.jpg',
       originalClass: 'img-gallery-sizes'
@@ -82,33 +83,53 @@ const FifthLvl = props => {
           </div>
           <div className="main-content">
             <div className="main-content__left">
-              <h1 className="main-content__name">Гранит TAN BROWN №: 58398</h1>
+              <h1 className="main-content__name">{item.name}</h1>
               <div className="main-content__info">
                 <div className="main-content__text-block">
-                  <p>Пачка BML 2091</p>
-                  <p>1.5 м X 3.5 м</p>
-                  <p>Площадь: 5,25 м²</p>
+                  <p>Пачка {item.prs ? item.prs.bl : '-'}</p>
+                  <p>
+                    {item.prs ? item.prs.le : '-'} м X{' '}
+                    {item.prs ? item.prs.he : '-'} м
+                  </p>
+                  <p>Площадь: {item.prs ? item.prs.os : '-'} м²</p>
                 </div>
                 <div className="main-content__text-block">
-                  <p>Цена за м²: 4 200₽</p>
-                  <p>Склад: Краснодар</p>
+                  <p>
+                    Цена за м²:{' '}
+                    {props.cur === 'rub' && item.prs
+                      ? `${item.prs.cntRUB}₽`
+                      : props.cur === 'usd'
+                      ? `${item.prs.cntUSD}$`
+                      : props.cur === 'eur'
+                      ? `${item.prs.cntEUR}€`
+                      : ''}
+                  </p>
+                  <p>Склад: {item.prs ? item.prs.sklad : '-'}</p>
                 </div>
                 <div className="main-content__text-block">
-                  <p>Стоимость : 2 390 110₽</p>
-                  <p>Скол : -</p>
+                  <p>
+                    Стоимость :{' '}
+                    {props.cur === 'rub' && item.prs
+                      ? `${(parseFloat(item.prs.cntRUB)*parseFloat(item.prs.os)).toFixed(2)}₽`
+                      : props.cur === 'usd'
+                      ? `${(parseFloat(item.prs.cntUSD)*parseFloat(item.prs.os)).toFixed(3)}$`
+                      : props.cur === 'eur'
+                      ? `${(parseFloat(item.prs.cntEUR)*parseFloat(item.prs.os)).toFixed(3)}€`
+                      : ''}
+                  </p>
+                  <p>Скол: {item.prs && item.prs.skl? item.prs.skl : '-'}</p>
                   <p className="-wrapped">
-                    Комментарий : asdas asdadad ad asd asd adasdasdad asd ad
-                    asda sd as d{' '}
+                    Комментарий: {item.prs && item.prs.komment? item.prs.komment : '-'}
                   </p>
                 </div>
               </div>
               <div className="main-content__colors">
+                {/* <ColorsItem item={_item} />
                 <ColorsItem item={_item} />
                 <ColorsItem item={_item} />
                 <ColorsItem item={_item} />
                 <ColorsItem item={_item} />
-                <ColorsItem item={_item} />
-                <ColorsItem item={_item} />
+                <ColorsItem item={_item} /> */}
               </div>
             </div>
             <div className="main-content__right">

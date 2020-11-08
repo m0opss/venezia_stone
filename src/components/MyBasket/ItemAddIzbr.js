@@ -5,17 +5,14 @@ import izbr_icon from 'images/izbr_icon.svg';
 import axios from 'axios';
 
 const ItemAddIzbr = props => {
-  const [state, setState] = React.useState(true);
+  const [state, setState] = React.useState(false);
 
-  useEffect(()=> {
-    props.izbr.map((el) => {
-      if(el == props.item.ps) {
-        setState(true)
-        console.log(el)
-      }
-    })
-  })
-  
+  useEffect(() => {
+    if (props.izbr.includes(props.item.ps)) {
+      setState(true);
+    }
+  }, []);
+
   const onFetchItem = id => {
     axios
       .post(`https://catalog-veneziastone.ru/api_v0/${id}/`, {
@@ -26,16 +23,12 @@ const ItemAddIzbr = props => {
         console.log('added');
       });
   };
-
   const clickItemIzbr = e => {
     onFetchItem(e.target.id);
     setState(!state);
   };
-
   if (props.isAuth) {
     if (state) {
-      return <img id="addFavourite" src={izbr_icon} onClick={clickItemIzbr} />;
-    } else {
       return (
         <img
           id="deleteFavourite"
@@ -43,6 +36,8 @@ const ItemAddIzbr = props => {
           onClick={clickItemIzbr}
         />
       );
+    } else {
+      return <img id="addFavourite" src={izbr_icon} onClick={clickItemIzbr} />;
     }
   } else {
     return <></>;

@@ -9,6 +9,7 @@ import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import SlabItemTablet from 'components/4lvl/SlabItemTablet';
 import SlabItemMobile from 'components/4lvl/SlabItemMobile';
+import tmp from 'images/header-logo.png'
 
 import {
   MobileView,
@@ -26,7 +27,7 @@ import basket from 'images/basket-4lvl.png';
 const SlabTableRow = props => {
   return (
     <div className="good-items-table__item">
-      <Link to={`${props.url}/${props.item.bl}`}>
+      <Link to={`${props.url}/${props.item.ps}`}>
         <div className="table-row__item">
           <p>{props.item.bl}</p>
         </div>
@@ -43,7 +44,7 @@ const SlabTableRow = props => {
           <p>{props.item.sco == '0' ? 'нет' : 'да'}</p>
         </div>
         <div className="table-row__item table-row__item_l">
-          <p>{props.item.skl}</p>
+          <p>{props.item.sklad}</p>
         </div>
         <div className="table-row__item table-row__item_l">
           <p>
@@ -86,6 +87,7 @@ const SlabTableRow = props => {
 
 const SlabItem = props => {
   const [selectedEl, setSelectedEl] = React.useState(props.item.prs[0]);
+  // console.log(selectedEl)
   let colors = [
     '#2C1D02',
     '#402A02',
@@ -132,8 +134,8 @@ const SlabItem = props => {
                 </div>
               </div>
               <div className="slab-item-info__slab-img">
-                <img src={selectedEl.photobl} />
-                <ColorRange colors={colors} />
+                <img src={selectedEl.photobl ? selectedEl.photobl : 'https://picsum.photos/id/1015/1000/600/'} />
+                <ColorRange colors={selectedEl.color_range} />
               </div>
             </div>
           </div>

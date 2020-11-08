@@ -40,9 +40,9 @@ const Routes = props => {
       <Route exact path="/new/:material/:numGroups/:num" component={FourLvlNew}/>
       <Route exact path="/:material/:numGroups/:num" component={FourLvl}/>
       <Route exact path="/:material/:numGroups/:num/:last" component={FifthLvl}/>
-      <Route path="*">
+      {/* <Route path="*">
         <Redirect to="/" />
-      </Route>
+      </Route> */}
     </Switch>
   );
 };

@@ -6,7 +6,8 @@ import ChooseCity from './ChooseCity/ChooseCity'
 import Logo from 'components/Logo/Logo'
 import AccountButton from './AccountButton/AccountButton'
 import BasketButton from './BasketButton/BasketButton'
-import izbr from "images/izbrannoe_icon.png"
+import izbr from "images/izbr_icon.svg"
+// import izbr from "images/izbrannoe_icon.png"
 import "./TopLine.scss"
 
 const TopLine = (props) => (

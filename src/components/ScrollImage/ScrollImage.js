@@ -2,6 +2,7 @@ import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import './ScrollImage.scss';
 
+
 const ScrollImage = props => {
   const ScrollItem = props => {
     return (
@@ -10,7 +11,7 @@ const ScrollImage = props => {
         onClick={() => props.selectItem(props.item)}
       >
         <p>{props.item.bl}</p>
-        <img src={props.item.photobl} />
+        <img src={props.photobl} />
       </div>
     );
   };
@@ -32,10 +33,16 @@ const ScrollImage = props => {
               <ScrollItem
                 key={item.ps}
                 item={item}
+                photobl={item.photobl}
                 selectItem={props.selectItem}
               />
             ) : (
-              <></>
+              <ScrollItem
+                key={item.ps}
+                item={item}
+                photobl={'https://picsum.photos/id/1015/1000/600/'}
+                selectItem={props.selectItem}
+              />
             )
           )}
         </div>
