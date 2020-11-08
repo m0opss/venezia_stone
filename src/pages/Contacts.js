@@ -61,8 +61,8 @@ const AddressCard = props => {
   );
 };
 const Contacts = () => {
-  const [center, setCenter] = React.useState([52.721219, 41.452274]);
-  const [zoom, setZoom] = React.useState(4);
+  const [center, setCenter] = React.useState([55.602576, 37.436086]);
+  const [zoom, setZoom] = React.useState(3);
   const [active, setActive] = React.useState([55.602576, 37.436086]);
 
   useEffect(() => {
@@ -98,7 +98,7 @@ const Contacts = () => {
         <YMaps>
           <Map
             width="100%"
-            height="550px"
+            height="350px"
             state={{
               center: center,
               zoom: zoom
