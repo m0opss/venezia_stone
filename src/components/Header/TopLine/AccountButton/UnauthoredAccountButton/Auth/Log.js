@@ -2,6 +2,7 @@ import React from 'react';
 
 import axios from 'axios';
 import validator from 'validator';
+import { Link } from 'react-router-dom';
 
 const Login = props => {
   const [inputValues, setInputValues] = React.useState({
@@ -39,7 +40,7 @@ const Login = props => {
   };
 
   const onPushLog = () => {
-    console.log('log')
+    console.log('log');
     if (onLogValidate()) {
       axios
         .post('https://catalog-veneziastone.ru/account/login/', {
@@ -47,38 +48,45 @@ const Login = props => {
           password: inputValues.l_pass
         })
         .then(response => {
-          localStorage.setItem('auth_token', response.data.key)
+          localStorage.setItem('auth_token', response.data.key);
           props.setVisible(false);
           props.setAuth(true);
           props.setToken(response.data.key);
-          
+
           axios
-          .post('https://catalog-veneziastone.ru/account/get_user_info/', {
-            token: response.data.key
-          })
-          .then(res=> {
-            console.log(123, res.data)
-            props.setUserInfo(res.data)
-          })
-          .catch(err => {
-            if (err.response) {
-              // client received an error response (5xx, 4xx)
-              console.log(1, err.response);
-              // props.setAuth(false);
-            } else if (err.request) {
-              // client never received a response, or request never left
-              console.log(2, err.request);
-            } else {
-              // anything else
-              console.log(3, err);
-            }
-          });
+            .post('https://catalog-veneziastone.ru/account/get_user_info/', {
+              token: response.data.key
+            })
+            .then(res => {
+              console.log(123, res.data);
+              props.setUserInfo(res.data);
+            })
+            .catch(err => {
+              if (err.response) {
+                // client received an error response (5xx, 4xx)
+                console.log(1, err.response);
+                // props.setAuth(false);
+              } else if (err.request) {
+                // client never received a response, or request never left
+                console.log(2, err.request);
+              } else {
+                // anything else
+                console.log(3, err);
+              }
+            });
         })
         .catch(err => {
           if (err.response) {
             console.log(1, err.response);
             if (err.response.data.hasOwnProperty('non_field_errors')) {
-              setLabelValues_l_email(err.response.data.non_field_errors[0]);
+              if (
+                err.response.data.non_field_errors[0] ==
+                'Unable to log in with provided credentials.'
+              ) {
+                setLabelValues_l_email('Неверный логин или пароль');
+              } else {
+                setLabelValues_l_email(err.response.data.non_field_errors[0]);
+              }
             }
             if (err.response.data.hasOwnProperty('email')) {
               setLabelValues_l_email(err.response.data.email[0]);
@@ -119,9 +127,15 @@ const Login = props => {
       <div className="button -hovered" onClick={onPushLog}>
         Войти
       </div>
-      <p className="login__reset-pass" onClick={() => {}}>
+      <Link
+        className="login__reset-pass"
+        to="/account/password/reset"
+        onClick={() => {
+          props.setVisible(false);
+        }}
+      >
         Забыли пароль?
-      </p>
+      </Link>
       <div
         className="button -hovered unselectable"
         onClick={() => {

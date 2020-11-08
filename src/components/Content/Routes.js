@@ -29,7 +29,7 @@ const Routes = props => {
       <Route exact path="/izbrannoe" component={LK} />
       <Route exact path="/history" component={LK} />
       <Route exact path="/basket" component={MyBasket} />
-      <Route exact path="/password/*" component={ResetPass}/>
+      <Route exact path="/account/password/*" component={ResetPass}/>
       <Route exact path="/:material"  component={NumGroups} />
       <Route exact path="/sale/:material"  component={SecondLvlSale} />
       <Route exact path="/new/:material"  component={SecondLvlNew} />

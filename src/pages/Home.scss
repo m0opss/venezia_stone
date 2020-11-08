@@ -5,7 +5,7 @@
   display: flex;
   flex-flow: column;
   justify-content: space-between;
-
+  margin-top: 40px;
   h1 {
     display: flex;
     margin: auto;
@@ -37,7 +37,7 @@
   opacity: 0;
 }
 .home-bottom-links__link {
-  margin-top: 50px;
+
   font-family: 'Roboto Condensed', sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -91,10 +91,17 @@
 .home-bottom-links__link-active {
   border: unset;
   justify-content: center;
+  @media screen and (max-width: 549px) {
+    border: unset;
+    &:hover {
+      border: unset;
+    }
+  }
   &::before,
   &::after {
     display: none;
   }
+  
   @media screen and (min-width: 550px) {
     &::before,
     &::after {

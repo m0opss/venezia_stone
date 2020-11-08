@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import Slide from '@material-ui/core/Slide';
 import Cropper from 'react-cropper';
-import axios from 'axios';
 
 import CropperPanel from 'components/Cropper/CropperPanel';
 import './MyCropper.scss';
