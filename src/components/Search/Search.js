@@ -32,19 +32,19 @@ const Search = props => {
     let arr = Object.keys(result).map (
       (k, index) =>
         k == 'mts' ? (
-          <Link to="/" className="search-drop-line">
+          <Link key={k} to="/" className="search-drop-line">
             Материалы <span>совпадений - {result[k].length}</span>
           </Link>
         ) : k == 'grs' ? (
-          <Link to="/" className="search-drop-line">
+          <Link key={k} to="/" className="search-drop-line">
             Номенклатурные группы <span>совпадений - {result[k].length}</span>
           </Link>
         ) : k == 'itms' ? (
-          <Link to="/" className="search-drop-line">
+          <Link key={k}  to="/" className="search-drop-line">
             Номенклатуры <span>совпадений - {result[k].length}</span>
           </Link>
         ) : k == 'prs' ? (
-          <Link to="/" className="search-drop-line">
+          <Link key={k} to="/" className="search-drop-line">
             Продукты <span>совпадений - {result[k].length}</span>
           </Link>
         ) : (
@@ -84,6 +84,11 @@ const Search = props => {
     setSearchVisible(true);
     setStyleVisible('');
   };
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      onClickSearch()
+    }
+  }
 
   return (
     <div
@@ -100,6 +105,7 @@ const Search = props => {
         placeholder="Поиск"
         defaultValue={props.searchVal}
         onChange={props.onChangeSearch}
+        onKeyPress={handleKeyPress}
         onFocus={() => setsearchActive(true)}
         onBlur={onBlurSearch}
       />

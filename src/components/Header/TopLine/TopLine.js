@@ -1,17 +1,18 @@
 import React from 'react';
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom';
 
-import SocialContacts from './SocialContacts/SocialContacts'
-import ChooseCity from './ChooseCity/ChooseCity'
-import Logo from 'components/Logo/Logo'
-import AccountButton from './AccountButton/AccountButton'
-import BasketButton from './BasketButton/BasketButton'
-import izbr from "images/izbr_icon.svg"
-// import izbr from "images/izbrannoe_icon.png"
-import "./TopLine.scss"
+import SocialContacts from './SocialContacts/SocialContacts';
+import ChooseCity from './ChooseCity/ChooseCity';
+import Logo from 'components/Logo/Logo';
+import AccountButton from './AccountButton/AccountButton';
+import BasketButton from './BasketButton/BasketButton';
+import izbr from 'images/izbr_icon.svg';
+import { connect } from 'react-redux';
 
-const TopLine = (props) => (
-  <div className='top-line'>
+import './TopLine.scss';
+
+const TopLine = props => (
+  <div className="top-line">
     <div className="top-line__left-block">
       <Logo />
     </div>
@@ -21,14 +22,21 @@ const TopLine = (props) => (
     </div>
     <div className="top-line__right-block">
       <AccountButton />
-      <Link to='/izbrannoe' className="izbrannoe-button">
-        <img src={izbr} alt=""/>
-      </Link>
-      <BasketButton basket_counter='2'/> {/* Здесь считать количество в корзине*/}
-      
+      {props.isAuth ? (
+        <Link to="/izbrannoe" className="izbrannoe-button">
+          <img src={izbr} alt="" />
+        </Link>
+      ) : (
+        <></>
+      )}
+      <BasketButton /> {/* Здесь считать количество в корзине*/}
     </div>
-    
   </div>
 );
 
-export default TopLine;
+const mapStateToProps = store => {
+  return {
+    isAuth: store.auth_data.isAuth
+  };
+};
+export default connect(mapStateToProps)(TopLine);

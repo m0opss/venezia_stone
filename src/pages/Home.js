@@ -18,13 +18,14 @@ import {
 import './Home.scss';
 
 const Home = props => {
-  const [dropdownMain, setDropdownMain] = React.useState(true);
+  const [dropdownMain, setDropdownMain] = React.useState(false);
   const [dropdownSales, setDropdownSales] = React.useState(false);
   const [dropdownNew, setDropdownNew] = React.useState(false);
   const [dropdownRoad, setDropdownRoad] = React.useState(false);
 
   const [dropClassMain, setDropClassMain] = React.useState(
-    'home-bottom-links__link-active'
+    // 'home-bottom-links__link-active'
+    ''
   );
   const [dropClassSales, setDropClassSales] = React.useState('');
   const [dropClassNew, setDropClassNew] = React.useState('');
