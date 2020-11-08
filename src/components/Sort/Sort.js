@@ -9,11 +9,17 @@ import './Sort.scss';
 
 const AlphSortArr = arr => {
   let tmp = [...arr];
-  
+
   tmp.sort((a, b) => {
     // console.log(a.gr, b.gr)
-    let nameA = a.gr.toLowerCase(),
+    let nameA, nameB;
+    if (a.gr) {
+      nameA = a.gr.toLowerCase();
       nameB = b.gr.toLowerCase();
+    } else if (a.name) {
+      nameA = a.name.toLowerCase();
+      nameB = b.name.toLowerCase();
+    }
     if (nameA < nameB) return -1;
     if (nameA > nameB) return 1;
     return 0;
@@ -23,6 +29,7 @@ const AlphSortArr = arr => {
 
 const ColorSortArr = arr => {
   let tmp = [...arr];
+  console.log(tmp);
   tmp.sort((a, b) => {
     let nameA = a.id_color_sort,
       nameB = b.id_color_sort;
@@ -41,7 +48,7 @@ const Sort = props => {
   // useEffect(() => {});
 
   const ArrSort = e => {
-    console.log(props.on)
+    console.log(props.on);
     if (!props.on) {
       props.setSortOn(true);
       if (e.target.id === 'alph') {

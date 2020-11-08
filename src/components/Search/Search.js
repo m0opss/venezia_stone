@@ -20,7 +20,7 @@ const Search = props => {
 
   const onClickMinimize = () => {
     setSearchVisible(false);
-    setStyleVisible('search-unvisible');
+    setStyleVisible('search-invisible');
   };
 
   const onBlurSearch = e => {
