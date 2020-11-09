@@ -22,7 +22,7 @@ import SlabItem from '../components/4lvl/SlabItem';
 import OtherItem from '../components/4lvl/OtherItem';
 
 const FourLvl = props => {
-  props.setLvl(4)
+  props.setLvl(4);
   const [item, setItem] = React.useState({});
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,6 +32,7 @@ const FourLvl = props => {
         .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
         .then(response => {
           setItem(response.data.itms[0]);
+          localStorage.setItem('items', response.data.itms[0].id)
         })
         .catch(e => {
           console.log(e);
@@ -39,27 +40,61 @@ const FourLvl = props => {
     }
     return () => (isSubscr = false);
   }, []);
-  
+
+  const tr = data => {
+    setItem(data);
+  };
+
   if (Object.keys(item).length != 0) {
     return (
-      <div className="four-lvl-container">
-        <div className="four-lvl-valute">
-          {isTablet || isBrowser ? <Valute /> : <></>}
-        </div>
-        {/* {item.izd === 'Слэбы' || item.izd === 'Полоса'? ( */}
-        {item.izd === 'Слэбы' ? (
-          <SlabItem type={item.izd} item={item} cur={props.cur} url={props.match.url}/>
+      <>
+        {isTablet ? (
+          <Filter
+            setData={data => tr(data)}
+            groups={localStorage.getItem('groups')}
+            items={localStorage.getItem('items')}
+          />
         ) : (
-          <OtherItem type={item.izd} item={item} cur={props.cur} url={props.match.url}/>
+          <BrowserView>
+            <Filter
+              setData={data => tr(data)}
+              groups={localStorage.getItem('groups')}
+              items={localStorage.getItem('items')}
+            />
+          </BrowserView>
         )}
-      </div>
+        <div className="four-lvl-container">
+          <div className="four-lvl-valute">
+            {isTablet || isBrowser ? <Valute /> : <></>}
+          </div>
+          {/* {item.izd === 'Слэбы' ? ( */}
+          {item.izd === 'Слэбы' || item.izd === 'Полоса' ? (
+            < SlabItem
+              type={item.izd}
+              item={item}
+              cur={props.cur}
+              url={props.match.url}
+              isAuth={props.isAuth}
+            />
+          ) : (
+            <OtherItem
+              type={item.izd}
+              item={item}
+              cur={props.cur}
+              url={props.match.url}
+              isAuth={props.isAuth}
+            />
+          )}
+        </div>
+      </>
     );
   } else return <></>;
 };
 
 const mapStateToProps = store => {
   return {
-    cur: store.valute_data.valute
+    cur: store.valute_data.valute, 
+    isAuth: store.auth_data.isAuth
   };
 };
 

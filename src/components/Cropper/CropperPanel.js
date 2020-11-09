@@ -1,7 +1,12 @@
 import React from 'react';
 import './CropperPanel.scss';
 import { ToastContainer, toast } from 'react-toastify';
- 
+import {
+  MobileView,
+  BrowserView,
+  isTablet,
+  isMobile
+} from 'react-device-detect';
 import 'react-toastify/dist/ReactToastify.css';
 
 const CropperPanel = props => {
@@ -20,7 +25,7 @@ const CropperPanel = props => {
     notify();
   };
   return (
-    <div className="cropper-panel">
+    <div className={isMobile ? `cropper-panel cropper-panel-mobile` : 'cropper-panel'}>
       <div className="cropper-panel__item" onClick={props.getCropData}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -51,29 +56,29 @@ const CropperPanel = props => {
           height="24"
           viewBox="0 0 24 24"
         >
-          <path d="M22 2v22h-20v-22h3c1.23 0 2.181-1.084 3-2h8c.82.916 1.771 2 3 2h3zm-11 1c0 .552.448 1 1 1 .553 0 1-.448 1-1s-.447-1-1-1c-.552 0-1 .448-1 1zm9 1h-4l-2 2h-3.897l-2.103-2h-4v18h16v-18zm-13 9.729l.855-.791c1 .484 1.635.852 2.76 1.654 2.113-2.399 3.511-3.616 6.106-5.231l.279.64c-2.141 1.869-3.709 3.949-5.967 7.999-1.393-1.64-2.322-2.686-4.033-4.271z" />
+          <path d="M15.003 3h2.997v5h-2.997v-5zm8.997 1v20h-24v-24h20l4 4zm-19 5h14v-7h-14v7zm16 4h-18v9h18v-9z"/>
         </svg>
       </div>
       {props.type == 'book' ? (
         <>
           <div
-            className="cropper-panel__item"
+            className={`cropper-panel__item ${props.mode == '-two' ? 'active-mode' : ''}`}
             onClick={() => props.setMode('-two')}
           >
             x2
           </div>
           <div
-            className="cropper-panel__item"
+            className={`cropper-panel__item ${props.mode == '-four' ? 'active-mode' : ''}`}
             onClick={() => props.setMode('-four')}
           >
             x4
           </div>
-          <div
+          {/* <div
             className="cropper-panel__item"
             onClick={() => props.setMode('-six')}
           >
             x6
-          </div>
+          </div> */}
         </>
       ) : (
         <></>

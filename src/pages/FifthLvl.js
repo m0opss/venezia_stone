@@ -2,12 +2,12 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import axios from 'axios';
-
+import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
+import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import filterActions from '../actions/filterActions';
 import basketActions from 'actions/basketActions';
 import ImageGallery from 'react-image-gallery';
 import Valute from 'components/Valute/Valute';
-import Filter from 'components/Filter/Filter';
 import OptionLine from 'components/5lvl/OptionLine';
 
 import {
@@ -21,16 +21,18 @@ import './FifthLvl.scss';
 
 const FifthLvl = props => {
   const [item, setItem] = React.useState({});
+  const [images, setImages] = React.useState([]);
   const [currentItemInd, setCurrentItemInd] = React.useState(0);
   const myRef = React.createRef();
 
   React.useEffect(() => {
+    console.log(props);
     props.setLvl(5);
     window.scrollTo(0, 0);
     axios
       .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
       .then(response => {
-        console.log(response.data.itms[0]);
+        setImages([response.data.itms[0].prs.photo_product]);
         setItem(response.data.itms[0]);
       })
       .catch(e => {
@@ -51,29 +53,13 @@ const FifthLvl = props => {
   };
 
   let _item = { color: 'red', name: 'RAL 1231' };
-  const imagess = [
-    {
-      original: 'https://picsum.photos/id/1015/1000/600/',
-      fullscreen:
-        'https://storage.yandexcloud.net/venezia-photo/materials/Soapstone.jpg',
-      originalClass: 'img-gallery-sizes'
-    },
-    {
-      original:
-        'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
-      fullscreen:
-        'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
-      originalClass: 'img-gallery-sizes'
-    },
-    {
-      original:
-        'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
-      fullscreen:
-        'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
-      originalClass: 'img-gallery-sizes'
-    }
-  ];
 
+  // const imagess = [
+  //   {
+  //     original: item.prs.photo_product,
+  //     originalClass: 'img-gallery-sizes'
+  //   }
+  // ];
   return (
     <div className="fifth-lvl-container">
       {isBrowser ? (
@@ -110,16 +96,23 @@ const FifthLvl = props => {
                   <p>
                     Стоимость :{' '}
                     {props.cur === 'rub' && item.prs
-                      ? `${(parseFloat(item.prs.cntRUB)*parseFloat(item.prs.os)).toFixed(2)}₽`
+                      ? `${(
+                          parseFloat(item.prs.cntRUB) * parseFloat(item.prs.os)
+                        ).toFixed(2)}₽`
                       : props.cur === 'usd'
-                      ? `${(parseFloat(item.prs.cntUSD)*parseFloat(item.prs.os)).toFixed(3)}$`
+                      ? `${(
+                          parseFloat(item.prs.cntUSD) * parseFloat(item.prs.os)
+                        ).toFixed(3)}$`
                       : props.cur === 'eur'
-                      ? `${(parseFloat(item.prs.cntEUR)*parseFloat(item.prs.os)).toFixed(3)}€`
+                      ? `${(
+                          parseFloat(item.prs.cntEUR) * parseFloat(item.prs.os)
+                        ).toFixed(3)}€`
                       : ''}
                   </p>
-                  <p>Скол: {item.prs && item.prs.skl? item.prs.skl : '-'}</p>
+                  <p>Скол: {item.prs && item.prs.skl ? item.prs.skl : '-'}</p>
                   <p className="-wrapped">
-                    Комментарий: {item.prs && item.prs.komment? item.prs.komment : '-'}
+                    Комментарий:{' '}
+                    {item.prs && item.prs.komment ? item.prs.komment : '-'}
                   </p>
                 </div>
               </div>
@@ -133,18 +126,180 @@ const FifthLvl = props => {
               </div>
             </div>
             <div className="main-content__right">
-              <OptionLine img={imagess[0].original} fullscreen={<></>} />
-              <ImageGallery items={imagess} showThumbnails={false} />
+              {item.prs ? (
+                <OptionLine img={item.prs.photo_product} fullscreen={<></>} />
+              ) : (
+                <></>
+              )}
+              <ImageGallery
+                items={[{ original: item.prs ? item.prs.photo_product : '' }]}
+                showThumbnails={false}
+              />
             </div>
           </div>
         </div>
       ) : isTablet ? (
         <>
-          <div className="fifth-lvl-tablet"></div>
+          <div className="fifth-lvl-tablet">
+            <div className="fifth-lvl__top">
+              <Valute />
+            </div>
+            <div className="fifth-lvl__title">
+              <p>Пачка {item.prs ? item.prs.bl : '-'}</p>
+              <p>СЛЭБ {item.prs ? item.prs.ps : '-'}</p>
+            </div>
+
+            <ImageGallery
+              items={[
+                {
+                  original: item.prs ? item.prs.photo_product : '',
+                  height: 300
+                }
+              ]}
+              showThumbnails={false}
+            />
+            <div className="main-content__info-tablet">
+              <div className="main-content__text-block">
+                <p>
+                  Размер: {item.prs ? item.prs.le : '-'} м X{' '}
+                  {item.prs ? item.prs.he : '-'} м ={' '}
+                  {item.prs ? item.prs.os : '-'} м²
+                </p>
+                <p>Склад: {item.prs ? item.prs.sklad : '-'}</p>
+                <p>
+                  Цена за м²:{' '}
+                  {props.cur === 'rub' && item.prs
+                    ? `${item.prs.cntRUB}₽`
+                    : props.cur === 'usd'
+                    ? `${item.prs.cntUSD}$`
+                    : props.cur === 'eur'
+                    ? `${item.prs.cntEUR}€`
+                    : ''}
+                </p>
+                <p>
+                  Стоимость:{' '}
+                  {props.cur === 'rub' && item.prs
+                    ? `${(
+                        parseFloat(item.prs.cntRUB) * parseFloat(item.prs.os)
+                      ).toFixed(2)}₽`
+                    : props.cur === 'usd'
+                    ? `${(
+                        parseFloat(item.prs.cntUSD) * parseFloat(item.prs.os)
+                      ).toFixed(3)}$`
+                    : props.cur === 'eur'
+                    ? `${(
+                        parseFloat(item.prs.cntEUR) * parseFloat(item.prs.os)
+                      ).toFixed(3)}€`
+                    : ''}
+                </p>
+                <p>Скол: {item.prs && item.prs.skl ? item.prs.skl : '-'}</p>
+                <p>
+                  Комментарий:{' '}
+                  {item.prs && item.prs.komment ? item.prs.komment : '-'}
+                </p>
+              </div>
+              <div className="main-content__icons">
+                <div className="main-content__photo-icons">
+                  {item.prs ? (
+                    <OptionLine
+                      img={item.prs.photo_product}
+                      fullscreen={<></>}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className="main-content__add-icons">
+                  <div className="main-content__add-icon">
+                    {item.prs ? <ItemAddIzbr item={item.prs} /> : <></>}
+                  </div>
+                  <div className="main-content__add-icon">
+                    {item.prs ? <ItemAddBasket item={item.prs} /> : <></>}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
       ) : (
         <>
-          <div className="fifth-lvl-mobile"></div>
+          <div className="fifth-lvl-mobile">
+            <div className="fifth-lvl__title">
+              <p>Пачка {item.prs ? item.prs.bl : '-'}</p>
+              <p>СЛЭБ {item.prs ? item.prs.ps : '-'}</p>
+            </div>
+
+            <ImageGallery
+              items={[
+                {
+                  original: item.prs ? item.prs.photo_product : '',
+                  height: 300
+                }
+              ]}
+              showThumbnails={false}
+            />
+            {/* <div className="fifth-lvl__opt">
+              {item.prs ? (
+                <OptionLine img={item.prs.photo_product} fullscreen={<></>} />
+              ) : (
+                <></>
+              )}
+            </div> */}
+            <div className="fifth-lvl__top">
+              <Valute />
+            </div>
+            <div className="main-content__info-tablet">
+              <div className="main-content__text-block">
+                <p>
+                  Размер: {item.prs ? item.prs.le : '-'} м X{' '}
+                  {item.prs ? item.prs.he : '-'} м ={' '}
+                  {item.prs ? item.prs.os : '-'} м²
+                </p>
+                <p>Склад: {item.prs ? item.prs.sklad : '-'}</p>
+                <p>
+                  Цена за м²:{' '}
+                  {props.cur === 'rub' && item.prs
+                    ? `${item.prs.cntRUB}₽`
+                    : props.cur === 'usd'
+                    ? `${item.prs.cntUSD}$`
+                    : props.cur === 'eur'
+                    ? `${item.prs.cntEUR}€`
+                    : ''}
+                </p>
+                <p>
+                  Стоимость:{' '}
+                  {props.cur === 'rub' && item.prs
+                    ? `${(
+                        parseFloat(item.prs.cntRUB) * parseFloat(item.prs.os)
+                      ).toFixed(2)}₽`
+                    : props.cur === 'usd'
+                    ? `${(
+                        parseFloat(item.prs.cntUSD) * parseFloat(item.prs.os)
+                      ).toFixed(3)}$`
+                    : props.cur === 'eur'
+                    ? `${(
+                        parseFloat(item.prs.cntEUR) * parseFloat(item.prs.os)
+                      ).toFixed(3)}€`
+                    : ''}
+                </p>
+                <p>Скол: {item.prs && item.prs.skl ? item.prs.skl : '-'}</p>
+                <p>
+                  Комментарий:{' '}
+                  {item.prs && item.prs.komment ? item.prs.komment : '-'}
+                </p>
+              </div>
+              <div className="main-content__icons">
+                <div className="main-content__add-icons">
+                  <div className="main-content__add-icon">
+                    {item.prs ? <ItemAddIzbr item={item.prs} /> : <></>}
+                  </div>
+                  <div className="main-content__add-icon">
+                    {item.prs ? <ItemAddBasket item={item.prs} /> : <></>}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
       )}
     </div>

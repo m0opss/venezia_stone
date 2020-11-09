@@ -54,22 +54,23 @@ const CropperBook = props => {
           />
           <CropperPanel
             type="book"
+            mode={mode}
             pushOnServer={pushOnServer}
             setCropData={setCropData}
             getCropData={getCropData}
             setMode={setMode}
           />
         </div>
-        <div
-          className={`dialog-cropper__res ${mode}`}
-          onClick={getCropper()}
-        >
-          <img className="dialog-cropper__preview-item" src={cropData} />
-          <img className="dialog-cropper__preview-item" src={cropData} />
-          <img className="dialog-cropper__preview-item" src={cropData} />
-          <img className="dialog-cropper__preview-item" src={cropData} />
-          <img className="dialog-cropper__preview-item" src={cropData} />
-          <img className="dialog-cropper__preview-item" src={cropData} />
+        <div className="dialog-cropper__res-wrapper">
+          <h2>Результат</h2>
+          <div className={`dialog-cropper__res ${mode}`} onClick={getCropper()}>
+            <img className="dialog-cropper__preview-item" src={cropData} />
+            <img className="dialog-cropper__preview-item" src={cropData} />
+            <img className="dialog-cropper__preview-item" src={cropData} />
+            <img className="dialog-cropper__preview-item" src={cropData} />
+            <img className="dialog-cropper__preview-item" src={cropData} />
+            <img className="dialog-cropper__preview-item" src={cropData} />
+          </div>
         </div>
       </div>
     </div>

@@ -7,8 +7,6 @@ import './SecondLine.scss';
 import 'antd/dist/antd.css';
 
 
-
-
 export const Burger = props => {
   return (
     <>
@@ -83,14 +81,11 @@ const SecondLine = props => {
     history.push('/');
   };
 
-  const onChangeSearch = e => {
-    console.log(e.target.value);
-  };
 
   return (
     <div className="second-line">
       <Burger setFilterParam={setFilterParam} />
-      <Search  onChangeSearch={onChangeSearch} />
+      <Search />
     </div>
   );
 };

@@ -21,7 +21,8 @@ import {
   MobileView,
   BrowserView,
   isTablet,
-  isMobile
+  isMobile,
+  isBrowser
 } from 'react-device-detect';
 
 const Numenclature = props => {
@@ -34,7 +35,7 @@ const Numenclature = props => {
   );
 
   React.useEffect(() => {
-    props.setLvl(3)
+    props.setLvl(3);
     window.scrollTo(0, 0);
     let isSubscr = true;
     axios
@@ -43,6 +44,7 @@ const Numenclature = props => {
         if (isSubscr) {
           setNumemclature(response.data.grs[0].itms);
           setdefNum(response.data.grs[0].itms);
+          localStorage.setItem('groups', response.data.grs[0].id);
         }
       })
       .catch(e => {
@@ -63,10 +65,18 @@ const Numenclature = props => {
   };
   const styleFilt = id => {
     ['Все', 'Слэбы', 'Полоса', 'Плитка'].map(val => {
-      if (id === val) {
-        document.getElementById(val).setAttribute('style', 'color: #c98505');
+      if (isBrowser || isTablet) {
+        if (id === val) {
+          document.getElementById(val).setAttribute('style', 'color: #c98505');
+        } else {
+          document.getElementById(val).setAttribute('style', 'color: black');
+        }
       } else {
-        document.getElementById(val).setAttribute('style', 'color: black');
+        if (id === val) {
+          document.getElementById(val).setAttribute('style', 'color: white, background-color: #BE9344');
+        } else {
+          document.getElementById(val).setAttribute('style', 'color: black, background-color: #BE9344');
+        }
       }
     });
   };
@@ -90,13 +100,24 @@ const Numenclature = props => {
     }
   };
 
+  const tr = data => {
+    console.log('nmc', data);
+    setNumemclature(data);
+  };
+
   return (
     <>
       {isTablet ? (
-        <Filter />
+        <Filter
+          setData={data => tr(data)}
+          groups={localStorage.getItem('groups')}
+        />
       ) : (
         <BrowserView>
-          <Filter />
+          <Filter
+            setData={data => tr(data)}
+            groups={localStorage.getItem('groups')}
+          />
         </BrowserView>
       )}
       <div
@@ -165,7 +186,7 @@ const Numenclature = props => {
           <div></div>
         </div>
 
-        {numenclature.map((item, index) => (
+        {numenclature.map(item => (
           <NumenclatureItem
             pltk={style_pltk}
             cur={props.cur}

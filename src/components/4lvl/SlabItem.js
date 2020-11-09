@@ -9,7 +9,7 @@ import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import SlabItemTablet from 'components/4lvl/SlabItemTablet';
 import SlabItemMobile from 'components/4lvl/SlabItemMobile';
-import tmp from 'images/header-logo.png'
+import tmp from 'images/header-logo.png';
 
 import {
   MobileView,
@@ -38,7 +38,7 @@ const SlabTableRow = props => {
           <p>{props.item.he}</p>
         </div>
         <div className="table-row__item table-row__item_s">
-          <p>{props.item.os}</p>
+          <p>{props.item.os ? props.item.os : '-'}</p>
         </div>
         <div className="table-row__item table-row__item_s">
           <p>{props.item.sco == '0' ? 'нет' : 'да'}</p>
@@ -61,23 +61,34 @@ const SlabTableRow = props => {
           <p>
             {props.cur === 'rub'
               ? `${(
-                  parseFloat(props.item.cntRUB) * parseFloat(props.item.os)
+                  parseFloat(props.item.cntRUB) *
+                  parseFloat(props.item.he) *
+                  parseFloat(props.item.le)
                 ).toFixed(2)} ₽`
               : props.cur === 'usd'
               ? `${(
-                  parseFloat(props.item.cntUSD) * parseFloat(props.item.os)
+                  parseFloat(props.item.cntUSD) *
+                  parseFloat(props.item.he) *
+                  parseFloat(props.item.le)
                 ).toFixed(2)} $`
               : props.cur === 'eur'
               ? `${(
-                  parseFloat(props.item.cntEUR) * parseFloat(props.item.os)
+                  parseFloat(props.item.cntEUR) *
+                  parseFloat(props.item.he) *
+                  parseFloat(props.item.le)
                 ).toFixed(2)} €`
               : 1}
           </p>
         </div>
       </Link>
-      <div className="table-row__item good-items-table__title-icons">
-        <ItemAddIzbr item={props.item} />
-      </div>
+      {props.isAuth ? (
+        <div className="table-row__item good-items-table__title-icons">
+          <ItemAddIzbr item={props.item} />
+        </div>
+      ) : (
+        <></>
+      )}
+
       <div className="table-row__item good-items-table__title-icons">
         <ItemAddBasket item={props.item} />
       </div>
@@ -134,7 +145,13 @@ const SlabItem = props => {
                 </div>
               </div>
               <div className="slab-item-info__slab-img">
-                <img src={selectedEl.photobl ? selectedEl.photobl : 'https://picsum.photos/id/1015/1000/600/'} />
+                <img
+                  src={
+                    selectedEl.photobl
+                      ? selectedEl.photobl
+                      : 'https://picsum.photos/id/1015/1000/600/'
+                  }
+                />
                 <ColorRange colors={selectedEl.color_range} />
               </div>
             </div>
@@ -173,10 +190,15 @@ const SlabItem = props => {
                   <p>Стоимость</p>
                 </div>
               </div>
-              <div className="table-row__item good-items-table__title-icons">
-                <img src={arr} />
-                <img src={like} />
-              </div>
+              {props.isAuth ? (
+                <div className="table-row__item good-items-table__title-icons">
+                  <img src={arr} />
+                  <img src={like} />
+                </div>
+              ) : (
+                <></>
+              )}
+
               <div className="table-row__item good-items-table__title-icons">
                 <img src={arr} />
                 <img src={basket} />
@@ -184,6 +206,7 @@ const SlabItem = props => {
             </div>
             {props.item.prs.map(item => (
               <SlabTableRow
+                isAuth={props.isAuth}
                 cur={props.cur}
                 key={item.ps}
                 type={props.item.izd}
@@ -197,9 +220,23 @@ const SlabItem = props => {
       </div>
     );
   } else if (isTablet) {
-    return <SlabItemTablet item={props.item} url={props.url} cur={props.cur} />;
+    return (
+      <SlabItemTablet
+        item={props.item}
+        url={props.url}
+        cur={props.cur}
+        isAuth={props.isAuth}
+      />
+    );
   } else {
-    return <SlabItemMobile item={props.item} url={props.url} cur={props.cur} />;
+    return (
+      <SlabItemMobile
+        item={props.item}
+        url={props.url}
+        cur={props.cur}
+        isAuth={props.isAuth}
+      />
+    );
   }
 };
 

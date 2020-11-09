@@ -33,7 +33,7 @@ const Header = props => {
           <MobileView>
             <div className="header-container">
               <div className="container">
-                <MobileHeader />
+                <MobileHeader isAuth={props.isAuth}/>
               </div>
             </div>
           </MobileView>

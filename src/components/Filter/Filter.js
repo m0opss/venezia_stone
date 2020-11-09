@@ -8,6 +8,7 @@ import close_icon from 'images/close.png';
 import { Menu } from 'antd';
 import axios from 'axios';
 import filterActions from 'actions/filterActions';
+import dataActions from 'actions/dataAction';
 import {
   MobileView,
   BrowserView,
@@ -19,12 +20,12 @@ import 'antd/dist/antd.css';
 
 import colors from './filterColors.json';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const { SubMenu } = Menu;
 
 const Filter = props => {
   const [state, setState] = React.useState({ collapsed: true });
-
   useEffect(() => {
     let isSubscr = true;
     if (isSubscr) {
@@ -88,11 +89,37 @@ const Filter = props => {
 
   const fetchFilters = () => {
     localStorage.setItem('activeFilters', JSON.stringify(props.activeFilters));
+    let gr = props.groups ? [props.groups] : [];
+    let its = props.items ? [props.items] : [];
+    let headers = props.activeFilters
+    if(headers.materials.length == 0)
+      headers.materials = [localStorage.getItem('material')]
+
     axios
       .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
-        ...props.activeFilters,
-        level: [props.level]
+        ...headers,
+        items: its,
+        level: [props.level],
+        groups: gr
       })
+      .then(response => {
+        if (props.level == 2) props.setData(response.data.mts[0].grs);
+        if (props.level == 3) props.setData(response.data.grs[0].itms);
+        if (props.level == 4) props.setData(response.data.itms[0])
+      })
+      .catch(err => {
+        if (err.response) {
+          // client received an error response (5xx, 4xx)
+          console.log(1, err.response);
+          // props.setAuth(false);
+        } else if (err.request) {
+          // client never received a response, or request never left
+          console.log(2, err.request);
+        } else {
+          // anything else
+          console.log(3, err);
+        }
+      });
   };
 
   const filterItemClicked = e => {
@@ -119,6 +146,37 @@ const Filter = props => {
 
     fetchFilters();
   };
+  const titles = {
+    materials: 'Материал',
+    izdelie: 'Изделие',
+    colors: 'Цвет',
+    countries: 'Страна',
+    obrabotka: 'Тип обработки',
+    thickness: 'Толщина',
+    sklad: 'Склад'
+  };
+  const materials = {
+    Гранит: 'Granit',
+    Травертин: 'Travertin',
+    Сланец: 'Slanets',
+    Оникс: 'Oniks',
+    Мрамор: 'Mramor',
+    Лабрадорит: 'Labradorit',
+    Керамика: 'Keramika',
+    Кварцит: 'Kvartsit',
+    'Кварцевый агломерат': 'Kvartsevyy_aglomerat',
+    Известняк: 'Izvestnyak',
+    'Искусственный мрамор': 'Iskusstvennyy_mramor',
+    Эксклюзив: 'Eksklyuziv'
+  };
+  const cities = {
+    krd: 'Краснодар',
+    kzn: 'Казань',
+    ekb: 'Екатеринбург',
+    spb: 'Санкт-Петербург',
+    msc: 'Москва'
+  };
+
   return (
     <Suspense>
       <div className="filter">
@@ -145,7 +203,8 @@ const Filter = props => {
           mode="inline"
           multiple={true}
           inlineCollapsed={state.collapsed}
-          selectedKeys={props.activeFields}
+          selectedKeys={JSON.parse(localStorage.getItem('activeFieldKeys'))}
+          defaultOpenKeys={props.activeFields}
         >
           {isMobile && !isTablet ? (
             <img
@@ -156,55 +215,177 @@ const Filter = props => {
           ) : (
             <></>
           )}
+
           {Object.keys(props.filters).map((filter, index) => {
             let title = '';
-            if (filter === 'materials') title = 'Материал';
-            else if (filter === 'izdelie') title = 'Изделие';
-            else if (filter === 'colors') title = 'Цвет';
-            else if (filter === 'countries') title = 'Страна';
-            else if (filter === 'obrabotka') title = 'Тип обработки';
-            else if (filter === 'thickness') title = 'Толщина';
-            else if (filter === 'sklad') title = 'Склад';
+            Object.keys(titles).map(t => {
+              if (filter == t) title = titles[t];
+            });
+
             return (
               <SubMenu key={filter} title={title}>
+                {/* Цикл по всем вкладкам */}
                 {props.filters[filter].map((material, ind) => {
-                  return (
-                    <Menu.Item
-                      key={`${index}${ind}`}
-                      style={{ display: 'flex', alignItems: 'center' }}
-                      onClick={filterItemClicked}
-                    >
-                      {material === 'krd' ? (
-                        'Краснодар'
-                      ) : material === 'kzn' ? (
-                        'Казань'
-                      ) : material === 'ekb' ? (
-                        'Екатеринбург'
-                      ) : material === 'spb' ? (
-                        'Санкт-Петербург'
-                      ) : material === 'msc' ? (
-                        'Москва'
-                      ) : index == 2 && material === 'Белый' ? (
-                        <>
-                          <div
-                            className="filter__color border-color"
-                            style={{ background: colors[material] }}
-                          />
-                          {material}
-                        </>
-                      ) : index == 2 && material !== 'Белый' ? (
-                        <>
-                          <div
-                            className="filter__color"
-                            style={{ background: colors[material] }}
-                          />
-                          {material}
-                        </>
-                      ) : (
-                        material
-                      )}
-                    </Menu.Item>
-                  );
+                  if (filter === 'materials') {
+                    {
+                      /* Для вкладки материалы - переводит с русского по словарю materials */
+                    }
+                    let mat_eng = material;
+                    Object.keys(materials).map(mat => {
+                      if (mat == material) mat_eng = materials[mat];
+                    });
+
+                    return props.level == 1 ? (
+                      <Menu.Item
+                        key={`${index}${ind}`}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        onClick={filterItemClicked}
+                      >
+                        <Link to={`/${mat_eng}`}>{material}</Link>
+                      </Menu.Item>
+                    ) : (
+                      <Menu.Item
+                        disabled
+                        key={`${index}${ind}`}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        onClick={filterItemClicked}
+                      >
+                        <Link to={`/${mat_eng}`}>{material}</Link>
+                      </Menu.Item>
+                    );
+                  } else if (filter === 'colors' || filter === 'countries') {
+                    return props.level == 2 ? (
+                      <Menu.Item
+                        key={`${index}${ind}`}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        onClick={filterItemClicked}
+                      >
+                        {index == 2 && material === 'Белый' ? (
+                          <>
+                            <div
+                              className="filter__color border-color"
+                              style={{ background: colors[material] }}
+                            />
+                            {material}
+                          </>
+                        ) : index == 2 && material !== 'Белый' ? (
+                          <>
+                            <div
+                              className="filter__color"
+                              style={{ background: colors[material] }}
+                            />
+                            {material}
+                          </>
+                        ) : (
+                          material
+                        )}
+                      </Menu.Item>
+                    ) : (
+                      <Menu.Item
+                        disabled
+                        key={`${index}${ind}`}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        onClick={filterItemClicked}
+                      >
+                        {index == 2 && material === 'Белый' ? (
+                          <>
+                            <div
+                              className="filter__color border-color"
+                              style={{ background: colors[material] }}
+                            />
+                            {material}
+                          </>
+                        ) : index == 2 && material !== 'Белый' ? (
+                          <>
+                            <div
+                              className="filter__color"
+                              style={{ background: colors[material] }}
+                            />
+                            {material}
+                          </>
+                        ) : (
+                          material
+                        )}
+                      </Menu.Item>
+                    );
+                  } else if (
+                    filter === 'izdelie' ||
+                    filter === 'obrabotka' ||
+                    filter === 'thickness'
+                  ) {
+                    return props.level == 3 ? (
+                      <Menu.Item
+                        key={`${index}${ind}`}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        onClick={filterItemClicked}
+                      >
+                        {material}
+                      </Menu.Item>
+                    ) : (
+                      <Menu.Item
+                        disabled
+                        key={`${index}${ind}`}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        onClick={filterItemClicked}
+                      >
+                        {material}
+                      </Menu.Item>
+                    );
+                  } else if (filter === 'sklad') {
+                    return props.level == 4 ? (
+                      <Menu.Item
+                        key={`${index}${ind}`}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        onClick={filterItemClicked}
+                      >
+                        {Object.keys(cities).map(k => {
+                          if (k == material) {
+                            return cities[k];
+                          }
+                        })}
+                      </Menu.Item>
+                    ) : (
+                      <Menu.Item
+                        disabled
+                        key={`${index}${ind}`}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        onClick={filterItemClicked}
+                      >
+                        {material === 'krd'
+                          ? 'Краснодар'
+                          : material === 'kzn'
+                          ? 'Казань'
+                          : material === 'ekb'
+                          ? 'Екатеринбург'
+                          : material === 'spb'
+                          ? 'Санкт-Петербург'
+                          : material === 'msc'
+                          ? 'Москва'
+                          : material}
+                      </Menu.Item>
+                    );
+                  }
+                  // return (
+                  //   <Menu.Item
+                  //     key={`${index}${ind}`}
+                  //     style={{ display: 'flex', alignItems: 'center' }}
+                  //     onClick={filterItemClicked}
+                  //   >
+                  //     {material === 'krd' ? (
+                  //       'Краснодар'
+                  //     ) : material === 'kzn' ? (
+                  //       'Казань'
+                  //     ) : material === 'ekb' ? (
+                  //       'Екатеринбург'
+                  //     ) : material === 'spb' ? (
+                  //       'Санкт-Петербург'
+                  //     ) : material === 'msc' ? (
+                  //       'Москва'
+                  //     )  : (
+                  //       material
+                  //     )}
+                  //   </Menu.Item>
+                  // );
                 })}
               </SubMenu>
             );
@@ -219,7 +400,8 @@ const mapStateToProps = store => {
     filters: store.filter_data.filters,
     activeFilters: store.filter_data.activeFilters,
     activeFields: store.filter_data.activeFields,
-    level: store.filter_data.level  
+    level: store.filter_data.level,
+    data: store.data
   };
 };
 
@@ -234,7 +416,6 @@ const mapDispatchToProps = dispatch => {
     setActiveFields: data => {
       dispatch(filterActions.setActiveFields(data));
     }
-
   };
 };
 

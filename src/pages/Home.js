@@ -37,7 +37,21 @@ const Home = props => {
   React.useEffect(() => {
     window.scrollTo(0, 0);
     props.setLvl(1);
-
+    if (localStorage.getItem('activeFilters') !== null) {
+      let tmp = JSON.parse(localStorage.getItem('activeFilters'));
+      tmp.materials = [];
+      localStorage.setItem('activeFilters', JSON.stringify(tmp));
+    }
+    if (localStorage.getItem('activeFieldKeys') !== null) {
+      let tmp = JSON.parse(localStorage.getItem('activeFieldKeys'));
+      tmp = tmp.filter(f => {
+        if (f[0] != '0') {
+          return f;
+        }
+      });
+      props.setActiveFields(tmp);
+      localStorage.setItem('activeFieldKeys', JSON.stringify(tmp));
+    }
     axios
       .get('https://catalog-veneziastone.ru/api_v0/getMaterials/')
       .then(response => {
@@ -58,7 +72,6 @@ const Home = props => {
   };
 
   const openListMain = () => {
-
     if (!dropdownMain) {
       setDropClassMain('home-bottom-links__link-active');
       setDropClassSales('');
@@ -142,7 +155,7 @@ const Home = props => {
                 img={item.photo_material}
                 link={item.ph}
                 item={item}
-                itemName={item.mt}  
+                itemName={item.mt}
                 key={item.mt}
               />
             ))
@@ -237,6 +250,9 @@ const mapDispatchToProps = dispatch => {
     },
     setLvl: data => {
       dispatch(filterActions.setLvl(data));
+    },
+    setActiveFields: data => {
+      dispatch(filterActions.setActiveFields(data));
     }
   };
 };

@@ -26,7 +26,6 @@ import {
 } from 'react-device-detect';
 
 const NumGroups = props => {
-
   const [numGroups, setNumGroups] = React.useState([]);
   const [defGroups, setdefNumGroups] = React.useState([]);
   const [sortOn, setSortOn] = React.useState(false);
@@ -37,7 +36,8 @@ const NumGroups = props => {
   );
 
   React.useEffect(() => {
-    props.setLvl(2)
+    props.setLvl(2);
+    
     window.scrollTo(0, 0);
     let isSubscr = true;
     axios
@@ -47,7 +47,8 @@ const NumGroups = props => {
       .then(response => {
         if (isSubscr) {
           setNumGroups(response.data.mts[0].grs);
-          setdefNumGroups(response.data.mts[0].grs)
+          setdefNumGroups(response.data.mts[0].grs);
+          localStorage.setItem('material', response.data.mts[0].mt)
         }
       })
       .catch(e => {
@@ -65,19 +66,28 @@ const NumGroups = props => {
     setHover_pltk(false);
     setNum_groups_items('num-gr-items-group-list');
   };
-
+  const tr = (data) => {
+    console.log('ngr', data)
+    setNumGroups(data)
+  }
   return (
     <>
       {isTablet ? (
-        <Filter />
+        <Filter setData={(data)=>tr(data)}/>
       ) : (
         <BrowserView>
-          <Filter />
+          <Filter setData={(data)=>tr(data)}/>
         </BrowserView>
       )}
       <div className="num-gr-options">
         <Valute />
-        <Sort defArr={defGroups} arr={numGroups} setArr={setNumGroups} on={sortOn} setSortOn={setSortOn}/>
+        <Sort
+          defArr={defGroups}
+          arr={numGroups}
+          setArr={setNumGroups}
+          on={sortOn}
+          setSortOn={setSortOn}
+        />
         {isMobile && !isTablet ? (
           <></>
         ) : (
@@ -97,7 +107,7 @@ const NumGroups = props => {
           className="num-gr-items-group-col num-gr-item-root"
           style={style_pltk ? { display: 'none' } : {}}
         >
-          <p style={{height:"unset"}}>Фото</p>
+          <p style={{ height: 'unset' }}>Фото</p>
           <p>Название</p>
           <p>Количество SKU</p>
           <p>Общая площадь</p>
@@ -122,7 +132,6 @@ const NumGroups = props => {
 const mapStateToProps = store => {
   return {
     cur: store.valute_data.valute
-
   };
 };
 

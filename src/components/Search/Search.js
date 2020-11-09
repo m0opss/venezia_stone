@@ -32,19 +32,19 @@ const Search = props => {
     let arr = Object.keys(result).map (
       (k, index) =>
         k == 'mts' ? (
-          <Link key={k} to="/" className="search-drop-line">
+          <Link key={k} to="/search/materials" className="search-drop-line">
             Материалы <span>совпадений - {result[k].length}</span>
           </Link>
         ) : k == 'grs' ? (
-          <Link key={k} to="/" className="search-drop-line">
+          <Link key={k} to="/search/nom-groups" className="search-drop-line">
             Номенклатурные группы <span>совпадений - {result[k].length}</span>
           </Link>
         ) : k == 'itms' ? (
-          <Link key={k}  to="/" className="search-drop-line">
+          <Link key={k}  to="/search/nomenclatures" className="search-drop-line">
             Номенклатуры <span>совпадений - {result[k].length}</span>
           </Link>
         ) : k == 'prs' ? (
-          <Link key={k} to="/" className="search-drop-line">
+          <Link key={k} to="/search/products" className="search-drop-line">
             Продукты <span>совпадений - {result[k].length}</span>
           </Link>
         ) : (
@@ -65,6 +65,7 @@ const Search = props => {
         .get(`https://catalog-veneziastone.ru/api_v0/Search/${searchVal}/`)
         .then(response => {
           console.log(response);
+          localStorage.setItem('searchData', JSON.stringify(response.data))
           checkresponse(response.data);
         })
         .catch(err => {
@@ -86,6 +87,7 @@ const Search = props => {
   };
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
+      setsearchActive(false);
       onClickSearch()
     }
   }
@@ -104,7 +106,7 @@ const Search = props => {
         id="search"
         placeholder="Поиск"
         defaultValue={props.searchVal}
-        onChange={props.onChangeSearch}
+        onChange={(e) => setSearchVal(e.target.value)}
         onKeyPress={handleKeyPress}
         onFocus={() => setsearchActive(true)}
         onBlur={onBlurSearch}

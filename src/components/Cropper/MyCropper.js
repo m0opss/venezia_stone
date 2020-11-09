@@ -54,6 +54,7 @@ const MyCropper = props => {
       </div>
       <div className="dialog-cropper-crop__res">
         <div className="dialog-cropper-crop__res-img">
+          <h2>Результат</h2>
           <img style={{ width: '100%' }} src={cropData} alt="cropped" />
         </div>
       </div>

@@ -25,7 +25,7 @@ const GroupItem = props => {
       <div className="other-items-group__line">
         <p className="other-items-group_first-col">Наличие</p>
         <div className="other-items-group__centered">
-          <p>{props.item.ossht}</p>
+          <p>{props.item.ossht ? props.item.ossht : '-'}</p>
           <p>{props.item.os}</p>
         </div>
       </div>
@@ -79,18 +79,22 @@ const GroupItem = props => {
 };
 
 const OtherItemTablet = props => {
-  let colors = [
-    '#2C1D02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02'
-  ];
-  let im = 'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg';
+  let ob_S = 0,
+    ob_sht = 0,
+    ob_sum = 0;
+  ob_S += parseFloat(props.item.prs.map(i => i.os));
+  ob_sht += parseFloat(props.item.prs.map(i => i.ossht));
+  ob_sum += parseFloat(
+    props.item.prs.map(i =>
+      props.cur === 'rub'
+        ? props.item.prs[0].cntRUB
+        : props.cur === 'usd'
+        ? props.item.prs[0].cntUSD
+        : props.cur === 'eur'
+        ? props.item.prs[0].cntEUR
+        : 0
+    )
+  );
 
   return (
     <div className="slab-item">
@@ -102,20 +106,37 @@ const OtherItemTablet = props => {
           <div className="slab-item-info__left-block slab-item-info__left-block_other slab-item-info__left-block_other-tablet">
             <h1 className="slab-item-info__title">{props.item.name}</h1>
             <div className="slab-item-info__parameters">
-              <p>Общая площадь: {``} </p>
-              <p>Количество: {``} </p>
-              <p>Сумма: {``} </p>
+              <p>
+                Общая площадь, м<sup>2</sup> : {ob_S ? ob_S : '-'}
+              </p>
+              <p>Количество, шт: {ob_sht ? ob_sht : '-'}</p>
+              <p>
+                Сумма:{' '}
+                {ob_sum
+                  ? props.cur === 'rub'
+                    ? `${ob_sum}₽`
+                    : props.cur === 'usd'
+                    ? `${ob_sum}$`
+                    : props.cur === 'eur'
+                    ? `${ob_sum}€`
+                    : ''
+                  : '-'}
+              </p>
             </div>
           </div>
           <div className="slab-item-info__slab-img">
-            <img src={im} />
-            <ColorRange colors={colors} />
+            <img
+              src={
+                props.item.prs.length > 0 ? props.item.prs[0].photo_product : ''
+              }
+            />
+            <ColorRange colors={props.item.prs ? props.item.prs[0] : []} />
           </div>
         </div>
       </div>
       <div className="other-items-group">
         {props.item.prs.map(item => (
-          <GroupItem item={item} key={item.ps} cur={props.cur} />
+          <GroupItem item={item} key={item.ps} cur={props.cur} isAuth={props.isAuth}/>
         ))}
       </div>
     </div>

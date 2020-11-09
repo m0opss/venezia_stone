@@ -23,14 +23,18 @@ const GroupItem = props => {
           className="slab-items-group-item__img-main"
           src={props.item.photobl}
         />
-        <div className="slab-items-group-item__img-icon -icons-1">
-          <ItemAddIzbr item={props.item} />
-        </div>
+        {props.isAuth ? (
+          <div className="slab-items-group-item__img-icon -icons-1">
+            <ItemAddIzbr item={props.item} />
+          </div>
+        ) : (
+          <></>
+        )}
         <div className="slab-items-group-item__img-icon -icons-2">
           <ItemAddBasket item={props.item} />
         </div>
       </div>
-      <Link to={`${props.url}/${props.item.bl}`}>
+      <Link to={`${props.url}/${props.item.ps}`}>
         <div className="slab-items-group-item__info">
           <p className="slab-items-group-item__line">Слэб: {props.item.bl}</p>
           <p className="slab-items-group-item__line">
@@ -41,7 +45,7 @@ const GroupItem = props => {
             Склад: {props.item.sklad}
           </p>
           <p className="slab-items-group-item__line">
-            Цена за м<sup>2</sup>: {' '}
+            Цена за м<sup>2</sup>:{' '}
             {props.cur === 'rub'
               ? `${props.item.cntRUB}₽`
               : props.cur === 'usd'
@@ -106,20 +110,22 @@ const SlabItemMobile = props => {
       <ButtonsPanel images={images} />
       <Slider {...settings}>
         {props.item.prs.map(item => (
-          <div key={item.ps} className="slab-item-carousel__item" onClick={() =>setSelectedEl(item)}>
-            <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
-            {/* <img src={item.photobl} /> */}
+          <div
+            key={item.ps}
+            className="slab-item-carousel__item"
+            onClick={() => setSelectedEl(item)}
+          >
+            <img src={item.photobl} />
           </div>
         ))}
       </Slider>
       <div className="slab-item-mobile__main">
         <div className="slab-item-mobile__main-title">{selectedEl.bl}</div>
         <div className="slab-item-mobile__main-img">
-          {/* <img src={selectedEl.photobl} /> */}
-          <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
+          <img src={selectedEl.photobl} />
         </div>
       </div>
-      <ColorRange colors={colors} />
+      <ColorRange colors={selectedEl} />
 
       <div className="slab-item-mobile__options-group">
         <div className=""></div>
@@ -128,7 +134,12 @@ const SlabItemMobile = props => {
       <div className="hidescroll">
         <div className="slab-items-group">
           {props.item.prs.map(item => (
-            <GroupItem key={item.ps} item={item} url={props.url} cur={props.cur}/>
+            <GroupItem
+              key={item.ps}
+              item={item}
+              url={props.url}
+              cur={props.cur}
+            />
           ))}
         </div>
       </div>

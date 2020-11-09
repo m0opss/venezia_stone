@@ -8,6 +8,9 @@
   padding-right: 15px;
   width: calc(100% + 16px);
   position: relative;
+  // > a {
+  //   flex: 0 1 48%;
+  // }
 }
 
 .slab-items-group-item {
@@ -20,8 +23,12 @@
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  line-height: 140%;
   flex: 0 1 48%;
+  line-height: 140%;
+  > a {
+    flex: 0 1 47%;
+    margin-left: 15px;
+  }
   @media screen and (max-width: 670px) {
     flex: 0 1 70%;
     justify-content: flex-start;
@@ -49,6 +56,9 @@
     border-radius: 100%;
     position: absolute;
     right: 3px;
+    img {
+      height: 22px;
+    }
     cursor: pointer;
   }
   .-icons-1 {
@@ -58,8 +68,8 @@
     bottom: 2px;
   }
   .slab-items-group-item__info {
-    flex: 0 1 47%;
-    margin-left: 20px;
+    // flex: 0 1 47%;
+    // margin-left: 20px;
     .slab-items-group-item__line {
       white-space: nowrap;
     }

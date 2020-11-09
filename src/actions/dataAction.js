@@ -8,6 +8,12 @@ const dataActions = {
       type: DATA_REQUEST,
       payload: data,
     }
+  },
+  setData: (data) => {
+    return {
+      type: "SET_DATA",
+      payload: data,
+    }
   }
 }
 

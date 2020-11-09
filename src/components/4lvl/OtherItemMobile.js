@@ -17,7 +17,7 @@ const GroupItem = props => {
   return (
     <div className="other-items-group__item">
       <div className="other-items-group__line">
-        <p className="other-items-group_first-col -city">{props.item.skl}</p>
+        <p className="other-items-group_first-col -city">{props.item.sklad}</p>
         <div className="other-items-group__centered">
           <p>шт</p>
           <p>
@@ -28,7 +28,7 @@ const GroupItem = props => {
       <div className="other-items-group__line">
         <p className="other-items-group_first-col">Наличие</p>
         <div className="other-items-group__centered">
-          <p>{props.item.ossht}</p>
+          <p>{props.item.ossht ? props.item.ossht : '-'}</p>
           <p>{props.item.os}</p>
         </div>
       </div>
@@ -38,14 +38,14 @@ const GroupItem = props => {
           <input
             type="number"
             min="0"
-            max={parseFloat(props.item.ossht)}
+            max={props.item.ossht}
             defaultValue={cnt}
             step="1"
           />
           <input
             type="number"
             min="0"
-            max={parseFloat(props.item.os)}
+            max={props.item.os}
             defaultValue={S}
             step="0.01"
           />

@@ -32,7 +32,8 @@
 .search-invisible {
   flex: 0 1 2%;
   input {
-    display: none;
+    // display: none;
+    width: 0;
   }
   img {
     &:nth-child(4) {

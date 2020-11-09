@@ -14,22 +14,25 @@ import './SlabItemTablet.scss';
 import { Link } from 'react-router-dom';
 
 const GroupItem = props => {
-  console.log('GroupItem', props)
   return (
-    <Link to={`${props.url}/${props.item.bl}`}>
-      <div className="slab-items-group-item">
-        <div className="slab-items-group-item__img">
-          <img
-            className="slab-items-group-item__img-main"
-            src={props.item.photobl}
-          />
+    <div className="slab-items-group-item">
+      <div className="slab-items-group-item__img">
+        <img
+          className="slab-items-group-item__img-main"
+          src={props.item.photobl}
+        />
+        {props.isAuth ? (
           <div className="slab-items-group-item__img-icon -icons-1">
             <ItemAddIzbr item={props.item} />
           </div>
-          <div className="slab-items-group-item__img-icon -icons-2">
-            <ItemAddBasket item={props.item} />
-          </div>
+        ) : (
+          <></>
+        )}
+        <div className="slab-items-group-item__img-icon -icons-2">
+          <ItemAddBasket item={props.item} />
         </div>
+      </div>
+      <Link to={`${props.url}/${props.item.ps}`}>
         <div className="slab-items-group-item__info">
           <p className="slab-items-group-item__line">Слэб: {props.item.bl}</p>
           <p className="slab-items-group-item__line">
@@ -40,7 +43,7 @@ const GroupItem = props => {
             Склад: {props.item.sklad}
           </p>
           <p className="slab-items-group-item__line">
-            Цена за м<sup>2</sup> : {' '}
+            Цена за м<sup>2</sup> :{' '}
             {props.cur === 'rub'
               ? `${props.item.cntRUB}₽`
               : props.cur === 'usd'
@@ -50,7 +53,7 @@ const GroupItem = props => {
               : ''}
           </p>
           <p className="slab-items-group-item__line">
-            Стоимость : {' '}
+            Стоимость :{' '}
             {props.cur === 'rub'
               ? `${(
                   parseFloat(props.item.cntRUB) * parseFloat(props.item.os)
@@ -66,8 +69,8 @@ const GroupItem = props => {
               : 1}
           </p>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
@@ -85,13 +88,6 @@ const SlabItemTablet = props => {
     '#402A02',
     '#402A02'
   ];
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1
-  };
 
   return (
     <div className="slab-item">
@@ -118,7 +114,7 @@ const SlabItemTablet = props => {
             </div>
             <div className="slab-item-info__slab-img">
               <img src={selectedEl.photobl} />
-              <ColorRange colors={colors} />
+              <ColorRange colors={selectedEl} />
             </div>
           </div>
         </div>
@@ -126,7 +122,12 @@ const SlabItemTablet = props => {
       <div className="hidescroll">
         <div className="slab-items-group">
           {props.item.prs.map(item => (
-            <GroupItem key={item.ps} item={item} url={props.url} cur={props.cur} />
+            <GroupItem
+              key={item.ps}
+              item={item}
+              url={props.url}
+              cur={props.cur}
+            />
           ))}
         </div>
       </div>

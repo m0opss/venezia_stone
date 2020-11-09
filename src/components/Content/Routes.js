@@ -17,6 +17,8 @@ import FourLvl from '../../pages/FourLvl';
 import FifthLvl from '../../pages/FifthLvl';
 import ResetPass from '../../pages/ResetPass';
 import Test from '../../pages/test';
+import NumGroupsSearch from '../../pages/NumGroupsSearch';
+import NumenclatureSearch from '../../pages/NumenclatureSearch';
 
 
 const Routes = props => {
@@ -31,9 +33,11 @@ const Routes = props => {
       <Route exact path="/basket" component={MyBasket} />
       <Route exact path="/account/password/*" component={ResetPass}/>
       <Route exact path="/:material"  component={NumGroups} />
+      <Route exact path="/search/nom-groups"  component={NumGroupsSearch} />
       <Route exact path="/sale/:material"  component={SecondLvlSale} />
       <Route exact path="/new/:material"  component={SecondLvlNew} />
       <Route exact path="/sale/:material/:numGroups" component={ThirdLvlSale}/>
+      <Route exact path="/search/nomenclatures" component={NumenclatureSearch}/>
       <Route exact path="/new/:material/:numGroups" component={ThirdLvlNew}/>
       <Route exact path="/:material/:numGroups" component={Numenclature}/>
       <Route exact path="/sale/:material/:numGroups/:num" component={FourLvlSale}/>

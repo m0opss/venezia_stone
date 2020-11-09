@@ -21,7 +21,12 @@
   }
 }
 .info-modal {
-  width: 40% !important;
+  @media screen and (min-width: 800px) {
+    width: 60% !important;
+  }
+  // @media screen and (min-width: 1200px) {
+  //   width: 50% !important;
+  // }
   .ant-modal-footer {
     button {
       display: none;

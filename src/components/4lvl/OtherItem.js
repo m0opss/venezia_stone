@@ -80,18 +80,22 @@ const MainImg = props => {
 };
 
 const OtherItem = props => {
-  console.log(props.item);
-  let colors = [
-    '#2C1D02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02'
-  ];
+  let ob_S = 0,
+    ob_sht = 0,
+    ob_sum = 0;
+  ob_S += parseFloat(props.item.prs.map(i => i.os));
+  ob_sht += parseFloat(props.item.prs.map(i => i.ossht));
+  ob_sum += parseFloat(
+    props.item.prs.map(i =>
+      props.cur === 'rub'
+        ? props.item.prs[0].cntRUB
+        : props.cur === 'usd'
+        ? props.item.prs[0].cntUSD
+        : props.cur === 'eur'
+        ? props.item.prs[0].cntEUR
+        : 0
+    )
+  );
 
   if (isBrowser) {
     return (
@@ -105,26 +109,28 @@ const OtherItem = props => {
             <div className="slab-item-info__left-block slab-item-info__left-block_other">
               <div className="slab-item-info__parameters">
                 <p>
-                  Общая площадь, м<sup>2</sup> : {props.item.prs[0].os}
+                  Общая площадь, м<sup>2</sup> : {ob_S ? ob_S : '-'}
                 </p>
-                <p>Количество, шт: </p>
+                <p>Количество, шт: {ob_sht ? ob_sht : '-'}</p>
                 <p>
                   Сумма:{' '}
-                  {props.cur === 'rub'
-                    ? `${props.item.prs[0].cntRUB}₽`
+                  {ob_sum 
+                  ? 
+                    (props.cur === 'rub'
+                    ? `${ob_sum}₽`
                     : props.cur === 'usd'
-                    ? `${props.item.prs[0].cntUSD}$`
+                    ? `${ob_sum}$`
                     : props.cur === 'eur'
-                    ? `${props.item.prs[0].cntEUR}€`
-                    : ''}
+                    ? `${ob_sum}€`
+                    : '') : '-'}
                 </p>
               </div>
-              <ColorRange colors={colors} />
+              <ColorRange colors={props.item.prs ? props.item.prs[0] : []} />
             </div>
             <div className="slab-item-info__right-block">
               <MainImg
                 type={props.type}
-                img={props.item.prs[0].photo_product}
+                img={props.item.prs.length>0 ? props.item.prs[0].photo_product : ''}
               />
             </div>
           </div>
@@ -133,7 +139,7 @@ const OtherItem = props => {
         <div className="good-items-table">
           <div className="good-items-table__item slabs-title other-title">
             <div className="table-row__item table-row__item_l">
-              <p>Склад: {props.item.prs[0].sklad}</p>
+              <p>Склад</p>
             </div>
             <div className="table-row__item table-row__item_l">
               <p>
@@ -158,32 +164,52 @@ const OtherItem = props => {
                 <div className="">Сумма</div>
               </div>
             </div>
-
-            <div className="table-row__item good-items-table__title-icons">
-              <img src={arr} />
-              <img src={like} />
-            </div>
+            {props.isAuth ? (
+              <div className="table-row__item good-items-table__title-icons">
+                <img src={arr} />
+                <img src={like} />
+              </div>
+            ) : (
+              <></>
+            )}
             <div className="table-row__item good-items-table__title-icons">
               <img src={arr} />
               <img src={basket} />
             </div>
           </div>
-          {props.item.prs.map(item => (
-            <OtherTableRow
-              cur={props.cur}
-              url={props.url}
-              key={item.ps}
-              type={props.item.izd}
-              item={item}
-            />
-          ))}
+          {props.item.prs ? (
+            props.item.prs.map(item => (
+              <OtherTableRow
+                cur={props.cur}
+                url={props.url}
+                key={item.ps}
+                type={props.item.izd}
+                item={item}
+                isAuth={props.isAuth}
+              />
+            ))
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     );
   } else if (isTablet) {
-    return <OtherItemTablet item={props.item} cur={props.cur} />;
+    return (
+      <OtherItemTablet
+        item={props.item}
+        cur={props.cur}
+        isAuth={props.isAuth}
+      />
+    );
   } else {
-    return <OtherItemMobile item={props.item} cur={props.cur} />;
+    return (
+      <OtherItemMobile
+        item={props.item}
+        cur={props.cur}
+        isAuth={props.isAuth}
+      />
+    );
   }
 };
 

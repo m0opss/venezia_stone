@@ -19,7 +19,7 @@ const App = props => {
   React.useEffect(() => {
     let isSubscr = true;
     if (isSubscr) {
-      if (localStorage.getItem('auth_token') !== null) {
+      if (props.isAuth && localStorage.getItem('auth_token') !== null) {
         axios
           .post(
             `https://catalog-veneziastone.ru/api_v0/showSelectedFavourite/`,
@@ -74,7 +74,7 @@ const App = props => {
 
   return (
     <HashRouter>
-      <Header />
+      <Header isAuth={props.isAuth}/>
       <Content data={props.data} />
       <Footer />
     </HashRouter>

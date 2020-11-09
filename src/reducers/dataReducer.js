@@ -19,6 +19,11 @@ export function dataReducer(state = initialState, action) {
         sale: action.payload.sale,
         new: action.payload.new,
       }
+    case "SET_DATA":
+      return {
+        ...state,
+        mts: action.payload,
+      }
     default:
       return state
   }    

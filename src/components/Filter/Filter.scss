@@ -5,7 +5,12 @@
     top: 160px;
     left: 15px;
   }
-
+  a {
+    color: black !important;
+    &:hover {
+      color:  #be9344 !important;
+    }
+  }
   .ant-menu-inline-collapsed.ant-menu-root.ant-menu-vertical {
     display: none;
   }
@@ -30,6 +35,7 @@
     }
   }
   .ant-menu-submenu-arrow {
+
   }
   .ant-menu-submenu {
     margin: 5px;

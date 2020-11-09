@@ -12,7 +12,8 @@ const ResetPass = props => {
   const [token, setToken] = React.useState('');
   const [uid, setUid] = React.useState('');
 
-  const succStageEmail = 'Письмо отправлено вам на почту. После активации ссылки она действительна в течении 1 мин.';
+  const succStageEmail = 'Письмо отправлено вам на почту.';
+  const succStagePhone = 'Код активации отправлен. Он действителен в течении 1 мин.';
   const succStagePass = 'Пароль успешно изменен';
   
   const notify = text =>

@@ -34,8 +34,8 @@
 
 .-mobile-footer {
   flex-wrap: wrap;
-  @media screen and (max-width: 410px) {
-    flex-direction: column;
+  @media screen and (max-width: 440px) {
+    font-size: 12px;
   }
   & > * {
     &:nth-child(1) {
@@ -43,7 +43,7 @@
       margin-top: 30px;
     }
     &:nth-child(2) {
-      flex: 0 1 45%;
+      flex: 0 1 40%;
       display: flex;
       align-items: center;
       justify-content: center;
