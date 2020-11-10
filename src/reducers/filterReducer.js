@@ -7,7 +7,7 @@ const initialState = {
   f_dset: () => {},
   f_share: () => {},
   groups: '',
-  upper_izd: '',
+  upper_izd: [],
   items: ''
 };
 

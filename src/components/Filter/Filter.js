@@ -102,14 +102,22 @@ const Filter = props => {
     let headers = props.activeFilters;
     if (headers.materials.length == 0)
       headers.materials = [localStorage.getItem('material')];
-
+    console.log({
+      ...headers,
+      items: its,
+      level: [props.level],
+      groups: gr,
+      upper_izd: props.upper_izd
+      // upper_izd: []
+    });
     axios
-      .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
-        ...headers,
-        items: its,
-        level: [props.level],
-        groups: gr,
-        upper_izd: [props.upper_izd]
+    .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
+      ...headers,
+      items: its,
+      level: [props.level],
+      groups: gr,
+      upper_izd: props.upper_izd
+      // upper_izd: []
       })
       .then(response => {
         console.log(response.data);

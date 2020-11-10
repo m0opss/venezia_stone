@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import filterActions from 'actions/filterActions';
 export const TopFilter = props => {
   const setFilterParam = e => {
-    props.setUpper(e.target.id);
+    props.setUpper([e.target.id]);
     props.f_share()
   };
   return (
