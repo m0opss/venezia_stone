@@ -41,9 +41,21 @@ const filterActions = {
       payload: data
     };
   },
+  setUpper: data => {
+    return {
+      type: 'SET_UPPER',
+      payload: data
+    };
+  },
   setActiveFilters: data => {
     return {
       type: 'SET_ACTIVE_FILTERS',
+      payload: data
+    };
+  },
+  setShareFilterFunc: data => {
+    return {
+      type: 'SET_SHARE_FILTER',
       payload: data
     };
   }

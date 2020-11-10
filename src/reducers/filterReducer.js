@@ -1,4 +1,3 @@
-
 const initialState = {
   filters: {},
   activeFilters: {},
@@ -6,7 +5,9 @@ const initialState = {
   level: 0,
   f_set: () => {},
   f_dset: () => {},
+  f_share: () => {},
   groups: '',
+  upper_izd: '',
   items: ''
 };
 
@@ -51,6 +52,16 @@ export function filterReducer(state = initialState, action) {
       return {
         ...state,
         items: action.payload
+      };
+    case 'SET_UPPER':
+      return {
+        ...state,
+        upper_izd: action.payload
+      };
+    case 'SET_SHARE_FILTER':
+      return {
+        ...state,
+        f_share: action.payload
       };
     default:
       return state;

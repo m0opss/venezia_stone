@@ -89,8 +89,16 @@ const Filter = props => {
 
   const fetchFilters = () => {
     localStorage.setItem('activeFilters', JSON.stringify(props.activeFilters));
-    let gr = props.groups ? [props.groups] : localStorage.getItem('groups') != null ? [localStorage.getItem('groups')] : [];
-    let its = props.items ? [props.items] : localStorage.getItem('items') != null ? [localStorage.getItem('items')] : [];
+    let gr = props.groups
+      ? [props.groups]
+      : localStorage.getItem('groups') != null
+      ? [localStorage.getItem('groups')]
+      : [];
+    let its = props.items
+      ? [props.items]
+      : localStorage.getItem('items') != null
+      ? [localStorage.getItem('items')]
+      : [];
     let headers = props.activeFilters;
     if (headers.materials.length == 0)
       headers.materials = [localStorage.getItem('material')];
@@ -101,21 +109,22 @@ const Filter = props => {
         items: its,
         level: [props.level],
         groups: gr,
-        upper_izd: []
+        upper_izd: [props.upper_izd]
       })
       .then(response => {
-          if (props.level == 2) {
-            props.f_set(response.data.mts[0].grs);
-            props.f_dset(response.data.mts[0].grs)
-          }
-          if (props.level == 3) {
-            props.f_set(response.data.grs[0].itms);
-            props.f_dset(response.data.grs[0].itms);
-          }
-          if (props.level == 4) {
-            props.f_set(response.data.itms[0]);
-            props.f_dset(response.data.itms[0]);
-          }
+        console.log(response.data);
+        if (props.level == 2) {
+          props.f_set(response.data.mts[0].grs);
+          props.f_dset(response.data.mts[0].grs);
+        }
+        if (props.level == 3) {
+          props.f_set(response.data.grs[0].itms);
+          props.f_dset(response.data.grs[0].itms);
+        }
+        if (props.level == 4) {
+          props.f_set(response.data.itms[0]);
+          props.f_dset(response.data.itms[0]);
+        }
       })
       .catch(err => {
         if (err.response) {
@@ -186,7 +195,7 @@ const Filter = props => {
     spb: 'Санкт-Петербург',
     msc: 'Москва'
   };
-
+  props.setShareFilterFunc(fetchFilters);
   return (
     <Suspense>
       <div className="filter">
@@ -375,27 +384,6 @@ const Filter = props => {
                       </Menu.Item>
                     );
                   }
-                  // return (
-                  //   <Menu.Item
-                  //     key={`${index}${ind}`}
-                  //     style={{ display: 'flex', alignItems: 'center' }}
-                  //     onClick={filterItemClicked}
-                  //   >
-                  //     {material === 'krd' ? (
-                  //       'Краснодар'
-                  //     ) : material === 'kzn' ? (
-                  //       'Казань'
-                  //     ) : material === 'ekb' ? (
-                  //       'Екатеринбург'
-                  //     ) : material === 'spb' ? (
-                  //       'Санкт-Петербург'
-                  //     ) : material === 'msc' ? (
-                  //       'Москва'
-                  //     )  : (
-                  //       material
-                  //     )}
-                  //   </Menu.Item>
-                  // );
                 })}
               </SubMenu>
             );
@@ -416,6 +404,7 @@ const mapStateToProps = store => {
     data: store.data,
     items: store.filter_data.items,
     groups: store.filter_data.groups,
+    upper_izd: store.filter_data.upper_izd
   };
 };
 
@@ -426,6 +415,9 @@ const mapDispatchToProps = dispatch => {
     },
     setActiveFilters: data => {
       dispatch(filterActions.setActiveFilters(data));
+    },
+    setShareFilterFunc: data => {
+      dispatch(filterActions.setShareFilterFunc(data));
     },
     setActiveFields: data => {
       dispatch(filterActions.setActiveFields(data));
