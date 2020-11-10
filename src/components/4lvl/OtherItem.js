@@ -183,9 +183,10 @@ const OtherItem = props => {
                 cur={props.cur}
                 url={props.url}
                 key={item.ps}
-                type={props.item.izd}
+                type={props.type}
                 item={item}
                 isAuth={props.isAuth}
+
               />
             ))
           ) : (
@@ -200,6 +201,7 @@ const OtherItem = props => {
         item={props.item}
         cur={props.cur}
         isAuth={props.isAuth}
+        type={props.type}
       />
     );
   } else {
@@ -208,6 +210,7 @@ const OtherItem = props => {
         item={props.item}
         cur={props.cur}
         isAuth={props.isAuth}
+        type={props.type}
       />
     );
   }

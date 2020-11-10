@@ -23,16 +23,19 @@ import OtherItem from '../components/4lvl/OtherItem';
 
 const FourLvl = props => {
   props.setLvl(4);
+  
   const [item, setItem] = React.useState({});
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
     let isSubscr = true;
     if (isSubscr) {
       axios
-        .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
-        .then(response => {
-          setItem(response.data.itms[0]);
-          localStorage.setItem('items', response.data.itms[0].id)
+      .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
+      .then(response => {
+        setItem(response.data.itms[0]);
+        localStorage.setItem('items', response.data.itms[0].id)
+        console.log(response.data.itms[0])
         })
         .catch(e => {
           console.log(e);

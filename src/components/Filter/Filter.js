@@ -91,9 +91,9 @@ const Filter = props => {
     localStorage.setItem('activeFilters', JSON.stringify(props.activeFilters));
     let gr = props.groups ? [props.groups] : [];
     let its = props.items ? [props.items] : [];
-    let headers = props.activeFilters
-    if(headers.materials.length == 0)
-      headers.materials = [localStorage.getItem('material')]
+    let headers = props.activeFilters;
+    if (headers.materials.length == 0)
+      headers.materials = [localStorage.getItem('material')];
 
     axios
       .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
@@ -103,9 +103,17 @@ const Filter = props => {
         groups: gr
       })
       .then(response => {
-        if (props.level == 2) props.setData(response.data.mts[0].grs);
-        if (props.level == 3) props.setData(response.data.grs[0].itms);
-        if (props.level == 4) props.setData(response.data.itms[0])
+        if (!isMobile) {
+          if (props.level == 2) props.setData(response.data.mts[0].grs);
+          if (props.level == 3) props.setData(response.data.grs[0].itms);
+          if (props.level == 4) props.setData(response.data.itms[0]);
+        } else {
+          if (props.level == 2)
+            localStorage.setItem(
+              'grps',
+              JSON.stringify(response.data.mts[0].grs)
+            );
+        }
       })
       .catch(err => {
         if (err.response) {
@@ -410,6 +418,9 @@ const mapDispatchToProps = dispatch => {
     setFilters: data => {
       dispatch(filterActions.setFilters(data));
     },
+    // setMobData: data => {
+    //   dispatch(filterActions.setMobData(data));
+    // },
     setActiveFilters: data => {
       dispatch(filterActions.setActiveFilters(data));
     },

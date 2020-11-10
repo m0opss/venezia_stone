@@ -31,8 +31,18 @@ const FourLvl = props => {
       .then(response => {
         setItem(response.data.itms[0]);
       })
-      .catch(e => {
-        console.log(e);
+      .catch(err => {
+        if (err.response) {
+          // client received an error response (5xx, 4xx)
+          console.log(1, err.response);
+          // props.setAuth(false);
+        } else if (err.request) {
+          // client never received a response, or request never left
+          console.log(2, err.request);
+        } else {
+          // anything else
+          console.log(3, err);
+        }
       });
   }, []);
 
@@ -42,12 +52,22 @@ const FourLvl = props => {
         {isTablet || isBrowser ? <Valute /> : <></>}
       </div>
       {item.izd === 'Слэбы' ? (
-        <SlabItem type={item.izd} item={item} addGood={props.addGood} cur={props.cur}/>
+        <SlabItem
+          type={item.izd}
+          item={item}
+          addGood={props.addGood}
+          cur={props.cur}
+        />
       ) : (
         <></>
       )}
       {item.izd !== 'Слэбы' && item.izd ? (
-        <OtherItem type={item.izd} item={item} addGood={props.addGood} cur={props.cur} />
+        <OtherItem
+          type={item.izd}
+          item={item}
+          addGood={props.addGood}
+          cur={props.cur}
+        />
       ) : (
         <></>
       )}

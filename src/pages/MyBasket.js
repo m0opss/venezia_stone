@@ -13,6 +13,10 @@ import './MyBasket.scss';
 const MyBasket = props => {
   const [visibleModal, setVisibleModal] = React.useState(false);
   const [basket, setBasket] = React.useState([]);
+  const [all_sum, setAllSum] = React.useState(0);
+  const [all_cnt, setAllCnt] = React.useState(0);
+
+  const [cntSum, setCntSum] = React.useState([]);
 
   const onClickOrder = () => {
     if (props.isAuth) {
@@ -22,13 +26,15 @@ const MyBasket = props => {
   };
 
   useEffect(() => {
+    console.log(props.basket)
     if (props.basket.length === 0 && localStorage.getItem('basket') !== null) {
       props.setBasket(JSON.parse(localStorage.getItem('basket')));
     }
+    let c = 0;
+    cntSum.map(i => console.log(i));
   }, [basket.length]);
 
   const orderOk = e => {
-    console.log(123123);
 
     setVisibleModal(false);
   };
@@ -96,11 +102,14 @@ const MyBasket = props => {
           props.basket.map(item => {
             return (
               <BasketItem
+                setBasket={setBasket}
+                basket={props.basket}
+                cntSum={cntSum}
                 key={item.ps}
                 kind="basket"
                 cur={props.cur}
                 item={item}
-                type={item.izd == 'Плитка' ? true : false}
+                type={item.type}
                 addGood={props.addGood}
                 deleteGood={props.deleteGood}
                 editGood={props.editGood}
@@ -115,9 +124,9 @@ const MyBasket = props => {
       <div className="basket__bottom-line">
         <div className="basket__total">
           <div className="">
-            <p>Итого шт.: 12</p>
+            <p>Итого шт.: {props.basket.length}</p>
             <p>
-              Итого м<sup>2</sup>: 400
+              Итого м<sup>2</sup>:{props.basket.map(item => {})}
             </p>
             <p>Итого : 44000 ₽</p>
           </div>

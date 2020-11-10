@@ -10,10 +10,37 @@ import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import './OtherItemMobile.scss';
 
 const GroupItem = props => {
-  const [S, setS] = React.useState(0);
+  const [kw, setKw] = React.useState(0);
   const [cnt, setCnt] = React.useState(0);
   const [sum, setSum] = React.useState(0);
 
+  useEffect(() => {
+    console.log(props.item);
+    if (props.type != 'Плитка') {
+      let pr;
+      if (props.cur === 'rub') pr = props.item.cntRUB;
+      else if (props.cur === 'usd') pr = props.item.cntUSD;
+      else if (props.cur === 'eur') pr = props.item.cntEUR;
+      setSum(parseFloat(props.item.le) * parseFloat(props.item.he) * pr * cnt);
+    } else {
+      setSum(kw * cnt);
+    }
+  });
+
+  const onChangeVal = e => {
+    console.log(e.target.value);
+    if (e.target.id == 'cnt') {
+      setCnt(e.target.value);
+      setKw(
+        parseFloat(props.item.le) *
+          parseFloat(props.item.he) *
+          parseFloat(e.target.value)
+      );
+    } else {
+      setKw(e.target.value);
+      setCnt();
+    }
+  };
   return (
     <div className="other-items-group__item">
       <div className="other-items-group__line">
@@ -38,17 +65,34 @@ const GroupItem = props => {
           <input
             type="number"
             min="0"
+            id="cnt"
             max={props.item.ossht}
             defaultValue={cnt}
             step="1"
+            onChange={onChangeVal}
           />
-          <input
-            type="number"
-            min="0"
-            max={props.item.os}
-            defaultValue={S}
-            step="0.01"
-          />
+          {props.type == 'Плитка' ? (
+            <input
+              id="kw"
+              type="number"
+              min="0"
+              max={props.item.os}
+              step="0.01"
+              defaultValue={kw}
+              style={{ borderBottom: '1px solid black' }}
+              onChange={onChangeVal}
+            />
+          ) : props.type == 'Ступени' ? (
+            <input
+              id="kw"
+              type="number"
+              defaultValue="0"
+              disabled
+              style={{ color: 'gray' }}
+            />
+          ) : (
+            <p>-</p>
+          )}
         </div>
       </div>
       <div className="other-items-group__line">
@@ -85,8 +129,16 @@ const GroupItem = props => {
       </div>
       <div className="other-items-group__line basket-item__buttons">
         <div className="">
-          <ItemAddIzbr item={props.item} />
-          <ItemAddBasket item={props.item} />
+          {props.isAuth ? (
+            <ItemAddIzbr
+              item={{ ...props.item, type: props.type, S: kw, cnt: cnt }}
+            />
+          ) : (
+            <></>
+          )}
+          <ItemAddBasket
+            item={{ ...props.item, type: props.type, S: kw, cnt: cnt }}
+          />
         </div>
       </div>
     </div>
@@ -94,7 +146,6 @@ const GroupItem = props => {
 };
 
 const OtherItemTablet = props => {
-
   React.useEffect(() => {
     let isSubscr = true;
     if (

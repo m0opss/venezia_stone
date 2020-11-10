@@ -25,13 +25,13 @@ const GroupItem = props => {
         />
         {props.isAuth ? (
           <div className="slab-items-group-item__img-icon -icons-1">
-            <ItemAddIzbr item={props.item} />
+            <ItemAddIzbr item={{...props.item, type: props.type}} />
           </div>
         ) : (
           <></>
         )}
         <div className="slab-items-group-item__img-icon -icons-2">
-          <ItemAddBasket item={props.item} />
+          <ItemAddBasket item={{...props.item, type: props.type}} />
         </div>
       </div>
       <Link to={`${props.url}/${props.item.ps}`}>
@@ -136,6 +136,7 @@ const SlabItemMobile = props => {
           {props.item.prs.map(item => (
             <GroupItem
               key={item.ps}
+              type={props.type}
               item={item}
               url={props.url}
               cur={props.cur}

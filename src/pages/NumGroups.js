@@ -37,7 +37,7 @@ const NumGroups = props => {
 
   React.useEffect(() => {
     props.setLvl(2);
-    
+
     window.scrollTo(0, 0);
     let isSubscr = true;
     axios
@@ -48,14 +48,18 @@ const NumGroups = props => {
         if (isSubscr) {
           setNumGroups(response.data.mts[0].grs);
           setdefNumGroups(response.data.mts[0].grs);
-          localStorage.setItem('material', response.data.mts[0].mt)
+          localStorage.setItem(
+            'grps',
+            JSON.stringify(response.data.mts[0].grs)
+          );
+          localStorage.setItem('material', response.data.mts[0].mt);
         }
       })
       .catch(e => {
         console.log(e);
       });
     return () => (isSubscr = false);
-  }, []);
+  }, [localStorage.getItem('grps')]);
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -66,17 +70,17 @@ const NumGroups = props => {
     setHover_pltk(false);
     setNum_groups_items('num-gr-items-group-list');
   };
-  const tr = (data) => {
-    console.log('ngr', data)
-    setNumGroups(data)
-  }
+  const tr = data => {
+    console.log('ngr', data);
+    setNumGroups(data);
+  };
   return (
     <>
       {isTablet ? (
-        <Filter setData={(data)=>tr(data)}/>
+        <Filter setData={data => tr(data)} />
       ) : (
         <BrowserView>
-          <Filter setData={(data)=>tr(data)}/>
+          <Filter setData={data => tr(data)} />
         </BrowserView>
       )}
       <div className="num-gr-options">
@@ -115,15 +119,27 @@ const NumGroups = props => {
           <p></p>
         </div>
 
-        {numGroups.map(item => (
-          <NumGroupItem
-            pltk={style_pltk}
-            key={item.ps}
-            link={props.match.url + '/' + item.ps}
-            item={item}
-            cur={props.cur}
-          />
-        ))}
+        {!isMobile
+          ? numGroups.map(item => (
+              <NumGroupItem
+                pltk={style_pltk}
+                key={item.ps}
+                link={props.match.url + '/' + item.ps}
+                item={item}
+                cur={props.cur}
+              />
+            ))
+          : localStorage.getItem('grps') != null ?
+          JSON.parse(localStorage.getItem('grps')).map(item => (
+              <NumGroupItem
+                pltk={style_pltk}
+                key={item.ps}
+                link={props.match.url + '/' + item.ps}
+                item={item}
+                cur={props.cur}
+              />
+            )) : <></>
+            }
       </div>
     </>
   );

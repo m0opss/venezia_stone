@@ -6,14 +6,13 @@ import basketActions from 'actions/basketActions';
 import { connect } from 'react-redux';
 
 const ItemAddBasket = props => {
-  const [state, setState] = React.useState(false);
-
+  const [state, setState] = React.useState(true);
 
   useEffect(() => {
-    if (props.basket.includes(props.item.ps)) {
-      setState(true);
-    }
-  }, []);
+    props.basket.map(item => {
+      if(item.ps == props.item.ps) setState(false)
+    })
+  })
 
   const onClickItem = e => {
     if (e.target.id == 'add') {
@@ -23,20 +22,17 @@ const ItemAddBasket = props => {
     }
     setState(!state);
   };
-
   if (state) {
-    return <img id="delete" src={basket_icon_accent} onClick={onClickItem} />;
-  } else {
     return <img id="add" src={basket_icon_black} onClick={onClickItem} />;
+  } else {
+    return <img id="delete" src={basket_icon_accent} onClick={onClickItem} />;
   }
 };
-
 const mapStateToProps = store => {
   return {
     basket: store.basket_data.basket
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     addGood: data => {

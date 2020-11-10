@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import deleteItem from 'images/deleteItem.png';
 import like from 'images/like.png';
@@ -9,7 +9,6 @@ import basket_icon from 'images/basket_icon.png';
 import './BasketItem.scss';
 
 const BasketItem = props => {
-  console.log(props.item);
   if (!props.item) {
     return (
       <div style={{ flex: '100%' }}>
@@ -40,13 +39,53 @@ const BasketItem = props => {
       </div>
     );
   }
+  const [kw, setKw] = React.useState(
+    props.item.S ? parseFloat(props.item.S) : 0
+  );
+  const [cnt, setCnt] = React.useState(
+    props.item.cnt ? parseFloat(props.item.cnt) : 0
+  );
+  const [sum, setSum] = React.useState(0);
 
-  const kwChange = e => {
-    console.log(e.target.value);
-    // props.editGood()
-  };
-  const cntChange = e => {
-    console.log(e.target.value);
+  useEffect(() => {
+    let pr;
+    if (props.cur === 'rub') pr = props.item.cntRUB;
+    else if (props.cur === 'usd') pr = props.item.cntUSD;
+    else if (props.cur === 'eur') pr = props.item.cntEUR;
+    if (props.type != 'Плитка') {
+      console.log(1);
+      setSum(
+        // parseFloat(props.item.le) *
+        //   parseFloat(props.item.he) *
+        (2 * 3 * parseFloat(pr) * cnt).toFixed(2)
+      );
+      // props.setCntSum([...props.cntSum, (2 * 3 * parseFloat(pr) * cnt).toFixed(2)])
+    } else {
+      // console.log(kw, cnt);
+      // console.log(kw, cnt);
+      setSum((kw * parseFloat(pr)).toFixed(2));
+    }
+  });
+
+  // props.setCntSum([...props.cntSum, sum])
+  const onChangeVal = e => {
+    if (e.target.id == 'cnt') {
+      setCnt(parseFloat(e.target.value));
+      setKw(
+        // parseFloat(props.item.le) *
+        //   parseFloat(props.item.he) *
+        2 * 3 * parseFloat(e.target.value)
+      );
+    } else {
+      setKw(e.target.value);
+      setCnt(
+        parseFloat(e.target.value) / 2 / 3
+        // parseFloat(props.item.le) /
+        // parseFloat(props.item.he)
+      );
+    }
+    console.log(cnt, kw)
+    props.setBasket([...props.basket, { ...props.item, cnd: cnt, S: kw }]);
   };
 
   return (
@@ -57,12 +96,12 @@ const BasketItem = props => {
       <div className="basket-item__type">{props.type}</div>
       <div className="basket-item__info">
         <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
-        {props.type == 'Слэб' ? (
+        {props.type != 'Слэбы' && props.type != 'Полоса' ? (
           <>
             <div className="basket-item__text">
               <div className="basket-item__line-wrapper">
                 <div className="basket-item__line">
-                  <p>Склад: {props.item.skl}</p>
+                  <p>Склад: {props.item.sklad}</p>
                   <p>
                     Цена за м<sup>2</sup>:{' '}
                     {props.cur === 'rub'
@@ -79,7 +118,9 @@ const BasketItem = props => {
                     {' '}
                     Наличие, м<sup>2</sup>: {props.item.os}
                   </p>
-                  <p>Наличие, шт: {props.item.ossht} </p>
+                  <p>
+                    Наличие, шт: {props.item.ossht ? props.item.ossht : '-'}
+                  </p>
                 </div>
               </div>
               <div className="basket-item__line -price">
@@ -87,45 +128,49 @@ const BasketItem = props => {
                   <p>
                     {' '}
                     м<sup>2</sup> :
-                    <input
-                      type="number"
-                      min="0"
-                      max={parseFloat(props.item.os)}
-                      defaultValue={parseFloat(props.item.os)}
-                      step="0.01"
-                      onBlur={kwChange}
-                    />
+                    {props.type == 'Плитка' ? (
+                      <input
+                        id="kw"
+                        type="number"
+                        min="0"
+                        max={props.item.os}
+                        defaultValue={kw}
+                        step="0.01"
+                        onChange={onChangeVal}
+                      />
+                    ) : props.type == 'Ступени' ? (
+                      <input
+                        type="number"
+                        defaultValue="0"
+                        disabled
+                        style={{ color: 'gray' }}
+                      />
+                    ) : (
+                      <p>-</p>
+                    )}
                   </p>
                   <p>
                     шт :
                     <input
+                      id="cnt"
                       type="number"
                       min="0"
-                      max={parseFloat(props.item.ossht)}
-                      defaultValue={parseFloat(props.item.ossht)}
-                      onBlur={cntChange}
+                      max={props.item.ossht}
+                      defaultValue={cnt}
+                      onChange={onChangeVal}
                     />
                   </p>
                 </div>
                 <div className="price-view">
-                  <p id="cost">
+                  <p id="cost" style={{ marginTop: 10 }}>
                     Сумма:{' '}
                     {props.cur === 'rub'
-                      ? `${(
-                          parseFloat(props.item.cntRUB) *
-                          parseFloat(props.item.os)
-                        ).toFixed(2)} ₽`
+                      ? `${sum} ₽`
                       : props.cur === 'usd'
-                      ? `${(
-                          parseFloat(props.item.cntUSD) *
-                          parseFloat(props.item.os)
-                        ).toFixed(2)} $`
+                      ? `${sum} $`
                       : props.cur === 'eur'
-                      ? `${(
-                          parseFloat(props.item.cntEUR) *
-                          parseFloat(props.item.os)
-                        ).toFixed(2)} €`
-                      : 1}
+                      ? `${sum} €`
+                      : '-'}
                   </p>
                   {block}
                 </div>
@@ -136,7 +181,7 @@ const BasketItem = props => {
           <div className="basket-item__text">
             <div className="basket-item__line-wrapper">
               <div className="basket-item__line">
-                <p>Склад: {props.item.skl}</p>
+                <p>Склад: {props.item.sklad}</p>
                 <p>Длина: {props.item.le} м</p>
                 <p>Ширина: {props.item.he} м</p>
               </div>
@@ -148,7 +193,28 @@ const BasketItem = props => {
               </div>
             </div>
             <div className="basket-item__line -price">
-              <p id="cost">Сумма:</p>
+              <p id="cost">
+                Сумма:{' '}
+                {props.cur === 'rub'
+                  ? `${(
+                      parseFloat(props.item.cntRUB) *
+                      parseFloat(props.item.he) *
+                      parseFloat(props.item.le)
+                    ).toFixed(2)} ₽`
+                  : props.cur === 'usd'
+                  ? `${(
+                      parseFloat(props.item.cntUSD) *
+                      parseFloat(props.item.he) *
+                      parseFloat(props.item.le)
+                    ).toFixed(2)} $`
+                  : props.cur === 'eur'
+                  ? `${(
+                      parseFloat(props.item.cntEUR) *
+                      parseFloat(props.item.he) *
+                      parseFloat(props.item.le)
+                    ).toFixed(2)} €`
+                  : 1}
+              </p>
               {block}
             </div>
           </div>

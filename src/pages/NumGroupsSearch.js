@@ -57,7 +57,7 @@ const NumGroups = props => {
     setNumGroups(JSON.parse(localStorage.getItem('searchData')).grs);
     setdefNumGroups(JSON.parse(localStorage.getItem('searchData')).grs);
     // localStorage.setItem('material', response.data.mts[0].mt);
-  }, []);
+  }, [localStorage.getItem('searchData')]);
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -121,7 +121,7 @@ const NumGroups = props => {
           <NumGroupItem
             pltk={style_pltk}
             key={item.ps}
-            link={props.match.url + '/' + item.ps}
+            link={item.url}
             item={item}
             cur={props.cur}
           />

@@ -83,14 +83,14 @@ const SlabTableRow = props => {
       </Link>
       {props.isAuth ? (
         <div className="table-row__item good-items-table__title-icons">
-          <ItemAddIzbr item={props.item} />
+          <ItemAddIzbr item={{...props.item, type: props.type}} />
         </div>
       ) : (
         <></>
       )}
 
       <div className="table-row__item good-items-table__title-icons">
-        <ItemAddBasket item={props.item} />
+        <ItemAddBasket item={{...props.item, type: props.type}} />
       </div>
     </div>
   );
@@ -99,17 +99,6 @@ const SlabTableRow = props => {
 const SlabItem = props => {
   const [selectedEl, setSelectedEl] = React.useState(props.item.prs[0]);
   // console.log(selectedEl)
-  let colors = [
-    '#2C1D02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02'
-  ];
 
   let images = [
     'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
@@ -131,6 +120,7 @@ const SlabItem = props => {
               <ScrollImage
                 scrollStyle="slab-item-info-scroll"
                 selectItem={setSelectedEl}
+                selectedItem={selectedEl}
                 elements={props.item.prs}
               />
             </div>
@@ -149,7 +139,7 @@ const SlabItem = props => {
                   src={
                     selectedEl.photobl
                       ? selectedEl.photobl
-                      : 'https://picsum.photos/id/1015/1000/600/'
+                      : ''
                   }
                 />
                 <ColorRange colors={selectedEl.color_range} />
@@ -209,7 +199,7 @@ const SlabItem = props => {
                 isAuth={props.isAuth}
                 cur={props.cur}
                 key={item.ps}
-                type={props.item.izd}
+                type={props.type}
                 item={item}
                 url={props.url}
                 addGood={props.addGood}
@@ -225,6 +215,7 @@ const SlabItem = props => {
         item={props.item}
         url={props.url}
         cur={props.cur}
+        type={props.type}
         isAuth={props.isAuth}
       />
     );
@@ -233,6 +224,7 @@ const SlabItem = props => {
       <SlabItemMobile
         item={props.item}
         url={props.url}
+        type={props.type}
         cur={props.cur}
         isAuth={props.isAuth}
       />

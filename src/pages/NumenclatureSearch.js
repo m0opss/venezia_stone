@@ -57,7 +57,7 @@ const Numenclature = props => {
     setdefNum(JSON.parse(localStorage.getItem('searchData')).itms);
     document.getElementById('Все').setAttribute('style', 'color: #c98505');
 
-  }, []);
+  }, [localStorage.getItem('searchData')]);
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -200,7 +200,7 @@ const Numenclature = props => {
             pltk={style_pltk}
             cur={props.cur}
             key={item.ps}
-            link={props.match.url + '/' + item.ps}
+            link={item.url}
             item={item}
           />
         ))}

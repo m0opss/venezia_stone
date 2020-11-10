@@ -98,13 +98,13 @@ const OtherTableRow = props => {
       </div>
       {props.isAuth ? (
         <div className="table-row__item good-items-table__title-icons">
-          <ItemAddIzbr item={props.item} />
+          <ItemAddIzbr item={{...props.item, type: props.type, S: kw, cnt: cnt}} />
         </div>
       ) : (
         <></>
       )}
       <div className="table-row__item good-items-table__title-icons">
-        <ItemAddBasket item={props.item} kw={kw} cnt={cnt}/>
+        <ItemAddBasket item={{...props.item, type: props.type, S: kw, cnt: cnt}}/>
       </div>
     </div>
   );

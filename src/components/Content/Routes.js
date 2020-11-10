@@ -19,12 +19,15 @@ import ResetPass from '../../pages/ResetPass';
 import Test from '../../pages/test';
 import NumGroupsSearch from '../../pages/NumGroupsSearch';
 import NumenclatureSearch from '../../pages/NumenclatureSearch';
+import HomeSearch from '../../pages/HomeSearch';
+import FourLvlSearch from '../../pages/FourLvlSearch';
 
 
 const Routes = props => {
   return (
     <Switch>
       <Route path="/" exact component={Home} />
+      <Route path="/search/materials" exact component={HomeSearch} />
       <Route exact path="/contacts" component={Contacts} />
       <Route exact path="/test" component={Test} />
       <Route exact path="/personal-data" component={LK} />
@@ -37,6 +40,7 @@ const Routes = props => {
       <Route exact path="/sale/:material"  component={SecondLvlSale} />
       <Route exact path="/new/:material"  component={SecondLvlNew} />
       <Route exact path="/sale/:material/:numGroups" component={ThirdLvlSale}/>
+      <Route exact path="/search/products" component={FourLvlSearch}/>
       <Route exact path="/search/nomenclatures" component={NumenclatureSearch}/>
       <Route exact path="/new/:material/:numGroups" component={ThirdLvlNew}/>
       <Route exact path="/:material/:numGroups" component={Numenclature}/>
