@@ -40,26 +40,25 @@ const NumGroups = props => {
 
     window.scrollTo(0, 0);
     let isSubscr = true;
-    axios
-      .get(
-        `https://catalog-veneziastone.ru/api_v0/${props.match.params.material}/`
-      )
-      .then(response => {
-        if (isSubscr) {
+    if (isSubscr) {
+      axios
+        .get(
+          `https://catalog-veneziastone.ru/api_v0/${props.match.params.material}/`
+        )
+        .then(response => {
           setNumGroups(response.data.mts[0].grs);
           setdefNumGroups(response.data.mts[0].grs);
-          localStorage.setItem(
-            'grps',
-            JSON.stringify(response.data.mts[0].grs)
-          );
           localStorage.setItem('material', response.data.mts[0].mt);
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      });
+          props.setMobData(setNumGroups);
+          props.setDefMobData(setdefNumGroups);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+
     return () => (isSubscr = false);
-  }, [localStorage.getItem('grps')]);
+  }, []);
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -70,19 +69,10 @@ const NumGroups = props => {
     setHover_pltk(false);
     setNum_groups_items('num-gr-items-group-list');
   };
-  const tr = data => {
-    console.log('ngr', data);
-    setNumGroups(data);
-  };
+
   return (
     <>
-      {isTablet ? (
-        <Filter setData={data => tr(data)} />
-      ) : (
-        <BrowserView>
-          <Filter setData={data => tr(data)} />
-        </BrowserView>
-      )}
+      {isTablet || isBrowser ? <Filter /> : <></>}
       <div className="num-gr-options">
         <Valute />
         <Sort
@@ -118,28 +108,15 @@ const NumGroups = props => {
           <p>Цена от</p>
           <p></p>
         </div>
-
-        {!isMobile
-          ? numGroups.map(item => (
-              <NumGroupItem
-                pltk={style_pltk}
-                key={item.ps}
-                link={props.match.url + '/' + item.ps}
-                item={item}
-                cur={props.cur}
-              />
-            ))
-          : localStorage.getItem('grps') != null ?
-          JSON.parse(localStorage.getItem('grps')).map(item => (
-              <NumGroupItem
-                pltk={style_pltk}
-                key={item.ps}
-                link={props.match.url + '/' + item.ps}
-                item={item}
-                cur={props.cur}
-              />
-            )) : <></>
-            }
+        {numGroups.map(item => (
+          <NumGroupItem
+            pltk={style_pltk}
+            key={item.ps}
+            link={props.match.url + '/' + item.ps}
+            item={item}
+            cur={props.cur}
+          />
+        ))}
       </div>
     </>
   );
@@ -147,7 +124,8 @@ const NumGroups = props => {
 
 const mapStateToProps = store => {
   return {
-    cur: store.valute_data.valute
+    cur: store.valute_data.valute,
+    f_set: store.filter_data.f_set
   };
 };
 
@@ -159,8 +137,17 @@ const mapDispatchToProps = dispatch => {
     setNumGroups: data => {
       dispatch(dataActions.setNumGroups(data));
     },
+    setMobData: data => {
+      dispatch(filterActions.setMobData(data));
+    },
+    setDefMobData: data => {
+      dispatch(filterActions.setDefMobData(data));
+    },
     setLvl: data => {
       dispatch(filterActions.setLvl(data));
+    },
+    setItems: data => {
+      dispatch(filterActions.setItems(data));
     }
   };
 };

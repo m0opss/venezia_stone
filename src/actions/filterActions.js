@@ -17,7 +17,30 @@ const filterActions = {
       payload: data
     };
   },
-
+  setMobData: data => {
+    return {
+      type: 'SET_MOB_DATA',
+      payload: data
+    };
+  },
+  setDefMobData: data => {
+    return {
+      type: 'SET_DEF_MOB_DATA',
+      payload: data
+    };
+  },
+  setGroups: data => {
+    return {
+      type: 'SET_GROUPS',
+      payload: data
+    };
+  },
+  setItems: data => {
+    return {
+      type: 'SET_ITEMS',
+      payload: data
+    };
+  },
   setActiveFilters: data => {
     return {
       type: 'SET_ACTIVE_FILTERS',

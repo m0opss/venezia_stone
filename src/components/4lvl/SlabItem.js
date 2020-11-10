@@ -9,7 +9,7 @@ import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import SlabItemTablet from 'components/4lvl/SlabItemTablet';
 import SlabItemMobile from 'components/4lvl/SlabItemMobile';
-import tmp from 'images/header-logo.png';
+import OptionLine from 'components/5lvl/OptionLine';
 
 import {
   MobileView,
@@ -83,14 +83,14 @@ const SlabTableRow = props => {
       </Link>
       {props.isAuth ? (
         <div className="table-row__item good-items-table__title-icons">
-          <ItemAddIzbr item={{...props.item, type: props.type}} />
+          <ItemAddIzbr item={{ ...props.item, type: props.type }} />
         </div>
       ) : (
         <></>
       )}
 
       <div className="table-row__item good-items-table__title-icons">
-        <ItemAddBasket item={{...props.item, type: props.type}} />
+        <ItemAddBasket item={{ ...props.item, type: props.type }} />
       </div>
     </div>
   );
@@ -130,18 +130,17 @@ const SlabItem = props => {
                   {selectedEl.bl}
                 </div>
                 <div className="slab-item-info__options">
-                  <img src={lamp} />
-                  <img src={book} />
+                  {/* <img src={lamp} />
+                  <img src={book} /> */}
+                  <OptionLine
+                  // lamp = {selectedEl.} поле для просветленного фото
+                    style={{ width: 'unset', marginBottom: 'unset' }}
+                    img={selectedEl.photobl}
+                  />
                 </div>
               </div>
               <div className="slab-item-info__slab-img">
-                <img
-                  src={
-                    selectedEl.photobl
-                      ? selectedEl.photobl
-                      : ''
-                  }
-                />
+                <img src={selectedEl.photobl ? selectedEl.photobl : ''} />
                 <ColorRange colors={selectedEl.color_range} />
               </div>
             </div>
@@ -188,7 +187,6 @@ const SlabItem = props => {
               ) : (
                 <></>
               )}
-
               <div className="table-row__item good-items-table__title-icons">
                 <img src={arr} />
                 <img src={basket} />

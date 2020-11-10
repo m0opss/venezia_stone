@@ -44,6 +44,9 @@ const Numenclature = props => {
         if (isSubscr) {
           setNumemclature(response.data.grs[0].itms);
           setdefNum(response.data.grs[0].itms);
+          props.setDefMobData(setNumemclature);
+          props.setMobData(setdefNum);
+          props.setGroups(response.data.grs[0].id);
           localStorage.setItem('groups', response.data.grs[0].id);
         }
       })
@@ -73,9 +76,13 @@ const Numenclature = props => {
         }
       } else {
         if (id === val) {
-          document.getElementById(val).setAttribute('style', 'color: white, background-color: #BE9344');
+          document
+            .getElementById(val)
+            .setAttribute('style', 'color: white, background-color: #BE9344');
         } else {
-          document.getElementById(val).setAttribute('style', 'color: black, background-color: #BE9344');
+          document
+            .getElementById(val)
+            .setAttribute('style', 'color: black, background-color: #BE9344');
         }
       }
     });
@@ -107,19 +114,8 @@ const Numenclature = props => {
 
   return (
     <>
-      {isTablet ? (
-        <Filter
-          setData={data => tr(data)}
-          groups={localStorage.getItem('groups')}
-        />
-      ) : (
-        <BrowserView>
-          <Filter
-            setData={data => tr(data)}
-            groups={localStorage.getItem('groups')}
-          />
-        </BrowserView>
-      )}
+      {isTablet || isBrowser ? <Filter /> : <></>}
+
       <div
         className={
           isMobile && !isTablet
@@ -215,8 +211,17 @@ const mapDispatchToProps = dispatch => {
     setNumGroups: data => {
       dispatch(dataActions.setNumGroups(data));
     },
+    setMobData: data => {
+      dispatch(filterActions.setMobData(data));
+    },
+    setDefMobData: data => {
+      dispatch(filterActions.setDefMobData(data));
+    },
     setLvl: data => {
       dispatch(filterActions.setLvl(data));
+    },
+    setGroups: data => {
+      dispatch(filterActions.setGroups(data));
     }
   };
 };

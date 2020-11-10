@@ -7,9 +7,6 @@ import Valute from 'components/Valute/Valute';
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 
-import lamp from 'images/lamp.png';
-import book from 'images/book.png';
-
 import Slider from 'react-slick';
 
 import './SlabItemMobile.scss';
@@ -25,13 +22,13 @@ const GroupItem = props => {
         />
         {props.isAuth ? (
           <div className="slab-items-group-item__img-icon -icons-1">
-            <ItemAddIzbr item={{...props.item, type: props.type}} />
+            <ItemAddIzbr item={{ ...props.item, type: props.type }} />
           </div>
         ) : (
           <></>
         )}
         <div className="slab-items-group-item__img-icon -icons-2">
-          <ItemAddBasket item={{...props.item, type: props.type}} />
+          <ItemAddBasket item={{ ...props.item, type: props.type }} />
         </div>
       </div>
       <Link to={`${props.url}/${props.item.ps}`}>
@@ -85,17 +82,6 @@ const SlabItemMobile = props => {
     slidesToShow: 2,
     slidesToScroll: 1
   };
-  let colors = [
-    '#2C1D02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02',
-    '#402A02'
-  ];
 
   let images = [
     'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
@@ -115,7 +101,10 @@ const SlabItemMobile = props => {
             className="slab-item-carousel__item"
             onClick={() => setSelectedEl(item)}
           >
-            <img src={item.photobl} />
+            <img
+              className={`${selectedEl.ps == item.ps ? 'selected-img' : '' }`}
+              src={item.photobl}
+            />
           </div>
         ))}
       </Slider>

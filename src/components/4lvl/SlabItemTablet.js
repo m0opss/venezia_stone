@@ -3,9 +3,8 @@ import React from 'react';
 import ScrollImage from 'components/ScrollImage/ScrollImage';
 import ColorRange from 'components/ColorRange/ColorRange';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
+import OptionLine from 'components/5lvl/OptionLine';
 
-import lamp from 'images/lamp.png';
-import book from 'images/book.png';
 
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
@@ -23,13 +22,13 @@ const GroupItem = props => {
         />
         {props.isAuth ? (
           <div className="slab-items-group-item__img-icon -icons-1">
-            <ItemAddIzbr item={{...props.item, type: props.type}} />
+            <ItemAddIzbr item={{ ...props.item, type: props.type }} />
           </div>
         ) : (
           <></>
         )}
         <div className="slab-items-group-item__img-icon -icons-2">
-          <ItemAddBasket item={{...props.item, type: props.type}} />
+          <ItemAddBasket item={{ ...props.item, type: props.type }} />
         </div>
       </div>
       <Link to={`${props.url}/${props.item.ps}`}>
@@ -102,14 +101,18 @@ const SlabItemTablet = props => {
               scrollStyle="slab-item-info-scroll"
               selectItem={setSelectedEl}
               elements={props.item.prs}
+              selectedItem={selectedEl}
             />
           </div>
           <div className="slab-item-info__right-block">
             <div className="slab-item-info__rb-top">
               <div className="slab-item-info__slab-title">{selectedEl.bl}</div>
               <div className="slab-item-info__options">
-                <img src={lamp} />
-                <img src={book} />
+                <OptionLine
+                  // lamp = {selectedEl.} поле для просветленного фото
+                  style={{ width: 'unset', marginBottom: 'unset' }}
+                  img={selectedEl.photobl}
+                />
               </div>
             </div>
             <div className="slab-item-info__slab-img">

@@ -89,8 +89,8 @@ const Filter = props => {
 
   const fetchFilters = () => {
     localStorage.setItem('activeFilters', JSON.stringify(props.activeFilters));
-    let gr = props.groups ? [props.groups] : [];
-    let its = props.items ? [props.items] : [];
+    let gr = props.groups ? [props.groups] : localStorage.getItem('groups') != null ? [localStorage.getItem('groups')] : [];
+    let its = props.items ? [props.items] : localStorage.getItem('items') != null ? [localStorage.getItem('items')] : [];
     let headers = props.activeFilters;
     if (headers.materials.length == 0)
       headers.materials = [localStorage.getItem('material')];
@@ -100,20 +100,22 @@ const Filter = props => {
         ...headers,
         items: its,
         level: [props.level],
-        groups: gr
+        groups: gr,
+        upper_izd: []
       })
       .then(response => {
-        if (!isMobile) {
-          if (props.level == 2) props.setData(response.data.mts[0].grs);
-          if (props.level == 3) props.setData(response.data.grs[0].itms);
-          if (props.level == 4) props.setData(response.data.itms[0]);
-        } else {
-          if (props.level == 2)
-            localStorage.setItem(
-              'grps',
-              JSON.stringify(response.data.mts[0].grs)
-            );
-        }
+          if (props.level == 2) {
+            props.f_set(response.data.mts[0].grs);
+            props.f_dset(response.data.mts[0].grs)
+          }
+          if (props.level == 3) {
+            props.f_set(response.data.grs[0].itms);
+            props.f_dset(response.data.grs[0].itms);
+          }
+          if (props.level == 4) {
+            props.f_set(response.data.itms[0]);
+            props.f_dset(response.data.itms[0]);
+          }
       })
       .catch(err => {
         if (err.response) {
@@ -409,7 +411,11 @@ const mapStateToProps = store => {
     activeFilters: store.filter_data.activeFilters,
     activeFields: store.filter_data.activeFields,
     level: store.filter_data.level,
-    data: store.data
+    f_set: store.filter_data.f_set,
+    f_dset: store.filter_data.f_dset,
+    data: store.data,
+    items: store.filter_data.items,
+    groups: store.filter_data.groups,
   };
 };
 
@@ -418,9 +424,6 @@ const mapDispatchToProps = dispatch => {
     setFilters: data => {
       dispatch(filterActions.setFilters(data));
     },
-    // setMobData: data => {
-    //   dispatch(filterActions.setMobData(data));
-    // },
     setActiveFilters: data => {
       dispatch(filterActions.setActiveFilters(data));
     },
