@@ -12,7 +12,7 @@ export const TopFilter = props => {
       <div
         id="Слэбы"
         className="second-line__filter-button"
-        onClick={setFilterParam}
+        onClick={(e) => setFilterParam(e)}
       >
         Слэбы
       </div>

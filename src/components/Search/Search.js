@@ -65,7 +65,7 @@ const Search = props => {
         .get(`https://catalog-veneziastone.ru/api_v0/Search/${searchVal}/`)
         .then(response => {
           console.log(response);
-          localStorage.setItem('searchData', JSON.stringify(response.data))
+          localStorage.setItem('searachData', JSON.stringify(response.data))
           checkresponse(response.data);
         })
         .catch(err => {

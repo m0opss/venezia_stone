@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import axios from 'axios';
-
+import BackArrow from 'components/BackArrow/BackArrow';
 import materialActions from '../actions/materialAction';
 import filterActions from '../actions/filterActions';
 import dataActions from 'actions/dataAction';
@@ -48,6 +48,7 @@ const Numenclature = props => {
           props.setMobData(setdefNum);
           props.setGroups(response.data.grs[0].id);
           localStorage.setItem('groups', response.data.grs[0].id);
+          localStorage.setItem('items', []);
         }
       })
       .catch(e => {
@@ -115,7 +116,7 @@ const Numenclature = props => {
   return (
     <>
       {isTablet || isBrowser ? <Filter /> : <></>}
-
+      {isMobile && !isTablet ? <BackArrow history={props.history}/> : <></>}
       <div
         className={
           isMobile && !isTablet

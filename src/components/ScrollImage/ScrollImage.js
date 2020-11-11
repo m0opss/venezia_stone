@@ -16,6 +16,7 @@ const ScrollImage = props => {
     return (
       <div className="scroll__item" onClick={chooseItem}>
         <p>{props.item.bl}</p>
+        
         <img
           className={`${active ? 'selected-img' : ''}`}
           id={props.id}

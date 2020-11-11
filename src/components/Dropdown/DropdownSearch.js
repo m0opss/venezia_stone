@@ -11,13 +11,12 @@ const DropdownSearch = props => {
     title: props.title
   });
 
-
   const handleVisibleChange = flag => {
     setState({
       ...state,
       visible: flag
     });
-    props.setVisible(flag)
+    props.setVisible(flag);
   };
 
   const menu = <Menu>{props.menuList}</Menu>;
@@ -27,9 +26,12 @@ const DropdownSearch = props => {
       overlay={menu}
       onVisibleChange={handleVisibleChange}
       trigger={['click']}
-      overlayClassName="dropdown-search"
+      overlayClassName={`dropdown-search  ${
+        props.className ? props.className : ''
+      }`}
       visible={props.visible}
-      placement="bottomCenter"
+      // placement='bottomRight'
+      placement={`${props.placement ? props.placement : 'bottomCenter'}`}
     >
       <div className=""></div>
     </Dropdown>

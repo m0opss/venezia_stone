@@ -23,7 +23,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const { SubMenu } = Menu;
-const { titles, cities, materials, colors } = data;
+const { titles, materials, cities, colors } = data;
 
 const Filter = props => {
   const [state, setState] = React.useState({ collapsed: true });
@@ -88,14 +88,14 @@ const Filter = props => {
   const fetchFilters = () => {
     localStorage.setItem('activeFilters', JSON.stringify(props.activeFilters));
     let gr = props.groups
-      ? props.groups
+      ? [props.groups]
       : localStorage.getItem('groups') != null
-      ? localStorage.getItem('groups')
+      ? [localStorage.getItem('groups')]
       : [];
     let its = props.items
-      ? props.items
+      ? [props.items]
       : localStorage.getItem('items') != null
-      ? localStorage.getItem('items')
+      ? [localStorage.getItem('items')]
       : [];
     let headers = props.activeFilters;
     if (headers.materials.length == 0)
@@ -106,6 +106,7 @@ const Filter = props => {
       level: [props.level],
       groups: gr,
       upper_izd: props.upper_izd
+      // upper_izd: []
     });
     axios
       .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
@@ -114,6 +115,7 @@ const Filter = props => {
         level: [props.level],
         groups: gr,
         upper_izd: props.upper_izd
+        // upper_izd: []
       })
       .then(response => {
         console.log(response.data);
@@ -221,25 +223,14 @@ const Filter = props => {
                 {/* Цикл по всем вкладкам */}
                 {props.filters[filter].map((material, ind) => {
                   if (filter === 'materials') {
-                    {
-                      /* Для вкладки материалы - переводит с русского по словарю materials */
-                    }
+
                     let mat_eng = material;
                     Object.keys(materials).map(mat => {
                       if (mat == material) mat_eng = materials[mat];
                     });
 
-                    return props.level == 1 ? (
+                    return (
                       <Menu.Item
-                        key={`${index}${ind}`}
-                        style={{ display: 'flex', alignItems: 'center' }}
-                        onClick={filterItemClicked}
-                      >
-                        <Link to={`/${mat_eng}`}>{material}</Link>
-                      </Menu.Item>
-                    ) : (
-                      <Menu.Item
-                        disabled
                         key={`${index}${ind}`}
                         style={{ display: 'flex', alignItems: 'center' }}
                         onClick={filterItemClicked}
@@ -248,35 +239,8 @@ const Filter = props => {
                       </Menu.Item>
                     );
                   } else if (filter === 'colors' || filter === 'countries') {
-                    return props.level == 2 ? (
+                    return (
                       <Menu.Item
-                        key={`${index}${ind}`}
-                        style={{ display: 'flex', alignItems: 'center' }}
-                        onClick={filterItemClicked}
-                      >
-                        {index == 2 && material === 'Белый' ? (
-                          <>
-                            <div
-                              className="filter__color border-color"
-                              style={{ background: colors[material] }}
-                            />
-                            {material}
-                          </>
-                        ) : index == 2 && material !== 'Белый' ? (
-                          <>
-                            <div
-                              className="filter__color"
-                              style={{ background: colors[material] }}
-                            />
-                            {material}
-                          </>
-                        ) : (
-                          material
-                        )}
-                      </Menu.Item>
-                    ) : (
-                      <Menu.Item
-                        disabled
                         key={`${index}${ind}`}
                         style={{ display: 'flex', alignItems: 'center' }}
                         onClick={filterItemClicked}
@@ -307,17 +271,8 @@ const Filter = props => {
                     filter === 'obrabotka' ||
                     filter === 'thickness'
                   ) {
-                    return props.level == 3 ? (
+                    return (
                       <Menu.Item
-                        key={`${index}${ind}`}
-                        style={{ display: 'flex', alignItems: 'center' }}
-                        onClick={filterItemClicked}
-                      >
-                        {material}
-                      </Menu.Item>
-                    ) : (
-                      <Menu.Item
-                        disabled
                         key={`${index}${ind}`}
                         style={{ display: 'flex', alignItems: 'center' }}
                         onClick={filterItemClicked}
@@ -326,7 +281,7 @@ const Filter = props => {
                       </Menu.Item>
                     );
                   } else if (filter === 'sklad') {
-                    return props.level == 4 ? (
+                    return (
                       <Menu.Item
                         key={`${index}${ind}`}
                         style={{ display: 'flex', alignItems: 'center' }}
@@ -337,25 +292,6 @@ const Filter = props => {
                             return cities[k];
                           }
                         })}
-                      </Menu.Item>
-                    ) : (
-                      <Menu.Item
-                        disabled
-                        key={`${index}${ind}`}
-                        style={{ display: 'flex', alignItems: 'center' }}
-                        onClick={filterItemClicked}
-                      >
-                        {material === 'krd'
-                          ? 'Краснодар'
-                          : material === 'kzn'
-                          ? 'Казань'
-                          : material === 'ekb'
-                          ? 'Екатеринбург'
-                          : material === 'spb'
-                          ? 'Санкт-Петербург'
-                          : material === 'msc'
-                          ? 'Москва'
-                          : material}
                       </Menu.Item>
                     );
                   }

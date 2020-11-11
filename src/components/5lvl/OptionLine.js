@@ -1,13 +1,26 @@
 import React from 'react';
+import { isMobile } from 'react-device-detect';
+import { Link } from 'react-router-dom';
+
 import FullScreenDialog from 'components/FullScreenDialog/FullScreenDialog';
 import CropperBook from 'components/Cropper/CropperBook';
 import MyCropper from 'components/Cropper/MyCropper';
+import DropdownSearch from 'components/Dropdown/DropdownSearch';
+
+import vk from 'images/vk.svg';
+import whatsapp from 'images/whatsapp.svg';
+import viber from 'images/viber.svg';
+import telegram from 'images/telegram.svg';
+import mail from 'images/mail.svg';
+import facebook from 'images/facebook.svg';
+import pdf from 'images/pdf.svg';
+
 import './OptionLine.scss';
 
 const OptionLine = props => {
   const [isOpen, setOpen] = React.useState(false);
   const [isOpenBook, setOpenBook] = React.useState(false);
-
+  const [dropVisible, setDropVisible] = React.useState(false);
   const openBook = () => {
     setOpenBook(true);
   };
@@ -15,8 +28,39 @@ const OptionLine = props => {
     setOpen(true);
   };
 
+  const openDropdown = e => {
+    setDropVisible(true);
+  };
+  const menu = (
+    <div className="soc-drop">
+      <Link className="soc-drop__item" to="/">
+        <img src={mail} />
+      </Link>
+      <Link className="soc-drop__item" to="/">
+        <img src={pdf} />
+      </Link>
+      <Link className="soc-drop__item" to="/">
+        <img src={viber} />
+      </Link>
+      <Link className="soc-drop__item" to="/">
+        <img src={vk} />
+      </Link>
+      <Link className="soc-drop__item" to="/">
+        <img src={facebook} />
+      </Link>
+      <Link className="soc-drop__item" to="/">
+        <img src={telegram} />
+      </Link>
+      <Link className="soc-drop__item" to="/">
+        <img src={whatsapp} />
+      </Link>
+    </div>
+  );
   return (
-    <div className="option-line" style={props.style}>
+    <div
+      className={`option-line ${isMobile ? 'option-line-mobile' : ''}`}
+      style={props.style}
+    >
       <FullScreenDialog open={isOpenBook} setVisible={setOpenBook}>
         <div className="dialog-wrapper">
           <CropperBook img={props.img} />
@@ -39,19 +83,29 @@ const OptionLine = props => {
           </div>
         </div>
       </FullScreenDialog>
-      {/* <div className="option-line__item">
-        <svg
-          width="24"
-          height="23"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="#BE9344"
-          fillRule="evenodd"
-          clipRule="evenodd"
-        >
-          <path d="M16.272 5.451c-.176-.45-.272-.939-.272-1.451 0-2.208 1.792-4 4-4s4 1.792 4 4-1.792 4-4 4c-1.339 0-2.525-.659-3.251-1.67l-7.131 3.751c.246.591.382 1.239.382 1.919 0 .681-.136 1.33-.384 1.922l7.131 3.751c.726-1.013 1.913-1.673 3.253-1.673 2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4c0-.51.096-.999.27-1.447l-7.129-3.751c-.9 1.326-2.419 2.198-4.141 2.198-2.76 0-5-2.24-5-5s2.24-5 5-5c1.723 0 3.243.873 4.143 2.201l7.129-3.75zm3.728 11.549c1.656 0 3 1.344 3 3s-1.344 3-3 3-3-1.344-3-3 1.344-3 3-3zm-15-9c2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4 1.792-4 4-4zm15-7c1.656 0 3 1.344 3 3s-1.344 3-3 3-3-1.344-3-3 1.344-3 3-3z" />
-        </svg>
-      </div> */}{' '}
+
+      <div>
+        <DropdownSearch
+          visible={dropVisible}
+          setVisible={setDropVisible}
+          menuList={menu}
+          placement="bottomRight"
+        />
+        <div className="option-line__item" onClick={openDropdown}>
+          <svg
+            width="24"
+            height="23"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="#BE9344"
+            fillRule="evenodd"
+            clipRule="evenodd"
+          >
+            <path d="M16.272 5.451c-.176-.45-.272-.939-.272-1.451 0-2.208 1.792-4 4-4s4 1.792 4 4-1.792 4-4 4c-1.339 0-2.525-.659-3.251-1.67l-7.131 3.751c.246.591.382 1.239.382 1.919 0 .681-.136 1.33-.384 1.922l7.131 3.751c.726-1.013 1.913-1.673 3.253-1.673 2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4c0-.51.096-.999.27-1.447l-7.129-3.751c-.9 1.326-2.419 2.198-4.141 2.198-2.76 0-5-2.24-5-5s2.24-5 5-5c1.723 0 3.243.873 4.143 2.201l7.129-3.75zm3.728 11.549c1.656 0 3 1.344 3 3s-1.344 3-3 3-3-1.344-3-3 1.344-3 3-3zm-15-9c2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4 1.792-4 4-4zm15-7c1.656 0 3 1.344 3 3s-1.344 3-3 3-3-1.344-3-3 1.344-3 3-3z" />
+          </svg>
+        </div>
+      </div>
+
       {props.lamp ? (
         <div className="option-line__item">
           <svg

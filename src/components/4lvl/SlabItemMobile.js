@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ScrollImage from 'components/ScrollImage/ScrollImage';
 import ColorRange from 'components/ColorRange/ColorRange';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import Valute from 'components/Valute/Valute';
@@ -102,7 +101,7 @@ const SlabItemMobile = props => {
             onClick={() => setSelectedEl(item)}
           >
             <img
-              className={`${selectedEl.ps == item.ps ? 'selected-img' : '' }`}
+              className={`${selectedEl.ps == item.ps ? 'selected-img' : ''}`}
               src={item.photobl}
             />
           </div>
@@ -111,6 +110,23 @@ const SlabItemMobile = props => {
       <div className="slab-item-mobile__main">
         <div className="slab-item-mobile__main-title">{selectedEl.bl}</div>
         <div className="slab-item-mobile__main-img">
+          <div className="num-gr-item__labels">
+            {selectedEl.nw != 0 ? (
+              <div className="item-label item-label-new">Новинка</div>
+            ) : (
+              <></>
+            )}
+            {selectedEl.onSale != 0 ? (
+              <div className="item-label item-label-sale">Распродажа</div>
+            ) : (
+              <></>
+            )}
+            {selectedEl.pz != 0 ? (
+              <div className="item-label item-label-order">Под заказ</div>
+            ) : (
+              <></>
+            )}
+          </div>
           <img src={selectedEl.photobl} />
         </div>
       </div>

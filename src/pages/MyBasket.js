@@ -13,6 +13,8 @@ import './MyBasket.scss';
 const MyBasket = props => {
   const [visibleModal, setVisibleModal] = React.useState(false);
   const [basket, setBasket] = React.useState([]);
+  const [orderBasket, setOrderBasket] = React.useState([]);
+
   const [all_sum, setAllSum] = React.useState(0);
   const [all_cnt, setAllCnt] = React.useState(0);
 
@@ -32,17 +34,20 @@ const MyBasket = props => {
     }
     let c = 0;
     cntSum.map(i => console.log(i));
+
   }, [basket.length]);
 
-  const orderOk = e => {
 
+  const orderOk = e => {
     setVisibleModal(false);
   };
+
 
   const orderCancel = e => {
     setVisibleModal(false);
   };
 
+  
   let modalContent = (
     <div className="order-inputs">
       <input

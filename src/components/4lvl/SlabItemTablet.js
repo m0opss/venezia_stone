@@ -5,7 +5,6 @@ import ColorRange from 'components/ColorRange/ColorRange';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import OptionLine from 'components/5lvl/OptionLine';
 
-
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 
@@ -116,6 +115,23 @@ const SlabItemTablet = props => {
               </div>
             </div>
             <div className="slab-item-info__slab-img">
+              <div className="num-gr-item__labels">
+                {selectedEl.nw != 0 ? (
+                  <div className="item-label item-label-new">Новинка</div>
+                ) : (
+                  <></>
+                )}
+                {selectedEl.onSale != 0 ? (
+                  <div className="item-label item-label-sale">Распродажа</div>
+                ) : (
+                  <></>
+                )}
+                {selectedEl.pz != 0 ? (
+                  <div className="item-label item-label-order">Под заказ</div>
+                ) : (
+                  <></>
+                )}
+              </div>
               <img src={selectedEl.photobl} />
               <ColorRange colors={selectedEl} />
             </div>

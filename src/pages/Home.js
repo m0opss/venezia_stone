@@ -56,6 +56,9 @@ const Home = props => {
       .get('https://catalog-veneziastone.ru/api_v0/getMaterials/')
       .then(response => {
         props.getDataResponse(response.data);
+        localStorage.setItem('material', []);
+        localStorage.setItem('groups', []);
+        localStorage.setItem('items', []);
       })
       .catch(e => {
         console.log(e);

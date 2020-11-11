@@ -6,12 +6,6 @@ import Contacts from '../../pages/Contacts';
 import MyBasket from '../../pages/MyBasket';
 import NumGroups from '../../pages/NumGroups';
 import Numenclature from '../../pages/Numenclature';
-import SecondLvlSale from '../../pages/SecondLvlSale';
-import ThirdLvlSale from '../../pages/ThirdLvlSale';
-import FourLvlSale from '../../pages/FourLvlSale';
-import SecondLvlNew from '../../pages/SecondLvlNew';
-import ThirdLvlNew from '../../pages/ThirdLvlNew';
-import FourLvlNew from '../../pages/FourLvlNew';
 import LK from '../../pages/LK';
 import FourLvl from '../../pages/FourLvl';
 import FifthLvl from '../../pages/FifthLvl';
@@ -37,17 +31,19 @@ const Routes = props => {
       <Route exact path="/account/password/*" component={ResetPass}/>
       <Route exact path="/:material"  component={NumGroups} />
       <Route exact path="/search/nom-groups"  component={NumGroupsSearch} />
-      <Route exact path="/sale/:material"  component={SecondLvlSale} />
-      <Route exact path="/new/:material"  component={SecondLvlNew} />
-      <Route exact path="/sale/:material/:numGroups" component={ThirdLvlSale}/>
+      <Route exact path="/sale/:material"  component={NumGroups} />
+      <Route exact path="/new/:material"  component={NumGroups} />
+      <Route exact path="/sale/:material/:numGroups" component={Numenclature}/>
       <Route exact path="/search/products" component={FourLvlSearch}/>
       <Route exact path="/search/nomenclatures" component={NumenclatureSearch}/>
-      <Route exact path="/new/:material/:numGroups" component={ThirdLvlNew}/>
+      <Route exact path="/new/:material/:numGroups" component={Numenclature}/>
       <Route exact path="/:material/:numGroups" component={Numenclature}/>
-      <Route exact path="/sale/:material/:numGroups/:num" component={FourLvlSale}/>
-      <Route exact path="/new/:material/:numGroups/:num" component={FourLvlNew}/>
+      <Route exact path="/sale/:material/:numGroups/:num" component={FourLvl}/>
+      <Route exact path="/new/:material/:numGroups/:num" component={FourLvl}/>
       <Route exact path="/:material/:numGroups/:num" component={FourLvl}/>
       <Route exact path="/:material/:numGroups/:num/:last" component={FifthLvl}/>
+      <Route exact path="/sale/:material/:numGroups/:num/:last" component={FifthLvl}/>
+      <Route exact path="/new/:material/:numGroups/:num/:last" component={FifthLvl}/>
       {/* <Route path="*">
         <Redirect to="/" />
       </Route> */}

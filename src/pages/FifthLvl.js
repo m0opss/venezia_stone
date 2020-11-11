@@ -1,12 +1,12 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
 import axios from 'axios';
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import filterActions from '../actions/filterActions';
 import basketActions from 'actions/basketActions';
-import ImageGallery from 'react-image-gallery';
+import BackArrow from 'components/BackArrow/BackArrow';
+import ImageGallery from 'components/5lvl/ImageGallery';
 import Valute from 'components/Valute/Valute';
 import OptionLine from 'components/5lvl/OptionLine';
 
@@ -22,11 +22,8 @@ import './FifthLvl.scss';
 const FifthLvl = props => {
   const [item, setItem] = React.useState({});
   const [images, setImages] = React.useState([]);
-  const [currentItemInd, setCurrentItemInd] = React.useState(0);
-  const myRef = React.createRef();
 
   React.useEffect(() => {
-    console.log(props);
     props.setLvl(5);
     window.scrollTo(0, 0);
     axios
@@ -34,6 +31,7 @@ const FifthLvl = props => {
       .then(response => {
         setImages([response.data.itms[0].prs.photo_product]);
         setItem(response.data.itms[0]);
+        console.log(response.data)
       })
       .catch(e => {
         console.log(e);
@@ -131,10 +129,8 @@ const FifthLvl = props => {
               ) : (
                 <></>
               )}
-              <ImageGallery
-                items={[{ original: item.prs ? item.prs.photo_product : '' }]}
-                showThumbnails={false}
-              />
+
+              <ImageGallery item={item} />
             </div>
           </div>
         </div>
@@ -149,15 +145,7 @@ const FifthLvl = props => {
               <p>СЛЭБ {item.prs ? item.prs.ps : '-'}</p>
             </div>
 
-            <ImageGallery
-              items={[
-                {
-                  original: item.prs ? item.prs.photo_product : '',
-                  height: 300
-                }
-              ]}
-              showThumbnails={false}
-            />
+            <ImageGallery item={item} />
             <div className="main-content__info-tablet">
               <div className="main-content__text-block">
                 <p>
@@ -224,27 +212,21 @@ const FifthLvl = props => {
       ) : (
         <>
           <div className="fifth-lvl-mobile">
+          <BackArrow history={props.history}/>
+          <h3 className="main-content__name">{item.name}</h3>
             <div className="fifth-lvl__title">
               <p>Пачка {item.prs ? item.prs.bl : '-'}</p>
               <p>СЛЭБ {item.prs ? item.prs.ps : '-'}</p>
             </div>
 
-            <ImageGallery
-              items={[
-                {
-                  original: item.prs ? item.prs.photo_product : '',
-                  height: 300
-                }
-              ]}
-              showThumbnails={false}
-            />
-            {/* <div className="fifth-lvl__opt">
+            <ImageGallery item={item} />
+            <div className="fifth-lvl__opt">
               {item.prs ? (
                 <OptionLine img={item.prs.photo_product} fullscreen={<></>} />
               ) : (
                 <></>
               )}
-            </div> */}
+            </div>
             <div className="fifth-lvl__top">
               <Valute />
             </div>

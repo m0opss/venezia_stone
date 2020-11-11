@@ -34,7 +34,12 @@
     }
   }
 }
-
+.dropdown-search {
+  margin-top: 50px;
+  > ul {
+    padding: 5px;
+  }
+}
 .dropdown-mobile {
   position: absolute;
   width: 97vw !important;

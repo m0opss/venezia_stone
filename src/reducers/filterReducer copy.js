@@ -6,9 +6,9 @@ const initialState = {
   f_set: () => {},
   f_dset: () => {},
   f_share: () => {},
-  groups: [],
+  groups: '',
   upper_izd: [],
-  items: []
+  items: ''
 };
 
 export function filterReducer(state = initialState, action) {
@@ -46,12 +46,12 @@ export function filterReducer(state = initialState, action) {
     case 'SET_GROUPS':
       return {
         ...state,
-        groups: [action.payload]
+        groups: action.payload
       };
     case 'SET_ITEMS':
       return {
         ...state,
-        items: [action.payload]
+        items: action.payload
       };
     case 'SET_UPPER':
       return {

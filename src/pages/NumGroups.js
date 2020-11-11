@@ -5,7 +5,7 @@ import axios from 'axios';
 import materialActions from '../actions/materialAction';
 import dataActions from 'actions/dataAction';
 import filterActions from 'actions/filterActions';
-
+import BackArrow from 'components/BackArrow/BackArrow';
 import listIcon from 'images/str.png';
 import pltk from 'images/pltk.png';
 import listIcon_a from 'images/str_a.png';
@@ -43,12 +43,14 @@ const NumGroups = props => {
     if (isSubscr) {
       axios
         .get(
-          `https://catalog-veneziastone.ru/api_v0/${props.match.params.material}/`
+          `https://catalog-veneziastone.ru/api_v0/${props.match.url}/`
         )
         .then(response => {
           setNumGroups(response.data.mts[0].grs);
           setdefNumGroups(response.data.mts[0].grs);
           localStorage.setItem('material', response.data.mts[0].mt);
+          localStorage.setItem('groups', []);
+          localStorage.setItem('items', []);
           props.setMobData(setNumGroups);
           props.setDefMobData(setdefNumGroups);
         })
@@ -58,7 +60,7 @@ const NumGroups = props => {
     }
 
     return () => (isSubscr = false);
-  }, []);
+  }, [props.upper_izd]);
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -73,6 +75,7 @@ const NumGroups = props => {
   return (
     <>
       {isTablet || isBrowser ? <Filter /> : <></>}
+      {isMobile && !isTablet ? <BackArrow history={props.history}/> : <></>}
       <div className="num-gr-options">
         <Valute />
         <Sort
@@ -125,7 +128,8 @@ const NumGroups = props => {
 const mapStateToProps = store => {
   return {
     cur: store.valute_data.valute,
-    f_set: store.filter_data.f_set
+    f_set: store.filter_data.f_set,
+    upper_izd: store.filter_data.upper_izd,
   };
 };
 

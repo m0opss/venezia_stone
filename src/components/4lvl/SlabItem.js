@@ -25,6 +25,7 @@ import like from 'images/like-4lvl.png';
 import basket from 'images/basket-4lvl.png';
 
 const SlabTableRow = props => {
+  console.log();
   return (
     <div className="good-items-table__item">
       <Link to={`${props.url}/${props.item.ps}`}>
@@ -98,7 +99,7 @@ const SlabTableRow = props => {
 
 const SlabItem = props => {
   const [selectedEl, setSelectedEl] = React.useState(props.item.prs[0]);
-  // console.log(selectedEl)
+  console.log(selectedEl);
 
   let images = [
     'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
@@ -133,13 +134,30 @@ const SlabItem = props => {
                   {/* <img src={lamp} />
                   <img src={book} /> */}
                   <OptionLine
-                  // lamp = {selectedEl.} поле для просветленного фото
+                    // lamp = {selectedEl.} поле для просветленного фото
                     style={{ width: 'unset', marginBottom: 'unset' }}
                     img={selectedEl.photobl}
                   />
                 </div>
               </div>
               <div className="slab-item-info__slab-img">
+                <div className="num-gr-item__labels">
+                {selectedEl.nw != 0 ? (
+                    <div className="item-label item-label-new">Новинка</div>
+                  ) : (
+                    <></>
+                  )}
+                  {selectedEl.onSale != 0 ? (
+                    <div className="item-label item-label-sale">Распродажа</div>
+                  ) : (
+                    <></>
+                  )}
+                  {selectedEl.pz != 0 ? (
+                    <div className="item-label item-label-order">Под заказ</div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
                 <img src={selectedEl.photobl ? selectedEl.photobl : ''} />
                 <ColorRange colors={selectedEl.color_range} />
               </div>

@@ -4,6 +4,20 @@
   display: flex;
   justify-content: flex-end;
 }
+.fifth-lvl__title {
+  width: 98%;
+  p {
+    margin-bottom: 0;
+    font-family: Roboto Condensed;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    @media screen and (max-width: '768px') {
+      font-size: 12px;
+      line-height: 140%;
+    }
+  }
+}
 
 .main-content {
   display: flex;
@@ -22,8 +36,9 @@
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-between;
-    padding-top: 30px;
-    // height: 100%;
+    padding-top: 7px;
+    position: relative;
+    // height: 380px;
   }
   .main-content__info {
     display: flex;
@@ -70,35 +85,59 @@
 
 .option-line {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   width: 35%;
   max-width: 400px;
-  margin-bottom: 20px;
+  margin-right: 20px;
+}
+.option-line-mobile {
+  justify-content: space-between;
 }
 .option-line__item {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5px;
+  margin: 5px 0 5px 20px;
   cursor: pointer;
 }
 .image-gallery-icon:hover {
   color: #be9344;
 }
 
-.image-gallery-content .image-gallery-slide .image-gallery-image {
-  max-height: calc(55vh);
-  // width: auto;
+.image-gallery {
+  width: 85%;
+  height: 100%;
+  .image-gallery-slick {
+    height: 100%;
+    .slick-list {
+      height: 100% !important;
+    }
+  }
+  .slick-slide {
+    position: relative;
+    width: 98% !important;
+  }
+  .lightbox-container {
+    height: 100%;
+    height: 450px !important;
+  }
+  .lightbox-img-thumbnail {
+    width: 98% !important;
+    height: unset !important;
+  }
 }
-
-.fullscreen .image-gallery-slide .image-gallery-image {
-  // width: auto;
-  max-height: calc(90vh);
+.image-gallery-tablet {
+  width: 100%;
 }
+.image-gallery-mobile {
+  width: 100%;
+  .lightbox-container {
+    height: 150px !important;
 
-.image-gallery-play-button {
-  display: none;
+  }
+  .lightbox-img-thumbnail {
+  }
 }
 
 .fifth-lvl__title {
@@ -108,13 +147,14 @@
 .main-content__info-tablet {
   display: flex;
   margin-top: 20px;
+  width: 98%;
   justify-content: space-between;
 }
 .main-content__icons {
   flex: 0 1 30%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 .main-content__photo-icons {
   display: flex;

@@ -4,11 +4,9 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import Valute from 'components/Valute/Valute';
-
+import BackArrow from 'components/BackArrow/BackArrow';
 import filterActions from '../actions/filterActions';
 import Filter from 'components/Filter/Filter';
-import dataActions from 'actions/dataAction';
-import basketActions from 'actions/basketActions';
 
 import {
   MobileView,
@@ -35,6 +33,7 @@ const FourLvl = props => {
         .then(response => {
           setItem(response.data.itms[0]);
           props.setMobData(setItem);
+          props.setItems(response.data.itms[0].id);
           localStorage.setItem('items', response.data.itms[0].id);
         })
         .catch(e => {
@@ -44,12 +43,12 @@ const FourLvl = props => {
     return () => (isSubscr = false);
   }, []);
 
-
   if (Object.keys(item).length != 0) {
     return (
       <>
         {isTablet || isBrowser ? <Filter /> : <></>}
         <div className="four-lvl-container">
+          <BackArrow history={props.history} />
           <div className="four-lvl-valute">
             {isTablet || isBrowser ? <Valute /> : <></>}
           </div>
@@ -90,6 +89,9 @@ const mapDispatchToProps = dispatch => {
     },
     setMobData: data => {
       dispatch(filterActions.setMobData(data));
+    },
+    setItems: data => {
+      dispatch(filterActions.setItems(data));
     },
     setDefMobData: data => {
       dispatch(filterActions.setDefMobData(data));

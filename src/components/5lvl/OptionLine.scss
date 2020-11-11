@@ -27,3 +27,11 @@
    width: 100%;
  }
 }
+.soc-drop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.soc-drop__item {
+  margin: 10px;
+}
