@@ -125,7 +125,7 @@ const FifthLvl = props => {
             </div>
             <div className="main-content__right">
               {item.prs ? (
-                <OptionLine img={item.prs.photo_product} fullscreen={<></>} />
+                <OptionLine img={`data:image/jpg;base64,${item.prs.photo_bytes}`} fullscreen={<></>} />
               ) : (
                 <></>
               )}

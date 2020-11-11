@@ -18,6 +18,7 @@ import pdf from 'images/pdf.svg';
 import './OptionLine.scss';
 
 const OptionLine = props => {
+  console.log(props.img)
   const [isOpen, setOpen] = React.useState(false);
   const [isOpenBook, setOpenBook] = React.useState(false);
   const [dropVisible, setDropVisible] = React.useState(false);

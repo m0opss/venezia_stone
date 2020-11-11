@@ -1,8 +1,8 @@
 .dialog-cropper-crop {
-  width: 100%;
+  width: 50%;
   display: flex;
   justify-content: space-around;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   // flex-direction: column;
   margin-top: 20px;
   margin-left: 200px;
@@ -10,7 +10,7 @@
 .cropper-crop {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   // width: 80%;
   // margin: auto;
   // position: a;

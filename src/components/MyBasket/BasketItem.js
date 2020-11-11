@@ -13,17 +13,22 @@ const BasketItem = props => {
   );
   const [sum, setSum] = React.useState(0);
 
-  const cntS_mult = k => {
+  const checkCur = () => {
     let pr;
     if (props.cur === 'rub') pr = props.item.cntRUB;
     else if (props.cur === 'usd') pr = props.item.cntUSD;
     else if (props.cur === 'eur') pr = props.item.cntEUR;
+    return pr
+  }
+  const cntS_mult = k => {
+    let pr = checkCur()
     return (
       parseFloat(props.item.le) * parseFloat(props.item.he) * k * parseFloat(pr)
     );
   };
 
   useEffect(() => {
+    let pr = checkCur()
     if (props.type != 'Плитка') {
       setSum(cntS_mult(cnt).toFixed(2));
       // props.setCntSum([...props.cntSum, (2 * 3 * parseFloat(pr) * cnt).toFixed(2)])
