@@ -14,8 +14,7 @@ const MobileDropdown = props => {
   const handleMenuClick = e => {
     setState({
       ...state,
-      visible: false,
-      choosedCity: e.key
+      visible: false
     });
   };
 

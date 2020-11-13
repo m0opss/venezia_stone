@@ -19,7 +19,7 @@
     font-weight: normal;
     font-size: 12px;
     line-height: 14px;
-    width: 100%;
+    // width: 100%;
   }
   img {
     cursor: pointer;
@@ -28,11 +28,13 @@
 }
 .search-active {
   flex: 0 1 30%;
+  input {
+    width: 100%;
+  }
 }
 .search-invisible {
   flex: 0 1 2%;
   input {
-    // display: none;
     width: 0;
   }
   img {

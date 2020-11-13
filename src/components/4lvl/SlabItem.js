@@ -164,7 +164,6 @@ const SlabItem = props => {
             </div>
           </div>
         </div>
-        <div className="hidescroll">
           <div className="good-items-table">
             <div className="good-items-table__item slabs-title">
               <div className="good-items-table__title-wrapper">
@@ -222,7 +221,6 @@ const SlabItem = props => {
               />
             ))}
           </div>
-        </div>
       </div>
     );
   } else if (isTablet) {

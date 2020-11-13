@@ -136,18 +136,17 @@ const SlabItemMobile = props => {
         <div className=""></div>
         <Valute />
       </div>
-      <div className="hidescroll">
-        <div className="slab-items-group">
-          {props.item.prs.map(item => (
-            <GroupItem
-              key={item.ps}
-              type={props.type}
-              item={item}
-              url={props.url}
-              cur={props.cur}
-            />
-          ))}
-        </div>
+
+      <div className="slab-items-group">
+        {props.item.prs.map(item => (
+          <GroupItem
+            key={item.ps}
+            type={props.type}
+            item={item}
+            url={props.url}
+            cur={props.cur}
+          />
+        ))}
       </div>
     </div>
   );

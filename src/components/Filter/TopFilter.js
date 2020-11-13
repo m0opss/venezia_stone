@@ -2,11 +2,14 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import filterActions from 'actions/filterActions';
+
 export const TopFilter = props => {
   const setFilterParam = e => {
+    console.log(e.target.id)
     props.setUpper([e.target.id]);
     props.f_share()
   };
+
   return (
     <>
       <div
@@ -75,12 +78,13 @@ export const TopFilter = props => {
 const mapStateToProps = store => {
   return {
     f_share: store.filter_data.f_share,
+    prevState: store.filter_data,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setUpper: data => {
+    setUpper: (data) => {
       dispatch(filterActions.setUpper(data));
     }
   };

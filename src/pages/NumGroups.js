@@ -17,6 +17,9 @@ import NumGroupItem from 'components/Content/NumGroupItem/NumGroupItem';
 
 import './NumGroups.scss';
 import Filter from 'components/Filter/Filter';
+
+import {headerCreator} from 'components/Filter/headerCreator';
+
 import {
   MobileView,
   BrowserView,
@@ -37,30 +40,38 @@ const NumGroups = props => {
 
   React.useEffect(() => {
     props.setLvl(2);
-
     window.scrollTo(0, 0);
     let isSubscr = true;
     if (isSubscr) {
+      let header = headerCreator(props.activeFilters, props.match.params.material, props.upper_izd)
       axios
-        .get(
-          `https://catalog-veneziastone.ru/api_v0/${props.match.url}/`
-        )
+        .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
+          ...header,
+          items: [],
+          level: [2],
+          groups: []
+        })
         .then(response => {
           setNumGroups(response.data.mts[0].grs);
           setdefNumGroups(response.data.mts[0].grs);
-          localStorage.setItem('material', response.data.mts[0].mt);
-          localStorage.setItem('groups', []);
-          localStorage.setItem('items', []);
-          props.setMobData(setNumGroups);
-          props.setDefMobData(setdefNumGroups);
         })
-        .catch(e => {
-          console.log(e);
+        .catch(err => {
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log(1, err.response);
+            // props.setAuth(false);
+          } else if (err.request) {
+            // client never received a response, or request never left
+            console.log(2, err.request);
+          } else {
+            // anything else
+            console.log(3, err);
+          }
         });
     }
 
     return () => (isSubscr = false);
-  }, [props.upper_izd]);
+  }, [props.activeFilters, props.upper_izd]);
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -75,7 +86,7 @@ const NumGroups = props => {
   return (
     <>
       {isTablet || isBrowser ? <Filter /> : <></>}
-      {isMobile && !isTablet ? <BackArrow history={props.history}/> : <></>}
+      {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
       <div className="num-gr-options">
         <Valute />
         <Sort
@@ -130,6 +141,7 @@ const mapStateToProps = store => {
     cur: store.valute_data.valute,
     f_set: store.filter_data.f_set,
     upper_izd: store.filter_data.upper_izd,
+    activeFilters: store.filter_data.activeFilters
   };
 };
 

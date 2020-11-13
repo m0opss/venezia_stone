@@ -138,18 +138,17 @@ const SlabItemTablet = props => {
           </div>
         </div>
       </div>
-      <div className="hidescroll">
-        <div className="slab-items-group">
-          {props.item.prs.map(item => (
-            <GroupItem
-              key={item.ps}
-              item={item}
-              url={props.url}
-              cur={props.cur}
-              type={props.type}
-            />
-          ))}
-        </div>
+
+      <div className="slab-items-group">
+        {props.item.prs.map(item => (
+          <GroupItem
+            key={item.ps}
+            item={item}
+            url={props.url}
+            cur={props.cur}
+            type={props.type}
+          />
+        ))}
       </div>
     </div>
   );

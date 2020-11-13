@@ -56,7 +56,7 @@ export function filterReducer(state = initialState, action) {
     case 'SET_UPPER':
       return {
         ...state,
-        upper_izd: action.payload
+        upper_izd: action.payload,
       };
     case 'SET_SHARE_FILTER':
       return {

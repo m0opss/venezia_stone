@@ -7,6 +7,7 @@ import Valute from 'components/Valute/Valute';
 import BackArrow from 'components/BackArrow/BackArrow';
 import filterActions from '../actions/filterActions';
 import Filter from 'components/Filter/Filter';
+import {headerCreator} from 'components/Filter/headerCreator';
 
 import {
   MobileView,
@@ -26,22 +27,40 @@ const FourLvl = props => {
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
+    console.log(props.match.params)
     let isSubscr = true;
     if (isSubscr) {
+      let header = headerCreator(
+        props.activeFilters,
+        props.match.params.material,
+        props.upper_izd
+      );
       axios
-        .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
+        .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
+          ...header,
+          items: [props.match.params.num],
+          level: [4],
+          groups: [props.match.params.numGroups]
+        })
         .then(response => {
           setItem(response.data.itms[0]);
-          props.setMobData(setItem);
-          props.setItems(response.data.itms[0].id);
-          localStorage.setItem('items', response.data.itms[0].id);
         })
-        .catch(e => {
-          console.log(e);
+        .catch(err => {
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log(1, err.response);
+            // props.setAuth(false);
+          } else if (err.request) {
+            // client never received a response, or request never left
+            console.log(2, err.request);
+          } else {
+            // anything else
+            console.log(3, err);
+          }
         });
     }
     return () => (isSubscr = false);
-  }, []);
+  }, [props.activeFilters, props.upper_izd]);
 
   if (Object.keys(item).length != 0) {
     return (
@@ -78,7 +97,9 @@ const FourLvl = props => {
 const mapStateToProps = store => {
   return {
     cur: store.valute_data.valute,
-    isAuth: store.auth_data.isAuth
+    isAuth: store.auth_data.isAuth,
+    upper_izd: store.filter_data.upper_izd,
+    activeFilters: store.filter_data.activeFilters
   };
 };
 

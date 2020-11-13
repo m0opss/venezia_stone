@@ -57,20 +57,6 @@ const Home = props => {
         <TreeView>
           <TreeItem nodeId="main" label="Натуральный камень в наличии">
             <div id="main-group" className="catalog-items-group">
-              <MaterialItem
-                img={''}
-                link={''}
-                item={{}}
-                itemName={'asdasdsd'}
-                key={'asa'}
-              />
-              <MaterialItem
-                img={''}
-                link={''}
-                item={{}}
-                itemName={'asdasdsd'}
-                key={'21'}
-              />
               {props.data ? (
                 props.data.mts.map(item => (
                   <MaterialItem

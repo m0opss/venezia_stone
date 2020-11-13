@@ -36,7 +36,6 @@ const MyBasket = props => {
       if (item.type == 'Слэбы' || item.type == 'Полоса') {
         res += parseFloat(item.os);
       } else {
-        console.log(item)
         res += parseFloat(item.S);
       }
     });

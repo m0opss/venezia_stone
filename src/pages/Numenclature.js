@@ -14,7 +14,7 @@ import listIcon_a from 'images/str_a.png';
 import pltk_a from 'images/pltk_a.png';
 
 import './Numenclature.scss';
-
+import {headerCreator} from 'components/Filter/headerCreator';
 import NumenclatureItem from '../components/Content/NumenclatureItem/NumenclatureItem';
 import Filter from 'components/Filter/Filter';
 import {
@@ -38,25 +38,40 @@ const Numenclature = props => {
     props.setLvl(3);
     window.scrollTo(0, 0);
     let isSubscr = true;
-    axios
-      .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
-      .then(response => {
-        if (isSubscr) {
+    if (isSubscr) {
+      let header = headerCreator(
+        props.activeFilters,
+        props.match.params.material,
+        props.upper_izd
+      );
+      axios
+        .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
+          ...header,
+          items: [],
+          level: [3],
+          groups: [props.match.params.numGroups]
+        })
+        .then(response => {
           setNumemclature(response.data.grs[0].itms);
           setdefNum(response.data.grs[0].itms);
-          props.setDefMobData(setNumemclature);
-          props.setMobData(setdefNum);
-          props.setGroups(response.data.grs[0].id);
-          localStorage.setItem('groups', response.data.grs[0].id);
-          localStorage.setItem('items', []);
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      });
+        })
+        .catch(err => {
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log(1, err.response);
+            // props.setAuth(false);
+          } else if (err.request) {
+            // client never received a response, or request never left
+            console.log(2, err.request);
+          } else {
+            // anything else
+            console.log(3, err);
+          }
+        });
+    }
     document.getElementById('Все').setAttribute('style', 'color: #c98505');
     return () => (isSubscr = false);
-  }, []);
+  }, [props.activeFilters, props.upper_izd]);
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -116,7 +131,7 @@ const Numenclature = props => {
   return (
     <>
       {isTablet || isBrowser ? <Filter /> : <></>}
-      {isMobile && !isTablet ? <BackArrow history={props.history}/> : <></>}
+      {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
       <div
         className={
           isMobile && !isTablet
@@ -200,7 +215,9 @@ const Numenclature = props => {
 const mapStateToProps = store => {
   return {
     selectedMaterial: store.material.selectedMaterial,
-    cur: store.valute_data.valute
+    cur: store.valute_data.valute,
+    upper_izd: store.filter_data.upper_izd,
+    activeFilters: store.filter_data.activeFilters
   };
 };
 

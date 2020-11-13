@@ -20,7 +20,8 @@ const data = {
     'Кварцевый агломерат': 'Kvartsevyy_aglomerat',
     Известняк: 'Izvestnyak',
     'Искусственный мрамор': 'Iskusstvennyy_mramor',
-    Эксклюзив: 'Eksklyuziv'
+    Эксклюзив: 'Eksklyuziv',
+    Soapstone: 'Soapstone'
   },
   cities: {
     krd: 'Краснодар',
