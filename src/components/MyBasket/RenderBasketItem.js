@@ -55,7 +55,7 @@ const RenderBasketItem = props => {
                         type="number"
                         min="0"
                         max={props.item.os}
-                        defaultValue={props.kw}
+                        value={props.kw}
                         step="0.01"
                         onChange={props.onChangeVal}
                       />
@@ -77,7 +77,7 @@ const RenderBasketItem = props => {
                       type="number"
                       min="0"
                       max={props.item.ossht}
-                      defaultValue={props.cnt}
+                      value={props.cnt}
                       onChange={props.onChangeVal}
                     />
                   </p>

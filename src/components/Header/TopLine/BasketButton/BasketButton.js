@@ -7,7 +7,13 @@ import { isMobile } from 'react-device-detect';
 import { connect } from 'react-redux';
 
 const BasketButton = props => {
-  let basket_counter = props.basket.length
+  let basket_counter = 0
+  if(props.basket.length != 0)
+    basket_counter = props.basket.length
+  else if(localStorage.getItem('basket') != null) {
+    basket_counter = JSON.parse(localStorage.getItem('basket')).length
+    
+  }
   return (
     <>
       <div className="top-line__basket">

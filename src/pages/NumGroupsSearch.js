@@ -121,7 +121,7 @@ const NumGroups = props => {
           <NumGroupItem
             pltk={style_pltk}
             key={item.ps}
-            link={item.url}
+            link={item.url.slice(0, item.url.length - 1)}
             item={item}
             cur={props.cur}
           />

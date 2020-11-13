@@ -4,6 +4,7 @@ import RenderBasketItem from './RenderBasketItem';
 
 import './BasketItem.scss';
 
+
 const BasketItem = props => {
   const [kw, setKw] = React.useState(
     props.item.S ? parseFloat(props.item.S) : 0
@@ -14,50 +15,44 @@ const BasketItem = props => {
   const [sum, setSum] = React.useState(0);
 
   const checkCur = () => {
-    let pr;
-    if (props.cur === 'rub') pr = props.item.cntRUB;
-    else if (props.cur === 'usd') pr = props.item.cntUSD;
-    else if (props.cur === 'eur') pr = props.item.cntEUR;
-    return pr
-  }
-  const cntS_mult = k => {
-    let pr = checkCur()
-    return (
-      parseFloat(props.item.le) * parseFloat(props.item.he) * k * parseFloat(pr)
-    );
+    if (props.cur === 'rub') return props.item.cntRUB;
+    else if (props.cur === 'usd') return props.item.cntUSD;
+    else if (props.cur === 'eur') return props.item.cntEUR;
   };
 
   useEffect(() => {
-    let pr = checkCur()
+    let pr = checkCur();
     if (props.type != 'Плитка') {
-      setSum(cntS_mult(cnt).toFixed(2));
-      // props.setCntSum([...props.cntSum, (2 * 3 * parseFloat(pr) * cnt).toFixed(2)])
+      setSum(parseFloat(props.item.le) * parseFloat(props.item.he) * pr * cnt);
     } else {
-      // console.log(kw, cnt);
-      // console.log(kw, cnt);
-      setSum((kw * parseFloat(pr)).toFixed(2));
+      setSum(kw * pr);
     }
-  }, [cnt]);
+    let newBasket = [...props.basket];
+    let item = newBasket.find(x => x.ps === props.item.ps);
+    item.S = kw;
+    item.cnt = cnt;
+    item.sum = sum;
+    props.setBasket(newBasket);
+  }, [cnt, kw, sum]);
 
   // props.setCntSum([...props.cntSum, sum])
   const onChangeVal = e => {
     if (e.target.id == 'cnt') {
-      setCnt(parseFloat(e.target.value));
+      let val = e.target.value;
+      val = Math.ceil(parseFloat(val));
+      setCnt(val);
       setKw(
         // parseFloat(props.item.le) *
         //   parseFloat(props.item.he) *
-        2 * 3 * parseFloat(e.target.value)
+        2 * 3 * val
       );
     } else {
       setKw(e.target.value);
       setCnt(
-        parseFloat(e.target.value) / 2 / 3
-        // parseFloat(props.item.le) /
-        // parseFloat(props.item.he)
+        // (parseFloat(props.item.le) * parseFloat(props.item.he))
+        Math.ceil(parseFloat(e.target.value) / (2 * 3))
       );
     }
-    console.log(cnt, kw);
-    props.setBasket([...props.basket, { ...props.item, cnd: cnt, S: kw }]);
   };
 
   return (
@@ -66,7 +61,9 @@ const BasketItem = props => {
       item={props.item}
       id={props.item.ps}
       type={props.item.type}
-      kw={props.kw}
+      cnt={cnt}
+      kw={kw}
+      sum={sum}
       cur={props.cur}
       deleteGood={props.deleteGood}
       onChangeVal={onChangeVal}

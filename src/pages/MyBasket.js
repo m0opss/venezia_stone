@@ -3,7 +3,7 @@ import { isMobile, isTablet } from 'react-device-detect';
 import { connect } from 'react-redux';
 
 import BasketItem from 'components/MyBasket/BasketItem';
-import MyModal from 'components/Modal/Modal';
+import OrderModal from 'components/Modal/OrderModal';
 import Valute from 'components/Valute/Valute';
 import BackArrow from 'components/BackArrow/BackArrow';
 import basketActions from 'actions/basketActions';
@@ -12,73 +12,79 @@ import './MyBasket.scss';
 
 const MyBasket = props => {
   const [visibleModal, setVisibleModal] = React.useState(false);
-  const [basket, setBasket] = React.useState([]);
-  const [orderBasket, setOrderBasket] = React.useState([]);
 
+  const [basket, setBasket] = React.useState(function getInitialState() {
+    if (props.basket.length == 0) {
+      if (localStorage.getItem('basket') !== null) {
+        return JSON.parse(localStorage.getItem('basket'));
+      } else return [];
+    } else {
+      return props.basket;
+    }
+  });
   const [all_sum, setAllSum] = React.useState(0);
-  const [all_cnt, setAllCnt] = React.useState(0);
+  const [all_kw, setAllKw] = React.useState(0);
 
-  const [cntSum, setCntSum] = React.useState([]);
+  useEffect(() => {
+    setAllSum(cntSumm(basket));
+    setAllKw(cntKw(basket));
+  }, [basket]);
 
+  const cntKw = basket => {
+    let res = 0;
+    basket.map(item => {
+      if (item.type == 'Слэбы' || item.type == 'Полоса') {
+        res += parseFloat(item.os);
+      } else {
+        console.log(item)
+        res += parseFloat(item.S);
+      }
+    });
+    return res;
+  };
+
+  const cntSumm = basket => {
+    let res = 0;
+    basket.map(item => {
+      if (item.type == 'Слэбы' || item.type == 'Полоса') {
+        let cost =
+          props.cur === 'rub'
+            ? parseFloat(item.cntRUB)
+            : props.cur === 'usd'
+            ? parseFloat(item.cntUSD)
+            : props.cur === 'eur'
+            ? parseFloat(item.cntEUR)
+            : 1;
+
+        res += parseFloat(
+          (parseFloat(item.he) * parseFloat(item.le) * cost).toFixed(2)
+        );
+      } else {
+        if (item.sum) res += parseFloat(item.sum);
+      }
+    });
+    return res.toFixed(2);
+  };
+
+  const deleteGood = item => {
+    setBasket(basket.filter(i => i.ps !== item.ps));
+    props.deleteGood(item);
+  };
+  const deleteAll = () => {
+    props.deleteAll();
+    setBasket([]);
+  };
   const onClickOrder = () => {
     if (props.isAuth) {
       setVisibleModal(true);
     } else {
+      setVisibleModal(true);
     }
   };
-
-  useEffect(() => {
-    console.log(props.basket)
-    if (props.basket.length === 0 && localStorage.getItem('basket') !== null) {
-      props.setBasket(JSON.parse(localStorage.getItem('basket')));
-    }
-    let c = 0;
-    cntSum.map(i => console.log(i));
-
-  }, [basket.length]);
-
 
   const orderOk = e => {
     setVisibleModal(false);
   };
-
-
-  const orderCancel = e => {
-    setVisibleModal(false);
-  };
-
-  
-  let modalContent = (
-    <div className="order-inputs">
-      <input
-        type="text"
-        placeholder="Имя"
-        defaultValue={
-          localStorage.getItem('first_name') !== null
-            ? localStorage.getItem('first_name')
-            : ''
-        }
-      />
-      <input
-        type="text"
-        placeholder="Телефон"
-        defaultValue={
-          localStorage.getItem('phone') !== null
-            ? localStorage.getItem('phone')
-            : ''
-        }
-      />
-      <input
-        type="text"
-        placeholder="Email*"
-        defaultValue={
-          localStorage.getItem('email') !== null
-            ? localStorage.getItem('email')
-            : ''
-        }
-      />
-    </div>
-  );
 
   let style = '';
   let buttonStyle = '';
@@ -87,36 +93,31 @@ const MyBasket = props => {
 
   return (
     <div className="basket">
-      <MyModal
-        title="Оформить заказ"
-        okText="Оформить заказ"
-        onOk={orderOk}
-        onCancel={orderCancel}
+      <OrderModal
         visible={visibleModal}
-        buttonVision={true}
-      >
-        {modalContent}
-      </MyModal>
+        onCancel={() => setVisibleModal(false)}
+        onOk={orderOk}
+      />
       <BackArrow history={props.history} />
+
       <div className={`basket__f-line ${style}`}>
         <h1>Корзина</h1>
         <Valute />
       </div>
+
       <div className="basket__items">
-        {props.basket.length > 0 ? (
-          props.basket.map(item => {
+        {basket.length > 0 ? (
+          basket.map(item => {
             return (
               <BasketItem
                 setBasket={setBasket}
-                basket={props.basket}
-                cntSum={cntSum}
                 key={item.ps}
-                kind="basket"
+                basket={basket}
                 cur={props.cur}
                 item={item}
                 type={item.type}
                 addGood={props.addGood}
-                deleteGood={props.deleteGood}
+                deleteGood={deleteGood}
                 editGood={props.editGood}
               />
             );
@@ -129,17 +130,17 @@ const MyBasket = props => {
       <div className="basket__bottom-line">
         <div className="basket__total">
           <div className="">
-            <p>Итого шт.: {props.basket.length}</p>
+            <p>Итого шт.: {basket.length}</p>
             <p>
-              Итого м<sup>2</sup>:{props.basket.map(item => {})}
+              Итого м<sup>2</sup>: {all_kw}
             </p>
-            <p>Итого : 44000 ₽</p>
+            <p>Итого : {all_sum} ₽</p>
           </div>
         </div>
         <div className="basket__buttons">
           <div
             className={`basket__button ${buttonStyle} -hovered`}
-            onClick={props.deleteAll}
+            onClick={deleteAll}
           >
             Очистить все
           </div>

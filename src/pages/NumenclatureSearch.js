@@ -53,10 +53,11 @@ const Numenclature = props => {
       props.setActiveFields(tmp);
       localStorage.setItem('activeFieldKeys', JSON.stringify(tmp));
     }
-    setNumemclature(JSON.parse(localStorage.getItem('searchData')).itms);
-    setdefNum(JSON.parse(localStorage.getItem('searchData')).itms);
+    if (localStorage.getItem('searchData') != null) {
+      setNumemclature(JSON.parse(localStorage.getItem('searchData')).itms);
+      setdefNum(JSON.parse(localStorage.getItem('searchData')).itms);
+    }
     document.getElementById('Все').setAttribute('style', 'color: #c98505');
-
   }, [localStorage.getItem('searchData')]);
 
   const toggleStyle_pltk = () => {
@@ -194,13 +195,13 @@ const Numenclature = props => {
           <div>Цена от</div>
           <div></div>
         </div>
-
+          
         {numenclature.map(item => (
           <NumenclatureItem
             pltk={style_pltk}
             cur={props.cur}
             key={item.ps}
-            link={item.url}
+            link={item.url.slice(0, item.url.length - 1)}
             item={item}
           />
         ))}

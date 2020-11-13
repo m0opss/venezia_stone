@@ -15,30 +15,34 @@ const GroupItem = props => {
   const [sum, setSum] = React.useState(0);
 
   useEffect(() => {
-    console.log(props.item);
+    let pr;
+    if (props.cur === 'rub') pr = props.item.cntRUB;
+    else if (props.cur === 'usd') pr = props.item.cntUSD;
+    else if (props.cur === 'eur') pr = props.item.cntEUR;
     if (props.type != 'Плитка') {
-      let pr;
-      if (props.cur === 'rub') pr = props.item.cntRUB;
-      else if (props.cur === 'usd') pr = props.item.cntUSD;
-      else if (props.cur === 'eur') pr = props.item.cntEUR;
       setSum(parseFloat(props.item.le) * parseFloat(props.item.he) * pr * cnt);
     } else {
-      setSum(kw * cnt);
+      setSum(kw * pr);
     }
-  });
+  }, [cnt, kw, sum]);
 
   const onChangeVal = e => {
-    console.log(e.target.value);
     if (e.target.id == 'cnt') {
-      setCnt(e.target.value);
+      let val = e.target.value;
+      val = Math.ceil(parseFloat(val));
+
+      setCnt(val);
       setKw(
-        parseFloat(props.item.le) *
-          parseFloat(props.item.he) *
-          parseFloat(e.target.value)
+        // parseFloat(props.item.le) *
+        //   parseFloat(props.item.he) *
+        2 * 3 * val
       );
     } else {
       setKw(e.target.value);
-      setCnt();
+      setCnt(
+        // (parseFloat(props.item.le) * parseFloat(props.item.he))
+        Math.ceil(parseFloat(e.target.value) / (2 * 3))
+      );
     }
   };
   return (
@@ -67,7 +71,7 @@ const GroupItem = props => {
             min="0"
             id="cnt"
             max={props.item.ossht}
-            defaultValue={cnt}
+            value={cnt}
             step="1"
             onChange={onChangeVal}
           />
@@ -78,7 +82,7 @@ const GroupItem = props => {
               min="0"
               max={props.item.os}
               step="0.01"
-              defaultValue={kw}
+              value={kw}
               style={{ borderBottom: '1px solid black' }}
               onChange={onChangeVal}
             />
