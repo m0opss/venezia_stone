@@ -14,15 +14,15 @@ const GroupItem = props => {
   const [cnt, setCnt] = React.useState(0);
   const [sum, setSum] = React.useState(0);
 
-  useEffect(() => {
+  React.useEffect(() => {
     let pr;
     if (props.cur === 'rub') pr = props.item.cntRUB;
     else if (props.cur === 'usd') pr = props.item.cntUSD;
     else if (props.cur === 'eur') pr = props.item.cntEUR;
     if (props.type != 'Плитка') {
-      setSum(parseFloat(props.item.le) * parseFloat(props.item.he) * pr * cnt);
+      setSum((parseFloat(props.item.le) * parseFloat(props.item.he) * parseFloat(pr) * cnt).toFixed(2));
     } else {
-      setSum(kw * pr);
+      setSum((kw * parseFloat(pr)).toFixed(2));
     }
   }, [cnt, kw, sum]);
 
@@ -150,42 +150,27 @@ const GroupItem = props => {
 };
 
 const OtherItemTablet = props => {
-  React.useEffect(() => {
-    let isSubscr = true;
-    if (
-      !(Object.entries(props.item).length === 0 && props.item.constructor) ===
-        Object &&
-      isSubscr
-    ) {
-      setItem(props.item);
-      setSelectedEl(item.prs[0]);
-    }
-    return () => (isSubscr = false);
-  });
-
+  const images = []
   return (
     <div className="slab-item-mobile">
-      <div className="slab-item-mobile__main-title">{props.item.name}</div>
-      <ButtonsPanel />
+      <div className="slab-item-mobile__main-title">{props.item[0].name}</div>
+      <ButtonsPanel images={images} />
       <div className="slab-item-mobile__main">
         <div className="slab-item-info__options">
-          <img src={lamp} />
-          <img src={book} />
+          {/* <img src={lamp} />
+          <img src={book} /> */}
         </div>
         <div className="slab-item-mobile__main-img">
-          <img src={selectedEl.photobl} />
-          {/* <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" /> */}
+          <img src={props.item[0].photo_product} />
         </div>
       </div>
 
       <div className="slab-item-mobile__options-group">
-        <div className="slab-item-mobile__country">
-          {props.item.prs[0].country}
-        </div>
+        <div className="slab-item-mobile__country">{props.item[0].country}</div>
         <Valute />
       </div>
       <div className="other-items-group">
-        {props.item.prs.map(item => (
+        {props.item.map(item => (
           <GroupItem item={item} key={item.ps} cur={props.cur} />
         ))}
       </div>

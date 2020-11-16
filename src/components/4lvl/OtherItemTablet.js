@@ -11,15 +11,15 @@ const GroupItem = props => {
   const [cnt, setCnt] = React.useState(0);
   const [sum, setSum] = React.useState(0);
 
-  useEffect(() => {
+  React.useEffect(() => {
     let pr;
     if (props.cur === 'rub') pr = props.item.cntRUB;
     else if (props.cur === 'usd') pr = props.item.cntUSD;
     else if (props.cur === 'eur') pr = props.item.cntEUR;
     if (props.type != 'Плитка') {
-      setSum(parseFloat(props.item.le) * parseFloat(props.item.he) * pr * cnt);
+      setSum((parseFloat(props.item.le) * parseFloat(props.item.he) * parseFloat(pr) * cnt).toFixed(2));
     } else {
-      setSum(kw * pr);
+      setSum((kw * parseFloat(pr)).toFixed(2));
     }
   }, [cnt, kw, sum]);
 
@@ -149,29 +149,29 @@ const OtherItemTablet = props => {
   let ob_S = 0,
     ob_sht = 0,
     ob_sum = 0;
-  ob_S += parseFloat(props.item.prs.map(i => i.os));
-  ob_sht += parseFloat(props.item.prs.map(i => i.ossht));
+  ob_S += parseFloat(props.item.map(i => i.os));
+  ob_sht += parseFloat(props.item.map(i => i.ossht));
   ob_sum += parseFloat(
-    props.item.prs.map(i =>
+    props.item.map(i =>
       props.cur === 'rub'
-        ? props.item.prs[0].cntRUB
+        ? props.item[0].cntRUB
         : props.cur === 'usd'
-        ? props.item.prs[0].cntUSD
+        ? props.item[0].cntUSD
         : props.cur === 'eur'
-        ? props.item.prs[0].cntEUR
+        ? props.item[0].cntEUR
         : 0
     )
   );
-
+  const images = []
   return (
     <div className="slab-item">
       <div className="slab-item-info">
         <div className="slab-item-info__top slab-item-info__top-tablet">
-          <ButtonsPanel />
+        <ButtonsPanel images={images} />
         </div>
         <div className="slab-item-info__bottom">
           <div className="slab-item-info__left-block slab-item-info__left-block_other slab-item-info__left-block_other-tablet">
-            <h1 className="slab-item-info__title">{props.item.name}</h1>
+            <h1 className="slab-item-info__title">{props.item[0].name}</h1>
             <div className="slab-item-info__parameters">
               <p>
                 Общая площадь, м<sup>2</sup> : {ob_S ? ob_S : '-'}
@@ -194,15 +194,15 @@ const OtherItemTablet = props => {
           <div className="slab-item-info__slab-img">
             <img
               src={
-                props.item.prs.length > 0 ? props.item.prs[0].photo_product : ''
+                props.item.length > 0 ? props.item[0].photo_product : ''
               }
             />
-            <ColorRange colors={props.item.prs ? props.item.prs[0] : []} />
+            <ColorRange colors={props.item ? props.item[0] : []} />
           </div>
         </div>
       </div>
       <div className="other-items-group">
-        {props.item.prs.map(item => (
+        {props.item.map(item => (
           <GroupItem
             item={item}
             key={item.ps}

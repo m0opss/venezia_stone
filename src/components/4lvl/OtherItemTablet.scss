@@ -51,6 +51,7 @@
   p {
     flex: 0 1 30%;
     text-align: center;
+    white-space: nowrap;
   }
   input {
     border: 1px solid #be9344;
@@ -64,4 +65,5 @@
 
 .other-items-group_first-col {
   flex: 0 1 30%;
+  white-space: nowrap;
 }

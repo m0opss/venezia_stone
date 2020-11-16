@@ -13,10 +13,11 @@ const createUserName = arr => {
   Object.keys(arr).map(name => {
     if (arr[name] != null) {
       if (name === 'last') userName += ucFirst(arr[name]) + ' ';
-      else userName += arr[name][0].toUpperCase() + '. ';
+      else {
+        if (arr[name][0]) userName += arr[name][0].toUpperCase() + '. ';
+      }
     }
   });
-
   return userName;
 };
 const Authored = props => {
@@ -27,10 +28,10 @@ const Authored = props => {
   const [user_name, setUserName] = React.useState(null);
 
   React.useEffect(() => {
-    setEmail(localStorage.getItem('email'));
-    setFName(localStorage.getItem('first_name'));
-    setLName(localStorage.getItem('last_name'));
-    setMName(localStorage.getItem('middle_name'));
+    setEmail(localStorage.getItem('email') != null ? localStorage.getItem('email') : '');
+    setFName(localStorage.getItem('first_name') != null ? localStorage.getItem('first_name') : '');
+    setLName(localStorage.getItem('last_name') != null ? localStorage.getItem('last_name') : '');
+    setMName(localStorage.getItem('middle_name') != null ? localStorage.getItem('middle_name') : '');
     let name;
     if (
       createUserName({
@@ -38,9 +39,9 @@ const Authored = props => {
         first: first_name,
         middle: middle_name
       }) == ''
-    )
-      name = email;
-    else
+    ) {
+      name = localStorage.getItem('email');
+    } else
       name = createUserName({
         last: last_name,
         first: first_name,
@@ -52,7 +53,12 @@ const Authored = props => {
   const onExitModal = () => {
     props.setAuth(false);
     props.setToken('');
-    
+    localStorage.removeItem('phone')
+    localStorage.removeItem('email')
+    localStorage.removeItem('first_name')
+    localStorage.removeItem('middle_name')
+    localStorage.removeItem('last_name')
+    localStorage.removeItem('searchData')
   };
 
   const menu = (
@@ -77,7 +83,8 @@ const Authored = props => {
       </Menu.Item>
     </>
   );
-  if(user_name != null) return <Dropdown type="acc-menu" title={user_name} menuList={menu} />;
-  else return <></>
+  if (user_name != null)
+    return <Dropdown type="acc-menu" title={user_name} menuList={menu} />;
+  else return <></>;
 };
 export default Authored;

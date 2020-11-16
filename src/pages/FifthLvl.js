@@ -29,6 +29,7 @@ const FifthLvl = props => {
     axios
       .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
       .then(response => {
+        console.log(response.data);
         // setImages([response.data.itms[0].prs.photo_product]);
         setItem(response.data.itms[0]);
         setLoading(false);
@@ -85,23 +86,26 @@ const FifthLvl = props => {
                   </div>
                   <div className="main-content__text-block">
                     <p>
-                      Стоимость :{' '}
+                      Стоимость:{' '}
                       {props.cur === 'rub' && item.prs
                         ? `${(
                             parseFloat(item.prs.cntRUB) *
-                            parseFloat(item.prs.os)
+                            parseFloat(item.prs.le) *
+                            parseFloat(item.prs.he)
                           ).toFixed(2)}₽`
                         : props.cur === 'usd'
                         ? `${(
                             parseFloat(item.prs.cntUSD) *
-                            parseFloat(item.prs.os)
+                            parseFloat(item.prs.le) *
+                            parseFloat(item.prs.he)
                           ).toFixed(3)}$`
                         : props.cur === 'eur'
                         ? `${(
                             parseFloat(item.prs.cntEUR) *
-                            parseFloat(item.prs.os)
+                            parseFloat(item.prs.le) *
+                            parseFloat(item.prs.he)
                           ).toFixed(3)}€`
-                        : ''}
+                        : '-'}
                     </p>
                     <p>Скол: {item.prs && item.prs.skl ? item.prs.skl : '-'}</p>
                     <p className="-wrapped">
@@ -167,15 +171,21 @@ const FifthLvl = props => {
                     Стоимость:{' '}
                     {props.cur === 'rub' && item.prs
                       ? `${(
-                          parseFloat(item.prs.cntRUB) * parseFloat(item.prs.os)
+                          parseFloat(item.prs.cntRUB) *
+                          parseFloat(item.prs.le) *
+                          parseFloat(item.prs.he)
                         ).toFixed(2)}₽`
                       : props.cur === 'usd'
                       ? `${(
-                          parseFloat(item.prs.cntUSD) * parseFloat(item.prs.os)
+                          parseFloat(item.prs.cntUSD) *
+                          parseFloat(item.prs.le) *
+                          parseFloat(item.prs.he)
                         ).toFixed(3)}$`
                       : props.cur === 'eur'
                       ? `${(
-                          parseFloat(item.prs.cntEUR) * parseFloat(item.prs.os)
+                          parseFloat(item.prs.cntEUR) *
+                          parseFloat(item.prs.le) *
+                          parseFloat(item.prs.he)
                         ).toFixed(3)}€`
                       : ''}
                   </p>
@@ -189,7 +199,7 @@ const FifthLvl = props => {
                   <div className="main-content__photo-icons">
                     {item.prs ? (
                       <OptionLine
-                        img={item.prs.photo_product}
+                        img={`data:image/jpg;base64,${item.prs.photo_bytes}`}
                         fullscreen={<></>}
                       />
                     ) : (
@@ -221,7 +231,10 @@ const FifthLvl = props => {
               <ImageGallery item={item} />
               <div className="fifth-lvl__opt">
                 {item.prs ? (
-                  <OptionLine img={item.prs.photo_product} fullscreen={<></>} />
+                  <OptionLine
+                    img={`data:image/jpg;base64,${item.prs.photo_bytes}`}
+                    fullscreen={<></>}
+                  />
                 ) : (
                   <></>
                 )}
@@ -251,15 +264,21 @@ const FifthLvl = props => {
                     Стоимость:{' '}
                     {props.cur === 'rub' && item.prs
                       ? `${(
-                          parseFloat(item.prs.cntRUB) * parseFloat(item.prs.os)
+                          parseFloat(item.prs.cntRUB) *
+                          parseFloat(item.prs.le) *
+                          parseFloat(item.prs.he)
                         ).toFixed(2)}₽`
                       : props.cur === 'usd'
                       ? `${(
-                          parseFloat(item.prs.cntUSD) * parseFloat(item.prs.os)
+                          parseFloat(item.prs.cntUSD) *
+                          parseFloat(item.prs.le) *
+                          parseFloat(item.prs.he)
                         ).toFixed(3)}$`
                       : props.cur === 'eur'
                       ? `${(
-                          parseFloat(item.prs.cntEUR) * parseFloat(item.prs.os)
+                          parseFloat(item.prs.cntEUR) *
+                          parseFloat(item.prs.le) *
+                          parseFloat(item.prs.he)
                         ).toFixed(3)}€`
                       : ''}
                   </p>

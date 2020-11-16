@@ -46,6 +46,12 @@ const LK = props => {
     console.log('exit');
     props.setAuth(false);
     props.setToken('');
+    localStorage.removeItem('phone')
+    localStorage.removeItem('email')
+    localStorage.removeItem('first_name')
+    localStorage.removeItem('middle_name')
+    localStorage.removeItem('last_name')
+    localStorage.removeItem('searchData')
   };
 
   if (props.isAuth) {

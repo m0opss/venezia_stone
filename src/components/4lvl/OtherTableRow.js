@@ -14,9 +14,16 @@ const OtherTableRow = props => {
     else if (props.cur === 'usd') pr = props.item.cntUSD;
     else if (props.cur === 'eur') pr = props.item.cntEUR;
     if (props.type != 'Плитка') {
-      setSum(parseFloat(props.item.le) * parseFloat(props.item.he) * pr * cnt);
+      setSum(
+        (
+          parseFloat(props.item.le) *
+          parseFloat(props.item.he) *
+          parseFloat(pr) *
+          cnt
+        ).toFixed(2)
+      );
     } else {
-      setSum(kw * pr);
+      setSum((kw * parseFloat(pr)).toFixed(2));
     }
   }, [cnt, kw, sum]);
 
@@ -48,11 +55,23 @@ const OtherTableRow = props => {
       <div className="table-row__item table-row__item_l">
         <p>
           {props.cur === 'rub'
-            ? `${props.item.cntRUB}₽`
+            ? `${
+                props.item.cntRUB == 'По запросу'
+                  ? props.item.cntRUB
+                  : `${props.item.cntRUB}₽`
+              }`
             : props.cur === 'usd'
-            ? `${props.item.cntUSD}$`
+            ? `${
+                props.item.cntUSD == 'По запросу'
+                  ? props.item.cntUSD
+                  : `${props.item.cntUSD}$`
+              }`
             : props.cur === 'eur'
-            ? `${props.item.cntEUR}€`
+            ? `${
+                props.item.cntEUR == 'По запросу'
+                  ? props.item.cntEUR
+                  : `${props.item.cntEUR}€`
+              }`
             : ''}
         </p>
       </div>

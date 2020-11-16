@@ -49,13 +49,16 @@ const Numenclature = props => {
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
+          token: [],
+          // token: [props.auth_token],
           items: [],
           level: [3],
           groups: [props.match.params.numGroups]
         })
         .then(response => {
-          setNumemclature(response.data.grs[0].itms);
-          setdefNum(response.data.grs[0].itms);
+          setNumemclature(response.data.itms);
+          setdefNum(response.data.itms);
+          console.log(response.data)
           setLoading(false);
           document
             .getElementById('Все')
@@ -226,7 +229,8 @@ const mapStateToProps = store => {
     selectedMaterial: store.material.selectedMaterial,
     cur: store.valute_data.valute,
     upper_izd: store.filter_data.upper_izd,
-    activeFilters: store.filter_data.activeFilters
+    activeFilters: store.filter_data.activeFilters,
+    auth_token: store.auth_data.auth_token,
   };
 };
 

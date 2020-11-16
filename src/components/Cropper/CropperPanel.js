@@ -25,7 +25,7 @@ const CropperPanel = props => {
     notify();
   };
   return (
-    <div className={isMobile ? `cropper-panel cropper-panel-mobile` : 'cropper-panel'}>
+    <div className={isMobile ? `cropper-panel` : 'cropper-panel'}>
       <div className="cropper-panel__item" onClick={props.getCropData}>
         <svg
           xmlns="http://www.w3.org/2000/svg"

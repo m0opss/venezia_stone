@@ -51,17 +51,26 @@ const NumGroups = props => {
         props.match.params.material,
         props.upper_izd
       );
+      console.log({
+        ...header,
+        items: [],
+        level: [2],
+        groups: [],
+        token: [props.auth_token]
+      });
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
           items: [],
           level: [2],
-          groups: []
+          groups: [],
+          token: []
         })
         .then(response => {
+          console.log(response.data)
           setLoading(false);
-          setNumGroups(response.data.mts[0].grs);
-          setdefNumGroups(response.data.mts[0].grs);
+          setNumGroups(response.data.grs);
+          setdefNumGroups(response.data.grs);
         })
         .catch(err => {
           if (err.response) {
@@ -135,7 +144,9 @@ const NumGroups = props => {
             <p>Цена от</p>
             <p></p>
           </div>
-          {numGroups.slice(0, loadCnt).map(item => (
+          {
+          numGroups.length > 0 ?
+          numGroups.slice(0, loadCnt).map(item => (
             <NumGroupItem
               pltk={style_pltk}
               key={item.ps}
@@ -143,7 +154,10 @@ const NumGroups = props => {
               item={item}
               cur={props.cur}
             />
-          ))}
+          ))
+          : 
+          <div className='goods-none'>Товаров не найдено</div>
+          }
         </div>
         <div className="button-text button load-more" onClick={loadMore}>
           Загрузить еще
@@ -158,7 +172,8 @@ const mapStateToProps = store => {
     cur: store.valute_data.valute,
     f_set: store.filter_data.f_set,
     upper_izd: store.filter_data.upper_izd,
-    activeFilters: store.filter_data.activeFilters
+    activeFilters: store.filter_data.activeFilters,
+    auth_token: store.auth_data.auth_token
   };
 };
 

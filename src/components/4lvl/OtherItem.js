@@ -83,27 +83,28 @@ const OtherItem = props => {
   let ob_S = 0,
     ob_sht = 0,
     ob_sum = 0;
-  ob_S += parseFloat(props.item.prs.map(i => i.os));
-  ob_sht += parseFloat(props.item.prs.map(i => i.ossht));
+
+  ob_S += parseFloat(props.item.map(i => i.os));
+  ob_sht += parseFloat(props.item.map(i => i.ossht));
   ob_sum += parseFloat(
-    props.item.prs.map(i =>
+    props.item.map(i =>
       props.cur === 'rub'
-        ? props.item.prs[0].cntRUB
+        ? props.item[0].cntRUB
         : props.cur === 'usd'
-        ? props.item.prs[0].cntUSD
+        ? props.item[0].cntUSD
         : props.cur === 'eur'
-        ? props.item.prs[0].cntEUR
+        ? props.item[0].cntEUR
         : 0
     )
   );
-
+  const images = []
   if (isBrowser) {
     return (
       <div className="slab-item">
         <div className="slab-item-info">
           <div className="slab-item-info__top">
-            <h1 className="slab-item-info__title">{props.item.name}</h1>
-            <ButtonsPanel />
+            <h1 className="slab-item-info__title">{props.item[0].name}</h1>
+            <ButtonsPanel images={images} />
           </div>
           <div className="slab-item-info__bottom">
             <div className="slab-item-info__left-block slab-item-info__left-block_other">
@@ -114,23 +115,23 @@ const OtherItem = props => {
                 <p>Количество, шт: {ob_sht ? ob_sht : '-'}</p>
                 <p>
                   Сумма:{' '}
-                  {ob_sum 
-                  ? 
-                    (props.cur === 'rub'
-                    ? `${ob_sum}₽`
-                    : props.cur === 'usd'
-                    ? `${ob_sum}$`
-                    : props.cur === 'eur'
-                    ? `${ob_sum}€`
-                    : '') : '-'}
+                  {ob_sum
+                    ? props.cur === 'rub'
+                      ? `${ob_sum}₽`
+                      : props.cur === 'usd'
+                      ? `${ob_sum}$`
+                      : props.cur === 'eur'
+                      ? `${ob_sum}€`
+                      : ''
+                    : '-'}
                 </p>
               </div>
-              <ColorRange colors={props.item.prs ? props.item.prs[0] : []} />
+              <ColorRange colors={props.item ? props.item[0] : []} />
             </div>
             <div className="slab-item-info__right-block">
               <MainImg
                 type={props.type}
-                img={props.item.prs.length>0 ? props.item.prs[0].photo_product : ''}
+                img={props.item.length > 0 ? props.item[0].photo_product : ''}
               />
             </div>
           </div>
@@ -177,8 +178,8 @@ const OtherItem = props => {
               <img src={basket} />
             </div>
           </div>
-          {props.item.prs ? (
-            props.item.prs.map(item => (
+          {props.item ? (
+            props.item.map(item => (
               <OtherTableRow
                 cur={props.cur}
                 url={props.url}
@@ -186,7 +187,6 @@ const OtherItem = props => {
                 type={props.type}
                 item={item}
                 isAuth={props.isAuth}
-
               />
             ))
           ) : (

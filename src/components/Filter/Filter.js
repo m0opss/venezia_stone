@@ -23,7 +23,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const { SubMenu } = Menu;
-const { titles, cities, materials, colors } = data;
+const { titles, cities, materials, colors, izdelie } = data;
 
 const Filter = props => {
   const [state, setState] = React.useState({ collapsed: true });
@@ -35,9 +35,7 @@ const Filter = props => {
         .then(response => {
           props.setFilters(response.data.filters);
           if (localStorage.getItem('activeFilters') !== null) {
-            props.setActiveFilters(
-              JSON.parse(localStorage.getItem('activeFilters'))
-            );
+            props.setActiveFilters(JSON.parse(localStorage.getItem('activeFilters')));
           } else {
             props.setActiveFilters(
               Object.fromEntries(
@@ -74,65 +72,41 @@ const Filter = props => {
         );
       }
     }
+    console.log(props.activeFields.length);
     return () => (isSubscr = false);
-  }, []);
+  }, [props.activeFields.length]);
 
   const handleClick = e => {
     setState({ collapsed: !state.collapsed });
   };
 
-  const setActiveFields = fields => {
-    localStorage.setItem('activeFieldKeys', JSON.stringify(fields));
-  };
-
   const fetchFilters = () => {
     localStorage.setItem('activeFilters', JSON.stringify(props.activeFilters));
-
-    // axios
-    //   .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
-    //     ...headers,
-    //     items: its,
-    //     level: [props.level],
-    //     groups: gr,
-    //     upper_izd: props.upper_izd
-    //   })
-    //   .then(response => {
-    //     console.log(response.data);
-    //     if (props.level == 2) {
-    //       props.f_set(response.data.mts[0].grs);
-    //       props.f_dset(response.data.mts[0].grs);
-    //     }
-    //     if (props.level == 3) {
-    //       props.f_set(response.data.grs[0].itms);
-    //       props.f_dset(response.data.grs[0].itms);
-    //     }
-    //     if (props.level == 4) {
-    //       props.f_set(response.data.itms[0]);
-    //       props.f_dset(response.data.itms[0]);
-    //     }
-    //   })
-    //   .catch(err => {
-    //     if (err.response) {
-    //       // client received an error response (5xx, 4xx)
-    //       console.log(1, err.response);
-    //       // props.setAuth(false);
-    //     } else if (err.request) {
-    //       // client never received a response, or request never left
-    //       console.log(2, err.request);
-    //     } else {
-    //       // anything else
-    //       console.log(3, err);
-    //     }
-    //   });
   };
 
-  const filterItemClicked = e => {
+  const setActiveFields = e => {
     let t = [...props.activeFields];
     if (t.indexOf(e.key) !== -1) t.splice(t.indexOf(e.key), 1);
     else t.push(e.key);
     props.setActiveFields(t);
-    setActiveFields(t);
+    localStorage.setItem('activeFieldKeys', JSON.stringify(t));
+  };
 
+  const izdItemClicked = e => {
+    setActiveFields(e);
+    let newArr = [...props.upper_izd];
+    if (newArr.indexOf(e.key) === -1) {
+      newArr.push(e.key);
+      document.getElementById(e.key).setAttribute('style', 'color: #c98505');
+    } else {
+      document.getElementById(e.key).setAttribute('style', 'color: black');
+      newArr.splice(newArr.indexOf(e.key), 1);
+    }
+    props.setUpper(newArr);
+  };
+
+  const filterItemClicked = e => {
+    setActiveFields(e);
     let f = Object.keys(props.filters)[parseFloat(e.key[0])];
     let param =
       props.filters[f][
@@ -144,6 +118,7 @@ const Filter = props => {
         let tmp = { ...props.activeFilters };
         if (tmp[field].indexOf(param) === -1) tmp[field].push(param);
         else tmp[field].splice(tmp[field].indexOf(param), 1);
+        console.log(111, 'ACTIVE', tmp);
         props.setActiveFilters(tmp);
       }
     });
@@ -152,6 +127,7 @@ const Filter = props => {
   };
 
   props.setShareFilterFunc(fetchFilters);
+
   return (
     <Suspense>
       <div className="filter">
@@ -196,89 +172,104 @@ const Filter = props => {
             Object.keys(titles).map(t => {
               if (filter == t) title = titles[t];
             });
+            if (filter != 'izdelie') {
+              return (
+                <SubMenu key={filter} title={title}>
+                  {props.filters[filter].map((material, ind) => {
+                    if (filter === 'materials') {
+                      {
+                        /* Для вкладки материалы - переводит с русского по словарю materials */
+                      }
+                      let mat_eng = material;
+                      Object.keys(materials).map(mat => {
+                        if (mat == material) mat_eng = materials[mat];
+                      });
 
-            return (
-              <SubMenu key={filter} title={title}>
-                {/* Цикл по всем вкладкам */}
-                {props.filters[filter].map((material, ind) => {
-                  if (filter === 'materials') {
-                    {
-                      /* Для вкладки материалы - переводит с русского по словарю materials */
+                      return (
+                        <Menu.Item
+                          key={`${index}${ind}`}
+                          style={{ display: 'flex', alignItems: 'center' }}
+                          onClick={filterItemClicked}
+                        >
+                          <Link to={`/${mat_eng}`}>{material}</Link>
+                        </Menu.Item>
+                      );
+                    } else if (filter === 'colors' || filter === 'countries') {
+                      return (
+                        <Menu.Item
+                          key={`${index}${ind}`}
+                          style={{ display: 'flex', alignItems: 'center' }}
+                          onClick={filterItemClicked}
+                        >
+                          {index == 2 && material === 'Белый' ? (
+                            <>
+                              <div
+                                className="filter__color border-color"
+                                style={{ background: colors[material] }}
+                              />
+                              {material}
+                            </>
+                          ) : index == 2 && material !== 'Белый' ? (
+                            <>
+                              <div
+                                className="filter__color"
+                                style={{ background: colors[material] }}
+                              />
+                              {material}
+                            </>
+                          ) : (
+                            material
+                          )}
+                        </Menu.Item>
+                      );
+                    } else if (
+                      filter === 'obrabotka' ||
+                      filter === 'thickness'
+                    ) {
+                      return (
+                        <Menu.Item
+                          key={`${index}${ind}`}
+                          style={{ display: 'flex', alignItems: 'center' }}
+                          onClick={filterItemClicked}
+                        >
+                          {material}
+                        </Menu.Item>
+                      );
+                    } else if (filter === 'sklad') {
+                      return (
+                        <Menu.Item
+                          key={`${index}${ind}`}
+                          style={{ display: 'flex', alignItems: 'center' }}
+                          onClick={filterItemClicked}
+                        >
+                          {Object.keys(cities).map(k => {
+                            if (k == material) {
+                              return cities[k];
+                            }
+                          })}
+                        </Menu.Item>
+                      );
                     }
-                    let mat_eng = material;
-                    Object.keys(materials).map(mat => {
-                      if (mat == material) mat_eng = materials[mat];
-                    });
-
+                  })}
+                </SubMenu>
+              );
+            } else {
+              return (
+                <SubMenu key={filter} title={title}>
+                  {izdelie.map(izd => {
                     return (
                       <Menu.Item
-                        key={`${index}${ind}`}
+                        key={izd}
                         style={{ display: 'flex', alignItems: 'center' }}
-                        onClick={filterItemClicked}
+                        onClick={izdItemClicked}
                       >
-                        <Link to={`/${mat_eng}`}>{material}</Link>
+                        {izd}
                       </Menu.Item>
                     );
-                  } else if (filter === 'colors' || filter === 'countries') {
-                    return (
-                      <Menu.Item
-                        key={`${index}${ind}`}
-                        style={{ display: 'flex', alignItems: 'center' }}
-                        onClick={filterItemClicked}
-                      >
-                        {index == 2 && material === 'Белый' ? (
-                          <>
-                            <div
-                              className="filter__color border-color"
-                              style={{ background: colors[material] }}
-                            />
-                            {material}
-                          </>
-                        ) : index == 2 && material !== 'Белый' ? (
-                          <>
-                            <div
-                              className="filter__color"
-                              style={{ background: colors[material] }}
-                            />
-                            {material}
-                          </>
-                        ) : (
-                          material
-                        )}
-                      </Menu.Item>
-                    );
-                  } else if (
-                    filter === 'izdelie' ||
-                    filter === 'obrabotka' ||
-                    filter === 'thickness'
-                  ) {
-                    return (
-                      <Menu.Item
-                        key={`${index}${ind}`}
-                        style={{ display: 'flex', alignItems: 'center' }}
-                        onClick={filterItemClicked}
-                      >
-                        {material}
-                      </Menu.Item>
-                    );
-                  } else if (filter === 'sklad') {
-                    return (
-                      <Menu.Item
-                        key={`${index}${ind}`}
-                        style={{ display: 'flex', alignItems: 'center' }}
-                        onClick={filterItemClicked}
-                      >
-                        {Object.keys(cities).map(k => {
-                          if (k == material) {
-                            return cities[k];
-                          }
-                        })}
-                      </Menu.Item>
-                    );
-                  }
-                })}
-              </SubMenu>
-            );
+                  })}
+                </SubMenu>
+              );
+            }
           })}
         </Menu>
       </div>
@@ -304,6 +295,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setFilters: data => {
       dispatch(filterActions.setFilters(data));
+    },
+    setUpper: data => {
+      dispatch(filterActions.setUpper(data));
     },
     setActiveFilters: data => {
       dispatch(filterActions.setActiveFilters(data));

@@ -5,7 +5,7 @@ import CropperPanel from 'components/Cropper/CropperPanel';
 import './CropperBook.scss';
 import './CropperScale.scss';
 import 'cropperjs/dist/cropper.css';
-
+import { isMobile, isTablet } from 'react-device-detect';
 const CropperBook = props => {
   const [cropData, setCropData] = React.useState('#');
   const [cropper, setCropper] = React.useState('');
@@ -32,45 +32,53 @@ const CropperBook = props => {
   };
 
   return (
-    <div className="dialog-cropper">
-      <div className="cropper-wrapper">
-        <div className="cropper-crop">
-          <Cropper
-            src={props.img}
-            initialAspectRatio={1 / 1}
-            // preview=".dialog-cropper__preview-item"
-            initialAspectRatio={2}
-            viewMode={3}
-            guides={true}
-            minCropBoxHeight={50}
-            minCropBoxWidth={50}
-            background={false}
-            responsive={true}
-            autoCropArea={1}
-            checkOrientation={false}
-            onInitialized={instance => {
-              setCropper(instance);
-            }}
-          />
-          <CropperPanel
-            type="book"
-            mode={mode}
-            pushOnServer={pushOnServer}
-            setCropData={setCropData}
-            getCropData={getCropData}
-            setMode={setMode}
-          />
-        </div>
-        <div className="dialog-cropper__res-wrapper">
-          <h2>Результат</h2>
-          <div className={`dialog-cropper__res ${mode}`} onClick={getCropper()}>
-            <img className="dialog-cropper__preview-item" src={cropData} />
-            <img className="dialog-cropper__preview-item" src={cropData} />
-            <img className="dialog-cropper__preview-item" src={cropData} />
-            <img className="dialog-cropper__preview-item" src={cropData} />
-            <img className="dialog-cropper__preview-item" src={cropData} />
-            <img className="dialog-cropper__preview-item" src={cropData} />
-          </div>
+    <div
+      className={`dialog-cropper-crop 
+      ${isMobile ? 'dialog-cropper-crop-tablet' : ''} ${!isTablet && isMobile ? 'dialog-cropper-crop-mobile' : ''}
+      `}
+    >
+      <div className="cropper">
+        <Cropper
+          src={props.img}
+          initialAspectRatio={1 / 1}
+          initialAspectRatio={2}
+          style={
+            isTablet
+              ? { height: 400 }
+              : isMobile
+              ? { height: 300 }
+              : { height: 600 }
+          }
+          viewMode={3}
+          guides={true}
+          minCropBoxHeight={50}
+          minCropBoxWidth={50}
+          background={false}
+          responsive={true}
+          autoCropArea={1}
+          checkOrientation={false}
+          onInitialized={instance => {
+            setCropper(instance);
+          }}
+        />
+        <CropperPanel
+          type="book"
+          mode={mode}
+          pushOnServer={pushOnServer}
+          setCropData={setCropData}
+          getCropData={getCropData}
+          setMode={setMode}
+        />
+      </div>
+      <div className="dialog-cropper__res-wrapper">
+        <h2>Результат</h2>
+        <div className={`dialog-cropper__res ${mode}`} onClick={getCropper()}>
+          <img className="dialog-cropper__preview-item" src={cropData} />
+          <img className="dialog-cropper__preview-item" src={cropData} />
+          <img className="dialog-cropper__preview-item" src={cropData} />
+          <img className="dialog-cropper__preview-item" src={cropData} />
+          <img className="dialog-cropper__preview-item" src={cropData} />
+          <img className="dialog-cropper__preview-item" src={cropData} />
         </div>
       </div>
     </div>

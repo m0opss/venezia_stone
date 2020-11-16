@@ -43,28 +43,48 @@ const GroupItem = props => {
           <p className="slab-items-group-item__line">
             Цена за м<sup>2</sup> :{' '}
             {props.cur === 'rub'
-              ? `${props.item.cntRUB}₽`
-              : props.cur === 'usd'
-              ? `${props.item.cntUSD}$`
-              : props.cur === 'eur'
-              ? `${props.item.cntEUR}€`
-              : ''}
+                ? `${
+                    props.item.cntRUB == 'По запросу'
+                      ? props.item.cntRUB
+                      : `${props.item.cntRUB}₽`
+                  }`
+                : props.cur === 'usd'
+                ? `${
+                    props.item.cntUSD == 'По запросу'
+                      ? props.item.cntUSD
+                      : `${props.item.cntUSD}$`
+                  }`
+                : props.cur === 'eur'
+                ? `${
+                    props.item.cntEUR == 'По запросу'
+                      ? props.item.cntEUR
+                      : `${props.item.cntEUR}€`
+                  }`
+                : ''}
           </p>
           <p className="slab-items-group-item__line">
             Стоимость :{' '}
-            {props.cur === 'rub'
-              ? `${(
-                  parseFloat(props.item.cntRUB) * parseFloat(props.item.le) * parseFloat(props.item.he)
-                ).toFixed(2)} ₽`
-              : props.cur === 'usd'
-              ? `${(
-                  parseFloat(props.item.cntUSD) * parseFloat(props.item.le) * parseFloat(props.item.he)
-                ).toFixed(2)} $`
-              : props.cur === 'eur'
-              ? `${(
-                  parseFloat(props.item.cntEUR) * parseFloat(props.item.le) * parseFloat(props.item.he)
-                ).toFixed(2)} €`
-              : 1}
+            {props.item.cntRUB == 'По запросу'
+                ? props.item.cntRUB
+                : props.cur === 'rub'
+                ? `${(
+                    parseFloat(props.item.cntRUB) *
+                    parseFloat(props.item.le) *
+                    parseFloat(props.item.he)
+                  ).toFixed(2)} ₽`
+                : props.cur === 'usd'
+                ? `${(
+                    parseFloat(props.item.cntUSD) *
+                    parseFloat(props.item.le) *
+                    parseFloat(props.item.he)
+                  ).toFixed(2)} $`
+                : props.cur === 'eur'
+                ? `${(
+                    parseFloat(props.item.cntEUR) *
+                    parseFloat(props.item.le) *
+                    parseFloat(props.item.he)
+                  ).toFixed(2)} €`
+                : 1}
           </p>
         </div>
       </Link>
@@ -73,7 +93,7 @@ const GroupItem = props => {
 };
 
 const SlabItemTablet = props => {
-  const [selectedEl, setSelectedEl] = React.useState(props.item.prs[0]);
+  const [selectedEl, setSelectedEl] = React.useState(props.item[0]);
   const [loadCnt, setLoadCnt] = React.useState(12);
   const loadMore = () => {
     setLoadCnt(loadCnt => loadCnt + 12);
@@ -83,7 +103,7 @@ const SlabItemTablet = props => {
     <div className="slab-item">
       <div className="slab-item-info">
         <div className="slab-item-info__top">
-          <h1 className="slab-item-info__title">{props.item.name}</h1>
+          <h1 className="slab-item-info__title">{props.item[0].itms_name}</h1>
           <ButtonsPanel images={images}/>
         </div>
         <div className="slab-item-info__bottom">
@@ -91,7 +111,7 @@ const SlabItemTablet = props => {
             <ScrollImage
               scrollStyle="slab-item-info-scroll"
               selectItem={setSelectedEl}
-              elements={props.item.prs}
+              elements={props.item}
               selectedItem={selectedEl}
             />
           </div>
@@ -102,7 +122,8 @@ const SlabItemTablet = props => {
                 <OptionLine
                   // lamp = {selectedEl.} поле для просветленного фото
                   style={{ width: 'unset', marginBottom: 'unset' }}
-                  img={selectedEl.photo_product}
+                  // img={selectedEl.photo_product}
+                  img={`data:image/jpg;base64,${selectedEl.photo_bytes}`}
                 />
               </div>
             </div>
@@ -132,7 +153,7 @@ const SlabItemTablet = props => {
       </div>
 
       <div className="slab-items-group">
-        {props.item.prs.slice(0, loadCnt).map(item => (
+        {props.item.slice(0, loadCnt).map(item => (
           <GroupItem
             key={item.ps}
             item={item}

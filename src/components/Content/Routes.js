@@ -15,6 +15,8 @@ import NumGroupsSearch from '../../pages/NumGroupsSearch';
 import NumenclatureSearch from '../../pages/NumenclatureSearch';
 import HomeSearch from '../../pages/HomeSearch';
 import FourLvlSearch from '../../pages/FourLvlSearch';
+import NumGroupsNew from '../../pages/NumGroupsNew';
+import NumenclatureNew from '../../pages/NumenclatureNew';
 
 
 const Routes = props => {
@@ -31,12 +33,12 @@ const Routes = props => {
       <Route exact path="/account/password/*" component={ResetPass}/>
       <Route exact path="/:material"  component={NumGroups} />
       <Route exact path="/search/nom-groups"  component={NumGroupsSearch} />
-      <Route exact path="/sale/:material"  component={NumGroups} />
-      <Route exact path="/new/:material"  component={NumGroups} />
-      <Route exact path="/sale/:material/:numGroups" component={Numenclature}/>
+      <Route exact path="/sale/:material"  component={NumGroupsNew} />
+      <Route exact path="/sale/:material/:numGroups" component={NumenclatureNew}/>
       <Route exact path="/search/products" component={FourLvlSearch}/>
       <Route exact path="/search/nomenclatures" component={NumenclatureSearch}/>
-      <Route exact path="/new/:material/:numGroups" component={Numenclature}/>
+      <Route exact path="/new/:material"  component={NumGroupsNew} />
+      <Route exact path="/new/:material/:numGroups" component={NumenclatureNew}/>
       <Route exact path="/:material/:numGroups" component={Numenclature}/>
       <Route exact path="/sale/:material/:numGroups/:num" component={FourLvl}/>
       <Route exact path="/new/:material/:numGroups/:num" component={FourLvl}/>

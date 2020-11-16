@@ -23,11 +23,10 @@ import OtherItem from '../components/4lvl/OtherItem';
 const FourLvl = props => {
   props.setLvl(4);
   const [isLoading, setLoading] = React.useState(true);
-  const [item, setItem] = React.useState({});
+  const [item, setItem] = React.useState([]);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(props.match.params);
     let isSubscr = true;
     if (isSubscr) {
       let header = headerCreator(
@@ -41,37 +40,38 @@ const FourLvl = props => {
           items: [props.match.params.num],
           level: [4],
           groups: [props.match.params.numGroups],
-          token: props.auth_token
+          // token: [props.auth_token]
+          token: []
         })
         .then(response => {
-          setItem(response.data.itms[0]);
+          setItem(response.data.prs);
           setLoading(false);
-          if (
-            response.data.itms[0].izd !== 'Слэбы' ||
-            response.data.itms[0].izd !== 'Полоса'
-          ) {
-            axios
-              .post('https://catalog-veneziastone.ru/api_v0/addViewed/', {
-                token: props.auth_token,
-                id_product: response.data.itms[0].prs[0].ps
-              })
-              .then(response => {
-                console.log(response);
-              })
-              .catch(err => {
-                if (err.response) {
-                  // client received an error response (5xx, 4xx)
-                  console.log(1, err.response);
-                  // props.setAuth(false);
-                } else if (err.request) {
-                  // client never received a response, or request never left
-                  console.log(2, err.request);
-                } else {
-                  // anything else
-                  console.log(3, err);
-                }
-              });
-          }
+          // if (
+          //   response.data.prs[0].itms_izd !== 'Слэбы' ||
+          //   response.data.prs[0].itms_izd !== 'Полоса'
+          // ) {
+          //   axios
+          //     .post('https://catalog-veneziastone.ru/api_v0/addViewed/', {
+          //       token: props.auth_token,
+          //       id_product: response.data.itms[0].prs[0].ps
+          //     })
+          //     .then(response => {
+          //       console.log(response);
+          //     })
+          //     .catch(err => {
+          //       if (err.response) {
+          //         // client received an error response (5xx, 4xx)
+          //         console.log(1, err.response);
+          //         // props.setAuth(false);
+          //       } else if (err.request) {
+          //         // client never received a response, or request never left
+          //         console.log(2, err.request);
+          //       } else {
+          //         // anything else
+          //         console.log(3, err);
+          //       }
+          //     });
+          // }
         })
         .catch(err => {
           if (err.response) {
@@ -89,38 +89,41 @@ const FourLvl = props => {
     }
     return () => (isSubscr = false);
   }, [props.activeFilters, props.upper_izd]);
-
-  return (
-    // if (Object.keys(item).length != 0) {
-    <>
-      <Preloader isLoading={isLoading}>
-        {isTablet || isBrowser ? <Filter /> : <></>}
-        <div className="four-lvl-container">
-          <BackArrow history={props.history} />
-          <div className="four-lvl-valute">
-            {isTablet || isBrowser ? <Valute /> : <></>}
+  if (item.length > 0)
+    return (
+      <>
+        <Preloader isLoading={isLoading}>
+          {isTablet || isBrowser ? <Filter /> : <></>}
+          <div className="four-lvl-container">
+            {console.log(item[0].itms_izd)}
+            <BackArrow history={props.history} />
+            <div className="four-lvl-valute">
+              {isTablet || isBrowser ? <Valute /> : <></>}
+            </div>
+            {item[0].itms_izd === 'Слэбы' || item[0].itms_izd === 'Полоса' ? (
+              <SlabItem
+                type={item[0].itms_izd}
+                item={item}
+                cur={props.cur}
+                url={props.match.url}
+                isAuth={props.isAuth}
+              />
+            ) : (
+              <OtherItem
+                type={item[0].itms_izd}
+                item={item}
+                cur={props.cur}
+                url={props.match.url}
+                isAuth={props.isAuth}
+              />
+            )}
           </div>
-          {item.izd === 'Слэбы' || item.izd === 'Полоса' ? (
-            <SlabItem
-              type={item.izd}
-              item={item}
-              cur={props.cur}
-              url={props.match.url}
-              isAuth={props.isAuth}
-            />
-          ) : (
-            <OtherItem
-              type={item.izd}
-              item={item}
-              cur={props.cur}
-              url={props.match.url}
-              isAuth={props.isAuth}
-            />
-          )}
-        </div>
-      </Preloader>
-    </>
-  );
+        </Preloader>
+      </>
+    );
+  else {
+    return <></>;
+  }
   // );
   // } else return <></>;
 };

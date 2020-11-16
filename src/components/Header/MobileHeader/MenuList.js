@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { Menu } from 'antd';
 
 import authActions from 'actions/authActions';
-
+import filterActions from 'actions/filterActions';
 import MobileAuth from './MobileAuth';
 import Auth from '../TopLine/AccountButton/UnauthoredAccountButton/Auth/Auth';
 
 import './MobileHeader.scss';
+import { TopFilter } from '../../Filter/TopFilter';
 
 const MenuList = props => {
   const { setFilterParam, isAuth, setToken, setAuth, ...other } = props;
@@ -19,20 +20,15 @@ const MenuList = props => {
   const onExitModal = () => {
     setAuth(false);
     setToken('');
+    localStorage.removeItem('phone');
+    localStorage.removeItem('email');
+    localStorage.removeItem('first_name');
+    localStorage.removeItem('middle_name');
+    localStorage.removeItem('last_name');
+    localStorage.removeItem('searchData');
   };
 
-
-  const burger = [
-    'Слэбы',
-    'Полоса',
-    'Плитка',
-    'Ступени',
-    'Брусчатка',
-    'Мозайка из камня',
-    'Бордюр',
-    'Прочее'
-  ];
-
+  console.log(1231, props);
   const menu = (
     <Menu.Item key="1">
       <Auth isReg={isReg} setIsReg={setIsReg} setVisible={setVisible} />
@@ -69,7 +65,6 @@ const MenuList = props => {
         </>
       ) : (
         <>
-          <Menu.Item {...other} key="21"></Menu.Item>
           <MobileAuth
             visible={visible}
             setVisible={setVisible}
@@ -85,19 +80,12 @@ const MenuList = props => {
       )}
       <br />
       <br />
-      {burger.map((title, index) => {
-        return (
-          <Menu.Item {...other} key={`${index}`}>
-            <div
-              id={`${index}`}
-              className="second-line__filter-button"
-              onClick={setFilterParam}
-            >
-              {title}
-            </div>
-          </Menu.Item>
-        );
-      })}
+      <TopFilter
+        activeFields={props.active_fields}
+        upper_izd={props.upper_izd}
+        setUpper={props.setUpper}
+        setActiveFields={props.setActiveFields}
+      />
       <br />
       <br />
       <Menu.Item {...other} key="15">
@@ -109,7 +97,9 @@ const MenuList = props => {
 
 const mapStateToProps = store => {
   return {
-    isAuth: store.auth_data.isAuth
+    isAuth: store.auth_data.isAuth,
+    active_fields: store.filter_data.activeFields,
+    upper_izd: store.filter_data.upper_izd
   };
 };
 
@@ -120,6 +110,12 @@ const mapDispatchToProps = dispatch => {
     },
     setToken: data => {
       dispatch(authActions.setToken(data));
+    },
+    setUpper: data => {
+      dispatch(filterActions.setUpper(data));
+    },
+    setActiveFields: data => {
+      dispatch(filterActions.setActiveFields(data));
     }
   };
 };

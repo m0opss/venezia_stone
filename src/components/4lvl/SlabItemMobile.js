@@ -43,28 +43,48 @@ const GroupItem = props => {
           <p className="slab-items-group-item__line">
             Цена за м<sup>2</sup>:{' '}
             {props.cur === 'rub'
-              ? `${props.item.cntRUB}₽`
-              : props.cur === 'usd'
-              ? `${props.item.cntUSD}$`
-              : props.cur === 'eur'
-              ? `${props.item.cntEUR}€`
-              : ''}
+                ? `${
+                    props.item.cntRUB == 'По запросу'
+                      ? props.item.cntRUB
+                      : `${props.item.cntRUB}₽`
+                  }`
+                : props.cur === 'usd'
+                ? `${
+                    props.item.cntUSD == 'По запросу'
+                      ? props.item.cntUSD
+                      : `${props.item.cntUSD}$`
+                  }`
+                : props.cur === 'eur'
+                ? `${
+                    props.item.cntEUR == 'По запросу'
+                      ? props.item.cntEUR
+                      : `${props.item.cntEUR}€`
+                  }`
+                : ''}
           </p>
           <p className="slab-items-group-item__line">
             Стоимость:{' '}
-            {props.cur === 'rub'
-              ? `${(
-                  parseFloat(props.item.cntRUB) * parseFloat(props.item.le) * parseFloat(props.item.he)
-                ).toFixed(2)} ₽`
-              : props.cur === 'usd'
-              ? `${(
-                  parseFloat(props.item.cntUSD) * parseFloat(props.item.le) * parseFloat(props.item.he)
-                ).toFixed(2)} $`
-              : props.cur === 'eur'
-              ? `${(
-                  parseFloat(props.item.cntEUR)* parseFloat(props.item.le) * parseFloat(props.item.he)
-                ).toFixed(2)} €`
-              : '-'}
+            {props.item.cntRUB == 'По запросу'
+                ? props.item.cntRUB
+                : props.cur === 'rub'
+                ? `${(
+                    parseFloat(props.item.cntRUB) *
+                    parseFloat(props.item.le) *
+                    parseFloat(props.item.he)
+                  ).toFixed(2)} ₽`
+                : props.cur === 'usd'
+                ? `${(
+                    parseFloat(props.item.cntUSD) *
+                    parseFloat(props.item.le) *
+                    parseFloat(props.item.he)
+                  ).toFixed(2)} $`
+                : props.cur === 'eur'
+                ? `${(
+                    parseFloat(props.item.cntEUR) *
+                    parseFloat(props.item.le) *
+                    parseFloat(props.item.he)
+                  ).toFixed(2)} €`
+                : 1}
           </p>
         </div>
       </Link>
@@ -73,7 +93,7 @@ const GroupItem = props => {
 };
 
 const SlabItemMobile = props => {
-  const [selectedEl, setSelectedEl] = React.useState(props.item.prs[0]);
+  const [selectedEl, setSelectedEl] = React.useState(props.item[0]);
   const settings = {
     dots: true,
     infinite: true,
@@ -91,7 +111,7 @@ const SlabItemMobile = props => {
     <div className="slab-item-mobile">
       <ButtonsPanel images={images} />
       <Slider {...settings}>
-        {props.item.prs.map(item => (
+        {props.item.map(item => (
           <div
             key={item.ps}
             className="slab-item-carousel__item"
@@ -135,7 +155,7 @@ const SlabItemMobile = props => {
       </div>
 
       <div className="slab-items-group">
-        {props.item.prs.slice(0, loadCnt).map(item => (
+        {props.item.slice(0, loadCnt).map(item => (
           <GroupItem
             key={item.ps}
             type={props.type}

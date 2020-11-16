@@ -3,7 +3,7 @@ import data from 'components/Filter/filterData';
 export const headerCreator = (activeFilters, material, upper_izd) => {
   let headers = activeFilters;
   let materials = [];
-  let izdelie = [];
+  // let izdelie = upper_izd;
   let colors = [];
   let countries = [];
   let obrabotka = [];
@@ -16,11 +16,11 @@ export const headerCreator = (activeFilters, material, upper_izd) => {
     }
   });
 
-  if (
-    typeof headers['izdelie'] !== 'undefined' &&
-    headers['izdelie'].length > 0
-  )
-    izdelie = headers.izdelie;
+  // if (
+  //   typeof headers['izdelie'] !== 'undefined' &&
+  //   headers['izdelie'].length > 0
+  // )
+  //   izdelie = headers.izdelie;
   if (typeof headers['colors'] !== 'undefined' && headers['colors'].length > 0)
     colors = headers.colors;
   if (
@@ -45,11 +45,10 @@ export const headerCreator = (activeFilters, material, upper_izd) => {
     materials: materials,
     colors: colors,
     countries: countries,
-    izdelie: izdelie,
+    izdelie: upper_izd,
     obrabotka: obrabotka,
     thickness: thickness,
-    sklad: sklad,
-    upper_izd: upper_izd
+    sklad: sklad
   };
 };
 headerCreator;

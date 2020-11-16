@@ -5,6 +5,7 @@ import CropperPanel from 'components/Cropper/CropperPanel';
 import './MyCropper.scss';
 import './CropperScale.scss';
 import 'cropperjs/dist/cropper.css';
+import { isMobile, isTablet } from 'react-device-detect';
 
 const MyCropper = props => {
   const [cropData, setCropData] = React.useState('#');
@@ -18,18 +19,22 @@ const MyCropper = props => {
   };
   const pushOnServer = () => {
     if (typeof cropper !== 'undefined') {
-      localStorage.setItem('croppedImage', cropData);
-      console.log('data', cropData);
+      console.log(cropData);
+      // localStorage.setItem('croppedImage', cropData);
       // console.log(cropper.getCroppedCanvas().toDataURL());
     }
   };
 
   return (
-    <div className="dialog-cropper-crop">
-      <div className="cropper-crop">
+    <div
+      className={`dialog-cropper-crop ${
+        isMobile ? 'dialog-cropper-crop-tablet' : ''
+      }`}
+    >
+      <div className="cropper">
         <Cropper
           src={props.img}
-          style={{ height: 600 }}
+          style={isTablet ? { height: 400 } : isMobile ? { height: 300 } :  { height: 600 }}
           initialAspectRatio={1 / 1}
           initialAspectRatio={1}
           viewMode={2}

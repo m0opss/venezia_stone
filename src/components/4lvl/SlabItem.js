@@ -50,27 +50,47 @@ const SlabTableRow = props => {
           <div className="table-row__item table-row__item_l">
             <p>
               {props.cur === 'rub'
-                ? `${props.item.cntRUB}₽`
+                ? `${
+                    props.item.cntRUB == 'По запросу'
+                      ? props.item.cntRUB
+                      : `${props.item.cntRUB}₽`
+                  }`
                 : props.cur === 'usd'
-                ? `${props.item.cntUSD}$`
+                ? `${
+                    props.item.cntUSD == 'По запросу'
+                      ? props.item.cntUSD
+                      : `${props.item.cntUSD}$`
+                  }`
                 : props.cur === 'eur'
-                ? `${props.item.cntEUR}€`
+                ? `${
+                    props.item.cntEUR == 'По запросу'
+                      ? props.item.cntEUR
+                      : `${props.item.cntEUR}€`
+                  }`
                 : ''}
             </p>
           </div>
           <div className="table-row__item table-row__item_l">
             <p>
-              {props.cur === 'rub'
+              {props.item.cntRUB == 'По запросу'
+                ? props.item.cntRUB
+                : props.cur === 'rub'
                 ? `${(
-                    parseFloat(props.item.cntRUB) * parseFloat(props.item.le) * parseFloat(props.item.he)
+                    parseFloat(props.item.cntRUB) *
+                    parseFloat(props.item.le) *
+                    parseFloat(props.item.he)
                   ).toFixed(2)} ₽`
                 : props.cur === 'usd'
                 ? `${(
-                    parseFloat(props.item.cntUSD) * parseFloat(props.item.le) * parseFloat(props.item.he)
+                    parseFloat(props.item.cntUSD) *
+                    parseFloat(props.item.le) *
+                    parseFloat(props.item.he)
                   ).toFixed(2)} $`
                 : props.cur === 'eur'
                 ? `${(
-                    parseFloat(props.item.cntEUR) * parseFloat(props.item.le) * parseFloat(props.item.he)
+                    parseFloat(props.item.cntEUR) *
+                    parseFloat(props.item.le) *
+                    parseFloat(props.item.he)
                   ).toFixed(2)} €`
                 : 1}
             </p>
@@ -96,20 +116,20 @@ const SlabTableRow = props => {
 
 const SlabItem = props => {
   const [selectedEl, setSelectedEl] = React.useState(
-    props.item.prs.length > 0 ? props.item.prs[0] : {}
+    props.item.length > 0 ? props.item[0] : {}
   );
   const [loadCnt, setLoadCnt] = React.useState(12);
   const loadMore = () => {
     setLoadCnt(loadCnt => loadCnt + 12);
   };
-
+  console.log(props.item[0]);
   let images = [];
   if (isBrowser) {
     return (
       <div className="slab-item">
         <div className="slab-item-info">
           <div className="slab-item-info__top">
-            <h1 className="slab-item-info__title">{props.item.name}</h1>
+            <h1 className="slab-item-info__title">{props.item[0].itms_name}</h1>
             <ButtonsPanel images={images} />
           </div>
           <div className="slab-item-info__bottom">
@@ -118,7 +138,7 @@ const SlabItem = props => {
                 scrollStyle="slab-item-info-scroll"
                 selectItem={setSelectedEl}
                 selectedItem={selectedEl}
-                elements={props.item.prs}
+                elements={props.item}
               />
             </div>
             <div className="slab-item-info__right-block">
@@ -132,7 +152,8 @@ const SlabItem = props => {
                   <OptionLine
                     // lamp = {selectedEl.} поле для просветленного фото
                     style={{ width: 'unset', marginBottom: 'unset' }}
-                    img={selectedEl.photobl}
+                    img={`data:image/jpg;base64,${selectedEl.photo_bytes}`}
+                    // img={selectedEl.photobl}
                   />
                 </div>
               </div>
@@ -207,18 +228,20 @@ const SlabItem = props => {
               <img src={basket} />
             </div>
           </div>
-          {props.item.prs.length > 0 ? (
-            props.item.prs.slice(0, loadCnt).map(item => (
-              <SlabTableRow
-                isAuth={props.isAuth}
-                cur={props.cur}
-                key={item.ps}
-                type={props.type}
-                item={item}
-                url={props.url}
-                addGood={props.addGood}
-              />
-            ))
+          {props.item.length > 0 ? (
+            props.item
+              .slice(0, loadCnt)
+              .map(item => (
+                <SlabTableRow
+                  isAuth={props.isAuth}
+                  cur={props.cur}
+                  key={item.ps}
+                  type={props.type}
+                  item={item}
+                  url={props.url}
+                  addGood={props.addGood}
+                />
+              ))
           ) : (
             <></>
           )}
