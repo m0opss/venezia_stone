@@ -3,6 +3,7 @@ export const SEL_MAT = 'SELECT_MATERIAL';
 
 const userActions = {
   setUserInfo: data => {
+    console.log(data)
     localStorage.setItem('email', data.email)
     localStorage.setItem('first_name', data.first_name)
     localStorage.setItem('last_name', data.last_name)
@@ -14,7 +15,6 @@ const userActions = {
     };
   },
   setUserName: data => {
-
     return {
       type: 'SET_USER_NAME',
       payload: data

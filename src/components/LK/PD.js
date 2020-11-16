@@ -10,10 +10,13 @@ import {
   isBrowser
 } from 'react-device-detect';
 
+import axios from 'axios';
+
 const PersonalData = props => {
+  console.log(props);
   const [ronly, set_ronly] = React.useState(true);
   const [canceled, setCanceled] = React.useState(false);
-  
+
   const [pd_lname, set_pd_lname] = React.useState('');
   const [pd_fname, set_pd_fname] = React.useState('');
   const [pd_mname, set_pd_mname] = React.useState('');
@@ -29,17 +32,52 @@ const PersonalData = props => {
   };
 
   useEffect(() => {
-    setDefaultVal()
-  }, [canceled])
-  
-  
-  const onClickSave = () => {};
-  
-  const onClickCancel = () => {
+    setDefaultVal();
+  }, [canceled]);
+
+  const onClickSave = () => {
     console.log(pd_lname)
-    setCanceled(!canceled)
+    console.log(pd_fname)
+    console.log(pd_mname)
+    console.log(pd_phone)
+    console.log(pd_email)
+    axios
+      .post(`https://catalog-veneziastone.ru/account/change_profile/`, {
+        token: props.token,
+        last_name: pd_lname,
+        first_name: pd_fname,
+        middle_name: pd_mname,
+        phone: pd_phone,
+        email: pd_email
+      })
+      .then(res => {
+        
+        props.setUserInfo({
+          last_name: pd_lname,
+          first_name: pd_fname,
+          middle_name: pd_mname,
+          phone: pd_phone,
+          email: pd_email
+        });
+      })
+      .catch(err => {
+        if (err.response) {
+          // client received an error response (5xx, 4xx)
+          console.log(1, err.response);
+        } else if (err.request) {
+          // client never received a response, or request never left
+          console.log(2, err.request);
+        } else {
+          // anything else
+          console.log(3, err);
+        }
+      });
+  };
+
+  const onClickCancel = () => {
+    setCanceled(!canceled);
     set_pd_lname(props.user_info.last_name);
-    setDefaultVal()
+    setDefaultVal();
     set_ronly(true);
   };
   const onClickEdit = () => {
@@ -56,7 +94,7 @@ const PersonalData = props => {
                 type="text"
                 className="-readonly"
                 placeholder="Фамилия"
-                defaultValue={pd_lname}
+                value={pd_lname}
                 readOnly
               />
             ) : (
@@ -73,7 +111,7 @@ const PersonalData = props => {
                 type="text"
                 className="-readonly"
                 placeholder="Имя"
-                defaultValue={pd_fname}
+                value={pd_fname}
                 readOnly
               />
             ) : (
@@ -86,7 +124,7 @@ const PersonalData = props => {
                 type="text"
                 className="-readonly"
                 placeholder="Отчество"
-                defaultValue={pd_mname}
+                value={pd_mname}
                 readOnly
               />
             ) : (
@@ -103,7 +141,7 @@ const PersonalData = props => {
                 type="text"
                 className="-readonly"
                 placeholder="Телефон"
-                defaultValue={pd_phone}
+                value={pd_phone}
                 readOnly
               />
             ) : (
@@ -126,16 +164,16 @@ const PersonalData = props => {
       ) : (
         <>
           <div className="lk__pd-line">
-            <input type="text" placeholder="Фамилия" defaultValue={pd_lname} />
+            <input type="text" placeholder="Фамилия" value={pd_lname} />
           </div>
           <div className="lk__pd-line">
-            <input type="text" placeholder="Имя" defaultValue={pd_fname} />
+            <input type="text" placeholder="Имя" value={pd_fname} />
           </div>
           <div className="lk__pd-line">
-            <input type="text" placeholder="Отчество" defaultValue={pd_mname} />
+            <input type="text" placeholder="Отчество" value={pd_mname} />
           </div>
           <div className="lk__pd-line">
-            <input type="text" placeholder="Телефон" defaultValue={pd_phone} />
+            <input type="text" placeholder="Телефон" value={pd_phone} />
           </div>
           <div className="lk__pd-line">
             <input
@@ -149,8 +187,13 @@ const PersonalData = props => {
       )}
 
       {isBrowser ? (
-        <div className="lk__pd-edit-buttons" onClick={onClickSave}>
-          <div className="lk__pd-edit-button -bordered -hovered">Сохранить</div>
+        <div className="lk__pd-edit-buttons">
+          <div
+            className="lk__pd-edit-button -bordered -hovered"
+            onClick={onClickSave}
+          >
+            Сохранить
+          </div>
           <div className="lk__pd-edit-button" onClick={onClickEdit}>
             <img src={edit} />
           </div>
@@ -159,8 +202,13 @@ const PersonalData = props => {
           </div>
         </div>
       ) : (
-        <div className="lk__pd-edit-buttons" onClick={onClickSave}>
-          <div className="lk__pd-edit-button -bordered -hovered">Сохранить</div>
+        <div className="lk__pd-edit-buttons">
+          <div
+            className="lk__pd-edit-button -bordered -hovered"
+            onClick={onClickSave}
+          >
+            Сохранить
+          </div>
         </div>
       )}
     </div>

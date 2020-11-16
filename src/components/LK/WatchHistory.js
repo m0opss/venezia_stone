@@ -9,8 +9,9 @@ const Izbrannoe = props => {
 
   let isSubscr = true;
   React.useEffect(() => {
+    console.log(props.token)
     axios
-      .post(`https://catalog-veneziastone.ru/api_v0/showFavourite/`, {
+      .post(`https://catalog-veneziastone.ru/api_v0/showViewed/`, {
         token: props.token
       })
       .then(response => {

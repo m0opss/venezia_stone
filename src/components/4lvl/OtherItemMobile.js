@@ -173,8 +173,8 @@ const OtherItemTablet = props => {
           <img src={book} />
         </div>
         <div className="slab-item-mobile__main-img">
-          {/* <img src={selectedEl.photobl} /> */}
-          <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
+          <img src={selectedEl.photobl} />
+          {/* <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" /> */}
         </div>
       </div>
 

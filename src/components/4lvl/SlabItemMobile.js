@@ -17,7 +17,7 @@ const GroupItem = props => {
       <div className="slab-items-group-item__img">
         <img
           className="slab-items-group-item__img-main"
-          src={props.item.photobl}
+          src={props.item.photo_product}
         />
         {props.isAuth ? (
           <div className="slab-items-group-item__img-icon -icons-1">
@@ -54,15 +54,15 @@ const GroupItem = props => {
             Стоимость:{' '}
             {props.cur === 'rub'
               ? `${(
-                  parseFloat(props.item.cntRUB) * parseFloat(props.item.os)
+                  parseFloat(props.item.cntRUB) * parseFloat(props.item.le) * parseFloat(props.item.he)
                 ).toFixed(2)} ₽`
               : props.cur === 'usd'
               ? `${(
-                  parseFloat(props.item.cntUSD) * parseFloat(props.item.os)
+                  parseFloat(props.item.cntUSD) * parseFloat(props.item.le) * parseFloat(props.item.he)
                 ).toFixed(2)} $`
               : props.cur === 'eur'
               ? `${(
-                  parseFloat(props.item.cntEUR) * parseFloat(props.item.os)
+                  parseFloat(props.item.cntEUR)* parseFloat(props.item.le) * parseFloat(props.item.he)
                 ).toFixed(2)} €`
               : '-'}
           </p>
@@ -82,14 +82,11 @@ const SlabItemMobile = props => {
     slidesToScroll: 1
   };
 
-  let images = [
-    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
-    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
-    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
-    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg',
-    'https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg'
-  ];
-
+  let images = [];
+  const [loadCnt, setLoadCnt] = React.useState(12);
+  const loadMore = () => {
+    setLoadCnt(loadCnt => loadCnt + 12);
+  };
   return (
     <div className="slab-item-mobile">
       <ButtonsPanel images={images} />
@@ -102,7 +99,7 @@ const SlabItemMobile = props => {
           >
             <img
               className={`${selectedEl.ps == item.ps ? 'selected-img' : ''}`}
-              src={item.photobl}
+              src={item.photo_product}
             />
           </div>
         ))}
@@ -127,7 +124,7 @@ const SlabItemMobile = props => {
               <></>
             )}
           </div>
-          <img src={selectedEl.photobl} />
+          <img src={selectedEl.photo_product} />
         </div>
       </div>
       <ColorRange colors={selectedEl} />
@@ -138,7 +135,7 @@ const SlabItemMobile = props => {
       </div>
 
       <div className="slab-items-group">
-        {props.item.prs.map(item => (
+        {props.item.prs.slice(0, loadCnt).map(item => (
           <GroupItem
             key={item.ps}
             type={props.type}
@@ -147,6 +144,9 @@ const SlabItemMobile = props => {
             cur={props.cur}
           />
         ))}
+      </div>
+      <div className="button-text button load-more" onClick={loadMore}>
+        Загрузить еще
       </div>
     </div>
   );

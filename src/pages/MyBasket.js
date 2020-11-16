@@ -28,13 +28,13 @@ const MyBasket = props => {
   useEffect(() => {
     setAllSum(cntSumm(basket));
     setAllKw(cntKw(basket));
-  }, [basket]);
+  }, [basket, props.cur]);
 
   const cntKw = basket => {
     let res = 0;
     basket.map(item => {
       if (item.type == 'Слэбы' || item.type == 'Полоса') {
-        res += parseFloat(item.os);
+        res += parseFloat(item.le) * parseFloat(item.he);
       } else {
         res += parseFloat(item.S);
       }
@@ -133,7 +133,16 @@ const MyBasket = props => {
             <p>
               Итого м<sup>2</sup>: {all_kw}
             </p>
-            <p>Итого : {all_sum} ₽</p>
+            <p>
+              Итого : {all_sum}
+              {props.cur === 'rub'
+                ? '₽'
+                : props.cur === 'usd'
+                ? '$'
+                : props.cur === 'eur'
+                ? '€'
+                : ''}
+            </p>
           </div>
         </div>
         <div className="basket__buttons">

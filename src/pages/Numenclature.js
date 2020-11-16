@@ -12,9 +12,9 @@ import listIcon from 'images/str.png';
 import pltk from 'images/pltk.png';
 import listIcon_a from 'images/str_a.png';
 import pltk_a from 'images/pltk_a.png';
-
+import Preloader from 'components/Preloader/Preloader';
 import './Numenclature.scss';
-import {headerCreator} from 'components/Filter/headerCreator';
+import { headerCreator } from 'components/Filter/headerCreator';
 import NumenclatureItem from '../components/Content/NumenclatureItem/NumenclatureItem';
 import Filter from 'components/Filter/Filter';
 import {
@@ -30,9 +30,11 @@ const Numenclature = props => {
   const [defNum, setdefNum] = React.useState([]);
   const [sortOn, setSortOn] = React.useState(false);
   const [style_pltk, setHover_pltk] = React.useState(true);
+  const [isLoading, setLoading] = React.useState(true);
   const [num_groups_items, setNum_groups_items] = React.useState(
     'num-gr-items-group'
   );
+  const [loadCnt, setLoadCnt] = React.useState(12);
 
   React.useEffect(() => {
     props.setLvl(3);
@@ -54,6 +56,10 @@ const Numenclature = props => {
         .then(response => {
           setNumemclature(response.data.grs[0].itms);
           setdefNum(response.data.grs[0].itms);
+          setLoading(false);
+          document
+            .getElementById('Все')
+            .setAttribute('style', 'color: #c98505');
         })
         .catch(err => {
           if (err.response) {
@@ -69,7 +75,6 @@ const Numenclature = props => {
           }
         });
     }
-    document.getElementById('Все').setAttribute('style', 'color: #c98505');
     return () => (isSubscr = false);
   }, [props.activeFilters, props.upper_izd]);
 
@@ -123,91 +128,95 @@ const Numenclature = props => {
     }
   };
 
-  const tr = data => {
-    console.log('nmc', data);
-    setNumemclature(data);
+  const loadMore = () => {
+    setLoadCnt(loadCnt => loadCnt + 12);
   };
 
   return (
     <>
       {isTablet || isBrowser ? <Filter /> : <></>}
       {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
-      <div
-        className={
-          isMobile && !isTablet
-            ? `num-options num-options-mobile`
-            : 'num-options'
-        }
-      >
+      <Preloader isLoading={isLoading}>
         <div
           className={
-            isMobile && !isTablet ? 'filter-options-mobile' : `filter-options`
+            isMobile && !isTablet
+              ? `num-options num-options-mobile`
+              : 'num-options'
           }
         >
-          <div id="Все" onClick={filterIzd}>
-            Все
+          <div
+            className={
+              isMobile && !isTablet ? 'filter-options-mobile' : `filter-options`
+            }
+          >
+            <div id="Все" onClick={filterIzd}>
+              Все
+            </div>
+            <div id="Слэбы" onClick={filterIzd}>
+              Слэбы
+            </div>
+            <div id="Полоса" onClick={filterIzd}>
+              Полоса
+            </div>
+            <div id="Плитка" onClick={filterIzd}>
+              Плитка
+            </div>
+            <div id="Другие" onClick={filterIzd}>
+              Другие изделия
+            </div>
           </div>
-          <div id="Слэбы" onClick={filterIzd}>
-            Слэбы
-          </div>
-          <div id="Полоса" onClick={filterIzd}>
-            Полоса
-          </div>
-          <div id="Плитка" onClick={filterIzd}>
-            Плитка
-          </div>
-          <div id="Другие" onClick={filterIzd}>
-            Другие изделия
-          </div>
-        </div>
 
-        <div className="other-options">
-          <Valute />
-          <Sort
-            defArr={defNum}
-            arr={numenclature}
-            setArr={setNumemclature}
-            on={sortOn}
-            setSortOn={setSortOn}
-          />
-          {isMobile && !isTablet ? (
-            <></>
-          ) : (
-            <>
-              <div className="" onClick={() => toggleStyle_pltk()}>
-                <img src={style_pltk ? pltk_a : pltk} />
-              </div>
-              <div className="" onClick={() => toggleStyle_list()}>
-                <img src={style_pltk ? listIcon : listIcon_a} />
-              </div>
-            </>
-          )}
+          <div className="other-options">
+            <Valute />
+            <Sort
+              defArr={defNum}
+              arr={numenclature}
+              setArr={setNumemclature}
+              on={sortOn}
+              setSortOn={setSortOn}
+            />
+            {isMobile && !isTablet ? (
+              <></>
+            ) : (
+              <>
+                <div className="" onClick={() => toggleStyle_pltk()}>
+                  <img src={style_pltk ? pltk_a : pltk} />
+                </div>
+                <div className="" onClick={() => toggleStyle_list()}>
+                  <img src={style_pltk ? listIcon : listIcon_a} />
+                </div>
+              </>
+            )}
+          </div>
         </div>
-      </div>
-      <div className={num_groups_items}>
-        <div
-          className="num-items-group-col num-gr-item-root num-item"
-          style={style_pltk ? { display: 'none' } : {}}
-        >
-          <div style={{ height: 'unset' }}>Фото</div>
-          <div>Название</div>
-          <div>Пачек</div>
-          <div>Слэбов</div>
-          <div>Общая площадь</div>
-          <div>Цена от</div>
-          <div></div>
-        </div>
+        <div className={num_groups_items}>
+          <div
+            className="num-items-group-col num-gr-item-root num-item"
+            style={style_pltk ? { display: 'none' } : {}}
+          >
+            <div style={{ height: 'unset' }}>Фото</div>
+            <div>Название</div>
+            <div>Пачек</div>
+            <div>Слэбов</div>
+            <div>Общая площадь</div>
+            <div>Цена от</div>
+            <div></div>
+          </div>
 
-        {numenclature.map(item => (
-          <NumenclatureItem
-            pltk={style_pltk}
-            cur={props.cur}
-            key={item.ps}
-            link={props.match.url + '/' + item.ps}
-            item={item}
-          />
-        ))}
-      </div>
+          {numenclature.slice(0, loadCnt).map(item => (
+            <NumenclatureItem
+              pltk={style_pltk}
+              cur={props.cur}
+              key={item.ps}
+              link={props.match.url + '/' + item.ps}
+              item={item}
+            />
+          ))}
+        </div>
+        <div className="button-text button load-more" onClick={loadMore}>
+          Загрузить еще
+        </div>
+      </Preloader>
     </>
   );
 };

@@ -6,6 +6,7 @@ import materialActions from '../actions/materialAction';
 import dataActions from 'actions/dataAction';
 import filterActions from 'actions/filterActions';
 import BackArrow from 'components/BackArrow/BackArrow';
+import Preloader from 'components/Preloader/Preloader';
 import listIcon from 'images/str.png';
 import pltk from 'images/pltk.png';
 import listIcon_a from 'images/str_a.png';
@@ -18,7 +19,7 @@ import NumGroupItem from 'components/Content/NumGroupItem/NumGroupItem';
 import './NumGroups.scss';
 import Filter from 'components/Filter/Filter';
 
-import {headerCreator} from 'components/Filter/headerCreator';
+import { headerCreator } from 'components/Filter/headerCreator';
 
 import {
   MobileView,
@@ -32,18 +33,24 @@ const NumGroups = props => {
   const [numGroups, setNumGroups] = React.useState([]);
   const [defGroups, setdefNumGroups] = React.useState([]);
   const [sortOn, setSortOn] = React.useState(false);
-
+  const [isLoading, setLoading] = React.useState(true);
   const [style_pltk, setHover_pltk] = React.useState(true);
   const [num_groups_items, setNum_groups_items] = React.useState(
     'num-gr-items-group'
   );
+
+  const [loadCnt, setLoadCnt] = React.useState(12);
 
   React.useEffect(() => {
     props.setLvl(2);
     window.scrollTo(0, 0);
     let isSubscr = true;
     if (isSubscr) {
-      let header = headerCreator(props.activeFilters, props.match.params.material, props.upper_izd)
+      let header = headerCreator(
+        props.activeFilters,
+        props.match.params.material,
+        props.upper_izd
+      );
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -52,6 +59,7 @@ const NumGroups = props => {
           groups: []
         })
         .then(response => {
+          setLoading(false);
           setNumGroups(response.data.mts[0].grs);
           setdefNumGroups(response.data.mts[0].grs);
         })
@@ -83,55 +91,64 @@ const NumGroups = props => {
     setNum_groups_items('num-gr-items-group-list');
   };
 
+  const loadMore = () => {
+    setLoadCnt(loadCnt => loadCnt + 12);
+  };
+
   return (
     <>
       {isTablet || isBrowser ? <Filter /> : <></>}
       {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
-      <div className="num-gr-options">
-        <Valute />
-        <Sort
-          defArr={defGroups}
-          arr={numGroups}
-          setArr={setNumGroups}
-          on={sortOn}
-          setSortOn={setSortOn}
-        />
-        {isMobile && !isTablet ? (
-          <></>
-        ) : (
-          <>
-            <div className="" onClick={() => toggleStyle_pltk()}>
-              <img src={style_pltk ? pltk_a : pltk} />
-            </div>
-            <div className="" onClick={() => toggleStyle_list()}>
-              <img src={style_pltk ? listIcon : listIcon_a} />
-            </div>
-          </>
-        )}
-      </div>
-
-      <div className={num_groups_items}>
-        <div
-          className="num-gr-items-group-col num-gr-item-root"
-          style={style_pltk ? { display: 'none' } : {}}
-        >
-          <p style={{ height: 'unset' }}>Фото</p>
-          <p>Название</p>
-          <p>Количество SKU</p>
-          <p>Общая площадь</p>
-          <p>Цена от</p>
-          <p></p>
-        </div>
-        {numGroups.map(item => (
-          <NumGroupItem
-            pltk={style_pltk}
-            key={item.ps}
-            link={props.match.url + '/' + item.ps}
-            item={item}
-            cur={props.cur}
+      <Preloader isLoading={isLoading}>
+        <div className="num-gr-options">
+          <Valute />
+          <Sort
+            defArr={defGroups}
+            arr={numGroups}
+            setArr={setNumGroups}
+            on={sortOn}
+            setSortOn={setSortOn}
           />
-        ))}
-      </div>
+          {isMobile && !isTablet ? (
+            <></>
+          ) : (
+            <>
+              <div className="" onClick={() => toggleStyle_pltk()}>
+                <img src={style_pltk ? pltk_a : pltk} />
+              </div>
+              <div className="" onClick={() => toggleStyle_list()}>
+                <img src={style_pltk ? listIcon : listIcon_a} />
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className={num_groups_items}>
+          <div
+            className="num-gr-items-group-col num-gr-item-root"
+            style={style_pltk ? { display: 'none' } : {}}
+          >
+            <p style={{ height: 'unset' }}>Фото</p>
+            <p>Название</p>
+            <p>Количество SKU</p>
+            <p>Общая площадь</p>
+            <p>Цена от</p>
+            <p></p>
+          </div>
+          {numGroups.slice(0, loadCnt).map(item => (
+            <NumGroupItem
+              pltk={style_pltk}
+              key={item.ps}
+              link={props.match.url + '/' + item.ps}
+              item={item}
+              cur={props.cur}
+            />
+          ))}
+        </div>
+        <div className="button-text button load-more" onClick={loadMore}>
+          Загрузить еще
+        </div>
+      </Preloader>
     </>
   );
 };

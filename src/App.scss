@@ -42,6 +42,7 @@ a {
   box-sizing: border-box;
   box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .button-text {
@@ -62,4 +63,16 @@ input[type='number'] {
 .image-gallery-left-nav .image-gallery-svg,
 .image-gallery-right-nav .image-gallery-svg {
   width: 30px;
+}
+.load-more {
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  margin: 15px auto;
+  
+  width: 60%;
+  padding: 15px;
+  &:hover {
+    color: white;
+    background-color: #be9344;
+  }
 }

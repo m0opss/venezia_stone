@@ -15,10 +15,10 @@ import mail from 'images/mail.svg';
 import facebook from 'images/facebook.svg';
 import pdf from 'images/pdf.svg';
 
+import pdf_file from 'images/1.pdf'
 import './OptionLine.scss';
 
 const OptionLine = props => {
-  console.log(props.img)
   const [isOpen, setOpen] = React.useState(false);
   const [isOpenBook, setOpenBook] = React.useState(false);
   const [dropVisible, setDropVisible] = React.useState(false);
@@ -34,27 +34,27 @@ const OptionLine = props => {
   };
   const menu = (
     <div className="soc-drop">
-      <Link className="soc-drop__item" to="/">
+      <a className="soc-drop__item" href="/">
         <img src={mail} />
-      </Link>
-      <Link className="soc-drop__item" to="/">
+      </a>
+      <a className="soc-drop__item" href={pdf_file} open target="_blank">
         <img src={pdf} />
-      </Link>
-      <Link className="soc-drop__item" to="/">
+      </a>
+      <a className="soc-drop__item" href="https://www.viber.com/ru/">
         <img src={viber} />
-      </Link>
-      <Link className="soc-drop__item" to="/">
+      </a>
+      <a className="soc-drop__item" href="https://www.vk.com">
         <img src={vk} />
-      </Link>
-      <Link className="soc-drop__item" to="/">
+      </a>
+      <a className="soc-drop__item" href="https://www.facebook.com/">
         <img src={facebook} />
-      </Link>
-      <Link className="soc-drop__item" to="/">
+      </a>
+      <a className="soc-drop__item" href="https://web.telegram.org/#/im">
         <img src={telegram} />
-      </Link>
-      <Link className="soc-drop__item" to="/">
+      </a>
+      <a className="soc-drop__item" href="https://www.whatsapp.com/?lang=ru">
         <img src={whatsapp} />
-      </Link>
+      </a>
     </div>
   );
   return (

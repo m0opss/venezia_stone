@@ -20,7 +20,7 @@ const ScrollImage = props => {
         <img
           className={`${active ? 'selected-img' : ''}`}
           id={props.id}
-          src={props.photobl ? props.photobl : ''}
+          src={props.item.photo_product ? props.item.photo_product : ''}
         />
       </div>
     );

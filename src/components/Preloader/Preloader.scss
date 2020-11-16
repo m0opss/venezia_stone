@@ -1,0 +1,10 @@
+.preloader-wrapper{
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .ant-spin {
+    color: #be9344
+  }
+}

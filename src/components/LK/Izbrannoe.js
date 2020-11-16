@@ -6,7 +6,7 @@ import axios from 'axios';
 const Izbrannoe = props => {
   const [izbr, setIzbr] = React.useState([]);
   const [defIzbr, setDefIzbr] = React.useState([]);
-
+  console.log(props)
   let isSubscr = true;
   React.useEffect(() => {
     axios

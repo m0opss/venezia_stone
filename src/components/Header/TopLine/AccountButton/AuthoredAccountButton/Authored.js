@@ -31,7 +31,6 @@ const Authored = props => {
     setFName(localStorage.getItem('first_name'));
     setLName(localStorage.getItem('last_name'));
     setMName(localStorage.getItem('middle_name'));
-    setMName(localStorage.getItem('middle_name'));
     let name;
     if (
       createUserName({

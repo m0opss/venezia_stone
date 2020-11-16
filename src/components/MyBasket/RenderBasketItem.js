@@ -18,7 +18,8 @@ const RenderBasketItem = props => {
       <div className="basket-item__name">{props.item.name}</div>
       <div className="basket-item__type">{props.type}</div>
       <div className="basket-item__info">
-        <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" />
+        {/* <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" /> */}
+        <img src={props.item.photo_product} />
         {props.type != 'Слэбы' && props.type != 'Полоса' ? (
           <>
             <div className="basket-item__text">

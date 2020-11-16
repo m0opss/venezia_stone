@@ -4,10 +4,34 @@ import { Link } from 'react-router-dom';
 import filterActions from 'actions/filterActions';
 
 export const TopFilter = props => {
+  const [activeFilter, setActiveFilter] = React.useState('');
+
   const setFilterParam = e => {
-    console.log(e.target.id)
-    props.setUpper([e.target.id]);
-    props.f_share()
+    if (e.target.id == activeFilter) {
+      setActiveFilter('');
+      props.setUpper([]);
+      props.f_share();
+      document.getElementById(e.target.id).setAttribute('style', 'color: black');
+    } else {
+      setActiveFilter(e.target.id);
+      props.setUpper([e.target.id]);
+      props.f_share();
+      [
+        'Ступени',
+        'Слэбы',
+        'Полоса',
+        'Плитка',
+        'Брусчатка',
+        'Мозайка из камня',
+        'Бордюр',
+        'Прочее'
+      ].map(val => {
+        document.getElementById(val).setAttribute('style', 'color: black');
+        if (e.target.id === val) {
+          document.getElementById(val).setAttribute('style', 'color: #c98505');
+        }
+      });
+    }
   };
 
   return (
@@ -15,7 +39,7 @@ export const TopFilter = props => {
       <div
         id="Слэбы"
         className="second-line__filter-button"
-        onClick={(e) => setFilterParam(e)}
+        onClick={e => setFilterParam(e)}
       >
         Слэбы
       </div>
@@ -78,13 +102,13 @@ export const TopFilter = props => {
 const mapStateToProps = store => {
   return {
     f_share: store.filter_data.f_share,
-    prevState: store.filter_data,
+    prevState: store.filter_data
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setUpper: (data) => {
+    setUpper: data => {
       dispatch(filterActions.setUpper(data));
     }
   };

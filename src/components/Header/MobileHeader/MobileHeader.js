@@ -36,7 +36,7 @@ const MobileHeader = props => {
   return (
     <div className="top-line--mobile">
       <Logo />
-      <BasketButton basket_counter="2" />
+      <BasketButton />
       {props.isAuth ? (
         <Link to="/izbrannoe" className="izbrannoe-button">
           <img className="-icon" src={izbr}  />

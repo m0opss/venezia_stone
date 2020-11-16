@@ -11,20 +11,7 @@ import {
   isMobile
 } from 'react-device-detect';
 
-const imagess = [
-  {
-    original: 'https://picsum.photos/id/1018/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1018/250/150/'
-  },
-  {
-    original: 'https://picsum.photos/id/1015/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1015/250/150/'
-  },
-  {
-    original: 'https://picsum.photos/id/1019/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1019/250/150/'
-  }
-];
+
 
 const ButtonsPanel = props => {
   const [visiblePhotos, setVisiblePhotos] = React.useState(false);
@@ -33,8 +20,7 @@ const ButtonsPanel = props => {
   const [visibleOrder, setVisibleOrder] = React.useState(false);
   
   const changePhotoCancel = () => {
-    console.log(123)
-    setVisiblePhotos(false);
+    setVisiblePhotos(!visiblePhotos);
   };
 
   const changeCommentButton = () => {
@@ -47,7 +33,7 @@ const ButtonsPanel = props => {
   const PhotoContent = () => {
     return (
       <div className="buttons-panel__modal buttons-panel__modal-photos">
-        <ImageGallery items={imagess} thumbnailPosition="right" />
+        <ImageGallery items={props.images} thumbnailPosition="right" />
       </div>
     );
   };
@@ -69,7 +55,7 @@ const ButtonsPanel = props => {
         onClick={() => setVisiblePhotos(true)}
       >
         Больше фото
-        <MyModal visible={visiblePhotos} onCancel={() => changePhotoCancel()}>
+        <MyModal visible={visiblePhotos} onCancel={changePhotoCancel}>
           <PhotoContent />
         </MyModal>
       </div>

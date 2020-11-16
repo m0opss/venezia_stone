@@ -35,7 +35,6 @@ const BasketItem = props => {
     props.setBasket(newBasket);
   }, [cnt, kw, sum]);
 
-  // props.setCntSum([...props.cntSum, sum])
   const onChangeVal = e => {
     if (e.target.id == 'cnt') {
       let val = e.target.value;
@@ -67,7 +66,6 @@ const BasketItem = props => {
       cur={props.cur}
       deleteGood={props.deleteGood}
       onChangeVal={onChangeVal}
-      // editGood={props.editGood}
     />
   );
 };

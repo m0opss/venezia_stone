@@ -1,4 +1,5 @@
-const data = {
+const data = 
+{
   titles: {
     materials: 'Материал',
     izdelie: 'Изделие',

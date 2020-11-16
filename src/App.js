@@ -19,31 +19,7 @@ const App = props => {
   React.useEffect(() => {
     let isSubscr = true;
     if (isSubscr) {
-      if (props.isAuth && localStorage.getItem('auth_token') !== null) {
-        axios
-          .post(
-            `https://catalog-veneziastone.ru/api_v0/showSelectedFavourite/`,
-            {
-              token: localStorage.getItem('auth_token')
-            }
-          )
-          .then(response => {
-            props.setIzbrPs(response.data.products);
-            localStorage.setItem('selectedFavourite', JSON.stringify(response.data.products))
-          })
-          .catch(err => {
-            if (err.response) {
-              // client received an error response (5xx, 4xx)
-              console.log(1, err.response);
-              // props.setAuth(false);
-            } else if (err.request) {
-              // client never received a response, or request never left
-              console.log(2, err.request);
-            } else {
-              // anything else
-              console.log(3, err);
-            }
-          });
+      if (localStorage.getItem('auth_token') !== null) {
         axios
           .post('https://catalog-veneziastone.ru/account/get_user_info/', {
             token: localStorage.getItem('auth_token')
@@ -55,9 +31,34 @@ const App = props => {
           })
           .catch(err => {
             if (err.response) {
-              // client received an error response (5xx, 4xx)
               console.log(1, err.response);
               props.setAuth(false);
+            } else if (err.request) {
+              console.log(2, err.request);
+            } else {
+              console.log(3, err);
+            }
+          });
+      }
+      if (props.isAuth) {
+        axios
+          .post(
+            `https://catalog-veneziastone.ru/api_v0/showSelectedFavourite/`,
+            {
+              token: localStorage.getItem('auth_token')
+            }
+          )
+          .then(response => {
+            props.setIzbrPs(response.data.products);
+            localStorage.setItem(
+              'selectedFavourite',
+              JSON.stringify(response.data.products)
+            );
+          })
+          .catch(err => {
+            if (err.response) {
+              // client received an error response (5xx, 4xx)
+              console.log(1, err.response);
               // props.setAuth(false);
             } else if (err.request) {
               // client never received a response, or request never left
@@ -74,7 +75,7 @@ const App = props => {
 
   return (
     <HashRouter>
-      <Header isAuth={props.isAuth}/>
+      <Header isAuth={props.isAuth} />
       <Content data={props.data} />
       <Footer />
     </HashRouter>

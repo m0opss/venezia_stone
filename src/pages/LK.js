@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import authActions from 'actions/authActions';
+import userActions from 'actions/userActions';
 import PersonalData from 'components/LK/PD';
 import Izbrannoe from 'components/LK/Izbrannoe';
 import BackArrow from 'components/BackArrow/BackArrow';
@@ -25,17 +26,19 @@ const LK = props => {
 
   if (props.match.url === '/personal-data') {
     pd = true;
-    modul = <PersonalData user_info={props.user_info} />;
+    modul = (
+      <PersonalData token={props.auth_token} setUserInfo={props.setUserInfo} user_info={props.user_info} />
+    );
     title = <>Персональные данные</>;
   }
   if (props.match.url === '/history') {
     h = true;
-    modul = <WatchHistory />;
+    modul = <WatchHistory token={props.auth_token} />;
     title = <>История просмотров</>;
   }
   if (props.match.url === '/izbrannoe') {
     i = true;
-    modul = <Izbrannoe token={props.auth_token}/>;
+    modul = <Izbrannoe token={props.auth_token} />;
     title = <>Избранное</>;
   }
 
@@ -68,7 +71,7 @@ const LK = props => {
           </div>
         </BrowserView>
         <MobileView>
-          <BackArrow history={props.history}/>
+          <BackArrow history={props.history} />
           <div className="lk-top -mobile">
             <h1>{title}</h1>
           </div>
@@ -94,6 +97,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setAuth: data => {
       dispatch(authActions.setAuth(data));
+    },
+    setUserInfo: data => {
+      dispatch(userActions.setUserInfo(data));
     },
     setToken: data => {
       dispatch(authActions.setToken(data));

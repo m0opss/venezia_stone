@@ -84,7 +84,7 @@
   }
 }
 .MuiTreeItem-root.Mui-expanded > .MuiTreeItem-content .MuiTreeItem-label {
-  border: unset;
+  border:  1px solid white;
   justify-content: center;
   @media screen and (max-width: 549px) {
     &:hover {
@@ -105,27 +105,3 @@
     border: 1px solid #be9344;
   }
 }
-
-// .home-bottom-links__link-active {
-//   border: unset;
-//   justify-content: center;
-//   @media screen and (max-width: 549px) {
-//     &:hover {
-//       border: unset;
-//     }
-//   }
-//   &::before,
-//   &::after {
-//     display: none;
-//   }
-
-//   @media screen and (min-width: 550px) {
-//     &::before,
-//     &::after {
-//       background-color: #be9344;
-//     }
-//   }
-//   @media screen and (max-width: 549px) {
-//     border: 1px solid #be9344;
-//   }
-// }
