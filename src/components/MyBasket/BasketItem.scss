@@ -9,6 +9,11 @@
   @media screen and (max-width: 631px) {
     flex: 0 1 80%;
   }
+  a {
+    width: 175px;
+    height: 175px;
+    overflow: hidden;
+  }
 }
 .basket-item-typography {
   font-family: 'Roboto Condensed', sans-serif;
@@ -30,6 +35,7 @@
   .basket-item__info {
     display: flex;
     position: relative;
+    padding-right: 15px;
     align-items: flex-start;
     .basket-item__buttons {
       margin-right: 0px;

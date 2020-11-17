@@ -39,12 +39,16 @@ const MyBasket = props => {
         res += parseFloat(item.S);
       }
     });
-    return res;
+    return res.toFixed(2);
   };
 
   const cntSumm = basket => {
     let res = 0;
+  
     basket.map(item => {
+      if(item.cntRUB == "По запросу"){
+        return "По запросу"
+      }
       if (item.type == 'Слэбы' || item.type == 'Полоса') {
         let cost =
           props.cur === 'rub'
@@ -55,9 +59,7 @@ const MyBasket = props => {
             ? parseFloat(item.cntEUR)
             : 1;
 
-        res += parseFloat(
-          (parseFloat(item.he) * parseFloat(item.le) * cost).toFixed(2)
-        );
+        res += parseFloat(parseFloat(item.he) * parseFloat(item.le) * cost);
       } else {
         if (item.sum) res += parseFloat(item.sum);
       }
@@ -92,6 +94,7 @@ const MyBasket = props => {
 
   return (
     <div className="basket">
+      
       <OrderModal
         visible={visibleModal}
         onCancel={() => setVisibleModal(false)}
@@ -117,7 +120,7 @@ const MyBasket = props => {
                 type={item.type}
                 addGood={props.addGood}
                 deleteGood={deleteGood}
-                editGood={props.editGood}
+              
               />
             );
           })

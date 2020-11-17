@@ -246,9 +246,13 @@ const SlabItem = props => {
             <></>
           )}
         </div>
-        <div className="button-text button load-more" onClick={loadMore}>
-          Загрузить еще
-        </div>
+        {loadCnt < props.item.length ? (
+          <div className="button-text button load-more" onClick={loadMore}>
+            Загрузить еще
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     );
   } else if (isTablet) {

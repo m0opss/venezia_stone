@@ -8,6 +8,7 @@ import PersonalData from 'components/LK/PD';
 import Izbrannoe from 'components/LK/Izbrannoe';
 import BackArrow from 'components/BackArrow/BackArrow';
 import WatchHistory from 'components/LK/WatchHistory';
+import MyModal from '../components/Modal/Modal';
 
 import './LK.scss';
 
@@ -23,11 +24,16 @@ const LK = props => {
   let h = false;
   let i = false;
   let modul, title;
+  const [visibleExitModale, setVisExModal] = React.useState(false);
 
   if (props.match.url === '/personal-data') {
     pd = true;
     modul = (
-      <PersonalData token={props.auth_token} setUserInfo={props.setUserInfo} user_info={props.user_info} />
+      <PersonalData
+        token={props.auth_token}
+        setUserInfo={props.setUserInfo}
+        user_info={props.user_info}
+      />
     );
     title = <>Персональные данные</>;
   }
@@ -42,16 +48,18 @@ const LK = props => {
     title = <>Избранное</>;
   }
 
-  const onExitModal = () => {
-    console.log('exit');
+  const onOkExit = () => {
     props.setAuth(false);
     props.setToken('');
-    localStorage.removeItem('phone')
-    localStorage.removeItem('email')
-    localStorage.removeItem('first_name')
-    localStorage.removeItem('middle_name')
-    localStorage.removeItem('last_name')
-    localStorage.removeItem('searchData')
+    localStorage.removeItem('phone');
+    localStorage.removeItem('email');
+    localStorage.removeItem('first_name');
+    localStorage.removeItem('middle_name');
+    localStorage.removeItem('last_name');
+    localStorage.removeItem('searchData');
+  };
+  const onExitModal = () => {
+    setVisExModal(true);
   };
 
   if (props.isAuth) {
@@ -84,6 +92,15 @@ const LK = props => {
         </MobileView>
 
         {modul}
+        <MyModal
+          onOk={onOkExit}
+          onCancel={() => setVisExModal(false)}
+          buttonVision={true}
+          visible={visibleExitModale}
+          title={'Выйти из кабинета?'}
+        >
+          {/* <div className=""></div> */}
+        </MyModal>
       </div>
     );
   } else {

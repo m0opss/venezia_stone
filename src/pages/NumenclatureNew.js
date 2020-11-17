@@ -37,21 +37,40 @@ const Numenclature = props => {
   const [loadCnt, setLoadCnt] = React.useState(12);
 
   React.useEffect(() => {
-    props.setLvl(3);
+    // props.setLvl(3);
     window.scrollTo(0, 0);
+    setLoading(true);
     let isSubscr = true;
     if (isSubscr) {
-
+      let header = headerCreator(
+        props.activeFilters,
+        props.match.params.material,
+        props.upper_izd
+      );
+      console.log(3, {
+        ...header,
+        token: [],
+        items: [],
+        level: [3],
+        nw: [],
+        on_sale: [],
+        groups: [props.match.params.numGroups]
+      });
       axios
-        .get(`https://catalog-veneziastone.ru/api_v0/${props.match.url}/`)
+        .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
+          ...header,
+          token: [],
+          // token: [props.auth_token],
+          items: [],
+          level: [3],
+          nw: [1],
+          on_sale: [],
+          groups: [props.match.params.numGroups]
+        })
         .then(response => {
-          console.log(response.data)
-          setNumemclature(response.data.grs[0].itms);
-          setdefNum(response.data.grs[0].itms);
+          setNumemclature(response.data.itms);
+          setdefNum(response.data.itms);
           setLoading(false);
-          document
-            .getElementById('Все')
-            .setAttribute('style', 'color: #c98505');
         })
         .catch(err => {
           if (err.response) {
@@ -79,8 +98,9 @@ const Numenclature = props => {
     setHover_pltk(false);
     setNum_groups_items('num-gr-items-group-list');
   };
+
   const styleFilt = id => {
-    ['Все', 'Слэбы', 'Полоса', 'Плитка'].map(val => {
+    ['Все_3', 'Слэбы_3', 'Полоса_3', 'Плитка_3'].map(val => {
       if (isBrowser || isTablet) {
         if (id === val) {
           document.getElementById(val).setAttribute('style', 'color: #c98505');
@@ -100,18 +120,19 @@ const Numenclature = props => {
       }
     });
   };
+
   const filterIzd = e => {
     let tmp = [...defNum];
     styleFilt(e.target.id);
-    if (e.target.id === 'Все') {
+    if (e.target.id === 'Все_3') {
       setNumemclature(tmp);
-    } else if (e.target.id === 'Слэбы') {
+    } else if (e.target.id === 'Слэбы_3') {
       setNumemclature(tmp.filter(el => el.izd === 'Слэбы'));
-    } else if (e.target.id === 'Полоса') {
+    } else if (e.target.id === 'Полоса_3') {
       setNumemclature(tmp.filter(el => el.izd === 'Полоса'));
-    } else if (e.target.id === 'Плитка') {
+    } else if (e.target.id === 'Плитка_3') {
       setNumemclature(tmp.filter(el => el.izd === 'Плитка'));
-    } else if (e.target.id === 'Другие') {
+    } else if (e.target.id === 'Другие_3') {
       setNumemclature(
         tmp.filter(
           el => el.izd !== 'Слэбы' && el.izd !== 'Полоса' && el.izd !== 'Плитка'
@@ -195,19 +216,29 @@ const Numenclature = props => {
             <div></div>
           </div>
 
-          {numenclature.slice(0, loadCnt).map(item => (
-            <NumenclatureItem
-              pltk={style_pltk}
-              cur={props.cur}
-              key={item.ps}
-              link={props.match.url + '/' + item.ps}
-              item={item}
-            />
-          ))}
+          {numenclature.length > 0 ? (
+            numenclature
+              .slice(0, loadCnt)
+              .map(item => (
+                <NumenclatureItem
+                  pltk={style_pltk}
+                  cur={props.cur}
+                  key={item.ps}
+                  link={props.match.url + '/' + item.ps}
+                  item={item}
+                />
+              ))
+          ) : (
+            <div className="goods-none">Товаров не найдено</div>
+          )}
         </div>
-        <div className="button-text button load-more" onClick={loadMore}>
-          Загрузить еще
-        </div>
+        {loadCnt < numenclature.length ? (
+          <div className="button-text button load-more" onClick={loadMore}>
+            Загрузить еще
+          </div>
+        ) : (
+          <></>
+        )}
       </Preloader>
     </>
   );
@@ -219,7 +250,7 @@ const mapStateToProps = store => {
     cur: store.valute_data.valute,
     upper_izd: store.filter_data.upper_izd,
     activeFilters: store.filter_data.activeFilters,
-    auth_token: store.auth_data.auth_token,
+    auth_token: store.auth_data.auth_token
   };
 };
 

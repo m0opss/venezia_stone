@@ -42,50 +42,52 @@ const NumGroups = props => {
   const [loadCnt, setLoadCnt] = React.useState(12);
 
   React.useEffect(() => {
-    props.setLvl(2);
     window.scrollTo(0, 0);
+    setLoading(true);
     let isSubscr = true;
-    if (isSubscr) {
-      let header = headerCreator(
-        props.activeFilters,
-        props.match.params.material,
-        props.upper_izd
-      );
-      console.log({
-        ...header,
-        items: [],
-        level: [2],
-        groups: [],
-        token: [props.auth_token]
-      });
-      axios
-        .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
-          ...header,
-          items: [],
-          level: [2],
-          groups: [],
-          token: []
-        })
-        .then(response => {
-          console.log(response.data)
-          setLoading(false);
-          setNumGroups(response.data.grs);
-          setdefNumGroups(response.data.grs);
-        })
-        .catch(err => {
-          if (err.response) {
-            // client received an error response (5xx, 4xx)
-            console.log(1, err.response);
-            // props.setAuth(false);
-          } else if (err.request) {
-            // client never received a response, or request never left
-            console.log(2, err.request);
-          } else {
-            // anything else
-            console.log(3, err);
-          }
-        });
+    let str = props.match.url.split('/')[1];
+    let news = [],
+      sales = [];
+    if (str == 'new') {
+      news = [1];
+    } else if (str == 'sale') {
+      sales = [1]
     }
+      if (isSubscr) {
+        let header = headerCreator(
+          props.activeFilters,
+          props.match.params.material,
+          props.upper_izd
+        );
+        axios
+          .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
+            ...header,
+            items: [],
+            level: [2],
+            groups: [],
+            token: [],
+            nw: news,
+            on_sale: sales
+          })
+          .then(response => {
+            setLoading(false);
+            setNumGroups(response.data.grs);
+            setdefNumGroups(response.data.grs);
+          })
+          .catch(err => {
+            if (err.response) {
+              // client received an error response (5xx, 4xx)
+              console.log(1, err.response);
+              // props.setAuth(false);
+            } else if (err.request) {
+              // client never received a response, or request never left
+              console.log(2, err.request);
+            } else {
+              // anything else
+              console.log(3, err);
+            }
+          });
+      }
 
     return () => (isSubscr = false);
   }, [props.activeFilters, props.upper_izd]);
@@ -144,24 +146,29 @@ const NumGroups = props => {
             <p>Цена от</p>
             <p></p>
           </div>
-          {
-          numGroups.length > 0 ?
-          numGroups.slice(0, loadCnt).map(item => (
-            <NumGroupItem
-              pltk={style_pltk}
-              key={item.ps}
-              link={props.match.url + '/' + item.ps}
-              item={item}
-              cur={props.cur}
-            />
-          ))
-          : 
-          <div className='goods-none'>Товаров не найдено</div>
-          }
+          {numGroups.length > 0 ? (
+            numGroups
+              .slice(0, loadCnt)
+              .map(item => (
+                <NumGroupItem
+                  pltk={style_pltk}
+                  key={item.ps}
+                  link={props.match.url + '/' + item.ps}
+                  item={item}
+                  cur={props.cur}
+                />
+              ))
+          ) : (
+            <div className="goods-none">Товаров не найдено</div>
+          )}
         </div>
-        <div className="button-text button load-more" onClick={loadMore}>
-          Загрузить еще
-        </div>
+        {loadCnt < numGroups.length ? (
+          <div className="button-text button load-more" onClick={loadMore}>
+            Загрузить еще
+          </div>
+        ) : (
+          <></>
+        )}
       </Preloader>
     </>
   );

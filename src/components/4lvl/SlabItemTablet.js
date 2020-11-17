@@ -43,48 +43,48 @@ const GroupItem = props => {
           <p className="slab-items-group-item__line">
             Цена за м<sup>2</sup> :{' '}
             {props.cur === 'rub'
-                ? `${
-                    props.item.cntRUB == 'По запросу'
-                      ? props.item.cntRUB
-                      : `${props.item.cntRUB}₽`
-                  }`
-                : props.cur === 'usd'
-                ? `${
-                    props.item.cntUSD == 'По запросу'
-                      ? props.item.cntUSD
-                      : `${props.item.cntUSD}$`
-                  }`
-                : props.cur === 'eur'
-                ? `${
-                    props.item.cntEUR == 'По запросу'
-                      ? props.item.cntEUR
-                      : `${props.item.cntEUR}€`
-                  }`
-                : ''}
+              ? `${
+                  props.item.cntRUB == 'По запросу'
+                    ? props.item.cntRUB
+                    : `${props.item.cntRUB}₽`
+                }`
+              : props.cur === 'usd'
+              ? `${
+                  props.item.cntUSD == 'По запросу'
+                    ? props.item.cntUSD
+                    : `${props.item.cntUSD}$`
+                }`
+              : props.cur === 'eur'
+              ? `${
+                  props.item.cntEUR == 'По запросу'
+                    ? props.item.cntEUR
+                    : `${props.item.cntEUR}€`
+                }`
+              : ''}
           </p>
           <p className="slab-items-group-item__line">
             Стоимость :{' '}
             {props.item.cntRUB == 'По запросу'
-                ? props.item.cntRUB
-                : props.cur === 'rub'
-                ? `${(
-                    parseFloat(props.item.cntRUB) *
-                    parseFloat(props.item.le) *
-                    parseFloat(props.item.he)
-                  ).toFixed(2)} ₽`
-                : props.cur === 'usd'
-                ? `${(
-                    parseFloat(props.item.cntUSD) *
-                    parseFloat(props.item.le) *
-                    parseFloat(props.item.he)
-                  ).toFixed(2)} $`
-                : props.cur === 'eur'
-                ? `${(
-                    parseFloat(props.item.cntEUR) *
-                    parseFloat(props.item.le) *
-                    parseFloat(props.item.he)
-                  ).toFixed(2)} €`
-                : 1}
+              ? props.item.cntRUB
+              : props.cur === 'rub'
+              ? `${(
+                  parseFloat(props.item.cntRUB) *
+                  parseFloat(props.item.le) *
+                  parseFloat(props.item.he)
+                ).toFixed(2)} ₽`
+              : props.cur === 'usd'
+              ? `${(
+                  parseFloat(props.item.cntUSD) *
+                  parseFloat(props.item.le) *
+                  parseFloat(props.item.he)
+                ).toFixed(2)} $`
+              : props.cur === 'eur'
+              ? `${(
+                  parseFloat(props.item.cntEUR) *
+                  parseFloat(props.item.le) *
+                  parseFloat(props.item.he)
+                ).toFixed(2)} €`
+              : 1}
           </p>
         </div>
       </Link>
@@ -104,7 +104,7 @@ const SlabItemTablet = props => {
       <div className="slab-item-info">
         <div className="slab-item-info__top">
           <h1 className="slab-item-info__title">{props.item[0].itms_name}</h1>
-          <ButtonsPanel images={images}/>
+          <ButtonsPanel images={images} />
         </div>
         <div className="slab-item-info__bottom">
           <div className="slab-item-info__left-block">
@@ -163,9 +163,13 @@ const SlabItemTablet = props => {
           />
         ))}
       </div>
-      <div className="button-text button load-more" onClick={loadMore}>
-        Загрузить еще
-      </div>  
+      {loadCnt < props.item.length ? (
+        <div className="button-text button load-more" onClick={loadMore}>
+          Загрузить еще
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

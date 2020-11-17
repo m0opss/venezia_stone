@@ -13,7 +13,6 @@ import {
 import axios from 'axios';
 
 const PersonalData = props => {
-  console.log(props);
   const [ronly, set_ronly] = React.useState(true);
   const [canceled, setCanceled] = React.useState(false);
 
@@ -36,11 +35,12 @@ const PersonalData = props => {
   }, [canceled]);
 
   const onClickSave = () => {
-    console.log(pd_lname)
-    console.log(pd_fname)
-    console.log(pd_mname)
-    console.log(pd_phone)
-    console.log(pd_email)
+    console.log(pd_lname);
+    console.log(pd_fname);
+    console.log(pd_mname);
+    console.log(pd_phone);
+    console.log(pd_email);
+
     axios
       .post(`https://catalog-veneziastone.ru/account/change_profile/`, {
         token: props.token,
@@ -51,7 +51,13 @@ const PersonalData = props => {
         email: pd_email
       })
       .then(res => {
-        
+        console.log({
+          last_name: pd_lname,
+          first_name: pd_fname,
+          middle_name: pd_mname,
+          phone: pd_phone,
+          email: pd_email
+        });
         props.setUserInfo({
           last_name: pd_lname,
           first_name: pd_fname,
@@ -102,6 +108,7 @@ const PersonalData = props => {
                 type="text"
                 placeholder="Фамилия"
                 defaultValue={pd_lname}
+                onChange={e => set_pd_lname(e.target.value)}
               />
             )}
           </div>
@@ -115,7 +122,12 @@ const PersonalData = props => {
                 readOnly
               />
             ) : (
-              <input type="text" placeholder="Имя" defaultValue={pd_fname} />
+              <input
+                type="text"
+                placeholder="Имя"
+                defaultValue={pd_fname}
+                onChange={e => set_pd_fname(e.target.value)}
+              />
             )}
           </div>
           <div className="lk__pd-line">
@@ -132,6 +144,7 @@ const PersonalData = props => {
                 type="text"
                 placeholder="Отчество"
                 defaultValue={pd_mname}
+                onChange={e => set_pd_mname(e.target.value)}
               />
             )}
           </div>
@@ -148,7 +161,8 @@ const PersonalData = props => {
               <input
                 type="text"
                 placeholder="Телефон"
-                defaultValue={pd_phone}
+                value={pd_phone}
+                onChange={e => set_pd_phone(e.target.value)}
               />
             )}
           </div>
@@ -156,7 +170,7 @@ const PersonalData = props => {
             <input
               type="text"
               className="-readonly"
-              defaultValue={pd_email}
+              value={pd_email}
               readOnly
             />
           </div>
@@ -164,16 +178,36 @@ const PersonalData = props => {
       ) : (
         <>
           <div className="lk__pd-line">
-            <input type="text" placeholder="Фамилия" value={pd_lname} />
+            <input
+              type="text"
+              placeholder="Фамилия"
+              onChange={e => set_pd_lname(e.target.value)}
+              value={pd_lname}
+            />
           </div>
           <div className="lk__pd-line">
-            <input type="text" placeholder="Имя" value={pd_fname} />
+            <input
+              type="text"
+              placeholder="Имя"
+              onChange={e => set_pd_fname(e.target.value)}
+              value={pd_fname}
+            />
           </div>
           <div className="lk__pd-line">
-            <input type="text" placeholder="Отчество" value={pd_mname} />
+            <input
+              type="text"
+              placeholder="Отчество"
+              onChange={e => set_pd_mname(e.target.value)}
+              value={pd_mname}
+            />
           </div>
           <div className="lk__pd-line">
-            <input type="text" placeholder="Телефон" value={pd_phone} />
+            <input
+              type="text"
+              placeholder="Телефон"
+              onChange={e => set_pd_phone(e.target.value)}
+              value={pd_phone}
+            />
           </div>
           <div className="lk__pd-line">
             <input

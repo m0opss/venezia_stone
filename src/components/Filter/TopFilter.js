@@ -18,7 +18,6 @@ export const TopFilter = props => {
 
   const setFilterParam = e => {
     let t = [...props.activeFields];
-    console.log(e, t);
     if (t.indexOf(e.target.id) !== -1) {
       t.splice(t.indexOf(e.target.id), 1);
     } else {
@@ -40,11 +39,10 @@ export const TopFilter = props => {
       newArr.splice(newArr.indexOf(e.target.id), 1);
     }
     props.setUpper(newArr);
-    props.f_share();
+    // props.f_share();
   };
 
   if (isMobile && !isTablet) {
-    console.log('aaaaaaaaaaaa', props);
     return (
       <>
         {up_filter.map(i => (

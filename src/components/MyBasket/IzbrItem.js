@@ -21,6 +21,7 @@ const IzbrItem = props => {
     console.log(e.target.value);
     setKw(parseFloat(e.target.value));
   };
+  
   const link = props.item.route.split('#')[1]
   return (
     <Link to={link} className="basket-item basket-item-root basket-item-typography">
@@ -30,7 +31,7 @@ const IzbrItem = props => {
       <div className="basket-item__type">{props.type}</div>
       <div className="basket-item__info">
         <img src={props.photo} />
-        {props.type == 'Слэб' ? (
+        {props.type != 'Слэб' ? (
           <>
             <div className="basket-item__text">
               <div className="basket-item__line-wrapper">

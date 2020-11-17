@@ -21,13 +21,14 @@ import SlabItem from '../components/4lvl/SlabItem';
 import OtherItem from '../components/4lvl/OtherItem';
 
 const FourLvl = props => {
-  props.setLvl(4);
+  // props.setLvl(4);
   const [isLoading, setLoading] = React.useState(true);
   const [item, setItem] = React.useState([]);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
     let isSubscr = true;
+    // setLoading(true);
     if (isSubscr) {
       let header = headerCreator(
         props.activeFilters,
@@ -41,6 +42,8 @@ const FourLvl = props => {
           level: [4],
           groups: [props.match.params.numGroups],
           // token: [props.auth_token]
+          nw: [],
+          on_sale: [],
           token: []
         })
         .then(response => {
@@ -89,18 +92,18 @@ const FourLvl = props => {
     }
     return () => (isSubscr = false);
   }, [props.activeFilters, props.upper_izd]);
-  if (item.length > 0)
-    return (
-      <>
-        <Preloader isLoading={isLoading}>
-          {isTablet || isBrowser ? <Filter /> : <></>}
-          <div className="four-lvl-container">
-            {console.log(item[0].itms_izd)}
-            <BackArrow history={props.history} />
-            <div className="four-lvl-valute">
-              {isTablet || isBrowser ? <Valute /> : <></>}
-            </div>
-            {item[0].itms_izd === 'Слэбы' || item[0].itms_izd === 'Полоса' ? (
+
+  return (
+    <>
+      <Preloader isLoading={isLoading}>
+        {isTablet || isBrowser ? <Filter /> : <></>}
+        <div className="four-lvl-container">
+          <BackArrow history={props.history} />
+          <div className="four-lvl-valute">
+            {isTablet || isBrowser ? <Valute /> : <></>}
+          </div>
+          {item.length > 0 ? (
+            item[0].itms_izd === 'Слэбы' || item[0].itms_izd === 'Полоса' ? (
               <SlabItem
                 type={item[0].itms_izd}
                 item={item}
@@ -116,16 +119,14 @@ const FourLvl = props => {
                 url={props.match.url}
                 isAuth={props.isAuth}
               />
-            )}
-          </div>
-        </Preloader>
-      </>
-    );
-  else {
-    return <></>;
-  }
-  // );
-  // } else return <></>;
+            )
+          ) : (
+            <div className="goods-none">Товаров не найдено</div>
+          )}
+        </div>
+      </Preloader>
+    </>
+  );
 };
 
 const mapStateToProps = store => {

@@ -6,6 +6,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 15px;
     border-bottom: 2px solid #fada9e;
     h1 {
       font-family: 'Roboto Condensed', sans-serif;
@@ -36,7 +37,6 @@
   }
 
   .basket__items {
-    margin-top: 30px;
     display: flex;
     align-items: stretch;
     justify-content: space-between;

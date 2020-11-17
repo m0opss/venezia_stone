@@ -72,9 +72,9 @@ const Filter = props => {
         );
       }
     }
-    console.log(props.activeFields.length);
     return () => (isSubscr = false);
-  }, [props.activeFields.length]);
+  }, []);
+  // }, [props.activeFields.length]);
 
   const handleClick = e => {
     setState({ collapsed: !state.collapsed });
@@ -126,7 +126,7 @@ const Filter = props => {
     fetchFilters();
   };
 
-  props.setShareFilterFunc(fetchFilters);
+  // props.setShareFilterFunc(fetchFilters);
 
   return (
     <Suspense>

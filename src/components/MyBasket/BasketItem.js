@@ -4,7 +4,6 @@ import RenderBasketItem from './RenderBasketItem';
 
 import './BasketItem.scss';
 
-
 const BasketItem = props => {
   const [kw, setKw] = React.useState(
     props.item.S ? parseFloat(props.item.S) : 0
@@ -12,9 +11,10 @@ const BasketItem = props => {
   const [cnt, setCnt] = React.useState(
     props.item.cnt ? parseFloat(props.item.cnt) : 0
   );
-  const [sum, setSum] = React.useState(0);
+  const [sum, setSum] = React.useState('');
 
   const checkCur = () => {
+    if (props.item.price) return props.item.price;
     if (props.cur === 'rub') return props.item.cntRUB;
     else if (props.cur === 'usd') return props.item.cntUSD;
     else if (props.cur === 'eur') return props.item.cntEUR;
@@ -22,17 +22,25 @@ const BasketItem = props => {
 
   useEffect(() => {
     let pr = checkCur();
-    if (props.type != 'Плитка') {
-      setSum(parseFloat(props.item.le) * parseFloat(props.item.he) * pr * cnt);
+    if (pr == 'По запросу') {
+      setSum('По запросу');
     } else {
-      setSum(kw * pr);
+      if (props.type != 'Плитка') {
+        setSum(
+          (parseFloat(props.item.le) * parseFloat(props.item.he) * pr * cnt).toFixed(2)
+        );
+      } else {
+        setSum((kw * pr).toFixed(2));
+      }
     }
-    let newBasket = [...props.basket];
-    let item = newBasket.find(x => x.ps === props.item.ps);
-    item.S = kw;
-    item.cnt = cnt;
-    item.sum = sum;
-    props.setBasket(newBasket);
+    if (props.basket) {
+      let newBasket = [...props.basket];
+      let item = newBasket.find(x => x.ps === props.item.ps);
+      item.S = kw;
+      item.cnt = cnt;
+      item.sum = sum;
+      props.setBasket(newBasket);
+    }
   }, [cnt, kw, sum]);
 
   const onChangeVal = e => {
@@ -56,6 +64,9 @@ const BasketItem = props => {
 
   return (
     <RenderBasketItem
+      link={props.link}
+      os={props.item.kw}
+      kind={props.kind}
       key={props.item.ps}
       item={props.item}
       id={props.item.ps}

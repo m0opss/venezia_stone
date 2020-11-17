@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 import deleteItem from 'images/deleteItem.png';
-
+import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
+import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import './BasketItem.scss';
 
 const RenderBasketItem = props => {
@@ -16,10 +17,19 @@ const RenderBasketItem = props => {
   return (
     <div className="basket-item basket-item-root basket-item-typography">
       <div className="basket-item__name">{props.item.name}</div>
-      <div className="basket-item__type">{props.type}</div>
+      <div className="basket-item__type">
+        {props.type ? props.type : props.izd}
+      </div>
       <div className="basket-item__info">
-        {/* <img src="https://storage.yandexcloud.net/venezia-photo/materials/Granit.jpg" /> */}
-        <img src={props.item.photo_product} />
+        <a href={props.link}>
+          <img
+            src={
+              props.item.photo_product
+                ? props.item.photo_product
+                : props.item.photo
+            }
+          />
+        </a>
         {props.type != 'Слэбы' && props.type != 'Полоса' ? (
           <>
             <div className="basket-item__text">
@@ -28,7 +38,9 @@ const RenderBasketItem = props => {
                   <p>Склад: {props.item.sklad}</p>
                   <p>
                     Цена за м<sup>2</sup>:{' '}
-                    {props.cur === 'rub'
+                    {props.item.price
+                      ? `${props.item.price}₽`
+                      : props.cur === 'rub'
                       ? `${props.item.cntRUB}₽`
                       : props.cur === 'usd'
                       ? `${props.item.cntUSD}$`
@@ -39,7 +51,12 @@ const RenderBasketItem = props => {
                 </div>
                 <div className="basket-item__line">
                   <p>
-                    Наличие, м<sup>2</sup>: {props.item.os}
+                    Наличие, м<sup>2</sup>:{' '}
+                    {props.item.os
+                      ? props.item.os
+                      : props.item.ostkw
+                      ? props.item.ostkw
+                      : props.os}
                   </p>
                   <p>
                     Наличие, шт: {props.item.ossht ? props.item.ossht : '-'}
@@ -48,7 +65,7 @@ const RenderBasketItem = props => {
               </div>
               <div className="basket-item__line -price">
                 <div className="price-input">
-                  <p>
+                  <div>
                     м<sup>2</sup> :
                     {props.type == 'Плитка' ? (
                       <input
@@ -68,9 +85,14 @@ const RenderBasketItem = props => {
                         style={{ color: 'gray' }}
                       />
                     ) : (
-                      <p>-</p>
+                      <input
+                        type="text"
+                        defaultValue="-"
+                        disabled
+                        style={{ color: 'gray' }}
+                      />
                     )}
-                  </p>
+                  </div>
                   <p>
                     шт :
                     <input
@@ -95,10 +117,17 @@ const RenderBasketItem = props => {
                       : '-'}
                   </p>
                   <div className="basket-item__buttons">
-                    <img
-                      src={deleteItem}
-                      onClick={() => props.deleteGood(props.item)}
-                    />
+                    {props.kind == 'izbr' ? (
+                      <>
+                        <ItemAddIzbr item={props.item} />
+                        <ItemAddBasket item={props.item} />
+                      </>
+                    ) : (
+                      <img
+                        src={deleteItem}
+                        onClick={() => props.deleteGood(props.item)}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -121,8 +150,8 @@ const RenderBasketItem = props => {
             </div>
             <div className="basket-item__line -price">
               <p id="cost">
-                Сумма:{' '}
-                {props.cur === 'rub'
+                Сумма: {props.item.sum}
+                {/* {props.cur === 'rub'
                   ? `${(
                       parseFloat(props.item.cntRUB) *
                       parseFloat(props.item.he) *
@@ -140,13 +169,20 @@ const RenderBasketItem = props => {
                       parseFloat(props.item.he) *
                       parseFloat(props.item.le)
                     ).toFixed(2)} €`
-                  : 1}
+                  : 1} */}
               </p>
               <div className="basket-item__buttons">
-                <img
-                  src={deleteItem}
-                  onClick={() => props.deleteGood(props.item)}
-                />
+                {props.kind == 'izbr' ? (
+                  <>
+                    <ItemAddIzbr item={props.item} />
+                    <ItemAddBasket item={props.item} />
+                  </>
+                ) : (
+                  <img
+                    src={deleteItem}
+                    onClick={() => props.deleteGood(props.item)}
+                  />
+                )}
               </div>
             </div>
           </div>

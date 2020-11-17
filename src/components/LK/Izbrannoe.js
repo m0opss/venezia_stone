@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 
-import IzbrItem from 'components/MyBasket/IzbrItem';
+import BasketItem from 'components/MyBasket/BasketItem';
 import axios from 'axios';
 
 const Izbrannoe = props => {
-  const [izbr, setIzbr] = React.useState([]);
-  const [defIzbr, setDefIzbr] = React.useState([]);
-  console.log(props)
+  const [izbr, setIzbr] = React.useState({});
+
   let isSubscr = true;
   React.useEffect(() => {
     axios
@@ -15,6 +14,7 @@ const Izbrannoe = props => {
       })
       .then(response => {
         if (isSubscr) {
+          console.log(response.data)
           setIzbr(response.data);
         }
       })
@@ -37,23 +37,21 @@ const Izbrannoe = props => {
   return (
     <div className="lk__izbrannoe basket">
       <div className="basket__items">
-        {Object.keys(izbr).map((ps, index) => (
-          
-          <IzbrItem
-            key={index}
-            kind="izbr"
-            photo={izbr[ps].photo}
-            ps={ps}
-            item={izbr[ps]}
-            type={izbr[ps].izbr}
-            name={izbr[ps].name}
-            price={izbr[ps].price}
-            le={izbr[ps].le}
-            he={izbr[ps].he}
-            kw={izbr[ps].kw}
-            sklad={izbr[ps].sklad}
-          />
-        ))}
+        {console.log(izbr)}
+        {Object.keys(izbr).length > 0 ? (
+          Object.keys(izbr).map((ps) => (
+            <BasketItem
+              kind="izbr"
+              key={izbr[ps].ps}
+              link={izbr[ps].route}
+              cur={props.cur}
+              item={izbr[ps]}
+              type={izbr[ps].izd}
+            />
+          ))
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

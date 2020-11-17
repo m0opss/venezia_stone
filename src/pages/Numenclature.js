@@ -37,9 +37,18 @@ const Numenclature = props => {
   const [loadCnt, setLoadCnt] = React.useState(12);
 
   React.useEffect(() => {
-    props.setLvl(3);
+    // props.setLvl(3);
     window.scrollTo(0, 0);
+    setLoading(true);
     let isSubscr = true;
+    let str = props.match.url.split('/')[1];
+    let news = [],
+      sales = [];
+    if (str == 'new') {
+      news = [1];
+    } else if (str == 'sale') {
+      sales = [1];
+    }
     if (isSubscr) {
       let header = headerCreator(
         props.activeFilters,
@@ -53,16 +62,14 @@ const Numenclature = props => {
           // token: [props.auth_token],
           items: [],
           level: [3],
+          nw: news,
+          on_sale: sales,
           groups: [props.match.params.numGroups]
         })
         .then(response => {
           setNumemclature(response.data.itms);
           setdefNum(response.data.itms);
-          console.log(response.data)
           setLoading(false);
-          document
-            .getElementById('Все')
-            .setAttribute('style', 'color: #c98505');
         })
         .catch(err => {
           if (err.response) {
@@ -80,6 +87,7 @@ const Numenclature = props => {
     }
     return () => (isSubscr = false);
   }, [props.activeFilters, props.upper_izd]);
+  // }, [props.activeFilters, props.upper_izd]);
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -90,44 +98,49 @@ const Numenclature = props => {
     setHover_pltk(false);
     setNum_groups_items('num-gr-items-group-list');
   };
-  const styleFilt = id => {
-    ['Все', 'Слэбы', 'Полоса', 'Плитка'].map(val => {
-      if (isBrowser || isTablet) {
-        if (id === val) {
-          document.getElementById(val).setAttribute('style', 'color: #c98505');
-        } else {
-          document.getElementById(val).setAttribute('style', 'color: black');
-        }
-      } else {
-        if (id === val) {
-          document
-            .getElementById(val)
-            .setAttribute('style', 'color: white, background-color: #BE9344');
-        } else {
-          document
-            .getElementById(val)
-            .setAttribute('style', 'color: black, background-color: #BE9344');
-        }
-      }
-    });
-  };
+  const up_filter = [
+    'Слэбы',
+    'Полоса',
+    'Плитка',
+    'Ступени',
+    'Брусчатка',
+    'Мозайка из камня',
+    'Бордюр',
+    'Прочее'
+  ];
+
   const filterIzd = e => {
-    let tmp = [...defNum];
-    styleFilt(e.target.id);
+    let t = [...props.activeFields];
     if (e.target.id === 'Все') {
-      setNumemclature(tmp);
-    } else if (e.target.id === 'Слэбы') {
-      setNumemclature(tmp.filter(el => el.izd === 'Слэбы'));
-    } else if (e.target.id === 'Полоса') {
-      setNumemclature(tmp.filter(el => el.izd === 'Полоса'));
-    } else if (e.target.id === 'Плитка') {
-      setNumemclature(tmp.filter(el => el.izd === 'Плитка'));
-    } else if (e.target.id === 'Другие') {
-      setNumemclature(
-        tmp.filter(
-          el => el.izd !== 'Слэбы' && el.izd !== 'Полоса' && el.izd !== 'Плитка'
-        )
-      );
+      props.setUpper([]);
+      up_filter.map(i => {
+        document.getElementById(i).setAttribute('style', 'color: black');
+        t.splice(t.indexOf(i), 1);
+      });
+      props.setActiveFields(t);
+      localStorage.setItem('activeFieldKeys', JSON.stringify(t));
+    } else {
+      const id = e.target.id;
+      const s_id = id.slice(1, id.length);
+      if (t.indexOf(s_id) !== -1) {
+        t.splice(t.indexOf(s_id), 1);
+      } else {
+        t.push(s_id);
+      }
+      props.setActiveFields(t);
+      localStorage.setItem('activeFieldKeys', JSON.stringify(t));
+
+      let newArr = [...props.upper_izd];
+      if (newArr.indexOf(s_id) === -1) {
+        newArr.push(s_id);
+        document.getElementById(s_id).setAttribute('style', 'color: #c98505');
+        document.getElementById(id).setAttribute('style', 'color: #c98505');
+      } else {
+        document.getElementById(s_id).setAttribute('style', 'color: black');
+        document.getElementById(id).setAttribute('style', 'color: black');
+        newArr.splice(newArr.indexOf(s_id), 1);
+      }
+      props.setUpper(newArr);
     }
   };
 
@@ -155,13 +168,13 @@ const Numenclature = props => {
             <div id="Все" onClick={filterIzd}>
               Все
             </div>
-            <div id="Слэбы" onClick={filterIzd}>
+            <div id="_Слэбы" onClick={filterIzd}>
               Слэбы
             </div>
-            <div id="Полоса" onClick={filterIzd}>
+            <div id="_Полоса" onClick={filterIzd}>
               Полоса
             </div>
-            <div id="Плитка" onClick={filterIzd}>
+            <div id="_Плитка" onClick={filterIzd}>
               Плитка
             </div>
             <div id="Другие" onClick={filterIzd}>
@@ -206,19 +219,29 @@ const Numenclature = props => {
             <div></div>
           </div>
 
-          {numenclature.slice(0, loadCnt).map(item => (
-            <NumenclatureItem
-              pltk={style_pltk}
-              cur={props.cur}
-              key={item.ps}
-              link={props.match.url + '/' + item.ps}
-              item={item}
-            />
-          ))}
+          {numenclature.length > 0 ? (
+            numenclature
+              .slice(0, loadCnt)
+              .map(item => (
+                <NumenclatureItem
+                  pltk={style_pltk}
+                  cur={props.cur}
+                  key={item.ps}
+                  link={props.match.url + '/' + item.ps}
+                  item={item}
+                />
+              ))
+          ) : (
+            <div className="goods-none">Товаров не найдено</div>
+          )}
         </div>
-        <div className="button-text button load-more" onClick={loadMore}>
-          Загрузить еще
-        </div>
+        {loadCnt < numenclature.length ? (
+          <div className="button-text button load-more" onClick={loadMore}>
+            Загрузить еще
+          </div>
+        ) : (
+          <></>
+        )}
       </Preloader>
     </>
   );
@@ -228,31 +251,20 @@ const mapStateToProps = store => {
   return {
     selectedMaterial: store.material.selectedMaterial,
     cur: store.valute_data.valute,
+    activeFields: store.filter_data.activeFields,
     upper_izd: store.filter_data.upper_izd,
     activeFilters: store.filter_data.activeFilters,
-    auth_token: store.auth_data.auth_token,
+    auth_token: store.auth_data.auth_token
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setSelectedMaterial: data => {
-      dispatch(materialActions.setSelectedMaterial(data));
+    setUpper: data => {
+      dispatch(filterActions.setUpper(data));
     },
-    setNumGroups: data => {
-      dispatch(dataActions.setNumGroups(data));
-    },
-    setMobData: data => {
-      dispatch(filterActions.setMobData(data));
-    },
-    setDefMobData: data => {
-      dispatch(filterActions.setDefMobData(data));
-    },
-    setLvl: data => {
-      dispatch(filterActions.setLvl(data));
-    },
-    setGroups: data => {
-      dispatch(filterActions.setGroups(data));
+    setActiveFields: data => {
+      dispatch(filterActions.setActiveFields(data));
     }
   };
 };
