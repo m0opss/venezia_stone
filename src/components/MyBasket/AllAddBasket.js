@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 const AllAddBasket = props => {
   const [state, setState] = React.useState(true);
-
+  console.log(props.goods)
   // useEffect(() => {
   //   props.basket.map(item => {
   //     props.goods.map(g => {

@@ -27,19 +27,27 @@ const OrderModal = props => {
   };
 
   const fetchOrder = () => {
-    console.log(name)
-    console.log(phone)
-    console.log(email)
+    let goods = props.goods;
+    let arr = {};
+
+    if (!Array.isArray(goods)) arr = [goods.ps];
+    else {
+      goods.map(i => {
+        if (i.itms_izd == 'Слэбы') arr[i.ps] = '';
+        else {
+          arr[i.ps] = i.S;
+        }
+      });
+    }
+    console.log(goods);
+    console.log(arr);
     axios
       .post('https://catalog-veneziastone.ru/account/order/', {
-        token: props.auth_token,
         email: email,
-        slabs: [],
-        products: {},
-        invItems: []
+        products: arr
       })
       .then(res => {
-        console.log(res)
+        console.log(res);
       })
       .catch(err => {
         if (err.response) {

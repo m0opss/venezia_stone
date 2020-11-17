@@ -6,14 +6,12 @@ import OtherTableRow from 'components/4lvl/OtherTableRow';
 import OtherItemTablet from 'components/4lvl/OtherItemTablet';
 import OtherItemMobile from 'components/4lvl/OtherItemMobile';
 
+import AllAddBasket from '../MyBasket/AllAddBasket';
+import AllAddIzbr from '../MyBasket/AllAddIzbr';
+
 import { isTablet, isBrowser } from 'react-device-detect';
 
 import lamp from 'images/lamp.png';
-import book from 'images/book.png';
-import like from 'images/like-4lvl.png';
-import basket from 'images/basket-4lvl.png';
-
-import arr from 'images/arr-4lvl.png';
 
 const PlitkaMainImg = props => {
   return (
@@ -97,14 +95,14 @@ const OtherItem = props => {
         : 0
     )
   );
-  const images = []
+  const images = [];
   if (isBrowser) {
     return (
       <div className="slab-item">
         <div className="slab-item-info">
           <div className="slab-item-info__top">
             <h1 className="slab-item-info__title">{props.item[0].name}</h1>
-            <ButtonsPanel images={images} />
+            <ButtonsPanel images={images} goods={props.item} />
           </div>
           <div className="slab-item-info__bottom">
             <div className="slab-item-info__left-block slab-item-info__left-block_other">
@@ -167,15 +165,13 @@ const OtherItem = props => {
             </div>
             {props.isAuth ? (
               <div className="table-row__item good-items-table__title-icons">
-                <img src={arr} />
-                <img src={like} />
+                <AllAddIzbr goods={props.item} />
               </div>
             ) : (
               <></>
             )}
             <div className="table-row__item good-items-table__title-icons">
-              <img src={arr} />
-              <img src={basket} />
+              <AllAddBasket goods={props.item} />
             </div>
           </div>
           {props.item ? (

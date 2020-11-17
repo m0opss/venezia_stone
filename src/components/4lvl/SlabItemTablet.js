@@ -8,6 +8,9 @@ import OptionLine from 'components/5lvl/OptionLine';
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 
+import AllAddBasket from '../MyBasket/AllAddBasket';
+import AllAddIzbr from '../MyBasket/AllAddIzbr';
+
 import './SlabItemTablet.scss';
 import { Link } from 'react-router-dom';
 

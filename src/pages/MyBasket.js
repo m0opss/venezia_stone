@@ -44,10 +44,10 @@ const MyBasket = props => {
 
   const cntSumm = basket => {
     let res = 0;
-  
+
     basket.map(item => {
-      if(item.cntRUB == "По запросу"){
-        return "По запросу"
+      if (item.cntRUB == 'По запросу') {
+        return 'По запросу';
       }
       if (item.type == 'Слэбы' || item.type == 'Полоса') {
         let cost =
@@ -83,7 +83,6 @@ const MyBasket = props => {
     }
   };
 
-
   let style = '';
   let buttonStyle = '';
   if (!isTablet && isMobile) style = '-basket-mobile';
@@ -91,11 +90,11 @@ const MyBasket = props => {
 
   return (
     <div className="basket">
-      
       <OrderModal
         visible={visibleModal}
         onCancel={() => setVisibleModal(false)}
         setVisible={setVisibleModal}
+        goods={basket}
       />
       <BackArrow history={props.history} />
 
@@ -107,6 +106,7 @@ const MyBasket = props => {
       <div className="basket__items">
         {basket.length > 0 ? (
           basket.map(item => {
+            console.log(item.itms_izd)
             return (
               <BasketItem
                 setBasket={setBasket}
@@ -114,10 +114,9 @@ const MyBasket = props => {
                 basket={basket}
                 cur={props.cur}
                 item={item}
-                type={item.type}
+                type={item.itms_izd}
                 addGood={props.addGood}
                 deleteGood={deleteGood}
-              
               />
             );
           })

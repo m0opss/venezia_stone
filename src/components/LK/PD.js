@@ -35,11 +35,6 @@ const PersonalData = props => {
   }, [canceled]);
 
   const onClickSave = () => {
-    console.log(pd_lname);
-    console.log(pd_fname);
-    console.log(pd_mname);
-    console.log(pd_phone);
-    console.log(pd_email);
 
     axios
       .post(`https://catalog-veneziastone.ru/account/change_profile/`, {
@@ -51,13 +46,6 @@ const PersonalData = props => {
         email: pd_email
       })
       .then(res => {
-        console.log({
-          last_name: pd_lname,
-          first_name: pd_fname,
-          middle_name: pd_mname,
-          phone: pd_phone,
-          email: pd_email
-        });
         props.setUserInfo({
           last_name: pd_lname,
           first_name: pd_fname,

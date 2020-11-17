@@ -160,25 +160,6 @@ const RenderBasketItem = props => {
                   : props.cur === 'eur'
                   ? `${props.sum} €`
                   : '-'}
-                {/* {props.cur === 'rub'
-                  ? `${(
-                      parseFloat(props.item.cntRUB) *
-                      parseFloat(props.item.he) *
-                      parseFloat(props.item.le)
-                    ).toFixed(2)} ₽`
-                  : props.cur === 'usd'
-                  ? `${(
-                      parseFloat(props.item.cntUSD) *
-                      parseFloat(props.item.he) *
-                      parseFloat(props.item.le)
-                    ).toFixed(2)} $`
-                  : props.cur === 'eur'
-                  ? `${(
-                      parseFloat(props.item.cntEUR) *
-                      parseFloat(props.item.he) *
-                      parseFloat(props.item.le)
-                    ).toFixed(2)} €`
-                  : 1} */}
               </p>
               <div className="basket-item__buttons">
                 {props.kind == 'izbr' ? (

@@ -119,7 +119,7 @@ const SlabItem = props => {
   const loadMore = () => {
     setLoadCnt(loadCnt => loadCnt + 12);
   };
-  console.log(props.item[0]);
+
   let images = [];
   if (isBrowser) {
     return (
@@ -127,7 +127,7 @@ const SlabItem = props => {
         <div className="slab-item-info">
           <div className="slab-item-info__top">
             <h1 className="slab-item-info__title">{props.item[0].itms_name}</h1>
-            <ButtonsPanel images={images} />
+            <ButtonsPanel images={images} goods={selectedEl} />
           </div>
           <div className="slab-item-info__bottom">
             <div className="slab-item-info__left-block">

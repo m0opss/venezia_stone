@@ -9,6 +9,8 @@ import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import './OtherItemMobile.scss';
 
+import AllAddBasket from '../MyBasket/AllAddBasket';
+import AllAddIzbr from '../MyBasket/AllAddIzbr';
 const GroupItem = props => {
   const [kw, setKw] = React.useState(0);
   const [cnt, setCnt] = React.useState(0);

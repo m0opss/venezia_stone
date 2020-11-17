@@ -88,7 +88,7 @@ const BasketItem = props => {
         key={props.item.ps}
         item={props.item}
         id={props.item.ps}
-        type={props.item.type}
+        type={props.type}
         cnt={cnt}
         kw={kw}
         sum={sum}
@@ -106,7 +106,7 @@ const BasketItem = props => {
       key={props.item.ps}
       item={props.item}
       id={props.item.ps}
-      type={props.item.type}
+      type={props.type}
       cnt={cnt}
       kw={kw}
       sum={sum}

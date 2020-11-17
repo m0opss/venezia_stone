@@ -68,6 +68,7 @@ const ButtonsPanel = props => {
         <CommentsContent />
       </MyModal>
       <OrderModal
+        goods={props.goods}
         setVisible={setVisibleOrder}
         visible={visibleOrder}
         onCancel={() => setVisibleOrder(false)}

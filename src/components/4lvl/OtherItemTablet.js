@@ -6,6 +6,9 @@ import './OtherItemTablet.scss';
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 
+import AllAddBasket from '../MyBasket/AllAddBasket';
+import AllAddIzbr from '../MyBasket/AllAddIzbr';
+
 const GroupItem = props => {
   const [kw, setKw] = React.useState(0);
   const [cnt, setCnt] = React.useState(0);
@@ -17,7 +20,14 @@ const GroupItem = props => {
     else if (props.cur === 'usd') pr = props.item.cntUSD;
     else if (props.cur === 'eur') pr = props.item.cntEUR;
     if (props.type != 'Плитка') {
-      setSum((parseFloat(props.item.le) * parseFloat(props.item.he) * parseFloat(pr) * cnt).toFixed(2));
+      setSum(
+        (
+          parseFloat(props.item.le) *
+          parseFloat(props.item.he) *
+          parseFloat(pr) *
+          cnt
+        ).toFixed(2)
+      );
     } else {
       setSum((kw * parseFloat(pr)).toFixed(2));
     }
@@ -162,12 +172,12 @@ const OtherItemTablet = props => {
         : 0
     )
   );
-  const images = []
+  const images = [];
   return (
     <div className="slab-item">
       <div className="slab-item-info">
         <div className="slab-item-info__top slab-item-info__top-tablet">
-        <ButtonsPanel images={images} />
+          <ButtonsPanel images={images} />
         </div>
         <div className="slab-item-info__bottom">
           <div className="slab-item-info__left-block slab-item-info__left-block_other slab-item-info__left-block_other-tablet">
@@ -193,9 +203,7 @@ const OtherItemTablet = props => {
           </div>
           <div className="slab-item-info__slab-img">
             <img
-              src={
-                props.item.length > 0 ? props.item[0].photo_product : ''
-              }
+              src={props.item.length > 0 ? props.item[0].photo_product : ''}
             />
             <ColorRange colors={props.item ? props.item[0] : []} />
           </div>
