@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import authActions from 'actions/authActions';
+import izbrActions from 'actions/izbrActions';
 import userActions from 'actions/userActions';
 import PersonalData from 'components/LK/PD';
 import Izbrannoe from 'components/LK/Izbrannoe';
@@ -44,18 +45,31 @@ const LK = props => {
   }
   if (props.match.url === '/izbrannoe') {
     i = true;
-    modul = <Izbrannoe token={props.auth_token} />;
+    modul = (
+      <Izbrannoe
+        cur={props.cur}
+        setIzbr={props.setIzbr}
+        izbr={props.izbrList}
+        token={props.auth_token}
+      />
+    );
     title = <>Избранное</>;
   }
 
   const onOkExit = () => {
     props.setAuth(false);
     props.setToken('');
-    localStorage.removeItem('phone');
-    localStorage.removeItem('email');
-    localStorage.removeItem('first_name');
-    localStorage.removeItem('middle_name');
     localStorage.removeItem('last_name');
+    localStorage.removeItem('basket');
+    localStorage.removeItem('middle_name');
+    localStorage.removeItem('activeFilters');
+    localStorage.removeItem('groups');
+    localStorage.removeItem('first_name');
+    localStorage.removeItem('selectedFavourite');
+    localStorage.removeItem('activeFieldKeys');
+    localStorage.removeItem('email');
+    localStorage.removeItem('phone');
+    localStorage.removeItem('items');
     localStorage.removeItem('searchData');
   };
   const onExitModal = () => {
@@ -112,7 +126,9 @@ const mapStateToProps = store => {
   return {
     auth_token: store.auth_data.auth_token,
     isAuth: store.auth_data.isAuth,
-    user_info: store.user_data.user_info
+    user_info: store.user_data.user_info,
+    izbrList: store.izbr_data.izbrList,
+    cur: store.valute_data.valute
   };
 };
 
@@ -126,6 +142,9 @@ const mapDispatchToProps = dispatch => {
     },
     setToken: data => {
       dispatch(authActions.setToken(data));
+    },
+    setIzbr: data => {
+      dispatch(izbrActions.setIzbr(data));
     }
   };
 };

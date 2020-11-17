@@ -4,7 +4,6 @@ import deleteItem from 'images/deleteItem.png';
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import './BasketItem.scss';
-import { isMobile } from 'react-device-detect';
 
 const RenderBasketItem = props => {
   if (!props.item) {
@@ -65,47 +64,6 @@ const RenderBasketItem = props => {
                 </div>
               </div>
               <div className="basket-item__line -price">
-                <div className="price-input">
-                  <div>
-                    м<sup>2</sup> :
-                    {props.type == 'Плитка' ? (
-                      <input
-                        id="kw"
-                        type="number"
-                        min="0"
-                        max={props.item.os}
-                        value={props.kw}
-                        step="0.01"
-                        onChange={props.onChangeVal}
-                      />
-                    ) : props.type == 'Ступени' ? (
-                      <input
-                        type="number"
-                        defaultValue="0"
-                        disabled
-                        style={{ color: 'gray' }}
-                      />
-                    ) : (
-                      <input
-                        type="text"
-                        defaultValue="-"
-                        disabled
-                        style={{ color: 'gray' }}
-                      />
-                    )}
-                  </div>
-                  <p>
-                    шт :
-                    <input
-                      id="cnt"
-                      type="number"
-                      min="0"
-                      max={props.item.ossht}
-                      value={props.cnt}
-                      onChange={props.onChangeVal}
-                    />
-                  </p>
-                </div>
                 <div className="price-view">
                   <p id="cost" style={{ marginTop: 10 }}>
                     Сумма: <br />
@@ -151,15 +109,8 @@ const RenderBasketItem = props => {
             </div>
             <div className="basket-item__line -price">
               <p id="cost">
-                Сумма:
-                {isMobile ? <br /> : <></>}
-                {props.cur === 'rub'
-                  ? `${props.sum} ₽`
-                  : props.cur === 'usd'
-                  ? `${props.sum} $`
-                  : props.cur === 'eur'
-                  ? `${props.sum} €`
-                  : '-'}
+                Сумма: <br />
+                {props.item.sum}
                 {/* {props.cur === 'rub'
                   ? `${(
                       parseFloat(props.item.cntRUB) *
@@ -181,17 +132,8 @@ const RenderBasketItem = props => {
                   : 1} */}
               </p>
               <div className="basket-item__buttons">
-                {props.kind == 'izbr' ? (
-                  <>
-                    <ItemAddIzbr item={props.item} />
-                    <ItemAddBasket item={props.item} />
-                  </>
-                ) : (
-                  <img
-                    src={deleteItem}
-                    onClick={() => props.deleteGood(props.item)}
-                  />
-                )}
+                <ItemAddIzbr item={props.item} />
+                <ItemAddBasket item={props.item} />
               </div>
             </div>
           </div>

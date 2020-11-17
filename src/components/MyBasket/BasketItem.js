@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import RenderBasketItem from './RenderBasketItem';
+import RenderIzbrItem from './RenderIzbrItem';
 
 import './BasketItem.scss';
 
@@ -25,12 +26,29 @@ const BasketItem = props => {
     if (pr == 'По запросу') {
       setSum('По запросу');
     } else {
-      if (props.type != 'Плитка') {
-        setSum(
-          (parseFloat(props.item.le) * parseFloat(props.item.he) * pr * cnt).toFixed(2)
-        );
+      if (
+        props.type != 'Плитка' &&
+        props.type != 'Слэбы' &&
+        props.type != 'Полоса'
+      ) {
+        if (props.item.le && props.item.he) {
+          setSum(
+            (
+              parseFloat(props.item.le) *
+              parseFloat(props.item.he) *
+              pr *
+              cnt
+            ).toFixed(2)
+          );
+        } else {
+          setSum((parseFloat(props.item.os) * pr * cnt).toFixed(2));
+        }
       } else {
-        setSum((kw * pr).toFixed(2));
+        if (props.type == 'Слэбы' || props.type == 'Полоса') {
+          setSum((parseFloat(props.item.os) * pr).toFixed(2));
+        } else {
+          setSum((kw * pr).toFixed(2));
+        }
       }
     }
     if (props.basket) {
@@ -61,7 +79,25 @@ const BasketItem = props => {
       );
     }
   };
-
+  if (props.kind == 'izbr') {
+    return (
+      <RenderIzbrItem
+        link={props.link}
+        os={props.item.kw}
+        kind={props.kind}
+        key={props.item.ps}
+        item={props.item}
+        id={props.item.ps}
+        type={props.item.type}
+        cnt={cnt}
+        kw={kw}
+        sum={sum}
+        cur={props.cur}
+        deleteGood={props.deleteGood}
+        onChangeVal={onChangeVal}
+      />
+    );
+  }
   return (
     <RenderBasketItem
       link={props.link}

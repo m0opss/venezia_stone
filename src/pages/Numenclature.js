@@ -37,7 +37,6 @@ const Numenclature = props => {
   const [loadCnt, setLoadCnt] = React.useState(12);
 
   React.useEffect(() => {
-    // props.setLvl(3);
     window.scrollTo(0, 0);
     setLoading(true);
     let isSubscr = true;
@@ -70,6 +69,25 @@ const Numenclature = props => {
           setNumemclature(response.data.itms);
           setdefNum(response.data.itms);
           setLoading(false);
+          if (localStorage.getItem('3lvl_active_field') != null) {
+            let arr = JSON.parse(localStorage.getItem('3lvl_active_field'));
+            if (arr.length == 0) {
+              document
+                .getElementById('Все')
+                .setAttribute('style', 'color: #c98505');
+            } else if (arr.length > 4) {
+              document
+                .getElementById('Другие')
+                .setAttribute('style', 'color: #c98505');
+            }
+            arr.map(i => {
+              console.log(i);
+              if (i != '_Прочее' && document.getElementById(i) != null)
+                document
+                  .getElementById(i)
+                  .setAttribute('style', 'color: #c98505');
+            });
+          }
         })
         .catch(err => {
           if (err.response) {
@@ -112,10 +130,34 @@ const Numenclature = props => {
   const filterIzd = e => {
     let t = [...props.activeFields];
     if (e.target.id === 'Все') {
+      localStorage.setItem('3lvl_active_field', JSON.stringify([]));
       props.setUpper([]);
       up_filter.map(i => {
-        document.getElementById(i).setAttribute('style', 'color: black');
         t.splice(t.indexOf(i), 1);
+        if (!isMobile) {
+          document.getElementById(i).setAttribute('style', 'color: black');
+        }
+      });
+      props.setActiveFields(t);
+      localStorage.setItem('activeFieldKeys', JSON.stringify(t));
+    } else if (e.target.id === 'Другие') {
+      let newArr = [...props.upper_izd];
+      up_filter.map(i => {
+        if (i != 'Слэбы' && i != 'Полоса' && i != 'Плитка') {
+          if (t.indexOf(i) !== -1) {
+            t.splice(t.indexOf(i), 1);
+          } else {
+            t.push(i);
+          }
+          if (newArr.indexOf(i) === -1) {
+            newArr.push(i);
+          } else {
+            newArr.splice(newArr.indexOf(i), 1);
+          }
+          props.setUpper(newArr);
+          let ls_3lvl = newArr.map(i => '_' + i);
+          localStorage.setItem('3lvl_active_field', JSON.stringify(ls_3lvl));
+        }
       });
       props.setActiveFields(t);
       localStorage.setItem('activeFieldKeys', JSON.stringify(t));
@@ -131,15 +173,14 @@ const Numenclature = props => {
       localStorage.setItem('activeFieldKeys', JSON.stringify(t));
 
       let newArr = [...props.upper_izd];
+      let ls_3lvl = [];
       if (newArr.indexOf(s_id) === -1) {
         newArr.push(s_id);
-        document.getElementById(s_id).setAttribute('style', 'color: #c98505');
-        document.getElementById(id).setAttribute('style', 'color: #c98505');
       } else {
-        document.getElementById(s_id).setAttribute('style', 'color: black');
-        document.getElementById(id).setAttribute('style', 'color: black');
         newArr.splice(newArr.indexOf(s_id), 1);
       }
+      ls_3lvl = newArr.map(i => '_' + i);
+      localStorage.setItem('3lvl_active_field', JSON.stringify(ls_3lvl));
       props.setUpper(newArr);
     }
   };

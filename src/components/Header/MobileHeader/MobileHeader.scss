@@ -40,6 +40,9 @@
 
   .second-line__filter-button {
     cursor: pointer;
+    &:hover {
+      color: #be9344;
+    }
   }
   .-icon {
     width: auto;

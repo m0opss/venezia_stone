@@ -11,24 +11,89 @@ import Auth from '../TopLine/AccountButton/UnauthoredAccountButton/Auth/Auth';
 import './MobileHeader.scss';
 import { TopFilter } from '../../Filter/TopFilter';
 
+function ucFirst(str) {
+  if (!str) return str;
+  return str[0].toUpperCase() + str.slice(1);
+}
+const createUserName = arr => {
+  let userName = '';
+  Object.keys(arr).map(name => {
+    if (arr[name] != null && arr[name] != 'null' && arr[name] != '') {
+      if (name === 'last') userName += ucFirst(arr[name]) + ' ';
+      else {
+        if (arr[name][0]) userName += arr[name][0].toUpperCase() + '. ';
+      }
+    }
+  });
+  return userName;
+};
+
 const MenuList = props => {
   const { setFilterParam, isAuth, setToken, setAuth, ...other } = props;
 
   const [isReg, setIsReg] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
 
+  const [email, setEmail] = React.useState(null);
+  const [first_name, setFName] = React.useState(null);
+  const [last_name, setLName] = React.useState(null);
+  const [middle_name, setMName] = React.useState(null);
+  const [user_name, setUserName] = React.useState(null);
+
+  React.useEffect(() => {
+    setEmail(
+      localStorage.getItem('email') != null ? localStorage.getItem('email') : ''
+    );
+    setFName(
+      localStorage.getItem('first_name') != null
+        ? localStorage.getItem('first_name')
+        : ''
+    );
+    setLName(
+      localStorage.getItem('last_name') != null
+        ? localStorage.getItem('last_name')
+        : ''
+    );
+    setMName(
+      localStorage.getItem('middle_name') != null
+        ? localStorage.getItem('middle_name')
+        : ''
+    );
+    let name;
+    if (
+      createUserName({
+        last: last_name,
+        first: first_name,
+        middle: middle_name
+      }) == ''
+    ) {
+      name = email;
+    } else {
+      name = createUserName({
+        last: last_name,
+        first: first_name,
+        middle: middle_name
+      });
+    }
+    setUserName(name);
+  });
+
   const onExitModal = () => {
     setAuth(false);
     setToken('');
-    localStorage.removeItem('phone');
-    localStorage.removeItem('email');
-    localStorage.removeItem('first_name');
-    localStorage.removeItem('middle_name');
     localStorage.removeItem('last_name');
+    localStorage.removeItem('basket');
+    localStorage.removeItem('middle_name');
+    localStorage.removeItem('activeFilters');
+    localStorage.removeItem('groups');
+    localStorage.removeItem('first_name');
+    localStorage.removeItem('selectedFavourite');
+    localStorage.removeItem('activeFieldKeys');
+    localStorage.removeItem('email');
+    localStorage.removeItem('phone');
+    localStorage.removeItem('items');
     localStorage.removeItem('searchData');
   };
-
-  console.log(1231, props);
   const menu = (
     <Menu.Item key="1">
       <Auth isReg={isReg} setIsReg={setIsReg} setVisible={setVisible} />
@@ -40,9 +105,7 @@ const MenuList = props => {
       {isAuth ? (
         <>
           <Menu.Item {...other} key="10">
-            <p style={{ color: '#c98505', marginBottom: 0 }}>
-              Иванов Иван Иванович
-            </p>
+            <p style={{ color: '#c98505', marginBottom: 0 }}>{user_name}</p>
           </Menu.Item>
           <Menu.Item {...other} key="11">
             <Link to="/personal-data">Персональные данные</Link>

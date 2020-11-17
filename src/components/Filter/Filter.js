@@ -35,7 +35,9 @@ const Filter = props => {
         .then(response => {
           props.setFilters(response.data.filters);
           if (localStorage.getItem('activeFilters') !== null) {
-            props.setActiveFilters(JSON.parse(localStorage.getItem('activeFilters')));
+            props.setActiveFilters(
+              JSON.parse(localStorage.getItem('activeFilters'))
+            );
           } else {
             props.setActiveFilters(
               Object.fromEntries(
@@ -97,9 +99,13 @@ const Filter = props => {
     let newArr = [...props.upper_izd];
     if (newArr.indexOf(e.key) === -1) {
       newArr.push(e.key);
-      document.getElementById(e.key).setAttribute('style', 'color: #c98505');
+      if (!isMobile) {
+        document.getElementById(e.key).setAttribute('style', 'color: #c98505');
+      }
     } else {
-      document.getElementById(e.key).setAttribute('style', 'color: black');
+      if (!isMobile) {
+        document.getElementById(e.key).setAttribute('style', 'color: black');
+      }
       newArr.splice(newArr.indexOf(e.key), 1);
     }
     props.setUpper(newArr);

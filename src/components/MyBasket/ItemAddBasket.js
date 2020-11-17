@@ -9,8 +9,10 @@ const ItemAddBasket = props => {
   const [state, setState] = React.useState(true);
 
   useEffect(() => {
+    setState(true)
     props.basket.map(item => {
       if(item.ps == props.item.ps) setState(false)
+
     })
   })
 

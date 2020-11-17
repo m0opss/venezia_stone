@@ -22,6 +22,9 @@
   .second-line__filter-button {
     flex: 0 1 5%;
     white-space: nowrap;
+    &:hover {
+      color: #be9344;
+    }
     cursor: pointer;
     a {
       color: black;

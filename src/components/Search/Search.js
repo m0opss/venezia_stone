@@ -6,9 +6,10 @@ import { Menu } from 'antd';
 
 import DropdownSearch from 'components/Dropdown/DropdownSearch';
 
-import searchClear from 'images/searchClear.png';
-import find from 'images/find.png';
+import searchClear from 'images/searchClear.svg';
+import find from 'images/find.svg';
 import './Search.scss';
+import { isMobile, isTablet } from 'react-device-detect';
 
 const Search = props => {
   const [dropVisible, setDropVisible] = React.useState(false);
@@ -29,32 +30,29 @@ const Search = props => {
   };
 
   const checkresponse = result => {
-    let arr = Object.keys(result).map (
-      (k, index) =>
-        k == 'mts' ? (
-          <Link key={k} to="/search/materials" className="search-drop-line">
-            Материалы <span>совпадений - {result[k].length}</span>
-          </Link>
-        ) : k == 'grs' ? (
-          <Link key={k} to="/search/nom-groups" className="search-drop-line">
-            Номенклатурные группы <span>совпадений - {result[k].length}</span>
-          </Link>
-        ) : k == 'itms' ? (
-          <Link key={k}  to="/search/nomenclatures" className="search-drop-line">
-            Номенклатуры <span>совпадений - {result[k].length}</span>
-          </Link>
-        ) : k == 'prs' ? (
-          <Link key={k} to="/search/products" className="search-drop-line">
-            Продукты <span>совпадений - {result[k].length}</span>
-          </Link>
-        ) : (
-          <></>
-        )
+    let arr = Object.keys(result).map(k =>
+      k == 'mts' ? (
+        <Link key={k} to="/search/materials" className="search-drop-line">
+          Материалы <span>совпадений - {result[k].length}</span>
+        </Link>
+      ) : k == 'grs' ? (
+        <Link key={k} to="/search/nom-groups" className="search-drop-line">
+          Номенклатурные группы <span>совпадений - {result[k].length}</span>
+        </Link>
+      ) : k == 'itms' ? (
+        <Link key={k} to="/search/nomenclatures" className="search-drop-line">
+          Номенклатуры <span>совпадений - {result[k].length}</span>
+        </Link>
+      ) : k == 'prs' ? (
+        <Link key={k} to="/search/products" className="search-drop-line">
+          Продукты <span>совпадений - {result[k].length}</span>
+        </Link>
+      ) : (
+        <></>
+      )
     );
-    let menu = <div className="search-drop-lines">
-      {arr}
-    </div>
-    
+    let menu = <div className="search-drop-lines">{arr}</div>;
+
     setMenu(menu);
     setDropVisible(true);
   };
@@ -65,7 +63,7 @@ const Search = props => {
         .get(`https://catalog-veneziastone.ru/api_v0/Search/${searchVal}/`)
         .then(response => {
           console.log(response);
-          localStorage.setItem('searchData', JSON.stringify(response.data))
+          localStorage.setItem('searchData', JSON.stringify(response.data));
           checkresponse(response.data);
         })
         .catch(err => {
@@ -85,12 +83,12 @@ const Search = props => {
     setSearchVisible(true);
     setStyleVisible('');
   };
-  const handleKeyPress = (e) => {
+  const handleKeyPress = e => {
     if (e.key === 'Enter') {
       setsearchActive(false);
-      onClickSearch()
+      onClickSearch();
     }
-  }
+  };
 
   return (
     <div
@@ -106,13 +104,17 @@ const Search = props => {
         id="search"
         placeholder="Поиск"
         defaultValue={props.searchVal}
-        onChange={(e) => setSearchVal(e.target.value)}
+        onChange={e => setSearchVal(e.target.value)}
         onKeyPress={handleKeyPress}
         onFocus={() => setsearchActive(true)}
         onBlur={onBlurSearch}
       />
       <img src={find} onClick={onClickSearch} />
-      <img src={searchClear} onClick={onClickMinimize} />
+      {isMobile && !isTablet ? (
+        <></>
+      ) : (
+        <img src={searchClear} onClick={onClickMinimize} />
+      )}
     </div>
   );
 };

@@ -5,13 +5,14 @@ import izbr_icon from 'images/izbr_icon.svg';
 import axios from 'axios';
 
 const ItemAddIzbr = props => {
-  const [state, setState] = React.useState(false);
+  const [state, setState] = React.useState(true);
 
   useEffect(() => {
+    setState(true)
     if (props.izbr.includes(props.item.ps)) {
-      setState(true);
+      setState(false);
     }
-  }, []);
+  }, [props.izbr]);
 
   const onFetchItem = id => {
     axios
@@ -20,15 +21,16 @@ const ItemAddIzbr = props => {
         id_product: props.item.ps
       })
       .then(response => {
-        console.log('added');
+
       });
   };
   const clickItemIzbr = e => {
     onFetchItem(e.target.id);
     setState(!state);
   };
+
   if (props.isAuth) {
-    if (state) {
+    if (!state) {
       return (
         <img
           id="deleteFavourite"

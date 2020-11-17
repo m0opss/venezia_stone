@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import IzbrItem from 'components/MyBasket/IzbrItem';
+import BasketItem from 'components/MyBasket/BasketItem';
 import axios from 'axios';
 
 const Izbrannoe = props => {
@@ -40,7 +40,7 @@ const Izbrannoe = props => {
     <div className="lk__izbrannoe basket">
       <div className="basket__items">
         {Object.keys(izbr).map((ps, index) => (
-          <IzbrItem
+          <BasketItem
             key={index}
             kind="izbr"
             photo={izbr[ps].photo}

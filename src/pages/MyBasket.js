@@ -83,9 +83,6 @@ const MyBasket = props => {
     }
   };
 
-  const orderOk = e => {
-    setVisibleModal(false);
-  };
 
   let style = '';
   let buttonStyle = '';
@@ -98,7 +95,7 @@ const MyBasket = props => {
       <OrderModal
         visible={visibleModal}
         onCancel={() => setVisibleModal(false)}
-        onOk={orderOk}
+        setVisible={setVisibleModal}
       />
       <BackArrow history={props.history} />
 

@@ -26,36 +26,46 @@ const AddressCard = props => {
       </div>
 
       <div className="address-card__soc">
-        <Link to="#">
-          <Icon icon={viberIcon} color="#6F3FAA" width="1.5em" height="1.5em" />
-        </Link>
-        <Link to="#">
-          <Icon icon={vkIcon} color="#4D76A1" width="1.5em" height="1.5em" />
-        </Link>
-        <Link to="#">
-          <Icon
-            icon={facebookIcon}
-            color="#3B5998"
-            width="1.5em"
-            height="1.5em"
-          />
-        </Link>
-        <Link to="#">
-          <Icon
-            icon={telegramIcon}
-            color="#039BE5"
-            width="1.5em"
-            height="1.5em"
-          />
-        </Link>
-        <Link to="#">
-          <Icon
-            icon={whatsappIcon}
-            color="#4CAF50"
-            width="1.5em"
-            height="1.5em"
-          />
-        </Link>
+      <a href="https://www.viber.com/ru/">
+              <Icon
+                icon={viberIcon}
+                color="#6F3FAA"
+                width="1.5em"
+                height="1.5em"
+              />
+            </a>
+            <a href="https://www.vk.com">
+              <Icon
+                icon={vkIcon}
+                color="#4D76A1"
+                width="1.5em"
+                height="1.5em"
+              />
+            </a>
+            <a href="https://www.facebook.com/">
+              <Icon
+                icon={facebookIcon}
+                color="#3B5998"
+                width="1.5em"
+                height="1.5em"
+              />
+            </a>
+            <a href="https://web.telegram.org/#/im">
+              <Icon
+                icon={telegramIcon}
+                color="#039BE5"
+                width="1.5em"
+                height="1.5em"
+              />
+            </a>
+            <a  href="https://www.whatsapp.com/?lang=ru">
+              <Icon
+                icon={whatsappIcon}
+                color="#4CAF50"
+                width="1.5em"
+                height="1.5em"
+              />
+            </a>
       </div>
     </div>
   );

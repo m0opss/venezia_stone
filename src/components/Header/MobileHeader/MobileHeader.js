@@ -16,12 +16,9 @@ import search from 'images/search.svg';
 import './MobileHeader.scss';
 
 const MobileHeader = props => {
-  const { match, history } = props;
   const [dropVisible, setDropVisible] = React.useState(false);
   const [menu, setMenu] = React.useState();
-  const setFilterParam = e => {
-    history.push('/');
-  };
+
 
   const clickSearch = () => {
     let menu = (

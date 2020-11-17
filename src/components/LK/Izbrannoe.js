@@ -4,8 +4,8 @@ import BasketItem from 'components/MyBasket/BasketItem';
 import axios from 'axios';
 
 const Izbrannoe = props => {
-  const [izbr, setIzbr] = React.useState({});
 
+  const [izbr, setIzbr] = React.useState({});
   let isSubscr = true;
   React.useEffect(() => {
     axios

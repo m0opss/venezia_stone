@@ -68,11 +68,17 @@ const Authored = props => {
   const onExitModal = () => {
     props.setAuth(false);
     props.setToken('');
-    localStorage.removeItem('phone');
-    localStorage.removeItem('email');
-    localStorage.removeItem('first_name');
-    localStorage.removeItem('middle_name');
     localStorage.removeItem('last_name');
+    localStorage.removeItem('basket');
+    localStorage.removeItem('middle_name');
+    localStorage.removeItem('activeFilters');
+    localStorage.removeItem('groups');
+    localStorage.removeItem('first_name');
+    localStorage.removeItem('selectedFavourite');
+    localStorage.removeItem('activeFieldKeys');
+    localStorage.removeItem('email');
+    localStorage.removeItem('phone');
+    localStorage.removeItem('items');
     localStorage.removeItem('searchData');
   };
 

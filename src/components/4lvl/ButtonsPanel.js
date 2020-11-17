@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import OrderModal from 'components/Modal/OrderModal';
 import MyModal from 'components/Modal/Modal';
 import ImageGallery from 'react-image-gallery';
 
@@ -11,24 +12,11 @@ import {
   isMobile
 } from 'react-device-detect';
 
-
-
 const ButtonsPanel = props => {
   const [visiblePhotos, setVisiblePhotos] = React.useState(false);
   const [visibleVideo, setVisibleVideo] = React.useState(false);
   const [visibleComments, setVisibleComments] = React.useState(false);
   const [visibleOrder, setVisibleOrder] = React.useState(false);
-  
-  const changePhotoCancel = () => {
-    setVisiblePhotos(!visiblePhotos);
-  };
-
-  const changeCommentButton = () => {
-    setVisibleComments(!visibleComments);
-  };
-  const changeOrderButton = () => {
-    setVisibleOrder(!visibleOrder);
-  };
 
   const PhotoContent = () => {
     return (
@@ -37,11 +25,9 @@ const ButtonsPanel = props => {
       </div>
     );
   };
+
   const CommentsContent = () => {
     return <div className="">{props.komment}</div>;
-  };
-  const OrderModalContent = () => {
-    return <div className="">Отправить</div>;
   };
 
   return (
@@ -55,34 +41,37 @@ const ButtonsPanel = props => {
         onClick={() => setVisiblePhotos(true)}
       >
         Больше фото
-        <MyModal visible={visiblePhotos} onCancel={changePhotoCancel}>
-          <PhotoContent />
-        </MyModal>
       </div>
-      <div className="button button-text slab-item-info__button">
-        Видео
-        <MyModal visible={visibleVideo}>
-          <div className=""></div>
-        </MyModal>
-      </div>
+      <div className="button button-text slab-item-info__button">Видео</div>
       <div
         className="button button-text slab-item-info__button"
-        onClick={changeCommentButton}
+        onClick={() => setVisibleComments(true)}
       >
         Комментарии
-        <MyModal visible={visibleComments} onCancel={changeCommentButton}>
-          <CommentsContent />
-        </MyModal>
       </div>
       <div
         className="button button-text slab-item-info__button"
-        onClick={changeOrderButton}
+        onClick={() => setVisibleOrder(true)}
       >
         Отправить
-        <MyModal visible={visibleOrder} onCancel={changeOrderButton}>
-          <OrderModalContent />
-        </MyModal>
       </div>
+      <MyModal visible={visiblePhotos} onCancel={() => setVisiblePhotos(false)}>
+        <PhotoContent />
+      </MyModal>
+      <MyModal visible={visibleVideo} onCancel={() => setVisibleVideo(false)}>
+        <div className=""></div>
+      </MyModal>
+      <MyModal
+        visible={visibleComments}
+        onCancel={() => setVisibleComments(false)}
+      >
+        <CommentsContent />
+      </MyModal>
+      <OrderModal
+        setVisible={setVisibleOrder}
+        visible={visibleOrder}
+        onCancel={() => setVisibleOrder(false)}
+      />
     </div>
   );
 };

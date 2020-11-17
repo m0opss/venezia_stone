@@ -18,11 +18,8 @@ import {
   isBrowser
 } from 'react-device-detect';
 
-import lamp from 'images/lamp.png';
-import book from 'images/book.png';
-import arr from 'images/arr-4lvl.png';
-import like from 'images/like-4lvl.png';
-import basket from 'images/basket-4lvl.png';
+import AllAddBasket from '../MyBasket/AllAddBasket';
+import AllAddIzbr from '../MyBasket/AllAddIzbr';
 
 const SlabTableRow = props => {
   if (props.item) {
@@ -217,15 +214,13 @@ const SlabItem = props => {
             </div>
             {props.isAuth ? (
               <div className="table-row__item good-items-table__title-icons">
-                <img src={arr} />
-                <img src={like} />
+                <AllAddIzbr goods={props.item} />
               </div>
             ) : (
               <></>
             )}
             <div className="table-row__item good-items-table__title-icons">
-              <img src={arr} />
-              <img src={basket} />
+              <AllAddBasket goods={props.item} />
             </div>
           </div>
           {props.item.length > 0 ? (

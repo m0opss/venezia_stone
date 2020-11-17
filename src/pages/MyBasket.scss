@@ -1,7 +1,4 @@
-
-
 .basket {
-
   .basket__f-line {
     display: flex;
     justify-content: space-between;
@@ -18,7 +15,6 @@
       align-items: center;
       text-transform: uppercase;
     }
-    
   }
 
   .-basket-mobile {
@@ -62,6 +58,9 @@
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
+      @media screen and (max-width: 767px) {
+        justify-content: center;
+      }
       .basket__button {
         border: 1px solid #be9344;
         box-sizing: border-box;
