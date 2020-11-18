@@ -2,6 +2,18 @@ import React, { useEffect } from 'react';
 import MyModal from 'components/Modal/Modal';
 import axios from 'axios';
 import { connect } from 'react-redux';
+// import { ToastContainer, toast } from 'react-toastify';
+
+// const notify = () =>
+//     toast.success('Заявка', {
+//       position: 'top-right',
+//       autoClose: 5000,
+//       hideProgressBar: true,
+//       closeOnClick: true,
+//       pauseOnHover: false,
+//       draggable: true,
+//       progress: undefined
+//     });
 
 const OrderModal = props => {
   const [name, setName] = React.useState(
@@ -15,6 +27,7 @@ const OrderModal = props => {
   const [email, setEmail] = React.useState(
     localStorage.getItem('email') !== null ? localStorage.getItem('email') : ''
   );
+  const [visibleOkorder, setVisibleOkOrder] = React.useState(false);
 
   const onChangeName = e => {
     setName(e.target.value);
@@ -30,16 +43,22 @@ const OrderModal = props => {
     let goods = props.goods;
     let arr = {};
 
-    if (!Array.isArray(goods)) arr = [goods.ps];
-    else {
+    console.log(goods);
+    if (!Array.isArray(goods)) {
+      if (goods.itms_izd == 'Слэбы') {
+        arr[goods.ps] = '';
+      } else {
+        arr[goods.ps] = goods.S;
+      }
+    } else {
       goods.map(i => {
-        if (i.itms_izd == 'Слэбы') arr[i.ps] = '';
-        else {
+        if (i.itms_izd == 'Слэбы') {
+          arr[i.ps] = '';
+        } else {
           arr[i.ps] = i.S;
         }
       });
     }
-    console.log(goods);
     console.log(arr);
     axios
       .post('https://catalog-veneziastone.ru/account/order/', {
@@ -47,7 +66,7 @@ const OrderModal = props => {
         products: arr
       })
       .then(res => {
-        console.log(res);
+        setVisibleOkOrder(true);
       })
       .catch(err => {
         if (err.response) {
@@ -94,6 +113,17 @@ const OrderModal = props => {
             value={email}
             onChange={onChangeEmail}
           />
+        </div>
+      </MyModal>
+      <MyModal
+        title="Спасибо за заказ!"
+        onCancel={() => setVisibleOkOrder(false)}
+        visible={visibleOkorder}
+        buttonVision={false}
+      >
+        <div className="">
+          {name}, Ваш заказ оформлен. В ближайшее время с вами свяжется менеджер.
+          Спасибо что выбрали нас!
         </div>
       </MyModal>
     </>

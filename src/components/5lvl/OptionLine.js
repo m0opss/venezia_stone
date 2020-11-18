@@ -1,7 +1,8 @@
 import React from 'react';
-import { isMobile } from 'react-device-detect';
+import { isBrowser, isMobile, isTablet } from 'react-device-detect';
 import { Link } from 'react-router-dom';
 
+import close_icon from 'images/close.png';
 import FullScreenDialog from 'components/FullScreenDialog/FullScreenDialog';
 import CropperBook from 'components/Cropper/CropperBook';
 import MyCropper from 'components/Cropper/MyCropper';
@@ -15,7 +16,7 @@ import mail from 'images/mail.svg';
 import facebook from 'images/facebook.svg';
 import pdf from 'images/pdf.svg';
 
-import pdf_file from 'images/1.pdf'
+import pdf_file from 'images/1.pdf';
 import './OptionLine.scss';
 
 const OptionLine = props => {
@@ -65,23 +66,39 @@ const OptionLine = props => {
       <FullScreenDialog open={isOpenBook} setVisible={setOpenBook}>
         <div className="dialog-wrapper">
           <CropperBook img={props.img} />
-          <div
-            className="dialog-wrapper__button"
-            onClick={() => setOpenBook(false)}
-          >
-            Закрыть
-          </div>
+          {isTablet || isBrowser ? (
+            <div
+              className="dialog-wrapper__button"
+              onClick={() => setOpenBook(false)}
+            >
+              Закрыть
+            </div>
+          ) : (
+            <img
+              src={close_icon}
+              className="close-filter"
+              onClick={() => setOpenBook(false)}
+            />
+          )}
         </div>
       </FullScreenDialog>
       <FullScreenDialog open={isOpen} setVisible={setOpen}>
         <div className="dialog-wrapper">
           <MyCropper img={props.img} />
-          <div
-            className="dialog-wrapper__button"
-            onClick={() => setOpen(false)}
-          >
-            Закрыть
-          </div>
+          {isTablet || isBrowser ? (
+            <div
+              className="dialog-wrapper__button"
+              onClick={() => setOpen(false)}
+            >
+              Закрыть
+            </div>
+          ) : (
+            <img
+              src={close_icon}
+              className="close-filter"
+              onClick={() => setOpen(false)}
+            />
+          )}
         </div>
       </FullScreenDialog>
 
