@@ -34,6 +34,7 @@ const Filter = props => {
         .get(`https://catalog-veneziastone.ru/api_v0/getFilters/`)
         .then(response => {
           props.setFilters(response.data.filters);
+          console.log(123)
           if (localStorage.getItem('activeFilters') !== null) {
             props.setActiveFilters(
               JSON.parse(localStorage.getItem('activeFilters'))
@@ -99,13 +100,9 @@ const Filter = props => {
     let newArr = [...props.upper_izd];
     if (newArr.indexOf(e.key) === -1) {
       newArr.push(e.key);
-      if (!isMobile) {
-        document.getElementById(e.key).setAttribute('style', 'color: #c98505');
-      }
+      document.getElementById(e.key).setAttribute('style', 'color: #c98505');
     } else {
-      if (!isMobile) {
-        document.getElementById(e.key).setAttribute('style', 'color: black');
-      }
+      document.getElementById(e.key).setAttribute('style', 'color: black');
       newArr.splice(newArr.indexOf(e.key), 1);
     }
     props.setUpper(newArr);
@@ -120,11 +117,12 @@ const Filter = props => {
       ];
 
     Object.keys(props.activeFilters).map(field => {
+      console.log(f, 1, field);
       if (f == field) {
         let tmp = { ...props.activeFilters };
         if (tmp[field].indexOf(param) === -1) tmp[field].push(param);
         else tmp[field].splice(tmp[field].indexOf(param), 1);
-        console.log(111, 'ACTIVE', tmp);
+        // console.log(111, 'ACTIVE', tmp);
         props.setActiveFilters(tmp);
       }
     });

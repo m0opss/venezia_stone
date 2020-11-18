@@ -42,6 +42,7 @@ const NumGroups = props => {
   const [loadCnt, setLoadCnt] = React.useState(12);
 
   React.useEffect(() => {
+    console.log(123)
     window.scrollTo(0, 0);
     setLoading(true);
     let isSubscr = true;
@@ -66,12 +67,14 @@ const NumGroups = props => {
             level: [2],
             groups: [],
             token: [],
-            nw: news,
+            nw: news, 
             on_sale: sales
           })
           .then(response => {
+            // console.log(response.data.grs)
             setNumGroups(response.data.grs);
             setdefNumGroups(response.data.grs);
+            // setLoading(false)
             setTimeout(() => setLoading(false), 600);
           })
           .catch(err => {

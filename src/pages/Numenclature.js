@@ -66,28 +66,31 @@ const Numenclature = props => {
           groups: [props.match.params.numGroups]
         })
         .then(response => {
+          setLoading(false);
           setNumemclature(response.data.itms);
           setdefNum(response.data.itms);
-          setTimeout(() => setLoading(false), 600);
           if (localStorage.getItem('3lvl_active_field') != null) {
             let arr = JSON.parse(localStorage.getItem('3lvl_active_field'));
-            if (arr.length == 0) {
+            if (arr.length == 0 && document.getElementById('Все') != null) {
               document
                 .getElementById('Все')
                 .setAttribute('style', 'color: #c98505');
-            } else if (arr.length > 4) {
+            } else if (
+              arr.length > 4 &&
+              document.getElementById('Другие') != null
+            ) {
               document
                 .getElementById('Другие')
                 .setAttribute('style', 'color: #c98505');
             }
             arr.map(i => {
-              console.log(i);
               if (i != '_Прочее' && document.getElementById(i) != null)
                 document
                   .getElementById(i)
                   .setAttribute('style', 'color: #c98505');
             });
           }
+          // setTimeout(() => setLoading(false), 600);
         })
         .catch(err => {
           if (err.response) {
