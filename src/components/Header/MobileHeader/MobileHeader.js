@@ -10,7 +10,7 @@ import Search from 'components/Search/Search';
 import DropdownSearch from 'components/Dropdown/DropdownSearch';
 
 // import izbr from "images/izbrannoe_icon.svg"
-import izbr from 'images/izbrannoe_icon.png';
+import izbr from 'images/izbrannoe_icon.svg';
 import search from 'images/search.svg';
 
 import './MobileHeader.scss';

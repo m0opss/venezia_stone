@@ -2,18 +2,7 @@ import React, { useEffect } from 'react';
 import MyModal from 'components/Modal/Modal';
 import axios from 'axios';
 import { connect } from 'react-redux';
-// import { ToastContainer, toast } from 'react-toastify';
-
-// const notify = () =>
-//     toast.success('Заявка', {
-//       position: 'top-right',
-//       autoClose: 5000,
-//       hideProgressBar: true,
-//       closeOnClick: true,
-//       pauseOnHover: false,
-//       draggable: true,
-//       progress: undefined
-//     });
+import validator from 'validator';
 
 const OrderModal = props => {
   const [name, setName] = React.useState(
@@ -24,11 +13,14 @@ const OrderModal = props => {
   const [phone, setPhone] = React.useState(
     localStorage.getItem('phone') !== null ? localStorage.getItem('phone') : ''
   );
+  const [phoneLabel, setPhoneLabel] = React.useState('');
+
   const [email, setEmail] = React.useState(
     localStorage.getItem('email') !== null ? localStorage.getItem('email') : ''
   );
-  const [visibleOkorder, setVisibleOkOrder] = React.useState(false);
+  const [emailLabel, setEmailLabel] = React.useState('');
 
+  const [visibleOkorder, setVisibleOkOrder] = React.useState(false);
   const onChangeName = e => {
     setName(e.target.value);
   };
@@ -39,11 +31,29 @@ const OrderModal = props => {
     setEmail(e.target.value);
   };
 
+  const validationFields = () => {
+    let flag = true;
+    setPhoneLabel('');
+    setEmailLabel('');
+    if (!validator.isMobilePhone(phone, 'any', ['strictMode'])) {
+      setPhoneLabel('Неверный формат номера');
+      flag = false;
+    }
+    if (!validator.isEmail(email)) {
+      setEmailLabel('Неверный формат email');
+      flag = false;
+    }
+    if(flag){
+      setPhoneLabel('');
+      setEmailLabel('');
+    }
+    return flag;
+  };
+
   const fetchOrder = () => {
     let goods = props.goods;
     let arr = {};
 
-    console.log(goods);
     if (!Array.isArray(goods)) {
       if (goods.itms_izd == 'Слэбы') {
         arr[goods.ps] = '';
@@ -59,29 +69,32 @@ const OrderModal = props => {
         }
       });
     }
-    console.log(arr);
-    axios
-      .post('https://catalog-veneziastone.ru/account/order/', {
-        email: email,
-        products: arr
-      })
-      .then(res => {
-        setVisibleOkOrder(true);
-      })
-      .catch(err => {
-        if (err.response) {
-          // client received an error response (5xx, 4xx)
-          console.log(1, err.response);
-          // props.setAuth(false);
-        } else if (err.request) {
-          // client never received a response, or request never left
-          console.log(2, err.request);
-        } else {
-          // anything else
-          console.log(3, err);
-        }
-      });
-    props.setVisible(false);
+    console.log(123)
+    console.log(validationFields())
+    if (validationFields()) {
+      axios
+        .post('https://catalog-veneziastone.ru/account/order/', {
+          email: email,
+          products: arr
+        })
+        .then(res => {
+          setVisibleOkOrder(true);
+        })
+        .catch(err => {
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log(1, err.response);
+            // props.setAuth(false);
+          } else if (err.request) {
+            // client never received a response, or request never left
+            console.log(2, err.request);
+          } else {
+            // anything else
+            console.log(3, err);
+          }
+        });
+      props.setVisible(false);
+    }
   };
 
   return (
@@ -101,12 +114,14 @@ const OrderModal = props => {
             value={name}
             onChange={onChangeName}
           />
+          <label className="reg_label" htmlFor="">{phoneLabel}</label>
           <input
             type="text"
             placeholder="Телефон"
             value={phone}
             onChange={onChangePhone}
           />
+          <label className="reg_label" htmlFor="">{emailLabel}</label>
           <input
             type="text"
             placeholder="Email*"
@@ -122,8 +137,8 @@ const OrderModal = props => {
         buttonVision={false}
       >
         <div className="">
-          {name}, Ваш заказ оформлен. В ближайшее время с вами свяжется менеджер.
-          Спасибо что выбрали нас!
+          {name}, Ваш заказ оформлен. В ближайшее время с вами свяжется
+          менеджер. Спасибо что выбрали нас!
         </div>
       </MyModal>
     </>

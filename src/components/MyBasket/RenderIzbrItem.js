@@ -4,6 +4,7 @@ import deleteItem from 'images/deleteItem.png';
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import './BasketItem.scss';
+import { isMobile } from 'react-device-detect';
 
 const RenderBasketItem = props => {
   if (!props.item) {
@@ -66,7 +67,8 @@ const RenderBasketItem = props => {
               <div className="basket-item__line -price">
                 <div className="price-view">
                   <p id="cost" style={{ marginTop: 10 }}>
-                    Сумма: <br />
+                    Сумма:
+                    {isMobile ? <br /> : <></>}
                     {props.cur === 'rub'
                       ? `${props.sum} ₽`
                       : props.cur === 'usd'
@@ -109,27 +111,9 @@ const RenderBasketItem = props => {
             </div>
             <div className="basket-item__line -price">
               <p id="cost">
-                Сумма: <br />
+                Сумма:
+                {isMobile ? <br /> : <></>}
                 {props.item.sum}
-                {/* {props.cur === 'rub'
-                  ? `${(
-                      parseFloat(props.item.cntRUB) *
-                      parseFloat(props.item.he) *
-                      parseFloat(props.item.le)
-                    ).toFixed(2)} ₽`
-                  : props.cur === 'usd'
-                  ? `${(
-                      parseFloat(props.item.cntUSD) *
-                      parseFloat(props.item.he) *
-                      parseFloat(props.item.le)
-                    ).toFixed(2)} $`
-                  : props.cur === 'eur'
-                  ? `${(
-                      parseFloat(props.item.cntEUR) *
-                      parseFloat(props.item.he) *
-                      parseFloat(props.item.le)
-                    ).toFixed(2)} €`
-                  : 1} */}
               </p>
               <div className="basket-item__buttons">
                 <ItemAddIzbr item={props.item} />

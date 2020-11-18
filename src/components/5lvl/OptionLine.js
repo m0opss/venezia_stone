@@ -103,12 +103,6 @@ const OptionLine = props => {
       </FullScreenDialog>
 
       <div>
-        <DropdownSearch
-          visible={dropVisible}
-          setVisible={setDropVisible}
-          menuList={menu}
-          placement="bottomRight"
-        />
         <div className="option-line__item" onClick={openDropdown}>
           <svg
             width="24"
@@ -171,6 +165,12 @@ const OptionLine = props => {
           />
         </svg>
       </div>
+      <DropdownSearch
+          visible={dropVisible}
+          setVisible={setDropVisible}
+          menuList={menu}
+          placement="bottomRight"
+        />
     </div>
   );
 };

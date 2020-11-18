@@ -70,9 +70,9 @@ const NumGroups = props => {
             on_sale: sales
           })
           .then(response => {
-            setLoading(false);
             setNumGroups(response.data.grs);
             setdefNumGroups(response.data.grs);
+            setTimeout(() => setLoading(false), 600);
           })
           .catch(err => {
             if (err.response) {

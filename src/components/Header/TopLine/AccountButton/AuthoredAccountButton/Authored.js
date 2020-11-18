@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu } from 'antd';
 import { Link } from 'react-router-dom';
-
+import MyModal from 'components/Modal/Modal';
 import Dropdown from 'components/Dropdown/Dropdown';
 
 function ucFirst(str) {
@@ -54,7 +54,7 @@ const Authored = props => {
         middle: middle_name
       }) == ''
     ) {
-      name = email
+      name = email;
     } else {
       name = createUserName({
         last: last_name,
@@ -64,8 +64,13 @@ const Authored = props => {
     }
     setUserName(name);
   });
+  const [visibleExitModale, setVisExModal] = React.useState(false);
 
   const onExitModal = () => {
+    setVisExModal(true);
+  };
+
+  const onOkExit = () => {
     props.setAuth(false);
     props.setToken('');
     localStorage.removeItem('last_name');
@@ -102,6 +107,15 @@ const Authored = props => {
           Выйти
         </div>
       </Menu.Item>
+      <MyModal
+        onOk={onOkExit}
+        okText="Да"
+        cancelText="Нет"
+        onCancel={() => setVisExModal(false)}
+        buttonAllVision={true}
+        visible={visibleExitModale}
+        title={'Выйти из кабинета?'}
+      ></MyModal>
     </>
   );
   if (user_name != null)

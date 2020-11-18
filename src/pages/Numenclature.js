@@ -68,7 +68,7 @@ const Numenclature = props => {
         .then(response => {
           setNumemclature(response.data.itms);
           setdefNum(response.data.itms);
-          setLoading(false);
+          setTimeout(() => setLoading(false), 600);
           if (localStorage.getItem('3lvl_active_field') != null) {
             let arr = JSON.parse(localStorage.getItem('3lvl_active_field'));
             if (arr.length == 0) {

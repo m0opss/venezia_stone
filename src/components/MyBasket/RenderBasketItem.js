@@ -108,7 +108,8 @@ const RenderBasketItem = props => {
                 </div>
                 <div className="price-view">
                   <p id="cost" style={{ marginTop: 10 }}>
-                    Сумма: <br />
+                    Сумма: 
+                    {isMobile ? <br /> : <></>}
                     {props.cur === 'rub'
                       ? `${props.sum} ₽`
                       : props.cur === 'usd'

@@ -29,17 +29,17 @@ export const TopFilter = props => {
     let newArr = [...props.upper_izd];
     if (newArr.indexOf(e.target.id) === -1) {
       newArr.push(e.target.id);
-      if (!isMobile) {
+      // if (!isMobile) {
         document
           .getElementById(e.target.id)
           .setAttribute('style', 'color: #c98505');
-      }
+      // }
     } else {
-      if (!isMobile) {
+      // if (!isMobile) {
         document
           .getElementById(e.target.id)
           .setAttribute('style', 'color: black');
-      }
+      // }
       newArr.splice(newArr.indexOf(e.target.id), 1);
     }
     props.setUpper(newArr);

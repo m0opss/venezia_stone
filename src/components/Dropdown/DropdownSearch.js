@@ -26,12 +26,11 @@ const DropdownSearch = props => {
       overlay={menu}
       onVisibleChange={handleVisibleChange}
       trigger={['click']}
+      placement={`${props.placement ? props.placement : 'bottomCenter'}`}
       overlayClassName={`dropdown-search  ${
         props.className ? props.className : ''
       }`}
       visible={props.visible}
-      // placement='bottomRight'
-      placement={`${props.placement ? props.placement : 'bottomCenter'}`}
     >
       <div className=""></div>
     </Dropdown>

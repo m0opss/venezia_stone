@@ -63,7 +63,7 @@ const Register = props => {
         !validator.isMobilePhone(inputValues.r_phone, 'any', ['strictMode'])
         || (inputValues.r_phone[0] == "8" && inputValues.r_phone.length == 11)
       ) {
-        setLabelValues_r_phone('Неверный формат номера');
+        setLabelValues_r_phone('Неверный формат номера. Номер должен начинаться с +7');
         flag = false;
       } else {
         setLabelValues_r_phone('');

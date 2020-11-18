@@ -13,9 +13,10 @@ const ResetPass = props => {
   const [uid, setUid] = React.useState('');
 
   const succStageEmail = 'Письмо отправлено вам на почту.';
-  const succStagePhone = 'Код активации отправлен. Он действителен в течении 1 мин.';
+  const succStagePhone =
+    'Код активации отправлен. Он действителен в течении 1 мин.';
   const succStagePass = 'Пароль успешно изменен';
-  
+
   const notify = text =>
     toast.success(text, {
       position: 'top-right',
@@ -148,7 +149,7 @@ const ResetPass = props => {
       <div className="lk-container">
         <BackArrow history={props.history} />
         <h1 style={{ marginTop: '50px' }}>Восстановление пароля</h1>
-        <div className="lk__personal-data" style={{ marginTop: '70px' }}>
+        <div className="lk__personal-data reset-pass" style={{ marginTop: '70px' }}>
           <div className="lk__pd-line">
             <input
               type="text"
@@ -159,13 +160,14 @@ const ResetPass = props => {
               }}
             />
           </div>
-
-          <div
-            className="button button-text busket_button -hovered"
-            onClick={onClickSave}
-            style={{ margin: 20, marginTop: '50px', width: '200px' }}
-          >
-            Отправить
+          <div className="centered">
+            <div
+              className="button button-text busket_button -hovered "
+              onClick={onClickSave}
+              // style={{ margin: 20, marginTop: '50px', width: '200px' }}
+            >
+              Отправить
+            </div>
           </div>
         </div>
         <ToastContainer

@@ -11,8 +11,10 @@ const MyModal = props => {
   return (
     <>
       <Modal
-        className={props.buttonVision ? '' : `info-modal`}
+        className={props.buttonVision ? '' :  props.buttonAllVision ? 'modal-all-buttons' : `info-modal`}
         visible={props.visible}
+        okText={props.okText}
+        cancelText={props.cancelText}
         title={props.title}
         onOk={props.onOk}
         onCancel={props.onCancel}

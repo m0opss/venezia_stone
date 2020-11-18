@@ -108,12 +108,13 @@ const LK = props => {
         {modul}
         <MyModal
           onOk={onOkExit}
+          okText="Да"
+          cancelText='Нет'
           onCancel={() => setVisExModal(false)}
-          buttonVision={true}
+          buttonAllVision={true}
           visible={visibleExitModale}
           title={'Выйти из кабинета?'}
         >
-          {/* <div className=""></div> */}
         </MyModal>
       </div>
     );
