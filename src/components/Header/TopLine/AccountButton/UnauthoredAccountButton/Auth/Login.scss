@@ -78,13 +78,16 @@
       // }
 
       .input-form__block {
-        flex: 0 1 45%;
+        // flex: 0 1 45%;
         @media screen and (max-width: 600px) {
           flex: 0 1 70%;
+          margin: auto;
         }
-        margin: 10px;
+        @media screen and (max-width: 767px) {
+          margin: auto;
+        }
+        margin: 10px 20px;
         display: flex;
-        margin: auto;
         flex-flow: column wrap;
       }
     }

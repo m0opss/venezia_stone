@@ -312,12 +312,12 @@ const Register = props => {
         </div>
       </div>
       <div className="reg__bottom">
-        <Reaptcha
+        {/* <Reaptcha
           // size="compact"
           className="g-recaptcha"
           sitekey="6Ld92NYZAAAAAGxOdWjx7wQ-CbTfhJDqmtRMY9on"
           onVerify={onVerifyCaptca}
-        />
+        /> */}
         <div className="reg_bottom-text">
           <p>* обязательные поля</p>
           <div className="reg__check-use-data">
