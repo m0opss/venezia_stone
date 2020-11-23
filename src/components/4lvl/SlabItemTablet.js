@@ -35,10 +35,14 @@ const GroupItem = props => {
       </div>
       <Link to={`${props.url}/${props.item.ps}`}>
         <div className="slab-items-group-item__info">
-          <p className="slab-items-group-item__line">Слэб: {props.item.bl}</p>
+          <p className="slab-items-group-item__line">Слэб: {props.item.ps}</p>
           <p className="slab-items-group-item__line">
-            Размер: {props.item.le}x{props.item.he} ={props.item.os} м
-            <sup>2</sup>
+            Размер: {props.item.le}x{props.item.he} ={' '}
+            {(
+              parseFloat(props.item.le) * parseFloat(props.item.he) -
+              parseFloat(props.item.sco)
+            ).toFixed(2)}{' '}
+            м<sup>2</sup>
           </p>
           <p className="slab-items-group-item__line">
             Склад: {props.item.sklad}
@@ -125,7 +129,7 @@ const SlabItemTablet = props => {
                 <OptionLine
                   // lamp = {selectedEl.} поле для просветленного фото
                   style={{ width: 'unset', marginBottom: 'unset' }}
-                  // img={selectedEl.photo_product}
+                  item={selectedEl}
                   img={`data:image/jpg;base64,${selectedEl.photo_bytes}`}
                 />
               </div>

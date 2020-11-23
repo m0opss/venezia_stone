@@ -84,7 +84,7 @@ const OptionLine = props => {
       </FullScreenDialog>
       <FullScreenDialog open={isOpen} setVisible={setOpen}>
         <div className="dialog-wrapper">
-          <MyCropper img={props.img} />
+          <MyCropper img={props.img} item={props.item}/>
           {isTablet || isBrowser ? (
             <div
               className="dialog-wrapper__button"

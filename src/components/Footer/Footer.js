@@ -7,8 +7,8 @@ import { Icon } from '@iconify/react';
 
 import vkIcon from '@iconify/icons-mdi/vk';
 import facebookIcon from '@iconify/icons-mdi/facebook';
-import telegramIcon from '@iconify/icons-mdi/telegram';
-import viberIcon from '@iconify/icons-whh/viber';
+import instagrammIcon from '@iconify/icons-mdi/instagram';
+import viberIcon from '@iconify/icons-whh/youtube';
 import whatsappIcon from '@iconify/icons-whh/whatsapp';
 
 import {
@@ -35,15 +35,15 @@ const Footer = props => {
             Все права защищены.
           </div>
           <div className="footer__social">
-            <a href="https://www.viber.com/ru/">
+            <a href="https://www.youtube.com/VeneziaStoneCompany" target='_blank' >
               <Icon
                 icon={viberIcon}
-                color="#6F3FAA"
+                color="red"
                 width="1.5em"
                 height="1.5em"
               />
             </a>
-            <a href="https://www.vk.com">
+            <a href="https://vk.com/venezia.stone" target='_blank' >
               <Icon
                 icon={vkIcon}
                 color="#4D76A1"
@@ -51,7 +51,7 @@ const Footer = props => {
                 height="1.5em"
               />
             </a>
-            <a href="https://www.facebook.com/">
+            <a href="https://www.facebook.com/veneziastone" target='_blank' >
               <Icon
                 icon={facebookIcon}
                 color="#3B5998"
@@ -59,15 +59,15 @@ const Footer = props => {
                 height="1.5em"
               />
             </a>
-            <a href="https://web.telegram.org/#/im">
+            <a href="https://www.instagram.com/venezia.stone.company/" target='_blank' >
               <Icon
-                icon={telegramIcon}
-                color="#039BE5"
+                icon={instagrammIcon}
+                // color="#039BE5"
                 width="1.5em"
                 height="1.5em"
               />
             </a>
-            <a  href="https://www.whatsapp.com/?lang=ru">
+            <a  href="https://www.whatsapp.com/?lang=ru" target='_blank' >
               <Icon
                 icon={whatsappIcon}
                 color="#4CAF50"

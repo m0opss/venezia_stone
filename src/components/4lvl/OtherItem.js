@@ -101,7 +101,7 @@ const OtherItem = props => {
       <div className="slab-item">
         <div className="slab-item-info">
           <div className="slab-item-info__top">
-            <h1 className="slab-item-info__title">{props.item[0].name}</h1>
+            <h1 className="slab-item-info__title">{props.item[0].itms_name}</h1>
             <ButtonsPanel images={images} goods={props.item} />
           </div>
           <div className="slab-item-info__bottom">

@@ -18,8 +18,20 @@ a {
     color: #be9344;
   }
 }
+.ant-breadcrumb a:hover {
+  color: #be9344;
+}
 
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: white;
+}
+// .ant-slider-track {
+//   background-color: gray;
 
+// }
+// .ant-slider-handle {
+//   border-color:  #be9344;
+// }
 .unselectable {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Chrome/Safari/Opera */

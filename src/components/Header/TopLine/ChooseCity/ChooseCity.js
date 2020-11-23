@@ -1,24 +1,13 @@
 import React from 'react';
 
-// import Menu from '../../../Menu/Menu'
-
 import { Menu } from 'antd';
-import { Link } from "react-router-dom"
 import { Icon } from '@iconify/react';
 import mapMarker from '@iconify/icons-mdi/map-marker';
 
-import MyDropdown from 'components/Dropdown/Dropdown'
+import MyDropdown from 'components/Dropdown/Dropdown';
 
-import "./ChooseCity.scss"
+import './ChooseCity.scss';
 
-// const cityOptions = {
-//   '0': 'Москва',
-//   '1': 'Санкт-Петербург',
-//   '2': 'Краснодар',
-//   '3': 'Екатеринбург',
-//   '4': 'Казань',
-//   '5': 'Крым'
-// }
 const cityOptions = [
   'Москва',
   'Санкт-Петербург',
@@ -26,21 +15,21 @@ const cityOptions = [
   'Екатеринбург',
   'Казань',
   'Крым'
-]
-
-const menu = (
-  // Object.keys(cityOptions).map((key, index) => (
-  cityOptions.map((item, index) => (
-    <Menu.Item key={index}><div className="city">{item}</div></Menu.Item>
-  ))
-)
+];
 
 const ChooseCity = props => {
+  const menu = cityOptions.map((item, index) => (
+    <Menu.Item key={index}>
+      <div className="city" id={item} onClick={e => props.setCity(e.target.id)}>
+        {item}
+      </div>
+    </Menu.Item>
+  ));
   return (
     <div className="top-line__city">
       <Icon icon={mapMarker} width="1.5em" height="1.5em" color="#C98505" />
-      <MyDropdown type='city' title={cityOptions[0]} menuList={menu} />
+      <MyDropdown type="city" title={cityOptions[0]} menuList={menu} />
     </div>
-  )
-}
-export default ChooseCity
+  );
+};
+export default ChooseCity;

@@ -27,7 +27,7 @@ const SlabTableRow = props => {
       <div className="good-items-table__item">
         <Link to={`${props.url}/${props.item.ps}`}>
           <div className="table-row__item">
-            <p>{props.item.bl}</p>
+            <p>{props.item.ps}</p>
           </div>
           <div className="table-row__item table-row__item_s">
             <p>{props.item.le}</p>
@@ -36,10 +36,15 @@ const SlabTableRow = props => {
             <p>{props.item.he}</p>
           </div>
           <div className="table-row__item table-row__item_s">
-            <p>{props.item.os ? props.item.os : '-'}</p>
+            <p>
+              {(
+                parseFloat(props.item.le) * parseFloat(props.item.he) -
+                parseFloat(props.item.sco)
+              ).toFixed(2)}
+            </p>
           </div>
           <div className="table-row__item table-row__item_s">
-            <p>{props.item.sco == '0' ? 'нет' : 'да'}</p>
+            <p>{props.item.sco}</p>
           </div>
           <div className="table-row__item table-row__item_l">
             <p>{props.item.sklad}</p>
@@ -149,6 +154,7 @@ const SlabItem = props => {
                   <OptionLine
                     // lamp = {selectedEl.} поле для просветленного фото
                     style={{ width: 'unset', marginBottom: 'unset' }}
+                    item={selectedEl}
                     img={`data:image/jpg;base64,${selectedEl.photo_bytes}`}
                     // img={selectedEl.photobl}
                   />

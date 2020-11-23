@@ -32,10 +32,14 @@ const GroupItem = props => {
       </div>
       <Link to={`${props.url}/${props.item.ps}`}>
         <div className="slab-items-group-item__info">
-          <p className="slab-items-group-item__line">Слэб: {props.item.bl}</p>
+          <p className="slab-items-group-item__line">Слэб: {props.item.ps}</p>
           <p className="slab-items-group-item__line">
-            Размер: {props.item.le}x{props.item.he} ={props.item.os} м
-            <sup>2</sup>
+            Размер: {props.item.le}x{props.item.he} ={' '}
+            {(
+              parseFloat(props.item.le) * parseFloat(props.item.he) -
+              parseFloat(props.item.sco)
+            ).toFixed(2)}{' '}
+            м<sup>2</sup>
           </p>
           <p className="slab-items-group-item__line">
             Склад: {props.item.sklad}
@@ -43,48 +47,48 @@ const GroupItem = props => {
           <p className="slab-items-group-item__line">
             Цена за м<sup>2</sup>:{' '}
             {props.cur === 'rub'
-                ? `${
-                    props.item.cntRUB == 'По запросу'
-                      ? props.item.cntRUB
-                      : `${props.item.cntRUB}₽`
-                  }`
-                : props.cur === 'usd'
-                ? `${
-                    props.item.cntUSD == 'По запросу'
-                      ? props.item.cntUSD
-                      : `${props.item.cntUSD}$`
-                  }`
-                : props.cur === 'eur'
-                ? `${
-                    props.item.cntEUR == 'По запросу'
-                      ? props.item.cntEUR
-                      : `${props.item.cntEUR}€`
-                  }`
-                : ''}
+              ? `${
+                  props.item.cntRUB == 'По запросу'
+                    ? props.item.cntRUB
+                    : `${props.item.cntRUB}₽`
+                }`
+              : props.cur === 'usd'
+              ? `${
+                  props.item.cntUSD == 'По запросу'
+                    ? props.item.cntUSD
+                    : `${props.item.cntUSD}$`
+                }`
+              : props.cur === 'eur'
+              ? `${
+                  props.item.cntEUR == 'По запросу'
+                    ? props.item.cntEUR
+                    : `${props.item.cntEUR}€`
+                }`
+              : ''}
           </p>
           <p className="slab-items-group-item__line">
             Стоимость:{' '}
             {props.item.cntRUB == 'По запросу'
-                ? props.item.cntRUB
-                : props.cur === 'rub'
-                ? `${(
-                    parseFloat(props.item.cntRUB) *
-                    parseFloat(props.item.le) *
-                    parseFloat(props.item.he)
-                  ).toFixed(2)} ₽`
-                : props.cur === 'usd'
-                ? `${(
-                    parseFloat(props.item.cntUSD) *
-                    parseFloat(props.item.le) *
-                    parseFloat(props.item.he)
-                  ).toFixed(2)} $`
-                : props.cur === 'eur'
-                ? `${(
-                    parseFloat(props.item.cntEUR) *
-                    parseFloat(props.item.le) *
-                    parseFloat(props.item.he)
-                  ).toFixed(2)} €`
-                : 1}
+              ? props.item.cntRUB
+              : props.cur === 'rub'
+              ? `${(
+                  parseFloat(props.item.cntRUB) *
+                  parseFloat(props.item.le) *
+                  parseFloat(props.item.he)
+                ).toFixed(2)} ₽`
+              : props.cur === 'usd'
+              ? `${(
+                  parseFloat(props.item.cntUSD) *
+                  parseFloat(props.item.le) *
+                  parseFloat(props.item.he)
+                ).toFixed(2)} $`
+              : props.cur === 'eur'
+              ? `${(
+                  parseFloat(props.item.cntEUR) *
+                  parseFloat(props.item.le) *
+                  parseFloat(props.item.he)
+                ).toFixed(2)} €`
+              : 1}
           </p>
         </div>
       </Link>

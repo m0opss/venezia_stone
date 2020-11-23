@@ -15,7 +15,7 @@ import pltk_a from 'images/pltk_a.png';
 import Valute from 'components/Valute/Valute';
 import Sort from 'components/Sort/Sort';
 import NumGroupItem from 'components/Content/NumGroupItem/NumGroupItem';
-
+import { Breadcrumb } from 'antd';
 import './NumGroups.scss';
 import Filter from 'components/Filter/Filter';
 
@@ -42,7 +42,6 @@ const NumGroups = props => {
   const [loadCnt, setLoadCnt] = React.useState(12);
 
   React.useEffect(() => {
-    console.log(123)
     window.scrollTo(0, 0);
     setLoading(true);
     let isSubscr = true;
@@ -52,45 +51,45 @@ const NumGroups = props => {
     if (str == 'new') {
       news = [1];
     } else if (str == 'sale') {
-      sales = [1]
+      sales = [1];
     }
-      if (isSubscr) {
-        let header = headerCreator(
-          props.activeFilters,
-          props.match.params.material,
-          props.upper_izd
-        );
-        axios
-          .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
-            ...header,
-            items: [],
-            level: [2],
-            groups: [],
-            token: [],
-            nw: news, 
-            on_sale: sales
-          })
-          .then(response => {
-            // console.log(response.data.grs)
-            setNumGroups(response.data.grs);
-            setdefNumGroups(response.data.grs);
-            // setLoading(false)
-            setTimeout(() => setLoading(false), 600);
-          })
-          .catch(err => {
-            if (err.response) {
-              // client received an error response (5xx, 4xx)
-              console.log(1, err.response);
-              // props.setAuth(false);
-            } else if (err.request) {
-              // client never received a response, or request never left
-              console.log(2, err.request);
-            } else {
-              // anything else
-              console.log(3, err);
-            }
-          });
-      }
+    if (isSubscr) {
+      let header = headerCreator(
+        props.activeFilters,
+        props.match.params.material,
+        props.upper_izd
+      );
+      axios
+        .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
+          ...header,
+          items: [],
+          level: [2],
+          groups: [],
+          token: [],
+          nw: news,
+          on_sale: sales
+        })
+        .then(response => {
+          // console.log(response.data.grs)
+          setNumGroups(response.data.grs);
+          setdefNumGroups(response.data.grs);
+          // setLoading(false)
+          setTimeout(() => setLoading(false), 600);
+        })
+        .catch(err => {
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log(1, err.response);
+            // props.setAuth(false);
+          } else if (err.request) {
+            // client never received a response, or request never left
+            console.log(2, err.request);
+          } else {
+            // anything else
+            console.log(3, err);
+          }
+        });
+    }
 
     return () => (isSubscr = false);
   }, [props.activeFilters, props.upper_izd]);
@@ -111,8 +110,12 @@ const NumGroups = props => {
 
   return (
     <>
-      {isTablet || isBrowser ? <Filter /> : <></>}
+      {/* {isTablet || isBrowser ? <Filter /> : <></>} */}
       {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
+      <Breadcrumb separator=">">
+        <Breadcrumb.Item href="/">Главная</Breadcrumb.Item>
+        <Breadcrumb.Item>{props.match.params.material}</Breadcrumb.Item>
+      </Breadcrumb>
       <Preloader isLoading={isLoading}>
         <div className="num-gr-options">
           <Valute />

@@ -17,6 +17,7 @@ import './Numenclature.scss';
 import { headerCreator } from 'components/Filter/headerCreator';
 import NumenclatureItem from '../components/Content/NumenclatureItem/NumenclatureItem';
 import Filter from 'components/Filter/Filter';
+import { Breadcrumb } from 'antd';
 import {
   MobileView,
   BrowserView,
@@ -194,8 +195,15 @@ const Numenclature = props => {
 
   return (
     <>
-      {isTablet || isBrowser ? <Filter /> : <></>}
+      {/* {isTablet || isBrowser ? <Filter /> : <></>} */}
       {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
+      <Breadcrumb separator=">">
+        <Breadcrumb.Item href="/">Главная</Breadcrumb.Item>
+        <Breadcrumb.Item href={`/#/${props.match.params.material}`}>
+          {props.match.params.material}
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>{props.match.params.numGroups}</Breadcrumb.Item>
+      </Breadcrumb>
       <Preloader isLoading={isLoading}>
         <div
           className={

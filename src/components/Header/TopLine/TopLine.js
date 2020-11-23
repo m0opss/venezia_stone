@@ -11,28 +11,33 @@ import { connect } from 'react-redux';
 
 import './TopLine.scss';
 
-const TopLine = props => (
-  <div className="top-line">
-    <div className="top-line__left-block">
-      <Logo />
+
+
+const TopLine = props => {
+  const [city, setCity] = React.useState('Москва')
+  return (
+    <div className="top-line">
+      <div className="top-line__left-block">
+        <Logo />
+      </div>
+      <div className="top-line__center-block">
+        <SocialContacts city={city}/>
+        <ChooseCity setCity={setCity} city={city}/>
+      </div>
+      <div className="top-line__right-block">
+        <AccountButton />
+        {props.isAuth ? (
+          <Link to="/izbrannoe" className="izbrannoe-button">
+            <img src={izbr} alt="" />
+          </Link>
+        ) : (
+          <></>
+        )}
+        <BasketButton />
+      </div>
     </div>
-    <div className="top-line__center-block">
-      <SocialContacts />
-      <ChooseCity />
-    </div>
-    <div className="top-line__right-block">
-      <AccountButton />
-      {props.isAuth ? (
-        <Link to="/izbrannoe" className="izbrannoe-button">
-          <img src={izbr} alt="" />
-        </Link>
-      ) : (
-        <></>
-      )}
-      <BasketButton /> {/* Здесь считать количество в корзине*/}
-    </div>
-  </div>
-);
+  );
+};
 
 const mapStateToProps = store => {
   return {

@@ -8,11 +8,17 @@ const initialState = {
   f_share: () => {},
   groups: [],
   upper_izd: [],
+  all_upper: [],
   items: []
 };
 
 export function filterReducer(state = initialState, action) {
   switch (action.type) {
+    case 'SET_ALL_UPPER':
+      return {
+        ...state,
+        all_upper: action.payload
+      }
     case 'SET_ACTIVE_FIELDS':
       return {
         ...state,

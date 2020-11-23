@@ -8,6 +8,7 @@ import BackArrow from 'components/BackArrow/BackArrow';
 import filterActions from '../actions/filterActions';
 import Filter from 'components/Filter/Filter';
 import { headerCreator } from 'components/Filter/headerCreator';
+import { Breadcrumb } from 'antd';
 
 import {
   MobileView,
@@ -95,8 +96,18 @@ const FourLvl = props => {
 
   return (
     <>
+      <Breadcrumb separator=">">
+        <Breadcrumb.Item href="/">Главная</Breadcrumb.Item>
+        <Breadcrumb.Item href={`/#/${props.match.params.material}`}>
+          {props.match.params.material}
+        </Breadcrumb.Item>
+        <Breadcrumb.Item href={`/#/${props.match.params.material}/${props.match.params.numGroups}`}>
+          {props.match.params.numGroups}
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>{props.match.params.num}</Breadcrumb.Item>
+      </Breadcrumb>
       <Preloader isLoading={isLoading}>
-        {isTablet || isBrowser ? <Filter /> : <></>}
+        {/* {isTablet || isBrowser ? <Filter /> : <></>} */}
         <div className="four-lvl-container">
           <BackArrow history={props.history} />
           <div className="four-lvl-valute">

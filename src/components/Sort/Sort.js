@@ -43,7 +43,7 @@ const ColorSortArr = arr => {
 const Sort = props => {
   // console.log(props)
   let customStyleRoot = props.rootStyle ? props.rootStyle : '';
-  const [active, setActive] = React.useState('');
+  const [active, setActive] = React.useState('alph');
 
   // useEffect(() => {});
 

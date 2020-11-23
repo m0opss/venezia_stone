@@ -7,7 +7,7 @@ import OrderModal from 'components/Modal/OrderModal';
 import Valute from 'components/Valute/Valute';
 import BackArrow from 'components/BackArrow/BackArrow';
 import basketActions from 'actions/basketActions';
-
+import { Breadcrumb } from 'antd';
 import './MyBasket.scss';
 
 const MyBasket = props => {
@@ -90,6 +90,10 @@ const MyBasket = props => {
 
   return (
     <div className="basket">
+      <Breadcrumb separator=">">
+        <Breadcrumb.Item href="/">Главная</Breadcrumb.Item>
+        <Breadcrumb.Item>Корзина</Breadcrumb.Item>
+      </Breadcrumb>
       <OrderModal
         visible={visibleModal}
         onCancel={() => setVisibleModal(false)}
@@ -106,7 +110,7 @@ const MyBasket = props => {
       <div className="basket__items">
         {basket.length > 0 ? (
           basket.map(item => {
-            console.log(item.itms_izd)
+            console.log(item.itms_izd);
             return (
               <BasketItem
                 setBasket={setBasket}

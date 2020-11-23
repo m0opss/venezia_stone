@@ -155,7 +155,7 @@ const OtherItemTablet = props => {
   const images = []
   return (
     <div className="slab-item-mobile">
-      <div className="slab-item-mobile__main-title">{props.item[0].name}</div>
+      <div className="slab-item-mobile__main-title">{props.item[0].itms_name}</div>
       <ButtonsPanel images={images} />
       <div className="slab-item-mobile__main">
         <div className="slab-item-info__options">

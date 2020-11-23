@@ -21,6 +21,7 @@ import 'antd/dist/antd.css';
 import data from './filterData';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import DecimalStep from './Slider/Slider';
 
 const { SubMenu } = Menu;
 const { titles, cities, materials, colors, izdelie } = data;
@@ -34,26 +35,26 @@ const Filter = props => {
         .get(`https://catalog-veneziastone.ru/api_v0/getFilters/`)
         .then(response => {
           props.setFilters(response.data.filters);
-          console.log(123)
-          if (localStorage.getItem('activeFilters') !== null) {
-            props.setActiveFilters(
-              JSON.parse(localStorage.getItem('activeFilters'))
-            );
-          } else {
-            props.setActiveFilters(
-              Object.fromEntries(
-                Object.keys(response.data.filters).map(key => [key, []])
-              )
-            );
-            localStorage.setItem(
-              'activeFilters',
-              JSON.stringify(
-                Object.fromEntries(
-                  Object.keys(response.data.filters).map(key => [key, []])
-                )
-              )
-            );
-          }
+
+          // if (localStorage.getItem('activeFilters') !== null) {
+          //   props.setActiveFilters(
+          //     JSON.parse(localStorage.getItem('activeFilters'))
+          //   );
+          // } else {
+          props.setActiveFilters(
+            Object.fromEntries(
+              Object.keys(response.data.filters).map(key => [key, []])
+            )
+          );
+          // localStorage.setItem(
+          //   'activeFilters',
+          //   JSON.stringify(
+          //     Object.fromEntries(
+          //       Object.keys(response.data.filters).map(key => [key, []])
+          //     )
+          //   )
+          // );
+          // }
         })
         .catch(err => {
           if (err.response) {
@@ -130,7 +131,17 @@ const Filter = props => {
     fetchFilters();
   };
 
-  // props.setShareFilterFunc(fetchFilters);
+  const resetAll = () => {
+    props.setActiveFilters({});
+    props.setActiveFields([]);
+    props.setUpper([]);
+    localStorage.removeItem('activeFilters');
+    localStorage.removeItem('3lvl_active_field');
+    localStorage.removeItem('activeFieldKeys');
+  };
+  const toggleCost = cost => {
+    console.log(cost);
+  };
 
   return (
     <Suspense>
@@ -258,9 +269,11 @@ const Filter = props => {
                 </SubMenu>
               );
             } else {
+              props.setAllUpper(props.filters[filter]);
+
               return (
                 <SubMenu key={filter} title={title}>
-                  {izdelie.map(izd => {
+                  {props.filters[filter].map(izd => {
                     return (
                       <Menu.Item
                         key={izd}
@@ -275,6 +288,29 @@ const Filter = props => {
               );
             }
           })}
+          <SubMenu key="cost-sub" title="Цена">
+            {/* <Menu.Item
+              key="cost"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            > */}
+            <DecimalStep onChange={toggleCost} />
+            {/* </Menu.Item> */}
+          </SubMenu>
+          <Menu.Item
+            key="reset_all"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+            onClick={resetAll}
+          >
+            Сбросить все
+          </Menu.Item>
         </Menu>
       </div>
     </Suspense>
@@ -299,6 +335,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setFilters: data => {
       dispatch(filterActions.setFilters(data));
+    },
+    setAllUpper: data => {
+      dispatch(filterActions.setAllUpper(data));
     },
     setUpper: data => {
       dispatch(filterActions.setUpper(data));

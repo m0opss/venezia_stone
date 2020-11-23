@@ -58,6 +58,12 @@ const filterActions = {
       type: 'SET_SHARE_FILTER',
       payload: data
     };
+  },
+  setAllUpper: data => {
+    return {
+      type: 'SET_ALL_UPPER',
+      payload: data
+    };
   }
 };
 

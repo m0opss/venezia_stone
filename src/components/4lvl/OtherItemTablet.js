@@ -181,7 +181,7 @@ const OtherItemTablet = props => {
         </div>
         <div className="slab-item-info__bottom">
           <div className="slab-item-info__left-block slab-item-info__left-block_other slab-item-info__left-block_other-tablet">
-            <h1 className="slab-item-info__title">{props.item[0].name}</h1>
+            <h1 className="slab-item-info__title">{props.item[0].itms_name}</h1>
             <div className="slab-item-info__parameters">
               <p>
                 Общая площадь, м<sup>2</sup> : {ob_S ? ob_S : '-'}

@@ -10,7 +10,7 @@ const MaterialItem = props => {
         <Link to={props.link}>
           <div className="num-gr-item__name">{props.item.gr}</div>
           <div className="num-gr-item__img">
-            <div className="num-gr-item__labels">
+            {/* <div className="num-gr-item__labels">
               {props.item.nw != null ? (
                 <div className="item-label item-label-new">Новинка</div>
               ) : (
@@ -26,7 +26,7 @@ const MaterialItem = props => {
               ) : (
                 <></>
               )}
-            </div>
+            </div> */}
 
             <img src={props.item.file} />
           </div>

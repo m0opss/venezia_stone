@@ -5,6 +5,7 @@ import axios from 'axios';
 import Reaptcha from 'reaptcha';
 import { Checkbox } from 'antd';
 import validator from 'validator';
+import pdf_file from 'images/1.pdf';
 
 const Register = props => {
   const [verified, setVerified] = React.useState(false);
@@ -322,7 +323,7 @@ const Register = props => {
           <p>* обязательные поля</p>
           <div className="reg__check-use-data">
             <Checkbox checked={checked} onChange={onChangeCheckDog} />
-            <a className="check-text">
+            <a className="check-text" href={pdf_file} open target="_blank">
               Согласие на обработку
               <br />
               персональных данных

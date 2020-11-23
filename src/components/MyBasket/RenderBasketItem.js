@@ -7,6 +7,7 @@ import './BasketItem.scss';
 import { isMobile } from 'react-device-detect';
 
 const RenderBasketItem = props => {
+  console.log(props.item);
   if (!props.item) {
     return (
       <div style={{ flex: '100%' }}>
@@ -17,9 +18,11 @@ const RenderBasketItem = props => {
   }
   return (
     <div className="basket-item basket-item-root basket-item-typography">
-      <div className="basket-item__name">{props.item.name}</div>
+      <div className="basket-item__name">{props.item.itms_name}</div>
       <div className="basket-item__type">
-        {props.type ? props.type : props.izd}
+        {props.type
+          ? `${props.type} №${props.item.ps}`
+          : `${props.izd} №${props.item.ps}`}
       </div>
       <div className="basket-item__info">
         <a href={props.link}>
@@ -108,7 +111,7 @@ const RenderBasketItem = props => {
                 </div>
                 <div className="price-view">
                   <p id="cost" style={{ marginTop: 10 }}>
-                    Сумма: 
+                    Сумма:
                     {isMobile ? <br /> : <></>}
                     {props.cur === 'rub'
                       ? `${props.sum} ₽`
@@ -145,7 +148,12 @@ const RenderBasketItem = props => {
               </div>
               <div className="basket-item__line">
                 <p>
-                  Площадь, м<sup>2</sup>: {props.item.os}
+                  Площадь, м<sup>2</sup>:{' '}
+                  {(
+                    parseFloat(props.item.le) *
+                    parseFloat(props.item.he) *
+                    parseFloat(props.item.sco)
+                  ).toFixed(2)}
                 </p>
                 <p>Пачка {props.item.bl}</p>
               </div>

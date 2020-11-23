@@ -53,8 +53,8 @@ const Home = props => {
   return (
     <div className="">
       <div className="home-container">
-        {isTablet || isBrowser ? <Filter /> : <></>}
-        <TreeView>
+        {/* {isTablet || isBrowser ? <Filter /> : <></>} */}
+        <TreeView  defaultExpanded={['main']}>
           <TreeItem nodeId="main" label="Натуральный камень в наличии">
             <div id="main-group" className="catalog-items-group">
               {props.data ? (

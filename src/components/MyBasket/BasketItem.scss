@@ -12,12 +12,13 @@
   a {
     width: 175px;
     height: 175px;
-    overflow: hidden;
-    position: relative;
+    // overflow: hidden;
+    // position: relative;
     img {
-      position: relative;
-      top: -65%;
-      left: -65%;
+      // position: relative;
+      // top: -65%;
+      // left: -65%;
+      width: 100%;
     }
   }
 }

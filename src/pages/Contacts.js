@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-
+import { Breadcrumb } from 'antd';
 import vkIcon from '@iconify/icons-mdi/vk';
 import facebookIcon from '@iconify/icons-mdi/facebook';
 import telegramIcon from '@iconify/icons-mdi/telegram';
@@ -26,46 +26,14 @@ const AddressCard = props => {
       </div>
 
       <div className="address-card__soc">
-      <a href="https://www.viber.com/ru/">
-              <Icon
-                icon={viberIcon}
-                color="#6F3FAA"
-                width="1.5em"
-                height="1.5em"
-              />
-            </a>
-            <a href="https://www.vk.com">
-              <Icon
-                icon={vkIcon}
-                color="#4D76A1"
-                width="1.5em"
-                height="1.5em"
-              />
-            </a>
-            <a href="https://www.facebook.com/">
-              <Icon
-                icon={facebookIcon}
-                color="#3B5998"
-                width="1.5em"
-                height="1.5em"
-              />
-            </a>
-            <a href="https://web.telegram.org/#/im">
-              <Icon
-                icon={telegramIcon}
-                color="#039BE5"
-                width="1.5em"
-                height="1.5em"
-              />
-            </a>
-            <a  href="https://www.whatsapp.com/?lang=ru">
-              <Icon
-                icon={whatsappIcon}
-                color="#4CAF50"
-                width="1.5em"
-                height="1.5em"
-              />
-            </a>
+        <a href={props.socLinks} target='_blank' >
+          <Icon
+            icon={whatsappIcon}
+            color="#4CAF50"
+            width="1.5em"
+            height="1.5em"
+          />
+        </a>
       </div>
     </div>
   );
@@ -81,9 +49,9 @@ const Contacts = () => {
 
   const onSetCity = e => {
     setZoom(13);
-    let list = document.getElementsByClassName('city-card__city')
+    let list = document.getElementsByClassName('city-card__city');
     for (let i of list) {
-      i.style.color = "black";
+      i.style.color = 'black';
     }
     document.getElementById(e.target.id).style.color = '#be9344';
     if (e.target.id == 'Москва') {
@@ -103,6 +71,10 @@ const Contacts = () => {
 
   return (
     <div className="contacts-container">
+      <Breadcrumb separator=">">
+        <Breadcrumb.Item href="/">Главная</Breadcrumb.Item>
+        <Breadcrumb.Item>Корзина</Breadcrumb.Item>
+      </Breadcrumb>
       <h1 className="contacts-h1">Контакты</h1>
       <div className="map">
         <YMaps>
@@ -127,7 +99,7 @@ const Contacts = () => {
         <AddressCard
           onClick={onSetCity}
           city="Москва"
-          socLinks=""
+          socLinks="https://api.whatsapp.com/send?phone=+79771005888"
           address={
             <p>
               Адрес:
@@ -171,6 +143,7 @@ const Contacts = () => {
         <AddressCard
           onClick={onSetCity}
           city="Краснодар"
+          socLinks="https://api.whatsapp.com/send?phone=+79771005888"
           address={
             <p>
               Адрес:
@@ -207,7 +180,7 @@ const Contacts = () => {
         <AddressCard
           onClick={onSetCity}
           city="Екатеринбург"
-          socLinks=""
+          socLinks="https://api.whatsapp.com/send?phone=+79771005888"
           address={
             <p>
               Адрес:
@@ -243,7 +216,7 @@ const Contacts = () => {
         <AddressCard
           onClick={onSetCity}
           city="Санкт-Петербург"
-          socLinks=""
+          socLinks="https://api.whatsapp.com/send?phone=+79771005888"
           address={
             <p>
               Адрес:
@@ -279,7 +252,7 @@ const Contacts = () => {
         <AddressCard
           onClick={onSetCity}
           city="Казань"
-          socLinks=""
+          socLinks="https://api.whatsapp.com/send?phone=+79771005888"
           address={
             <p>
               Адрес:
@@ -317,7 +290,7 @@ const Contacts = () => {
         <AddressCard
           onClick={onSetCity}
           city="Крым"
-          socLinks=""
+          socLinks="https://api.whatsapp.com/send?phone=+79771005888"
           address={
             <p>
               Адрес:

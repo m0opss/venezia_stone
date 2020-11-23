@@ -17,9 +17,11 @@ const RenderBasketItem = props => {
   }
   return (
     <div className="basket-item basket-item-root basket-item-typography">
-      <div className="basket-item__name">{props.item.name}</div>
+      <div className="basket-item__name">{props.item.itms_name}</div>
       <div className="basket-item__type">
-        {props.type ? props.type : props.izd}
+        {props.type
+          ? `${props.type} №${props.item.ps}`
+          : `${props.izd} №${props.item.ps}`}
       </div>
       <div className="basket-item__info">
         <a href={props.link}>

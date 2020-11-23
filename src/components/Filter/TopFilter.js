@@ -2,19 +2,18 @@ import { connect } from 'react-redux';
 import React from 'react';
 import filterActions from 'actions/filterActions';
 import { isMobile, isTablet } from 'react-device-detect';
-import { Menu } from 'antd';
 
 export const TopFilter = props => {
-  const up_filter = [
-    'Слэбы',
-    'Полоса',
-    'Плитка',
-    'Ступени',
-    'Брусчатка',
-    'Мозайка из камня',
-    'Бордюр',
-    'Прочее'
-  ];
+  React.useEffect(() => {
+    console.log(props.upper_izd);
+    props.all_upper.map(izd => {
+      if (props.upper_izd.includes(izd)) {
+        document.getElementById(izd).setAttribute('style', 'color: #c98505');
+      } else {
+        document.getElementById(izd).setAttribute('style', 'color: black');
+      }
+    });
+  }, [props.upper_izd]);
 
   const setFilterParam = e => {
     let t = [...props.activeFields];
@@ -30,15 +29,15 @@ export const TopFilter = props => {
     if (newArr.indexOf(e.target.id) === -1) {
       newArr.push(e.target.id);
       // if (!isMobile) {
-        document
-          .getElementById(e.target.id)
-          .setAttribute('style', 'color: #c98505');
+      // document
+      //   .getElementById(e.target.id)
+      //   .setAttribute('style', 'color: #c98505');
       // }
     } else {
       // if (!isMobile) {
-        document
-          .getElementById(e.target.id)
-          .setAttribute('style', 'color: black');
+      // document
+      //   .getElementById(e.target.id)
+      //   .setAttribute('style', 'color: black');
       // }
       newArr.splice(newArr.indexOf(e.target.id), 1);
     }
@@ -49,7 +48,7 @@ export const TopFilter = props => {
   if (isMobile && !isTablet) {
     return (
       <>
-        {up_filter.map(i => (
+        {props.all_upper.map(i => (
           <div className="top-mobile-filter-line" key={i}>
             <div
               id={i}
@@ -65,7 +64,7 @@ export const TopFilter = props => {
   } else {
     return (
       <>
-        {up_filter.map(i => (
+        {props.all_upper.map(i => (
           <div
             id={i}
             key={i}
@@ -84,7 +83,8 @@ const mapStateToProps = store => {
   return {
     f_share: store.filter_data.f_share,
     activeFields: store.filter_data.activeFields,
-    upper_izd: store.filter_data.upper_izd
+    upper_izd: store.filter_data.upper_izd,
+    all_upper: store.filter_data.all_upper
   };
 };
 
