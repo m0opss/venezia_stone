@@ -202,6 +202,9 @@ const OtherItemTablet = props => {
             </div>
           </div>
           <div className="slab-item-info__slab-img">
+            <div className="">
+              {props.item[0].typeFoto == null ? 'NULL' : props.item[0].typeFoto}{' '}
+            </div>
             <img
               src={props.item.length > 0 ? props.item[0].photo_product : ''}
             />

@@ -127,6 +127,11 @@ const OtherItem = props => {
               <ColorRange colors={props.item ? props.item[0] : []} />
             </div>
             <div className="slab-item-info__right-block">
+              <div className="">
+                {props.item[0].typeFoto == null
+                  ? 'NULL'
+                  : props.item[0].typeFoto}{' '}
+              </div>
               <MainImg
                 type={props.type}
                 img={props.item.length > 0 ? props.item[0].photo_product : ''}
@@ -147,7 +152,12 @@ const OtherItem = props => {
             </div>
             <div className="table-row__item">
               <p>
-                Наличие, м<sup>2</sup>
+                Доступно, м<sup>2</sup>
+              </p>
+            </div>
+            <div className="table-row__item">
+              <p>
+                Резерв, м<sup>2</sup>
               </p>
             </div>
             <div className="table-row__item">

@@ -5,39 +5,9 @@ const filterActions = {
       payload: data
     };
   },
-  setLvl: data => {
-    return {
-      type: 'SET_LVL',
-      payload: data
-    };
-  },
   setFilters: data => {
     return {
       type: 'SET_FILTERS',
-      payload: data
-    };
-  },
-  setMobData: data => {
-    return {
-      type: 'SET_MOB_DATA',
-      payload: data
-    };
-  },
-  setDefMobData: data => {
-    return {
-      type: 'SET_DEF_MOB_DATA',
-      payload: data
-    };
-  },
-  setGroups: data => {
-    return {
-      type: 'SET_GROUPS',
-      payload: data
-    };
-  },
-  setItems: data => {
-    return {
-      type: 'SET_ITEMS',
       payload: data
     };
   },
@@ -47,15 +17,21 @@ const filterActions = {
       payload: data
     };
   },
-  setActiveFilters: data => {
+  setNew: data => {
     return {
-      type: 'SET_ACTIVE_FILTERS',
+      type: 'SET_NEW',
       payload: data
     };
   },
-  setShareFilterFunc: data => {
+  setSale: data => {
     return {
-      type: 'SET_SHARE_FILTER',
+      type: 'SET_SALE',
+      payload: data
+    };
+  },
+  setActiveFilters: data => {
+    return {
+      type: 'SET_ACTIVE_FILTERS',
       payload: data
     };
   },

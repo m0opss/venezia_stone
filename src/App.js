@@ -10,7 +10,6 @@ import axios from 'axios';
 import './App.scss';
 import './components/Content/Content.scss';
 
-import dataActions from './actions/dataAction';
 import authActions from './actions/authActions';
 import userActions from './actions/userActions';
 import izbrActions from './actions/izbrActions';
@@ -55,19 +54,6 @@ const App = props => {
               JSON.stringify(response.data.products)
             );
           })
-          .catch(err => {
-            if (err.response) {
-              // client received an error response (5xx, 4xx)
-              console.log(1, err.response);
-              // props.setAuth(false);
-            } else if (err.request) {
-              // client never received a response, or request never left
-              console.log(2, err.request);
-            } else {
-              // anything else
-              console.log(3, err);
-            }
-          });
       }
     }
     return () => (isSubscr = false);
@@ -95,9 +81,6 @@ const mapDispatchToProps = dispatch => {
   return {
     setBasket: data => {
       dispatch(basketActions.setBasket(data));
-    },
-    getDataResponse: data => {
-      dispatch(dataActions.getDataResponse(data));
     },
     setAuth: data => {
       dispatch(authActions.setAuth(data));

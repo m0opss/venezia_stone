@@ -15,8 +15,6 @@ import NumGroupsSearch from '../../pages/NumGroupsSearch';
 import NumenclatureSearch from '../../pages/NumenclatureSearch';
 import HomeSearch from '../../pages/HomeSearch';
 import FourLvlSearch from '../../pages/FourLvlSearch';
-import NumGroupsNew from '../../pages/NumGroupsNew';
-import NumenclatureNew from '../../pages/NumenclatureNew';
 
 
 const Routes = props => {
@@ -31,7 +29,8 @@ const Routes = props => {
       <Route exact path="/history" component={LK} />
       <Route exact path="/basket" component={MyBasket} />
       <Route exact path="/account/password/*" component={ResetPass}/>
-      <Route exact path="/:material"  component={NumGroups} />
+      {/* <Route exact path="/:material"  component={NumGroups} /> */}
+      <Route exact path="/materials"  component={NumGroups} />
       <Route exact path="/search/nom-groups"  component={NumGroupsSearch} />
       <Route exact path="/sale/:material"  component={NumGroups} />
       <Route exact path="/sale/:material/:numGroups" component={Numenclature}/>

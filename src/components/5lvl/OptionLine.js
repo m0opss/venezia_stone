@@ -16,7 +16,6 @@ import mail from 'images/mail.svg';
 import facebook from 'images/facebook.svg';
 import pdf from 'images/pdf.svg';
 
-import pdf_file from 'images/1.pdf';
 import './OptionLine.scss';
 
 const OptionLine = props => {
@@ -33,14 +32,19 @@ const OptionLine = props => {
   const openDropdown = e => {
     setDropVisible(true);
   };
+
+  const createPDF = () => {
+    console.log(123);
+  };
+
   const menu = (
     <div className="soc-drop">
       <a className="soc-drop__item" href="/">
         <img src={mail} />
       </a>
-      <a className="soc-drop__item" href={pdf_file} open target="_blank">
+      <div className="soc-drop__item" onClick={createPDF}>
         <img src={pdf} />
-      </a>
+      </div>
       <a className="soc-drop__item" href="https://www.viber.com/ru/">
         <img src={viber} />
       </a>
@@ -58,6 +62,7 @@ const OptionLine = props => {
       </a>
     </div>
   );
+
   return (
     <div
       className={`option-line ${isMobile ? 'option-line-mobile' : ''}`}
@@ -65,7 +70,7 @@ const OptionLine = props => {
     >
       <FullScreenDialog open={isOpenBook} setVisible={setOpenBook}>
         <div className="dialog-wrapper">
-          <CropperBook img={props.img} />
+          <CropperBook img={props.img} item={props.item} />
           {isTablet || isBrowser ? (
             <div
               className="dialog-wrapper__button"
@@ -84,7 +89,7 @@ const OptionLine = props => {
       </FullScreenDialog>
       <FullScreenDialog open={isOpen} setVisible={setOpen}>
         <div className="dialog-wrapper">
-          <MyCropper img={props.img} item={props.item}/>
+          <MyCropper img={props.img} item={props.item} />
           {isTablet || isBrowser ? (
             <div
               className="dialog-wrapper__button"
@@ -166,11 +171,11 @@ const OptionLine = props => {
         </svg>
       </div>
       <DropdownSearch
-          visible={dropVisible}
-          setVisible={setDropVisible}
-          menuList={menu}
-          placement="bottomRight"
-        />
+        visible={dropVisible}
+        setVisible={setDropVisible}
+        menuList={menu}
+        placement="bottomRight"
+      />
     </div>
   );
 };

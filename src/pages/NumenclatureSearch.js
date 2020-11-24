@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import materialActions from '../actions/materialAction';
 import filterActions from '../actions/filterActions';
-import dataActions from 'actions/dataAction';
+
 import Valute from 'components/Valute/Valute';
 import Sort from 'components/Sort/Sort';
 import listIcon from 'images/str.png';
@@ -35,7 +35,6 @@ const Numenclature = props => {
   );
 
   React.useEffect(() => {
-    props.setLvl(3);
     window.scrollTo(0, 0);
 
     if (localStorage.getItem('activeFilters') !== null) {
@@ -222,12 +221,7 @@ const mapDispatchToProps = dispatch => {
     setSelectedMaterial: data => {
       dispatch(materialActions.setSelectedMaterial(data));
     },
-    setNumGroups: data => {
-      dispatch(dataActions.setNumGroups(data));
-    },
-    setLvl: data => {
-      dispatch(filterActions.setLvl(data));
-    },
+
     setActiveFields: data => {
       dispatch(filterActions.setActiveFields(data));
     }

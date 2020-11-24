@@ -1,11 +1,12 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import BackArrow from 'components/BackArrow/BackArrow';
 import materialActions from '../actions/materialAction';
 import filterActions from '../actions/filterActions';
-import dataActions from 'actions/dataAction';
+
 import Valute from 'components/Valute/Valute';
 import Sort from 'components/Sort/Sort';
 import listIcon from 'images/str.png';
@@ -41,20 +42,9 @@ const Numenclature = props => {
     window.scrollTo(0, 0);
     setLoading(true);
     let isSubscr = true;
-    let str = props.match.url.split('/')[1];
-    let news = [],
-      sales = [];
-    if (str == 'new') {
-      news = [1];
-    } else if (str == 'sale') {
-      sales = [1];
-    }
+
     if (isSubscr) {
-      let header = headerCreator(
-        props.activeFilters,
-        props.match.params.material,
-        props.upper_izd
-      );
+      let header = headerCreator(props.activeFilters, props.upper_izd);
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -62,8 +52,8 @@ const Numenclature = props => {
           // token: [props.auth_token],
           items: [],
           level: [3],
-          nw: news,
-          on_sale: sales,
+          nw: props.nw,
+          on_sale: props.sale,
           groups: [props.match.params.numGroups]
         })
         .then(response => {
@@ -195,13 +185,20 @@ const Numenclature = props => {
 
   return (
     <>
-      {/* {isTablet || isBrowser ? <Filter /> : <></>} */}
+      {isTablet || isBrowser ? <Filter /> : <></>}
       {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
       <Breadcrumb separator=">">
-        <Breadcrumb.Item href="/">Главная</Breadcrumb.Item>
-        <Breadcrumb.Item href={`/#/${props.match.params.material}`}>
-          {props.match.params.material}
+        <Breadcrumb.Item>
+          <Link to='/'>Главная </Link>
         </Breadcrumb.Item>
+        {props.nw.length != 0 ? (
+          <Breadcrumb.Item>Новые поступления</Breadcrumb.Item>
+        ) : props.sale.length != 0 ? (
+          <Breadcrumb.Item>Распродажа</Breadcrumb.Item>
+        ) : (
+          <></>
+        )}
+        <Breadcrumb.Item>{props.match.params.material}</Breadcrumb.Item>
         <Breadcrumb.Item>{props.match.params.numGroups}</Breadcrumb.Item>
       </Breadcrumb>
       <Preloader isLoading={isLoading}>
@@ -279,7 +276,7 @@ const Numenclature = props => {
                   pltk={style_pltk}
                   cur={props.cur}
                   key={item.ps}
-                  link={props.match.url + '/' + item.ps}
+                  link={item.url}
                   item={item}
                 />
               ))
@@ -301,12 +298,13 @@ const Numenclature = props => {
 
 const mapStateToProps = store => {
   return {
-    selectedMaterial: store.material.selectedMaterial,
     cur: store.valute_data.valute,
     activeFields: store.filter_data.activeFields,
     upper_izd: store.filter_data.upper_izd,
     activeFilters: store.filter_data.activeFilters,
-    auth_token: store.auth_data.auth_token
+    auth_token: store.auth_data.auth_token,
+    sale: store.filter_data.sale,
+    nw: store.filter_data.nw
   };
 };
 

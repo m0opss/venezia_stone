@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import materialActions from '../actions/materialAction';
-import dataActions from 'actions/dataAction';
+
 import filterActions from 'actions/filterActions';
 
 import listIcon from 'images/str.png';
@@ -36,7 +36,6 @@ const NumGroups = props => {
   );
 
   React.useEffect(() => {
-    props.setLvl(2);
     if (localStorage.getItem('activeFilters') !== null) {
       let tmp = JSON.parse(localStorage.getItem('activeFilters'));
       tmp.materials = [];
@@ -141,12 +140,6 @@ const mapDispatchToProps = dispatch => {
   return {
     setSelectedMaterial: data => {
       dispatch(materialActions.setSelectedMaterial(data));
-    },
-    setNumGroups: data => {
-      dispatch(dataActions.setNumGroups(data));
-    },
-    setLvl: data => {
-      dispatch(filterActions.setLvl(data));
     },
     setActiveFields: data => {
       dispatch(filterActions.setActiveFields(data));

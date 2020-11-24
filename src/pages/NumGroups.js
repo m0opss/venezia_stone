@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom'
 import materialActions from '../actions/materialAction';
-import dataActions from 'actions/dataAction';
 import filterActions from 'actions/filterActions';
 import BackArrow from 'components/BackArrow/BackArrow';
 import Preloader from 'components/Preloader/Preloader';
@@ -45,20 +44,17 @@ const NumGroups = props => {
     window.scrollTo(0, 0);
     setLoading(true);
     let isSubscr = true;
-    let str = props.match.url.split('/')[1];
-    let news = [],
-      sales = [];
-    if (str == 'new') {
-      news = [1];
-    } else if (str == 'sale') {
-      sales = [1];
-    }
     if (isSubscr) {
-      let header = headerCreator(
-        props.activeFilters,
-        props.match.params.material,
-        props.upper_izd
-      );
+      let header = headerCreator(props.activeFilters, props.upper_izd);
+      console.log({
+        ...header,
+        items: [],
+        level: [2],
+        groups: [],
+        token: [],
+        nw: props.nw,
+        on_sale: props.sale
+      });
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -66,11 +62,11 @@ const NumGroups = props => {
           level: [2],
           groups: [],
           token: [],
-          nw: news,
-          on_sale: sales
+          nw: props.nw,
+          on_sale: props.sale
         })
         .then(response => {
-          // console.log(response.data.grs)
+          console.log(response.data);
           setNumGroups(response.data.grs);
           setdefNumGroups(response.data.grs);
           // setLoading(false)
@@ -110,11 +106,20 @@ const NumGroups = props => {
 
   return (
     <>
-      {/* {isTablet || isBrowser ? <Filter /> : <></>} */}
+      {isTablet || isBrowser ? <Filter /> : <></>}
       {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
       <Breadcrumb separator=">">
-        <Breadcrumb.Item href="/">Главная</Breadcrumb.Item>
-        <Breadcrumb.Item>{props.match.params.material}</Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to="/">Главная </Link>
+        </Breadcrumb.Item>
+        {props.nw.length != 0 ? (
+          <Breadcrumb.Item>Новые поступления</Breadcrumb.Item>
+        ) : props.sale.length != 0 ? (
+          <Breadcrumb.Item>Распродажа</Breadcrumb.Item>
+        ) : (
+          <></>
+        )}
+        <Breadcrumb.Item>Материалы</Breadcrumb.Item>
       </Breadcrumb>
       <Preloader isLoading={isLoading}>
         <div className="num-gr-options">
@@ -159,7 +164,7 @@ const NumGroups = props => {
                 <NumGroupItem
                   pltk={style_pltk}
                   key={item.ps}
-                  link={props.match.url + '/' + item.ps}
+                  link={item.url}
                   item={item}
                   cur={props.cur}
                 />
@@ -183,34 +188,16 @@ const NumGroups = props => {
 const mapStateToProps = store => {
   return {
     cur: store.valute_data.valute,
-    f_set: store.filter_data.f_set,
     upper_izd: store.filter_data.upper_izd,
     activeFilters: store.filter_data.activeFilters,
+    sale: store.filter_data.sale,
+    nw: store.filter_data.nw,
     auth_token: store.auth_data.auth_token
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    setSelectedMaterial: data => {
-      dispatch(materialActions.setSelectedMaterial(data));
-    },
-    setNumGroups: data => {
-      dispatch(dataActions.setNumGroups(data));
-    },
-    setMobData: data => {
-      dispatch(filterActions.setMobData(data));
-    },
-    setDefMobData: data => {
-      dispatch(filterActions.setDefMobData(data));
-    },
-    setLvl: data => {
-      dispatch(filterActions.setLvl(data));
-    },
-    setItems: data => {
-      dispatch(filterActions.setItems(data));
-    }
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NumGroups);

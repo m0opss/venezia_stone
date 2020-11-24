@@ -1,8 +1,8 @@
 import data from 'components/Filter/filterData';
 
-export const headerCreator = (activeFilters, material, upper_izd) => {
+export const headerCreator = (activeFilters, upper_izd) => {
   let headers = activeFilters;
-  let materials = [];
+  let res_materials = activeFilters['materials'];
   // let izdelie = upper_izd;
   let colors = [];
   let countries = [];
@@ -10,11 +10,6 @@ export const headerCreator = (activeFilters, material, upper_izd) => {
   let thickness = [];
   let sklad = [];
 
-  Object.keys(data.materials).map(mat => {
-    if (data.materials[mat] == material) {
-      materials = [mat];
-    }
-  });
 
   // if (
   //   typeof headers['izdelie'] !== 'undefined' &&
@@ -42,7 +37,7 @@ export const headerCreator = (activeFilters, material, upper_izd) => {
     sklad = headers.sklad;
 
   return {
-    materials: materials,
+    materials: res_materials,
     colors: colors,
     countries: countries,
     izdelie: upper_izd,

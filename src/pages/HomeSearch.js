@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import filterActions from '../actions/filterActions';
-import dataActions from 'actions/dataAction';
+
 import MaterialItem from '../components/Content/MaterialItem/MaterialItem';
 import Filter from 'components/Filter/Filter';
 import {
@@ -21,7 +21,6 @@ const Home = props => {
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
-    props.setLvl(1);
     if (localStorage.getItem('activeFilters') !== null) {
       let tmp = JSON.parse(localStorage.getItem('activeFilters'));
       tmp.materials = [];
@@ -74,14 +73,9 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setData: data => {
-      dispatch(dataActions.setData(data));
-    },
+
     setMatList: data => {
       dispatch(filterActions.setMatList(data));
-    },
-    setLvl: data => {
-      dispatch(filterActions.setLvl(data));
     },
     setActiveFields: data => {
       dispatch(filterActions.setActiveFields(data));

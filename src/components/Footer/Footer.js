@@ -62,12 +62,11 @@ const Footer = props => {
             <a href="https://www.instagram.com/venezia.stone.company/" target='_blank' >
               <Icon
                 icon={instagrammIcon}
-                // color="#039BE5"
                 width="1.5em"
                 height="1.5em"
               />
             </a>
-            <a  href="https://www.whatsapp.com/?lang=ru" target='_blank' >
+            <a  href="https://api.whatsapp.com/send?phone=+79771005888" target='_blank' >
               <Icon
                 icon={whatsappIcon}
                 color="#4CAF50"

@@ -33,16 +33,14 @@ const OtherTableRow = props => {
       val = Math.ceil(parseFloat(val));
 
       setCnt(val);
-      setKw(
-        // parseFloat(props.item.le) *
-        //   parseFloat(props.item.he) *
-        2 * 3 * val
-      );
+      setKw(parseFloat(props.item.le) * parseFloat(props.item.he) * val);
     } else {
       setKw(e.target.value);
       setCnt(
-        // (parseFloat(props.item.le) * parseFloat(props.item.he))
-        Math.ceil(parseFloat(e.target.value) / (2 * 3))
+        Math.ceil(
+          parseFloat(e.target.value) /
+            (parseFloat(props.item.le) * parseFloat(props.item.he))
+        )
       );
     }
   };
@@ -77,6 +75,9 @@ const OtherTableRow = props => {
       </div>
       <div className="table-row__item">
         <p>{props.item.os}</p>
+      </div>
+      <div className="table-row__item">
+        <p>{props.item.kolvo}</p>
       </div>
       <div className="table-row__item">
         <p>{props.item.ossht ? props.item.ossht : '-'}</p>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import materialActions from '../actions/materialAction';
-import dataActions from 'actions/dataAction';
+
 import filterActions from 'actions/filterActions';
 import BackArrow from 'components/BackArrow/BackArrow';
 import Preloader from 'components/Preloader/Preloader';
@@ -184,21 +184,6 @@ const mapDispatchToProps = dispatch => {
     setSelectedMaterial: data => {
       dispatch(materialActions.setSelectedMaterial(data));
     },
-    setNumGroups: data => {
-      dispatch(dataActions.setNumGroups(data));
-    },
-    setMobData: data => {
-      dispatch(filterActions.setMobData(data));
-    },
-    setDefMobData: data => {
-      dispatch(filterActions.setDefMobData(data));
-    },
-    setLvl: data => {
-      dispatch(filterActions.setLvl(data));
-    },
-    setItems: data => {
-      dispatch(filterActions.setItems(data));
-    }
   };
 };
 

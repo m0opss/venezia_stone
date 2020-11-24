@@ -15,7 +15,7 @@ import './Content.scss';
 const Content = props => (
   <div className="content">
     <div className="container">
-      {isTablet || isBrowser ? <Filter /> : <></>}
+      {/* {isTablet || isBrowser ? <Filter /> : <></>} */}
       <Routes data={props.data} />
     </div>
   </div>

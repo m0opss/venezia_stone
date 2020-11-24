@@ -22,7 +22,14 @@ const GroupItem = props => {
     else if (props.cur === 'usd') pr = props.item.cntUSD;
     else if (props.cur === 'eur') pr = props.item.cntEUR;
     if (props.type != 'Плитка') {
-      setSum((parseFloat(props.item.le) * parseFloat(props.item.he) * parseFloat(pr) * cnt).toFixed(2));
+      setSum(
+        (
+          parseFloat(props.item.le) *
+          parseFloat(props.item.he) *
+          parseFloat(pr) *
+          cnt
+        ).toFixed(2)
+      );
     } else {
       setSum((kw * parseFloat(pr)).toFixed(2));
     }
@@ -152,10 +159,12 @@ const GroupItem = props => {
 };
 
 const OtherItemTablet = props => {
-  const images = []
+  const images = [];
   return (
     <div className="slab-item-mobile">
-      <div className="slab-item-mobile__main-title">{props.item[0].itms_name}</div>
+      <div className="slab-item-mobile__main-title">
+        {props.item[0].itms_name}
+      </div>
       <ButtonsPanel images={images} />
       <div className="slab-item-mobile__main">
         <div className="slab-item-info__options">
@@ -163,6 +172,9 @@ const OtherItemTablet = props => {
           <img src={book} /> */}
         </div>
         <div className="slab-item-mobile__main-img">
+          <div className="">
+            {props.item[0].typeFoto == null ? 'NULL' : props.item[0].typeFoto}{' '}
+          </div>
           <img src={props.item[0].photo_product} />
         </div>
       </div>

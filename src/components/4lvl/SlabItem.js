@@ -25,7 +25,7 @@ const SlabTableRow = props => {
   if (props.item) {
     return (
       <div className="good-items-table__item">
-        <Link to={`${props.url}/${props.item.ps}`}>
+        <Link to={props.item.url}>
           <div className="table-row__item">
             <p>{props.item.ps}</p>
           </div>
@@ -155,7 +155,7 @@ const SlabItem = props => {
                     // lamp = {selectedEl.} поле для просветленного фото
                     style={{ width: 'unset', marginBottom: 'unset' }}
                     item={selectedEl}
-                    img={`data:image/jpg;base64,${selectedEl.photo_bytes}`}
+                    // img={`data:image/jpg;base64,${selectedEl.photo_bytes}`}
                     // img={selectedEl.photobl}
                   />
                 </div>
@@ -177,6 +177,9 @@ const SlabItem = props => {
                   ) : (
                     <></>
                   )}
+                </div>
+                <div className="">
+                  {selectedEl.typeFoto == null ? 'NULL' : selectedEl.typeFoto}
                 </div>
                 <img
                   src={selectedEl.photo_product ? selectedEl.photo_product : ''}
@@ -260,7 +263,7 @@ const SlabItem = props => {
     return (
       <SlabItemTablet
         item={props.item}
-        url={props.url}
+        url={props.item.url}
         cur={props.cur}
         type={props.type}
         isAuth={props.isAuth}
@@ -270,7 +273,7 @@ const SlabItem = props => {
     return (
       <SlabItemMobile
         item={props.item}
-        url={props.url}
+        url={props.item.url}
         type={props.type}
         cur={props.cur}
         isAuth={props.isAuth}

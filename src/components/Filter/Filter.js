@@ -8,7 +8,7 @@ import close_icon from 'images/close.png';
 import { Menu } from 'antd';
 import axios from 'axios';
 import filterActions from 'actions/filterActions';
-import dataActions from 'actions/dataAction';
+
 import {
   MobileView,
   BrowserView,
@@ -27,7 +27,10 @@ const { SubMenu } = Menu;
 const { titles, cities, materials, colors, izdelie } = data;
 
 const Filter = props => {
-  const [state, setState] = React.useState({ collapsed: true });
+  const [state, setState] = React.useState({
+    collapsed: isMobile ? true : false
+  });
+
   useEffect(() => {
     let isSubscr = true;
     if (isSubscr) {
@@ -35,26 +38,11 @@ const Filter = props => {
         .get(`https://catalog-veneziastone.ru/api_v0/getFilters/`)
         .then(response => {
           props.setFilters(response.data.filters);
-
-          // if (localStorage.getItem('activeFilters') !== null) {
-          //   props.setActiveFilters(
-          //     JSON.parse(localStorage.getItem('activeFilters'))
-          //   );
-          // } else {
           props.setActiveFilters(
             Object.fromEntries(
               Object.keys(response.data.filters).map(key => [key, []])
             )
           );
-          // localStorage.setItem(
-          //   'activeFilters',
-          //   JSON.stringify(
-          //     Object.fromEntries(
-          //       Object.keys(response.data.filters).map(key => [key, []])
-          //     )
-          //   )
-          // );
-          // }
         })
         .catch(err => {
           if (err.response) {
@@ -78,14 +66,9 @@ const Filter = props => {
     }
     return () => (isSubscr = false);
   }, []);
-  // }, [props.activeFields.length]);
 
   const handleClick = e => {
     setState({ collapsed: !state.collapsed });
-  };
-
-  const fetchFilters = () => {
-    localStorage.setItem('activeFilters', JSON.stringify(props.activeFilters));
   };
 
   const setActiveFields = e => {
@@ -109,6 +92,17 @@ const Filter = props => {
     props.setUpper(newArr);
   };
 
+  const materialsItemClicked = e => {
+    setActiveFields(e);
+    let newArr = { ...props.activeFilters };
+    if (newArr['materials'].includes(e.key)) {
+      newArr['materials'].splice(newArr['materials'].indexOf(e.key), 1);
+    } else {
+      newArr['materials'].push(e.key);
+    }
+    props.setActiveFilters(newArr);
+  };
+
   const filterItemClicked = e => {
     setActiveFields(e);
     let f = Object.keys(props.filters)[parseFloat(e.key[0])];
@@ -118,27 +112,27 @@ const Filter = props => {
       ];
 
     Object.keys(props.activeFilters).map(field => {
-      console.log(f, 1, field);
       if (f == field) {
         let tmp = { ...props.activeFilters };
         if (tmp[field].indexOf(param) === -1) tmp[field].push(param);
         else tmp[field].splice(tmp[field].indexOf(param), 1);
-        // console.log(111, 'ACTIVE', tmp);
         props.setActiveFilters(tmp);
       }
     });
-
-    fetchFilters();
   };
 
   const resetAll = () => {
-    props.setActiveFilters({});
+    props.setActiveFilters(
+      Object.fromEntries(Object.keys(props.filters).map(key => [key, []]))
+    );
     props.setActiveFields([]);
     props.setUpper([]);
-    localStorage.removeItem('activeFilters');
+
     localStorage.removeItem('3lvl_active_field');
     localStorage.removeItem('activeFieldKeys');
+    document.location.href('/');
   };
+
   const toggleCost = cost => {
     console.log(cost);
   };
@@ -164,8 +158,9 @@ const Filter = props => {
             />
           )}
         </div>
+
         <Menu
-          style={{ width: 320 }}
+          style={{ width: 230 }}
           mode="inline"
           multiple={true}
           inlineCollapsed={state.collapsed}
@@ -192,21 +187,13 @@ const Filter = props => {
                 <SubMenu key={filter} title={title}>
                   {props.filters[filter].map((material, ind) => {
                     if (filter === 'materials') {
-                      {
-                        /* Для вкладки материалы - переводит с русского по словарю materials */
-                      }
-                      let mat_eng = material;
-                      Object.keys(materials).map(mat => {
-                        if (mat == material) mat_eng = materials[mat];
-                      });
-
                       return (
                         <Menu.Item
-                          key={`${index}${ind}`}
+                          key={material}
                           style={{ display: 'flex', alignItems: 'center' }}
-                          onClick={filterItemClicked}
+                          onClick={materialsItemClicked}
                         >
-                          <Link to={`/${mat_eng}`}>{material}</Link>
+                          {material}
                         </Menu.Item>
                       );
                     } else if (filter === 'colors' || filter === 'countries') {
@@ -270,7 +257,6 @@ const Filter = props => {
               );
             } else {
               props.setAllUpper(props.filters[filter]);
-
               return (
                 <SubMenu key={filter} title={title}>
                   {props.filters[filter].map(izd => {
@@ -288,18 +274,19 @@ const Filter = props => {
               );
             }
           })}
-          <SubMenu key="cost-sub" title="Цена">
-            {/* <Menu.Item
-              key="cost"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            > */}
+          <SubMenu key="cost-sub" title="Цена за м2">
             <DecimalStep onChange={toggleCost} />
-            {/* </Menu.Item> */}
           </SubMenu>
+          <Menu.Item key="result-header">Всего найдено:</Menu.Item>
+          <Menu.Item
+            key="result"
+            style={{ display: 'flex', justifyContent: 'space-between' }}
+          >
+            <div className="">
+              1212511 м<sup>2</sup>
+            </div>
+            <div className="">1124 шт</div>
+          </Menu.Item>
           <Menu.Item
             key="reset_all"
             style={{
@@ -344,9 +331,6 @@ const mapDispatchToProps = dispatch => {
     },
     setActiveFilters: data => {
       dispatch(filterActions.setActiveFilters(data));
-    },
-    setShareFilterFunc: data => {
-      dispatch(filterActions.setShareFilterFunc(data));
     },
     setActiveFields: data => {
       dispatch(filterActions.setActiveFields(data));

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Cropper from 'react-cropper';
-
+import axios from 'axios';
 import CropperPanel from 'components/Cropper/CropperPanel';
 import './MyCropper.scss';
 import './CropperScale.scss';
@@ -24,7 +24,28 @@ const MyCropper = props => {
       // console.log(cropper.getCroppedCanvas().toDataURL());
     }
   };
-
+  useEffect(() => {
+    axios
+      .post(`https://catalog-veneziastone.ru/api_v0/get_photo_bytes/`, {
+        ps: props.item.ps
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        if (err.response) {
+          // client received an error response (5xx, 4xx)
+          console.log(1, err.response);
+          // props.setAuth(false);
+        } else if (err.request) {
+          // client never received a response, or request never left
+          console.log(2, err.request);
+        } else {
+          // anything else
+          console.log(3, err);
+        }
+      });
+  }, []);
   return (
     <div
       className={`dialog-cropper-crop ${
@@ -34,7 +55,13 @@ const MyCropper = props => {
       <div className="cropper">
         <Cropper
           src={props.img}
-          style={isTablet ? { height: 400 } : isMobile ? { height: 300 } :  { height: 600 }}
+          style={
+            isTablet
+              ? { height: 400 }
+              : isMobile
+              ? { height: 300 }
+              : { height: 600 }
+          }
           initialAspectRatio={1 / 1}
           initialAspectRatio={1}
           viewMode={2}

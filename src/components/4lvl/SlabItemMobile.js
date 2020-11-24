@@ -30,7 +30,7 @@ const GroupItem = props => {
           <ItemAddBasket item={{ ...props.item, type: props.type }} />
         </div>
       </div>
-      <Link to={`${props.url}/${props.item.ps}`}>
+      <Link to={props.item.url}>
         <div className="slab-items-group-item__info">
           <p className="slab-items-group-item__line">Слэб: {props.item.ps}</p>
           <p className="slab-items-group-item__line">
@@ -148,6 +148,9 @@ const SlabItemMobile = props => {
               <></>
             )}
           </div>
+          <div className="">
+            {selectedEl.typeFoto == null ? 'NULL' : selectedEl.typeFoto}
+          </div>
           <img src={selectedEl.photo_product} />
         </div>
       </div>
@@ -164,7 +167,6 @@ const SlabItemMobile = props => {
             key={item.ps}
             type={props.type}
             item={item}
-            url={props.url}
             cur={props.cur}
           />
         ))}

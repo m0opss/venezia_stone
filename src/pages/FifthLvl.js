@@ -10,11 +10,14 @@ import ImageGallery from 'components/5lvl/ImageGallery';
 import Valute from 'components/Valute/Valute';
 import OptionLine from 'components/5lvl/OptionLine';
 import Preloader from 'components/Preloader/Preloader';
+import { Breadcrumb } from 'antd';
+import { Link } from 'react-router-dom';
 import {
   MobileView,
   BrowserView,
   isTablet,
-  isBrowser
+  isBrowser,
+  isMobile
 } from 'react-device-detect';
 
 import './FifthLvl.scss';
@@ -24,12 +27,11 @@ const FifthLvl = props => {
   const [isLoading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    props.setLvl(5);
     window.scrollTo(0, 0);
     axios
       .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
       .then(response => {
-        // console.log(response.data);
+        console.log(props);
         // setImages([response.data.itms[0].prs.photo_product]);
         setItem(response.data.itms[0]);
         setLoading(false);
@@ -53,6 +55,38 @@ const FifthLvl = props => {
 
   return (
     <div className="fifth-lvl-container">
+      {isMobile && !isTablet ? (
+        <></>
+      ) : (
+        <Breadcrumb separator=">">
+          <Breadcrumb.Item>
+            <Link to="/">Главная </Link>
+          </Breadcrumb.Item>
+          {props.nw.length != 0 ? (
+            <Breadcrumb.Item>Новые поступления</Breadcrumb.Item>
+          ) : props.sale.length != 0 ? (
+            <Breadcrumb.Item>Распродажа</Breadcrumb.Item>
+          ) : (
+            <></>
+          )}
+          <Breadcrumb.Item>{props.match.params.material}</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link
+              to={`/${props.match.params.material}/${props.match.params.numGroups}`}
+            >
+              {props.match.params.numGroups}
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link
+              to={`/${props.match.params.material}/${props.match.params.numGroups}/${props.match.params.num}`}
+            >
+              {props.match.params.num}
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>{props.match.params.last}</Breadcrumb.Item>
+        </Breadcrumb>
+      )}
       <Preloader isLoading={isLoading}>
         {isBrowser ? (
           <div className="fifth-lvl">
@@ -69,7 +103,14 @@ const FifthLvl = props => {
                       {item.prs ? item.prs.le : '-'} м X{' '}
                       {item.prs ? item.prs.he : '-'} м
                     </p>
-                    <p>Площадь: {item.prs ? item.prs.os : '-'} м²</p>
+                    <p>
+                      Площадь:{' '}
+                      {item.prs
+                        ? parseFloat(item.prs.le) * parseFloat(item.prs.he) -
+                          parseFloat(item.prs.sko)
+                        : '-'}{' '}
+                      м²
+                    </p>
                   </div>
                   <div className="main-content__text-block">
                     <p>
@@ -107,7 +148,7 @@ const FifthLvl = props => {
                           ).toFixed(3)}€`
                         : '-'}
                     </p>
-                    <p>Скол: {item.prs && item.prs.skl ? item.prs.skl : '-'}</p>
+                    <p>Скол: {item.prs && item.prs.sco ? item.prs.sco : '-'}</p>
                     <p className="-wrapped">
                       Комментарий:{' '}
                       {item.prs && item.prs.komment ? item.prs.komment : '-'}
@@ -127,13 +168,15 @@ const FifthLvl = props => {
                 {item.prs ? (
                   <OptionLine
                     item={item.prs}
-                    img={`data:image/jpg;base64,${item.prs.photo_bytes}`}
+                    // img={`data:image/jpg;base64,${item.prs.photo_bytes}`}
                     fullscreen={<></>}
                   />
                 ) : (
                   <></>
                 )}
-
+                <div style={{ marginRight: '30px' }}>
+                  {item.typeFoto == null ? 'NULL' : item.typeFoto}
+                </div>
                 <ImageGallery item={item} />
               </div>
             </div>
@@ -148,14 +191,20 @@ const FifthLvl = props => {
                 <p>Пачка {item.prs ? item.prs.bl : '-'}</p>
                 <p>СЛЭБ {item.prs ? item.prs.ps : '-'}</p>
               </div>
-
+              <div className="">
+                {item.typeFoto == null ? 'NULL' : item.typeFoto}
+              </div>
               <ImageGallery item={item} />
               <div className="main-content__info-tablet">
                 <div className="main-content__text-block">
                   <p>
                     Размер: {item.prs ? item.prs.le : '-'} м X{' '}
                     {item.prs ? item.prs.he : '-'} м ={' '}
-                    {item.prs ? item.prs.os : '-'} м²
+                    {item.prs
+                      ? parseFloat(item.prs.le) * parseFloat(item.prs.he) -
+                        parseFloat(item.prs.sko)
+                      : '-'}{' '}
+                    м²
                   </p>
                   <p>Склад: {item.prs ? item.prs.sklad : '-'}</p>
                   <p>
@@ -190,7 +239,7 @@ const FifthLvl = props => {
                         ).toFixed(3)}€`
                       : ''}
                   </p>
-                  <p>Скол: {item.prs && item.prs.skl ? item.prs.skl : '-'}</p>
+                  <p>Скол: {item.prs && item.prs.sco ? item.prs.sco : '-'}</p>
                   <p>
                     Комментарий:{' '}
                     {item.prs && item.prs.komment ? item.prs.komment : '-'}
@@ -230,6 +279,9 @@ const FifthLvl = props => {
               </div>
 
               <ImageGallery item={item} />
+              <div className="">
+                {item.typeFoto == null ? 'NULL' : item.typeFoto}
+              </div>
               <div className="fifth-lvl__opt">
                 {item.prs ? (
                   <OptionLine
@@ -248,7 +300,11 @@ const FifthLvl = props => {
                   <p>
                     Размер: {item.prs ? item.prs.le : '-'} м X{' '}
                     {item.prs ? item.prs.he : '-'} м ={' '}
-                    {item.prs ? item.prs.os : '-'} м²
+                    {item.prs
+                      ? parseFloat(item.prs.le) * parseFloat(item.prs.he) -
+                        parseFloat(item.prs.sko)
+                      : '-'}{' '}
+                    м²
                   </p>
                   <p>Склад: {item.prs ? item.prs.sklad : '-'}</p>
                   <p>
@@ -283,7 +339,7 @@ const FifthLvl = props => {
                         ).toFixed(3)}€`
                       : ''}
                   </p>
-                  <p>Скол: {item.prs && item.prs.skl ? item.prs.skl : '-'}</p>
+                  <p>Скол: {item.prs && item.prs.sco ? item.prs.sco : '-'}</p>
                   <p>
                     Комментарий:{' '}
                     {item.prs && item.prs.komment ? item.prs.komment : '-'}
@@ -311,7 +367,9 @@ const FifthLvl = props => {
 const mapStateToProps = store => {
   return {
     cur: store.valute_data.valute,
-    auth_token: store.auth_data.auth_token
+    auth_token: store.auth_data.auth_token,
+    sale: store.filter_data.sale,
+    nw: store.filter_data.nw
   };
 };
 
@@ -319,9 +377,6 @@ const mapDispatchToProps = dispatch => {
   return {
     addGood: data => {
       dispatch(basketActions.addGood(data));
-    },
-    setLvl: data => {
-      dispatch(filterActions.setLvl(data));
     }
   };
 };

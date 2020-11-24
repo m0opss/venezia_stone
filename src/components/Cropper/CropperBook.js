@@ -6,7 +6,30 @@ import './CropperBook.scss';
 import './CropperScale.scss';
 import 'cropperjs/dist/cropper.css';
 import { isMobile, isTablet } from 'react-device-detect';
+import axios from 'axios';
 const CropperBook = props => {
+  useEffect(() => {
+    axios
+      .post(`https://catalog-veneziastone.ru/api_v0/get_photo_bytes/`, {
+        ps: props.item.ps
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        if (err.response) {
+          // client received an error response (5xx, 4xx)
+          console.log(1, err.response);
+          // props.setAuth(false);
+        } else if (err.request) {
+          // client never received a response, or request never left
+          console.log(2, err.request);
+        } else {
+          // anything else
+          console.log(3, err);
+        }
+      });
+  }, []);
   const [cropData, setCropData] = React.useState('#');
   const [cropper, setCropper] = React.useState('');
   const [mode, setMode] = React.useState('-two');
@@ -34,7 +57,9 @@ const CropperBook = props => {
   return (
     <div
       className={`dialog-cropper-crop 
-      ${isMobile ? 'dialog-cropper-crop-tablet' : ''} ${!isTablet && isMobile ? 'dialog-cropper-crop-mobile' : ''}
+      ${isMobile ? 'dialog-cropper-crop-tablet' : ''} ${
+        !isTablet && isMobile ? 'dialog-cropper-crop-mobile' : ''
+      }
       `}
     >
       <div className="cropper">

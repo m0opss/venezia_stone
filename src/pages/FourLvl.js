@@ -10,11 +10,13 @@ import Filter from 'components/Filter/Filter';
 import { headerCreator } from 'components/Filter/headerCreator';
 import { Breadcrumb } from 'antd';
 
+import { Link } from 'react-router-dom';
 import {
   MobileView,
   BrowserView,
   isTablet,
-  isBrowser
+  isBrowser,
+  isMobile
 } from 'react-device-detect';
 
 import './FourLvl.scss';
@@ -22,7 +24,6 @@ import SlabItem from '../components/4lvl/SlabItem';
 import OtherItem from '../components/4lvl/OtherItem';
 
 const FourLvl = props => {
-  // props.setLvl(4);
   const [isLoading, setLoading] = React.useState(true);
   const [item, setItem] = React.useState([]);
 
@@ -96,18 +97,33 @@ const FourLvl = props => {
 
   return (
     <>
-      <Breadcrumb separator=">">
-        <Breadcrumb.Item href="/">Главная</Breadcrumb.Item>
-        <Breadcrumb.Item href={`/#/${props.match.params.material}`}>
-          {props.match.params.material}
-        </Breadcrumb.Item>
-        <Breadcrumb.Item href={`/#/${props.match.params.material}/${props.match.params.numGroups}`}>
-          {props.match.params.numGroups}
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>{props.match.params.num}</Breadcrumb.Item>
-      </Breadcrumb>
+      {isMobile && !isTablet ? (
+        <></>
+      ) : (
+        <Breadcrumb separator=">">
+          <Breadcrumb.Item>
+            <Link to="/">Главная </Link>
+          </Breadcrumb.Item>
+          {props.nw.length != 0 ? (
+            <Breadcrumb.Item>Новые поступления</Breadcrumb.Item>
+          ) : props.sale.length != 0 ? (
+            <Breadcrumb.Item>Распродажа</Breadcrumb.Item>
+          ) : (
+            <></>
+          )}
+          <Breadcrumb.Item>{props.match.params.material}</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link
+              to={`/${props.match.params.material}/${props.match.params.numGroups}`}
+            >
+              {props.match.params.numGroups}
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>{props.match.params.num}</Breadcrumb.Item>
+        </Breadcrumb>
+      )}
       <Preloader isLoading={isLoading}>
-        {/* {isTablet || isBrowser ? <Filter /> : <></>} */}
+        {isTablet || isBrowser ? <Filter /> : <></>}
         <div className="four-lvl-container">
           <BackArrow history={props.history} />
           <div className="four-lvl-valute">
@@ -146,25 +162,14 @@ const mapStateToProps = store => {
     isAuth: store.auth_data.isAuth,
     auth_token: store.auth_data.auth_token,
     upper_izd: store.filter_data.upper_izd,
-    activeFilters: store.filter_data.activeFilters
+    activeFilters: store.filter_data.activeFilters,
+    sale: store.filter_data.sale,
+    nw: store.filter_data.nw
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    setLvl: data => {
-      dispatch(filterActions.setLvl(data));
-    },
-    setMobData: data => {
-      dispatch(filterActions.setMobData(data));
-    },
-    setItems: data => {
-      dispatch(filterActions.setItems(data));
-    },
-    setDefMobData: data => {
-      dispatch(filterActions.setDefMobData(data));
-    }
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FourLvl);
