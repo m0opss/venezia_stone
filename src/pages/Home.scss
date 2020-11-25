@@ -4,6 +4,9 @@
 .home-container {
   display: flex;
   flex-flow: column;
+  @media screen and (max-width: 1690px) {
+    flex-flow: row;
+  }
   justify-content: space-between;
   margin-top: 40px;
   h1 {
@@ -27,7 +30,10 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  @media screen and (max-width: 1690px) {
+    justify-content: center;
+  }
 }
 .MuiTreeView-root {
   .MuiTreeItem-root {
@@ -84,7 +90,7 @@
   }
 }
 .MuiTreeItem-root.Mui-expanded > .MuiTreeItem-content .MuiTreeItem-label {
-  border:  1px solid white;
+  border: 1px solid white;
   justify-content: center;
   @media screen and (max-width: 549px) {
     &:hover {

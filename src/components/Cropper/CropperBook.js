@@ -8,13 +8,14 @@ import 'cropperjs/dist/cropper.css';
 import { isMobile, isTablet } from 'react-device-detect';
 import axios from 'axios';
 const CropperBook = props => {
+  const [imgData, setImgData] = React.useState('');
   useEffect(() => {
     axios
       .post(`https://catalog-veneziastone.ru/api_v0/get_photo_bytes/`, {
         ps: props.item.ps
       })
       .then(response => {
-        console.log(response);
+        setImgData(response.data);
       })
       .catch(err => {
         if (err.response) {
@@ -33,7 +34,6 @@ const CropperBook = props => {
   const [cropData, setCropData] = React.useState('#');
   const [cropper, setCropper] = React.useState('');
   const [mode, setMode] = React.useState('-two');
-  const [bookImg, setBookImg] = React.useState('');
 
   const getCropData = () => {
     if (typeof cropper !== 'undefined') {
@@ -44,7 +44,6 @@ const CropperBook = props => {
     if (typeof cropper !== 'undefined') {
       // setBookImg(cropper.getCroppedCanvas().toDataURL());
     }
-    console.log(cropper);
   };
 
   const pushOnServer = () => {
@@ -64,7 +63,7 @@ const CropperBook = props => {
     >
       <div className="cropper">
         <Cropper
-          src={props.img}
+          src={`data:image/jpg;base64,${imgData}`}
           initialAspectRatio={1 / 1}
           initialAspectRatio={2}
           style={

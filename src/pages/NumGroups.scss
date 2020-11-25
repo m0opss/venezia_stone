@@ -3,6 +3,14 @@
   margin-top: 15px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  @media screen and (max-width: 1044px) {
+    justify-content: space-around
+  }
+}
+.second-lvl-wrapper {
+  display: flex;
+  justify-content: space-between;
 }
 .num-gr-options {
   width: 100%;

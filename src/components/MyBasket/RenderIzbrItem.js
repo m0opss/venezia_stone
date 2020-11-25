@@ -69,8 +69,7 @@ const RenderBasketItem = props => {
               <div className="basket-item__line -price">
                 <div className="price-view">
                   <p id="cost" style={{ marginTop: 10 }}>
-                    Сумма:
-                    {isMobile ? <br /> : <></>}
+                    Сумма: {isMobile ? <br /> : <></>}
                     {props.cur === 'rub'
                       ? `${props.sum} ₽`
                       : props.cur === 'usd'
@@ -106,15 +105,22 @@ const RenderBasketItem = props => {
               </div>
               <div className="basket-item__line">
                 <p>
-                  Площадь, м<sup>2</sup>: {props.item.os}
+                  Площадь, м<sup>2</sup>:{' '}
+                  {props.item.sco
+                    ? (
+                        parseFloat(props.item.le) * parseFloat(props.item.he) -
+                        parseFloat(props.item.sco)
+                      ).toFixed(2)
+                    : (
+                        parseFloat(props.item.le) * parseFloat(props.item.he)
+                      ).toFixed(2)}
                 </p>
                 <p>Пачка {props.item.bl}</p>
               </div>
             </div>
             <div className="basket-item__line -price">
               <p id="cost">
-                Сумма:
-                {isMobile ? <br /> : <></>}
+                Сумма: {isMobile ? <br /> : <></>}
                 {props.item.sum}
               </p>
               <div className="basket-item__buttons">

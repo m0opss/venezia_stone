@@ -32,11 +32,7 @@ const FourLvl = props => {
     let isSubscr = true;
     // setLoading(true);
     if (isSubscr) {
-      let header = headerCreator(
-        props.activeFilters,
-        props.match.params.material,
-        props.upper_izd
-      );
+      let header = headerCreator(props.activeFilters, props.upper_izd);
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -122,8 +118,8 @@ const FourLvl = props => {
           <Breadcrumb.Item>{props.match.params.num}</Breadcrumb.Item>
         </Breadcrumb>
       )}
+      {isTablet || isBrowser ? <Filter built_in={true}/> : <></>}
       <Preloader isLoading={isLoading}>
-        {isTablet || isBrowser ? <Filter /> : <></>}
         <div className="four-lvl-container">
           <BackArrow history={props.history} />
           <div className="four-lvl-valute">

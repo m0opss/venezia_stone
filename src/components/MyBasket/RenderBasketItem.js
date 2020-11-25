@@ -149,11 +149,14 @@ const RenderBasketItem = props => {
               <div className="basket-item__line">
                 <p>
                   Площадь, м<sup>2</sup>:{' '}
-                  {(
-                    parseFloat(props.item.le) *
-                    parseFloat(props.item.he) *
-                    parseFloat(props.item.sco)
-                  ).toFixed(2)}
+                  {props.item.sco
+                    ? (
+                        parseFloat(props.item.le) * parseFloat(props.item.he) -
+                        parseFloat(props.item.sco)
+                      ).toFixed(2)
+                    : (
+                        parseFloat(props.item.le) * parseFloat(props.item.he)
+                      ).toFixed(2)}
                 </p>
                 <p>Пачка {props.item.bl}</p>
               </div>

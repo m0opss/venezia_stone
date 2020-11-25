@@ -81,7 +81,7 @@ const OtherItem = props => {
   let ob_S = 0,
     ob_sht = 0,
     ob_sum = 0;
-
+  console.log(props.item);
   ob_S += parseFloat(props.item.map(i => i.os));
   ob_sht += parseFloat(props.item.map(i => i.ossht));
   ob_sum += parseFloat(
@@ -150,14 +150,18 @@ const OtherItem = props => {
                 Цена за м<sup>2</sup>
               </p>
             </div>
-            <div className="table-row__item">
+            <div className="table-row__item table-row__item_l">
               <p>
-                Доступно, м<sup>2</sup>
+                <div className="">
+                  Свободный остаток, м<sup>2</sup>
+                </div>
               </p>
             </div>
-            <div className="table-row__item">
+            <div className="table-row__item table-row__item_l">
               <p>
-                Резерв, м<sup>2</sup>
+                <div className="">
+                  Общий остаток, м<sup>2</sup>
+                </div>
               </p>
             </div>
             <div className="table-row__item">

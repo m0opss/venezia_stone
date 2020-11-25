@@ -73,11 +73,11 @@ const OtherTableRow = props => {
             : ''}
         </p>
       </div>
-      <div className="table-row__item">
+      <div className="table-row__item table-row__item_l">
         <p>{props.item.os}</p>
       </div>
-      <div className="table-row__item">
-        <p>{props.item.kolvo}</p>
+      <div className="table-row__item table-row__item_l">
+        <p>{props.item.kw}</p>
       </div>
       <div className="table-row__item">
         <p>{props.item.ossht ? props.item.ossht : '-'}</p>

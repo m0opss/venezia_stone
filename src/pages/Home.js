@@ -51,9 +51,21 @@ const Home = props => {
           on_sale: []
         })
         .then(response => {
-          console.log(response);
           setMatList(response.data.mts);
           setMatLoading(false);
+        })
+        .catch(err => {
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log(1, err.response);
+            // props.setAuth(false);
+          } else if (err.request) {
+            // client never received a response, or request never left
+            console.log(2, err.request);
+          } else {
+            // anything else
+            console.log(3, err);
+          }
         });
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
@@ -68,6 +80,19 @@ const Home = props => {
         .then(response => {
           setNewList(response.data.mts);
           setNewLoading(false);
+        })
+        .catch(err => {
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log(1, err.response);
+            // props.setAuth(false);
+          } else if (err.request) {
+            // client never received a response, or request never left
+            console.log(2, err.request);
+          } else {
+            // anything else
+            console.log(3, err);
+          }
         });
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
@@ -82,10 +107,24 @@ const Home = props => {
         .then(response => {
           setSaleList(response.data.mts);
           setSaleLoading(false);
+        })
+        .catch(err => {
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log(1, err.response);
+            // props.setAuth(false);
+          } else if (err.request) {
+            // client never received a response, or request never left
+            console.log(2, err.request);
+          } else {
+            // anything else
+            console.log(3, err);
+          }
         });
     }
     return () => (isSubscr = false);
-  }, [props.activeFilters, props.upper_izd]);
+    }, [props.activeFilters, props.upper_izd]);
+  // }, []);
 
   const setActiveFields = key => {
     let t = [...props.activeFields];

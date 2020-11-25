@@ -38,6 +38,7 @@ const Numenclature = props => {
   );
   const [loadCnt, setLoadCnt] = React.useState(12);
 
+  const arrFilt = ['_Слэбы', '_Полоса', '_Плитка'];
   React.useEffect(() => {
     window.scrollTo(0, 0);
     setLoading(true);
@@ -60,28 +61,37 @@ const Numenclature = props => {
           setLoading(false);
           setNumemclature(response.data.itms);
           setdefNum(response.data.itms);
+
           if (localStorage.getItem('3lvl_active_field') != null) {
-            let arr = JSON.parse(localStorage.getItem('3lvl_active_field'));
+            let arr = [
+              ...JSON.parse(localStorage.getItem('3lvl_active_field'))
+            ];
             if (arr.length == 0 && document.getElementById('Все') != null) {
               document
                 .getElementById('Все')
                 .setAttribute('style', 'color: #c98505');
-            } else if (
-              arr.length > 4 &&
-              document.getElementById('Другие') != null
-            ) {
-              document
-                .getElementById('Другие')
-                .setAttribute('style', 'color: #c98505');
-            }
-            arr.map(i => {
-              if (i != '_Прочее' && document.getElementById(i) != null)
+              arrFilt.map(i => {
                 document
                   .getElementById(i)
-                  .setAttribute('style', 'color: #c98505');
-            });
+                  .setAttribute('style', 'color: black');
+              });
+            } else {
+              arrFilt.map(i => {
+                document
+                .getElementById('Все')
+                .setAttribute('style', 'color: black');
+                if (arr.includes(i)) {
+                  document
+                    .getElementById(i)
+                    .setAttribute('style', 'color: #c98505');
+                } else {
+                  document
+                    .getElementById(i)
+                    .setAttribute('style', 'color: black');
+                }
+              });
+            }
           }
-          // setTimeout(() => setLoading(false), 600);
         })
         .catch(err => {
           if (err.response) {
@@ -110,54 +120,44 @@ const Numenclature = props => {
     setHover_pltk(false);
     setNum_groups_items('num-gr-items-group-list');
   };
-  const up_filter = [
-    'Слэбы',
-    'Полоса',
-    'Плитка',
-    'Ступени',
-    'Брусчатка',
-    'Мозайка из камня',
-    'Бордюр',
-    'Прочее'
-  ];
 
   const filterIzd = e => {
     let t = [...props.activeFields];
     if (e.target.id === 'Все') {
       localStorage.setItem('3lvl_active_field', JSON.stringify([]));
       props.setUpper([]);
-      up_filter.map(i => {
+      props.all_upper.map(i => {
         t.splice(t.indexOf(i), 1);
-        if (!isMobile) {
-          document.getElementById(i).setAttribute('style', 'color: black');
-        }
       });
       props.setActiveFields(t);
       localStorage.setItem('activeFieldKeys', JSON.stringify(t));
-    } else if (e.target.id === 'Другие') {
-      let newArr = [...props.upper_izd];
-      up_filter.map(i => {
-        if (i != 'Слэбы' && i != 'Полоса' && i != 'Плитка') {
-          if (t.indexOf(i) !== -1) {
-            t.splice(t.indexOf(i), 1);
-          } else {
-            t.push(i);
-          }
-          if (newArr.indexOf(i) === -1) {
-            newArr.push(i);
-          } else {
-            newArr.splice(newArr.indexOf(i), 1);
-          }
-          props.setUpper(newArr);
-          let ls_3lvl = newArr.map(i => '_' + i);
-          localStorage.setItem('3lvl_active_field', JSON.stringify(ls_3lvl));
-        }
-      });
-      props.setActiveFields(t);
-      localStorage.setItem('activeFieldKeys', JSON.stringify(t));
-    } else {
+    } 
+    // else if (e.target.id === 'Другие') {
+    //   let newArr = [...props.upper_izd];
+    //   props.all_upper.map(i => {
+    //     if (i != 'Слэбы' && i != 'Полоса' && i != 'Плитка') {
+    //       if (t.indexOf(i) !== -1) {
+    //         t.splice(t.indexOf(i), 1);
+    //       } else {
+    //         t.push(i);
+    //       }
+    //       if (newArr.indexOf(i) === -1) {
+    //         newArr.push(i);
+    //       } else {
+    //         newArr.splice(newArr.indexOf(i), 1);
+    //       }
+    //       props.setUpper(newArr);
+    //       let ls_3lvl = newArr.map(i => '_' + i);
+    //       localStorage.setItem('3lvl_active_field', JSON.stringify(ls_3lvl));
+    //     }
+    //   });
+    //   props.setActiveFields(t);
+    //   localStorage.setItem('activeFieldKeys', JSON.stringify(t));
+    // } 
+    else {
       const id = e.target.id;
       const s_id = id.slice(1, id.length);
+
       if (t.indexOf(s_id) !== -1) {
         t.splice(t.indexOf(s_id), 1);
       } else {
@@ -185,11 +185,10 @@ const Numenclature = props => {
 
   return (
     <>
-      {isTablet || isBrowser ? <Filter /> : <></>}
       {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
       <Breadcrumb separator=">">
         <Breadcrumb.Item>
-          <Link to='/'>Главная </Link>
+          <Link to="/">Главная </Link>
         </Breadcrumb.Item>
         {props.nw.length != 0 ? (
           <Breadcrumb.Item>Новые поступления</Breadcrumb.Item>
@@ -201,97 +200,104 @@ const Numenclature = props => {
         <Breadcrumb.Item>{props.match.params.material}</Breadcrumb.Item>
         <Breadcrumb.Item>{props.match.params.numGroups}</Breadcrumb.Item>
       </Breadcrumb>
-      <Preloader isLoading={isLoading}>
-        <div
-          className={
-            isMobile && !isTablet
-              ? `num-options num-options-mobile`
-              : 'num-options'
-          }
-        >
+      <div style={{ display: 'flex' }} className="">
+        {isTablet || isBrowser ? <Filter /> : <></>}
+        <div style={{ width: '100%' }} className="">
           <div
             className={
-              isMobile && !isTablet ? 'filter-options-mobile' : `filter-options`
+              isMobile && !isTablet
+                ? `num-options num-options-mobile`
+                : 'num-options'
             }
           >
-            <div id="Все" onClick={filterIzd}>
-              Все
+            <div
+              className={
+                isMobile && !isTablet
+                  ? 'filter-options-mobile'
+                  : `filter-options`
+              }
+            >
+              <div id="Все" onClick={filterIzd}>
+                Все
+              </div>
+              <div id="_Слэбы" onClick={filterIzd}>
+                Слэбы
+              </div>
+              <div id="_Полоса" onClick={filterIzd}>
+                Полоса
+              </div>
+              <div id="_Плитка" onClick={filterIzd}>
+                Плитка
+              </div>
+              {/* <div id="Другие" onClick={filterIzd}>
+                Другие изделия
+              </div> */}
             </div>
-            <div id="_Слэбы" onClick={filterIzd}>
-              Слэбы
-            </div>
-            <div id="_Полоса" onClick={filterIzd}>
-              Полоса
-            </div>
-            <div id="_Плитка" onClick={filterIzd}>
-              Плитка
-            </div>
-            <div id="Другие" onClick={filterIzd}>
-              Другие изделия
+
+            <div className="other-options">
+              <Valute />
+              <Sort
+                defArr={defNum}
+                arr={numenclature}
+                setArr={setNumemclature}
+                on={sortOn}
+                setSortOn={setSortOn}
+              />
+              {isMobile && !isTablet ? (
+                <></>
+              ) : (
+                <>
+                  <div className="" onClick={() => toggleStyle_pltk()}>
+                    <img src={style_pltk ? pltk_a : pltk} />
+                  </div>
+                  <div className="" onClick={() => toggleStyle_list()}>
+                    <img src={style_pltk ? listIcon : listIcon_a} />
+                  </div>
+                </>
+              )}
             </div>
           </div>
+          <Preloader isLoading={isLoading}>
+            <div className={num_groups_items}>
+              <div
+                className="num-items-group-col num-gr-item-root num-item"
+                style={style_pltk ? { display: 'none' } : {}}
+              >
+                <div style={{ height: 'unset' }}>Фото</div>
+                <div>Название</div>
+                <div>Пачек</div>
+                <div>Слэбов</div>
+                <div>Общая площадь</div>
+                <div>Цена от</div>
+                <div></div>
+              </div>
 
-          <div className="other-options">
-            <Valute />
-            <Sort
-              defArr={defNum}
-              arr={numenclature}
-              setArr={setNumemclature}
-              on={sortOn}
-              setSortOn={setSortOn}
-            />
-            {isMobile && !isTablet ? (
-              <></>
+              {numenclature.length > 0 ? (
+                numenclature
+                  .slice(0, loadCnt)
+                  .map(item => (
+                    <NumenclatureItem
+                      pltk={style_pltk}
+                      cur={props.cur}
+                      key={item.ps}
+                      link={item.url}
+                      item={item}
+                    />
+                  ))
+              ) : (
+                <div className="goods-none">Товаров не найдено</div>
+              )}
+            </div>
+            {loadCnt < numenclature.length ? (
+              <div className="button-text button load-more" onClick={loadMore}>
+                Загрузить еще
+              </div>
             ) : (
-              <>
-                <div className="" onClick={() => toggleStyle_pltk()}>
-                  <img src={style_pltk ? pltk_a : pltk} />
-                </div>
-                <div className="" onClick={() => toggleStyle_list()}>
-                  <img src={style_pltk ? listIcon : listIcon_a} />
-                </div>
-              </>
+              <></>
             )}
-          </div>
+          </Preloader>
         </div>
-        <div className={num_groups_items}>
-          <div
-            className="num-items-group-col num-gr-item-root num-item"
-            style={style_pltk ? { display: 'none' } : {}}
-          >
-            <div style={{ height: 'unset' }}>Фото</div>
-            <div>Название</div>
-            <div>Пачек</div>
-            <div>Слэбов</div>
-            <div>Общая площадь</div>
-            <div>Цена от</div>
-            <div></div>
-          </div>
-
-          {numenclature.length > 0 ? (
-            numenclature
-              .slice(0, loadCnt)
-              .map(item => (
-                <NumenclatureItem
-                  pltk={style_pltk}
-                  cur={props.cur}
-                  key={item.ps}
-                  link={item.url}
-                  item={item}
-                />
-              ))
-          ) : (
-            <div className="goods-none">Товаров не найдено</div>
-          )}
-        </div>
-        {loadCnt < numenclature.length ? (
-          <div className="button-text button load-more" onClick={loadMore}>
-            Загрузить еще
-          </div>
-        ) : (
-          <></>
-        )}
-      </Preloader>
+      </div>
     </>
   );
 };
@@ -304,6 +310,7 @@ const mapStateToProps = store => {
     activeFilters: store.filter_data.activeFilters,
     auth_token: store.auth_data.auth_token,
     sale: store.filter_data.sale,
+    all_upper: store.filter_data.all_upper,
     nw: store.filter_data.nw
   };
 };

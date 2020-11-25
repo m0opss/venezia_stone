@@ -37,14 +37,18 @@ const SlabTableRow = props => {
           </div>
           <div className="table-row__item table-row__item_s">
             <p>
-              {(
-                parseFloat(props.item.le) * parseFloat(props.item.he) -
-                parseFloat(props.item.sco)
-              ).toFixed(2)}
+              {props.item.sco
+                ? (
+                    parseFloat(props.item.le) * parseFloat(props.item.he) -
+                    parseFloat(props.item.sco)
+                  ).toFixed(2)
+                : (
+                    parseFloat(props.item.le) * parseFloat(props.item.he)
+                  ).toFixed(2)}
             </p>
           </div>
           <div className="table-row__item table-row__item_s">
-            <p>{props.item.sco}</p>
+            <p>{props.item.sco ? props.item.sco : 0}</p>
           </div>
           <div className="table-row__item table-row__item_l">
             <p>{props.item.sklad}</p>

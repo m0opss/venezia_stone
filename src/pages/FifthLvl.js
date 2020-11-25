@@ -31,7 +31,6 @@ const FifthLvl = props => {
     axios
       .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
       .then(response => {
-        console.log(props);
         // setImages([response.data.itms[0].prs.photo_product]);
         setItem(response.data.itms[0]);
         setLoading(false);
@@ -106,9 +105,16 @@ const FifthLvl = props => {
                     <p>
                       Площадь:{' '}
                       {item.prs
-                        ? parseFloat(item.prs.le) * parseFloat(item.prs.he) -
-                          parseFloat(item.prs.sko)
-                        : '-'}{' '}
+                        ? item.prs.sco
+                          ? (
+                              parseFloat(item.prs.le) *
+                                parseFloat(item.prs.he) -
+                              parseFloat(item.prs.sco)
+                            ).toFixed(2)
+                          : (
+                              parseFloat(item.prs.le) * parseFloat(item.prs.he)
+                            ).toFixed(2)
+                        : ''}{' '}
                       м²
                     </p>
                   </div>
@@ -168,7 +174,6 @@ const FifthLvl = props => {
                 {item.prs ? (
                   <OptionLine
                     item={item.prs}
-                    // img={`data:image/jpg;base64,${item.prs.photo_bytes}`}
                     fullscreen={<></>}
                   />
                 ) : (

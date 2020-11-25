@@ -13,7 +13,8 @@ import {
   MobileView,
   BrowserView,
   isTablet,
-  isMobile
+  isMobile,
+  isBrowser
 } from 'react-device-detect';
 import './Filter.scss';
 import 'antd/dist/antd.css';
@@ -130,7 +131,7 @@ const Filter = props => {
 
     localStorage.removeItem('3lvl_active_field');
     localStorage.removeItem('activeFieldKeys');
-    document.location.href('/');
+    // document.location.href('http://localhost:8080/');
   };
 
   const toggleCost = cost => {
@@ -139,7 +140,7 @@ const Filter = props => {
 
   return (
     <Suspense>
-      <div className="filter">
+      <div className={`filter ${isBrowser && !props.built_in ? 'browser-filter' : ''}`}>
         <div className="filter__button">
           {!state.collapsed && !isMobile ? (
             <>
@@ -277,16 +278,6 @@ const Filter = props => {
           <SubMenu key="cost-sub" title="Цена за м2">
             <DecimalStep onChange={toggleCost} />
           </SubMenu>
-          <Menu.Item key="result-header">Всего найдено:</Menu.Item>
-          <Menu.Item
-            key="result"
-            style={{ display: 'flex', justifyContent: 'space-between' }}
-          >
-            <div className="">
-              1212511 м<sup>2</sup>
-            </div>
-            <div className="">1124 шт</div>
-          </Menu.Item>
           <Menu.Item
             key="reset_all"
             style={{

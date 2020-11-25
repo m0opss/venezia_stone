@@ -29,7 +29,12 @@ a {
 .ant-breadcrumb a:hover {
   color: #be9344;
 }
-
+.MuiTreeView-root {
+  width: 100%;
+}
+.MuiTreeItem-group {
+  margin-left: 0 !important;
+}
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: white;
 }

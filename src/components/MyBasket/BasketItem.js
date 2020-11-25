@@ -31,21 +31,35 @@ const BasketItem = props => {
         props.type != 'Слэбы' &&
         props.type != 'Полоса'
       ) {
-        if (props.item.le && props.item.he) {
-          setSum(
-            (
-              parseFloat(props.item.le) *
-              parseFloat(props.item.he) *
-              pr *
-              cnt
-            ).toFixed(2)
-          );
-        } else {
-          setSum((parseFloat(props.item.os) * pr * cnt).toFixed(2));
-        }
+        setSum(
+          (
+            parseFloat(props.item.le) *
+            parseFloat(props.item.he) *
+            pr *
+            cnt
+          ).toFixed(2)
+        );
       } else {
         if (props.type == 'Слэбы' || props.type == 'Полоса') {
-          setSum((parseFloat(props.item.os) * pr).toFixed(2));
+          if (props.item.sco) {
+            console.log('sco', props.item.sco);
+            setSum(
+              (
+                (parseFloat(props.item.le) * parseFloat(props.item.he) -
+                  parseFloat(props.item.sco)) *
+                pr
+              ).toFixed(2)
+            );
+          } else {
+            console.log('sco==================', cnt);
+            setSum(
+              (
+                parseFloat(props.item.le) *
+                parseFloat(props.item.he) *
+                pr
+              ).toFixed(2)
+            );
+          }
         } else {
           setSum((kw * pr).toFixed(2));
         }
@@ -66,16 +80,15 @@ const BasketItem = props => {
       let val = e.target.value;
       val = Math.ceil(parseFloat(val));
       setCnt(val);
-      setKw(
-        parseFloat(props.item.le) *
-          parseFloat(props.item.he) *
-        val
-      );
+      setKw(parseFloat(props.item.le) * parseFloat(props.item.he) * val);
     } else {
       setKw(e.target.value);
       setCnt(
         // (parseFloat(props.item.le) * parseFloat(props.item.he))
-        Math.ceil(parseFloat(e.target.value) / (parseFloat(props.item.le) * parseFloat(props.item.he)))
+        Math.ceil(
+          parseFloat(e.target.value) /
+            (parseFloat(props.item.le) * parseFloat(props.item.he))
+        )
       );
     }
   };

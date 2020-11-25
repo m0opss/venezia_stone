@@ -35,10 +35,14 @@ const GroupItem = props => {
           <p className="slab-items-group-item__line">Слэб: {props.item.ps}</p>
           <p className="slab-items-group-item__line">
             Размер: {props.item.le}x{props.item.he} ={' '}
-            {(
-              parseFloat(props.item.le) * parseFloat(props.item.he) -
-              parseFloat(props.item.sco)
-            ).toFixed(2)}{' '}
+            {props.item.sco
+              ? (
+                  parseFloat(props.item.le) * parseFloat(props.item.he) -
+                  parseFloat(props.item.sco)
+                ).toFixed(2)
+              : (parseFloat(props.item.le) * parseFloat(props.item.he)).toFixed(
+                  2
+                )}{' '}
             м<sup>2</sup>
           </p>
           <p className="slab-items-group-item__line">

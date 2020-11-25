@@ -8,7 +8,7 @@
   a {
     color: black !important;
     &:hover {
-      color:  #be9344 !important;
+      color: #be9344 !important;
     }
   }
   .ant-menu-inline-collapsed.ant-menu-root.ant-menu-vertical {
@@ -17,8 +17,8 @@
   .ant-menu-inline-collapsed.ant-menu-root.ant-menu-inline {
     display: none;
   }
-  .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
 
+  .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
     @media screen and (max-width: 885px) {
       width: 48vw !important;
     }
@@ -33,9 +33,6 @@
         width: 70vw;
       }
     }
-  }
-  .ant-menu-submenu-arrow {
-
   }
   .ant-menu-submenu {
     margin: 5px;
@@ -137,4 +134,10 @@
   display: flex;
   flex-direction: column;
   font-size: 22px;
+}
+
+.browser-filter{
+  @media screen and (max-width: 1690px) {
+    position: static;
+  }
 }

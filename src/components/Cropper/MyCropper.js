@@ -11,7 +11,7 @@ const MyCropper = props => {
   const [cropData, setCropData] = React.useState('#');
   const [cropper, setCropper] = React.useState();
   const [mode, setMode] = React.useState('-one');
-
+  const [imgData, setImgData] = React.useState('')
   const getCropData = () => {
     if (typeof cropper !== 'undefined') {
       setCropData(cropper.getCroppedCanvas().toDataURL());
@@ -30,7 +30,9 @@ const MyCropper = props => {
         ps: props.item.ps
       })
       .then(response => {
-        console.log(response);
+        console.log(response.data);
+        setImgData(response.data)
+       
       })
       .catch(err => {
         if (err.response) {
@@ -54,7 +56,7 @@ const MyCropper = props => {
     >
       <div className="cropper">
         <Cropper
-          src={props.img}
+          src={`data:image/jpg;base64,${imgData}`}
           style={
             isTablet
               ? { height: 400 }

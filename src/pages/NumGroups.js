@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import materialActions from '../actions/materialAction';
 import filterActions from 'actions/filterActions';
 import BackArrow from 'components/BackArrow/BackArrow';
@@ -46,6 +46,7 @@ const NumGroups = props => {
     let isSubscr = true;
     if (isSubscr) {
       let header = headerCreator(props.activeFilters, props.upper_izd);
+
       console.log({
         ...header,
         items: [],
@@ -66,11 +67,11 @@ const NumGroups = props => {
           on_sale: props.sale
         })
         .then(response => {
-          console.log(response.data);
+          // console.log(response.data);
           setNumGroups(response.data.grs);
           setdefNumGroups(response.data.grs);
-          // setLoading(false)
-          setTimeout(() => setLoading(false), 600);
+          setLoading(false)
+          // setTimeout(() => setLoading(false), 600);
         })
         .catch(err => {
           if (err.response) {
@@ -106,7 +107,6 @@ const NumGroups = props => {
 
   return (
     <>
-      {isTablet || isBrowser ? <Filter /> : <></>}
       {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
       <Breadcrumb separator=">">
         <Breadcrumb.Item>
@@ -121,66 +121,70 @@ const NumGroups = props => {
         )}
         <Breadcrumb.Item>Материалы</Breadcrumb.Item>
       </Breadcrumb>
-      <Preloader isLoading={isLoading}>
-        <div className="num-gr-options">
-          <Valute />
-          <Sort
-            defArr={defGroups}
-            arr={numGroups}
-            setArr={setNumGroups}
-            on={sortOn}
-            setSortOn={setSortOn}
-          />
-          {isMobile && !isTablet ? (
-            <></>
-          ) : (
-            <>
-              <div className="" onClick={() => toggleStyle_pltk()}>
-                <img src={style_pltk ? pltk_a : pltk} />
-              </div>
-              <div className="" onClick={() => toggleStyle_list()}>
-                <img src={style_pltk ? listIcon : listIcon_a} />
-              </div>
-            </>
-          )}
-        </div>
-
-        <div className={num_groups_items}>
-          <div
-            className="num-gr-items-group-col num-gr-item-root"
-            style={style_pltk ? { display: 'none' } : {}}
-          >
-            <p style={{ height: 'unset' }}>Фото</p>
-            <p>Название</p>
-            <p>Количество SKU</p>
-            <p>Общая площадь</p>
-            <p>Цена от</p>
-            <p></p>
-          </div>
-          {numGroups.length > 0 ? (
-            numGroups
-              .slice(0, loadCnt)
-              .map(item => (
-                <NumGroupItem
-                  pltk={style_pltk}
-                  key={item.ps}
-                  link={item.url}
-                  item={item}
-                  cur={props.cur}
-                />
-              ))
-          ) : (
-            <div className="goods-none">Товаров не найдено</div>
-          )}
-        </div>
-        {loadCnt < numGroups.length ? (
-          <div className="button-text button load-more" onClick={loadMore}>
-            Загрузить еще
-          </div>
-        ) : (
+      <div className="num-gr-options">
+        <Valute />
+        <Sort
+          defArr={defGroups}
+          arr={numGroups}
+          setArr={setNumGroups}
+          on={sortOn}
+          setSortOn={setSortOn}
+        />
+        {isMobile && !isTablet ? (
           <></>
+        ) : (
+          <>
+            <div className="" onClick={() => toggleStyle_pltk()}>
+              <img src={style_pltk ? pltk_a : pltk} />
+            </div>
+            <div className="" onClick={() => toggleStyle_list()}>
+              <img src={style_pltk ? listIcon : listIcon_a} />
+            </div>
+          </>
         )}
-      </Preloader>
+      </div>
+      <div className="second-lvl-wrapper">
+        {isTablet || isBrowser ? <Filter /> : <></>}
+        <Preloader isLoading={isLoading}>
+          <div style={{ width: '100%' }}>
+            <div className={num_groups_items}>
+              <div
+                className="num-gr-items-group-col num-gr-item-root"
+                style={style_pltk ? { display: 'none' } : {}}
+              >
+                <p style={{ height: 'unset' }}>Фото</p>
+                <p>Название</p>
+                <p>Количество SKU</p>
+                <p>Общая площадь</p>
+                <p>Цена от</p>
+                <p></p>
+              </div>
+              {numGroups.length > 0 ? (
+                numGroups
+                  .slice(0, loadCnt)
+                  .map(item => (
+                    <NumGroupItem
+                      pltk={style_pltk}
+                      key={item.ps}
+                      link={item.url}
+                      item={item}
+                      cur={props.cur}
+                    />
+                  ))
+              ) : (
+                <div className="goods-none">Товаров не найдено</div>
+              )}
+            </div>
+            {loadCnt < numGroups.length ? (
+              <div className="button-text button load-more" onClick={loadMore}>
+                Загрузить еще
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+        </Preloader>
+      </div>
     </>
   );
 };
