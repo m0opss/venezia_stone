@@ -1,5 +1,8 @@
 html,
 body {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-style: normal;
+  font-weight: normal;
   margin: 0;
   // margin-right: 30px;
   .back-arr {
@@ -38,13 +41,12 @@ a {
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: white;
 }
-// .ant-slider-track {
-//   background-color: gray;npm run-script build
-
-// }
-// .ant-slider-handle {
-//   border-color:  #be9344;
-// }
+.MuiTreeItem-iconContainer {
+  display: none !important;
+}
+.ant-input-number-handler-wrap {
+  display: none;
+}
 .unselectable {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Chrome/Safari/Opera */

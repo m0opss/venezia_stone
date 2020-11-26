@@ -15,7 +15,7 @@ const CropperBook = props => {
         ps: props.item.ps
       })
       .then(response => {
-        setImgData(response.data);
+        setImgData(response.data.bytes);
       })
       .catch(err => {
         if (err.response) {
@@ -48,8 +48,32 @@ const CropperBook = props => {
 
   const pushOnServer = () => {
     if (typeof cropper !== 'undefined') {
-      console.log('data', cropData);
-      console.log(cropper.getCroppedCanvas().toDataURL());
+      let mod = mode == '-two' ? 2 : mode == '-four' ? 4 : 2;
+      axios
+        .post(`https://catalog-veneziastone.ru/api_v0/Bookmatch/`, {
+          bytes: cropData,
+          mode: mod
+        })
+        .then(response => {
+          var a = document.createElement('a');
+          a.href = 'data:application/octet-stream;base64,' + response.data;
+          a.download = 'bookmatch.jpg';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        })
+        .catch(err => {
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log(1, err.response);
+          } else if (err.request) {
+            // client never received a response, or request never left
+            console.log(2, err.request);
+          } else {
+            // anything else
+            console.log(3, err);
+          }
+        });
     }
   };
 

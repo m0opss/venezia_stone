@@ -17,6 +17,24 @@ const filterActions = {
       payload: data
     };
   },
+  setCost: data => {
+    return {
+      type: 'SET_COST',
+      payload: data
+    };
+  },
+  setLe: data => {
+    return {
+      type: 'SET_LE',
+      payload: data
+    };
+  },
+  setHe: data => {
+    return {
+      type: 'SET_HE',
+      payload: data
+    };
+  },
   setNew: data => {
     return {
       type: 'SET_NEW',

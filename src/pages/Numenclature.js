@@ -40,12 +40,22 @@ const Numenclature = props => {
 
   const arrFilt = ['_Слэбы', '_Полоса', '_Плитка'];
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    document.body.scrollIntoView({
+      block: 'start',
+      behavior: 'smooth'
+    });
     setLoading(true);
     let isSubscr = true;
 
     if (isSubscr) {
-      let header = headerCreator(props.activeFilters, props.upper_izd);
+      let header = headerCreator(
+        props.activeFilters,
+        props.upper_izd,
+        props.cur,
+        props.cost,
+        props.le,
+        props.he
+      );
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -78,8 +88,8 @@ const Numenclature = props => {
             } else {
               arrFilt.map(i => {
                 document
-                .getElementById('Все')
-                .setAttribute('style', 'color: black');
+                  .getElementById('Все')
+                  .setAttribute('style', 'color: black');
                 if (arr.includes(i)) {
                   document
                     .getElementById(i)
@@ -131,7 +141,7 @@ const Numenclature = props => {
       });
       props.setActiveFields(t);
       localStorage.setItem('activeFieldKeys', JSON.stringify(t));
-    } 
+    }
     // else if (e.target.id === 'Другие') {
     //   let newArr = [...props.upper_izd];
     //   props.all_upper.map(i => {
@@ -153,7 +163,7 @@ const Numenclature = props => {
     //   });
     //   props.setActiveFields(t);
     //   localStorage.setItem('activeFieldKeys', JSON.stringify(t));
-    // } 
+    // }
     else {
       const id = e.target.id;
       const s_id = id.slice(1, id.length);
@@ -305,6 +315,9 @@ const Numenclature = props => {
 const mapStateToProps = store => {
   return {
     cur: store.valute_data.valute,
+    cost: store.filter_data.cost,
+    le: store.filter_data.le,
+    he: store.filter_data.he,
     activeFields: store.filter_data.activeFields,
     upper_izd: store.filter_data.upper_izd,
     activeFilters: store.filter_data.activeFilters,

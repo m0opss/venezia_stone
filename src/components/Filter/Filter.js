@@ -22,7 +22,8 @@ import 'antd/dist/antd.css';
 import data from './filterData';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import DecimalStep from './Slider/Slider';
+import SliderCost from './Slider/SliderCost';
+import SliderSize from './Slider/SliderSize';
 
 const { SubMenu } = Menu;
 const { titles, cities, materials, colors, izdelie } = data;
@@ -39,11 +40,25 @@ const Filter = props => {
         .get(`https://catalog-veneziastone.ru/api_v0/getFilters/`)
         .then(response => {
           props.setFilters(response.data.filters);
-          props.setActiveFilters(
-            Object.fromEntries(
-              Object.keys(response.data.filters).map(key => [key, []])
-            )
-          );
+          if (localStorage.getItem('activeFilters') !== null) {
+            props.setActiveFilters(
+              JSON.parse(localStorage.getItem('activeFilters'))
+            );
+          } else {
+            props.setActiveFilters(
+              Object.fromEntries(
+                Object.keys(response.data.filters).map(key => [key, []])
+              )
+            );
+            localStorage.setItem(
+              'activeFilters',
+              JSON.stringify(
+                Object.fromEntries(
+                  Object.keys(response.data.filters).map(key => [key, []])
+                )
+              )
+            );
+          }
         })
         .catch(err => {
           if (err.response) {
@@ -91,17 +106,22 @@ const Filter = props => {
       newArr.splice(newArr.indexOf(e.key), 1);
     }
     props.setUpper(newArr);
+    localStorage.setItem('uppper_izd', JSON.stringify(newArr));
   };
 
   const materialsItemClicked = e => {
     setActiveFields(e);
     let newArr = { ...props.activeFilters };
-    if (newArr['materials'].includes(e.key)) {
-      newArr['materials'].splice(newArr['materials'].indexOf(e.key), 1);
-    } else {
-      newArr['materials'].push(e.key);
+    console.log('filter newarr', newArr);
+    if (newArr['materials']) {
+      if (newArr['materials'].includes(e.key)) {
+        newArr['materials'].splice(newArr['materials'].indexOf(e.key), 1);
+      } else {
+        newArr['materials'].push(e.key);
+      }
     }
     props.setActiveFilters(newArr);
+    localStorage.setItem('activeFilters', JSON.stringify(newArr));
   };
 
   const filterItemClicked = e => {
@@ -118,6 +138,7 @@ const Filter = props => {
         if (tmp[field].indexOf(param) === -1) tmp[field].push(param);
         else tmp[field].splice(tmp[field].indexOf(param), 1);
         props.setActiveFilters(tmp);
+        localStorage.setItem('activeFilters', JSON.stringify(tmp));
       }
     });
   };
@@ -125,6 +146,12 @@ const Filter = props => {
   const resetAll = () => {
     props.setActiveFilters(
       Object.fromEntries(Object.keys(props.filters).map(key => [key, []]))
+    );
+    localStorage.setItem(
+      'activeFilters',
+      JSON.stringify(
+        Object.fromEntries(Object.keys(props.filters).map(key => [key, []]))
+      )
     );
     props.setActiveFields([]);
     props.setUpper([]);
@@ -135,12 +162,23 @@ const Filter = props => {
   };
 
   const toggleCost = cost => {
-    console.log(cost);
+    props.setCost(cost);
+  };
+
+  const toggle_le = sizes => {
+    props.setLe(sizes);
+  };
+  const toggle_he = sizes => {
+    props.setHe(sizes);
   };
 
   return (
     <Suspense>
-      <div className={`filter ${isBrowser && !props.built_in ? 'browser-filter' : ''}`}>
+      <div
+        className={`filter ${
+          isBrowser && !props.built_in ? 'browser-filter' : ''
+        }`}
+      >
         <div className="filter__button">
           {!state.collapsed && !isMobile ? (
             <>
@@ -183,7 +221,69 @@ const Filter = props => {
             Object.keys(titles).map(t => {
               if (filter == t) title = titles[t];
             });
-            if (filter != 'izdelie') {
+            if (filter == 'izdelie') {
+              props.setAllUpper(props.filters[filter]);
+              return (
+                <SubMenu key={filter} title={title}>
+                  {props.filters[filter].map(izd => {
+                    return (
+                      <Menu.Item
+                        key={izd}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        onClick={izdItemClicked}
+                      >
+                        {izd}
+                      </Menu.Item>
+                    );
+                  })}
+                </SubMenu>
+              );
+            } else if (filter == 'prices') {
+              if (props.cur === 'rub') {
+                toggleCost([
+                  parseFloat(props.filters[filter].price_RUB.rub__min),
+                  parseFloat(props.filters[filter].price_RUB.rub__max)
+                ]);
+              } else if (props.cur === 'usd') {
+                toggleCost([
+                  parseFloat(props.filters[filter].price_USD.usd__min),
+                  parseFloat(props.filters[filter].price_USD.usd__max)
+                ]);
+              } else {
+                toggleCost([
+                  parseFloat(props.filters[filter].price_EUR.eur__min),
+                  parseFloat(props.filters[filter].price_EUR.eur__max)
+                ]);
+              }
+
+              return (
+                <SubMenu key="cost-sub" title="Цена за м2">
+                  <SliderCost
+                    cur={props.cur}
+                    defVal={props.filters[filter]}
+                    onChange={toggleCost}
+                  />
+                </SubMenu>
+              );
+            } else if (filter == 'sizas') {
+              toggle_le([
+                props.filters[filter]['le'].length__min,
+                props.filters[filter]['le'].length__max
+              ]);
+              toggle_he([
+                props.filters[filter]['he'].height__min,
+                props.filters[filter]['he'].height__max
+              ]);
+              return (
+                <SubMenu key="size-sub" title="Размеры">
+                  <SliderSize
+                    defVal={props.filters[filter]}
+                    onChange_le={toggle_le}
+                    onChange_he={toggle_he}
+                  />
+                </SubMenu>
+              );
+            } else {
               return (
                 <SubMenu key={filter} title={title}>
                   {props.filters[filter].map((material, ind) => {
@@ -256,28 +356,9 @@ const Filter = props => {
                   })}
                 </SubMenu>
               );
-            } else {
-              props.setAllUpper(props.filters[filter]);
-              return (
-                <SubMenu key={filter} title={title}>
-                  {props.filters[filter].map(izd => {
-                    return (
-                      <Menu.Item
-                        key={izd}
-                        style={{ display: 'flex', alignItems: 'center' }}
-                        onClick={izdItemClicked}
-                      >
-                        {izd}
-                      </Menu.Item>
-                    );
-                  })}
-                </SubMenu>
-              );
             }
           })}
-          <SubMenu key="cost-sub" title="Цена за м2">
-            <DecimalStep onChange={toggleCost} />
-          </SubMenu>
+
           <Menu.Item
             key="reset_all"
             style={{
@@ -297,12 +378,10 @@ const Filter = props => {
 const mapStateToProps = store => {
   return {
     filters: store.filter_data.filters,
+    cur: store.valute_data.valute,
     activeFilters: store.filter_data.activeFilters,
     activeFields: store.filter_data.activeFields,
     level: store.filter_data.level,
-    f_set: store.filter_data.f_set,
-    f_dset: store.filter_data.f_dset,
-    data: store.data,
     items: store.filter_data.items,
     groups: store.filter_data.groups,
     upper_izd: store.filter_data.upper_izd
@@ -322,6 +401,15 @@ const mapDispatchToProps = dispatch => {
     },
     setActiveFilters: data => {
       dispatch(filterActions.setActiveFilters(data));
+    },
+    setCost: data => {
+      dispatch(filterActions.setCost(data));
+    },
+    setLe: data => {
+      dispatch(filterActions.setLe(data));
+    },
+    setHe: data => {
+      dispatch(filterActions.setHe(data));
     },
     setActiveFields: data => {
       dispatch(filterActions.setActiveFields(data));

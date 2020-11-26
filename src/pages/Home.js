@@ -27,7 +27,10 @@ const Home = props => {
   const [saleList, setSaleList] = React.useState([]);
   const [newList, setNewList] = React.useState([]);
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    document.body.scrollIntoView({
+      block: 'start',
+      behavior: 'smooth'
+    });
     setMatLoading(true);
     setNewLoading(true);
     setSaleLoading(true);
@@ -36,10 +39,25 @@ const Home = props => {
 
     let isSubscr = true;
     if (isSubscr) {
-      // let newObj = { ...props.activeFilters };
-      // newObj['materials'] = [];
-      // props.setActiveFilters(newObj);
-      let header = headerCreator(props.activeFilters, props.upper_izd);
+      let header = headerCreator(
+        props.activeFilters,
+        props.upper_izd,
+        props.cur,
+        props.cost,
+        props.le,
+        props.he
+      );
+      console.log(
+        JSON.stringify({
+          ...header,
+          items: [],
+          level: [1],
+          groups: [],
+          token: [],
+          nw: [],
+          on_sale: []
+        })
+      );
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -123,7 +141,7 @@ const Home = props => {
         });
     }
     return () => (isSubscr = false);
-    }, [props.activeFilters, props.upper_izd]);
+  }, [props.activeFilters, props.upper_izd, props.cost, props.le, props.he]);
   // }, []);
 
   const setActiveFields = key => {
@@ -136,10 +154,12 @@ const Home = props => {
   const clickItem = (itemName, type) => {
     setActiveFields(itemName);
     let newArr = { ...props.activeFilters };
-    if (!newArr['materials'].includes(itemName)) {
+    console.log('Home newarr', newArr)
+    if (newArr['materials'] && !newArr['materials'].includes(itemName)) {
       newArr['materials'].push(itemName);
     }
     props.setActiveFilters(newArr);
+    localStorage.setItem('activeFilters', JSON.stringify(newArr));
     if (type == 'sale') {
       props.setSale([1]);
     }
@@ -241,8 +261,12 @@ const mapStateToProps = store => {
     activeFilters: store.filter_data.activeFilters,
     activeFields: store.filter_data.activeFields,
     upper_izd: store.filter_data.upper_izd,
-    nw: store.filter_data.nw,
-    sale: store.filter_data.sale
+    cur: store.valute_data.valute,
+    cost: store.filter_data.cost,
+    le: store.filter_data.le,
+    he: store.filter_data.he,
+    sale: store.filter_data.sale,
+    nw: store.filter_data.nw
   };
 };
 

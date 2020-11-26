@@ -17,6 +17,8 @@ import facebook from 'images/facebook.svg';
 import pdf from 'images/pdf.svg';
 
 import './OptionLine.scss';
+import PDFCreator from './PDFCreator'
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 const OptionLine = props => {
   const [isOpen, setOpen] = React.useState(false);
@@ -33,17 +35,21 @@ const OptionLine = props => {
     setDropVisible(true);
   };
 
-  const createPDF = () => {
-    console.log(123);
-  };
-
   const menu = (
     <div className="soc-drop">
       <a className="soc-drop__item" href="/">
         <img src={mail} />
       </a>
-      <div className="soc-drop__item" onClick={createPDF}>
-        <img src={pdf} />
+      <div className="soc-drop__item" style={{ cursor: 'pointer' }}>
+      
+        <PDFDownloadLink
+          document={<PDFCreator item={props.item} />}
+          fileName={props.item.itms_name + ' Пачка ' + props.item.bl}
+        >
+          {({ blob, url, loading, error }) =>
+            loading ? 'Loading document...' : <img src={pdf} />
+          }
+        </PDFDownloadLink>
       </div>
       <a className="soc-drop__item" href="https://www.viber.com/ru/">
         <img src={viber} />

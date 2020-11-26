@@ -5,7 +5,10 @@ const initialState = {
   activeFilters: {},
   activeFields: [],
   upper_izd: [],
-  all_upper: []
+  all_upper: [],
+  cost: [],
+  le: [],
+  he: []
 };
 
 export function filterReducer(state = initialState, action) {
@@ -44,6 +47,21 @@ export function filterReducer(state = initialState, action) {
       return {
         ...state,
         nw: action.payload
+      };
+    case 'SET_COST':
+      return {
+        ...state,
+        cost: action.payload
+      };
+    case 'SET_LE':
+      return {
+        ...state,
+        le: action.payload
+      };
+    case 'SET_HE':
+      return {
+        ...state,
+        he: action.payload
       };
     default:
       return state;

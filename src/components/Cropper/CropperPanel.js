@@ -20,10 +20,12 @@ const CropperPanel = props => {
       draggable: true,
       progress: undefined
     });
+    
   const saveData = () => {
     props.pushOnServer();
     notify();
   };
+
   return (
     <div className={isMobile ? `cropper-panel` : 'cropper-panel'}>
       <div className="cropper-panel__item" onClick={props.getCropData}>

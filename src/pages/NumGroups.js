@@ -41,21 +41,23 @@ const NumGroups = props => {
   const [loadCnt, setLoadCnt] = React.useState(12);
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    console.log(props);
+    document.body.scrollIntoView({
+      block: 'start',
+      behavior: 'smooth'
+    });
     setLoading(true);
     let isSubscr = true;
     if (isSubscr) {
-      let header = headerCreator(props.activeFilters, props.upper_izd);
+      let header = headerCreator(
+        props.activeFilters,
+        props.upper_izd,
+        props.cur,
+        props.cost,
+        props.le,
+        props.he
+      );
 
-      console.log({
-        ...header,
-        items: [],
-        level: [2],
-        groups: [],
-        token: [],
-        nw: props.nw,
-        on_sale: props.sale
-      });
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -70,7 +72,7 @@ const NumGroups = props => {
           // console.log(response.data);
           setNumGroups(response.data.grs);
           setdefNumGroups(response.data.grs);
-          setLoading(false)
+          setLoading(false);
           // setTimeout(() => setLoading(false), 600);
         })
         .catch(err => {
@@ -192,6 +194,9 @@ const NumGroups = props => {
 const mapStateToProps = store => {
   return {
     cur: store.valute_data.valute,
+    cost: store.filter_data.cost,
+    le: store.filter_data.le,
+    he: store.filter_data.he,
     upper_izd: store.filter_data.upper_izd,
     activeFilters: store.filter_data.activeFilters,
     sale: store.filter_data.sale,

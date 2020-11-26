@@ -172,10 +172,7 @@ const FifthLvl = props => {
               </div>
               <div className="main-content__right">
                 {item.prs ? (
-                  <OptionLine
-                    item={item.prs}
-                    fullscreen={<></>}
-                  />
+                  <OptionLine item={item.prs} fullscreen={<></>} />
                 ) : (
                   <></>
                 )}
@@ -253,10 +250,7 @@ const FifthLvl = props => {
                 <div className="main-content__icons">
                   <div className="main-content__photo-icons">
                     {item.prs ? (
-                      <OptionLine
-                        img={`data:image/jpg;base64,${item.prs.photo_bytes}`}
-                        fullscreen={<></>}
-                      />
+                      <OptionLine item={item.prs} fullscreen={<></>} />
                     ) : (
                       <></>
                     )}
@@ -289,10 +283,7 @@ const FifthLvl = props => {
               </div>
               <div className="fifth-lvl__opt">
                 {item.prs ? (
-                  <OptionLine
-                    img={`data:image/jpg;base64,${item.prs.photo_bytes}`}
-                    fullscreen={<></>}
-                  />
+                  <OptionLine item={item.prs} fullscreen={<></>} />
                 ) : (
                   <></>
                 )}
