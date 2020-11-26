@@ -30,6 +30,7 @@ import {
 const Numenclature = props => {
   const [numenclature, setNumemclature] = React.useState([]);
   const [defNum, setdefNum] = React.useState([]);
+  const [breadPath, setBreadPath] = React.useState({});
   const [sortOn, setSortOn] = React.useState(false);
   const [style_pltk, setHover_pltk] = React.useState(true);
   const [isLoading, setLoading] = React.useState(true);
@@ -39,6 +40,7 @@ const Numenclature = props => {
   const [loadCnt, setLoadCnt] = React.useState(12);
 
   const arrFilt = ['_Слэбы', '_Полоса', '_Плитка'];
+
   React.useEffect(() => {
     document.body.scrollIntoView({
       block: 'start',
@@ -68,10 +70,11 @@ const Numenclature = props => {
           groups: [props.match.params.numGroups]
         })
         .then(response => {
+          console.log(response.data.path);
           setLoading(false);
           setNumemclature(response.data.itms);
           setdefNum(response.data.itms);
-
+          setBreadPath(response.data.path);
           if (localStorage.getItem('3lvl_active_field') != null) {
             let arr = [
               ...JSON.parse(localStorage.getItem('3lvl_active_field'))
@@ -118,8 +121,7 @@ const Numenclature = props => {
         });
     }
     return () => (isSubscr = false);
-  }, [props.activeFilters, props.upper_izd]);
-  // }, [props.activeFilters, props.upper_izd]);
+  }, [props.activeFilters, props.upper_izd, props.cost, props.le, props.he]);
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -141,30 +143,7 @@ const Numenclature = props => {
       });
       props.setActiveFields(t);
       localStorage.setItem('activeFieldKeys', JSON.stringify(t));
-    }
-    // else if (e.target.id === 'Другие') {
-    //   let newArr = [...props.upper_izd];
-    //   props.all_upper.map(i => {
-    //     if (i != 'Слэбы' && i != 'Полоса' && i != 'Плитка') {
-    //       if (t.indexOf(i) !== -1) {
-    //         t.splice(t.indexOf(i), 1);
-    //       } else {
-    //         t.push(i);
-    //       }
-    //       if (newArr.indexOf(i) === -1) {
-    //         newArr.push(i);
-    //       } else {
-    //         newArr.splice(newArr.indexOf(i), 1);
-    //       }
-    //       props.setUpper(newArr);
-    //       let ls_3lvl = newArr.map(i => '_' + i);
-    //       localStorage.setItem('3lvl_active_field', JSON.stringify(ls_3lvl));
-    //     }
-    //   });
-    //   props.setActiveFields(t);
-    //   localStorage.setItem('activeFieldKeys', JSON.stringify(t));
-    // }
-    else {
+    } else {
       const id = e.target.id;
       const s_id = id.slice(1, id.length);
 
@@ -207,11 +186,11 @@ const Numenclature = props => {
         ) : (
           <></>
         )}
-        <Breadcrumb.Item>{props.match.params.material}</Breadcrumb.Item>
-        <Breadcrumb.Item>{props.match.params.numGroups}</Breadcrumb.Item>
+        <Breadcrumb.Item>{breadPath.material}</Breadcrumb.Item>
+        <Breadcrumb.Item>{breadPath.group}</Breadcrumb.Item>
       </Breadcrumb>
       <div style={{ display: 'flex' }} className="">
-        {isTablet || isBrowser ? <Filter /> : <></>}
+        {isTablet || isBrowser ? <Filter lvl='3'/> : <></>}
         <div style={{ width: '100%' }} className="">
           <div
             className={
@@ -239,9 +218,6 @@ const Numenclature = props => {
               <div id="_Плитка" onClick={filterIzd}>
                 Плитка
               </div>
-              {/* <div id="Другие" onClick={filterIzd}>
-                Другие изделия
-              </div> */}
             </div>
 
             <div className="other-options">
@@ -296,6 +272,24 @@ const Numenclature = props => {
                   ))
               ) : (
                 <div className="goods-none">Товаров не найдено</div>
+              )}
+              {numenclature.length % 4 == 1 ? (
+                <>
+                  <p>aaaaaaaa</p>
+                  <p>aaaaaaaa</p>
+                  <p>aaaaaaaa</p>
+                </>
+              ) : numenclature.length % 4 == 2 ? (
+                <>
+                  <p>aaaaaaaa</p>
+                  <p>aaaaaaaa</p>
+                </>
+              ) : numenclature.length % 4 == 3 ? (
+                <>
+                  <p>aaaaaaaa</p>
+                </>
+              ) : (
+                <></>
               )}
             </div>
             {loadCnt < numenclature.length ? (

@@ -26,13 +26,20 @@ import OtherItem from '../components/4lvl/OtherItem';
 const FourLvl = props => {
   const [isLoading, setLoading] = React.useState(true);
   const [item, setItem] = React.useState([]);
-
+  const [breadPath, setBreadPath] = React.useState({});
   React.useEffect(() => {
     window.scrollTo(0, 0);
     let isSubscr = true;
-    // setLoading(true);
+    
     if (isSubscr) {
-      let header = headerCreator(props.activeFilters, props.upper_izd);
+      let header = headerCreator(
+        props.activeFilters,
+        props.upper_izd,
+        props.cur,
+        props.cost,
+        props.le,
+        props.he
+      );
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -45,6 +52,8 @@ const FourLvl = props => {
           token: []
         })
         .then(response => {
+          console.log(response.data);
+          setBreadPath(response.data.path)
           setItem(response.data.prs);
           setLoading(false);
           // if (
@@ -107,18 +116,18 @@ const FourLvl = props => {
           ) : (
             <></>
           )}
-          <Breadcrumb.Item>{props.match.params.material}</Breadcrumb.Item>
+          <Breadcrumb.Item>{breadPath.material}</Breadcrumb.Item>
           <Breadcrumb.Item>
             <Link
               to={`/${props.match.params.material}/${props.match.params.numGroups}`}
             >
-              {props.match.params.numGroups}
+              {breadPath.group}
             </Link>
           </Breadcrumb.Item>
-          <Breadcrumb.Item>{props.match.params.num}</Breadcrumb.Item>
+          <Breadcrumb.Item>{breadPath.item}</Breadcrumb.Item>
         </Breadcrumb>
       )}
-      {isTablet || isBrowser ? <Filter built_in={true}/> : <></>}
+      {isTablet || isBrowser ? <Filter built_in={true} lvl='4'/> : <></>}
       <Preloader isLoading={isLoading}>
         <div className="four-lvl-container">
           <BackArrow history={props.history} />
@@ -155,6 +164,9 @@ const FourLvl = props => {
 const mapStateToProps = store => {
   return {
     cur: store.valute_data.valute,
+    cost: store.filter_data.cost,
+    le: store.filter_data.le,
+    he: store.filter_data.he,
     isAuth: store.auth_data.isAuth,
     auth_token: store.auth_data.auth_token,
     upper_izd: store.filter_data.upper_izd,

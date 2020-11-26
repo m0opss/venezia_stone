@@ -91,7 +91,7 @@ const NumGroups = props => {
     }
 
     return () => (isSubscr = false);
-  }, [props.activeFilters, props.upper_izd]);
+  }, [props.activeFilters, props.upper_izd, props.cost, props.le, props.he]);
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -146,7 +146,7 @@ const NumGroups = props => {
         )}
       </div>
       <div className="second-lvl-wrapper">
-        {isTablet || isBrowser ? <Filter /> : <></>}
+        {isTablet || isBrowser ? <Filter lvl='2'/> : <></>}
         <Preloader isLoading={isLoading}>
           <div style={{ width: '100%' }}>
             <div className={num_groups_items}>

@@ -106,7 +106,7 @@ const Filter = props => {
       newArr.splice(newArr.indexOf(e.key), 1);
     }
     props.setUpper(newArr);
-    localStorage.setItem('uppper_izd', JSON.stringify(newArr));
+    localStorage.setItem('upper_izd', JSON.stringify(newArr));
   };
 
   const materialsItemClicked = e => {
@@ -222,22 +222,26 @@ const Filter = props => {
               if (filter == t) title = titles[t];
             });
             if (filter == 'izdelie') {
-              props.setAllUpper(props.filters[filter]);
-              return (
-                <SubMenu key={filter} title={title}>
-                  {props.filters[filter].map(izd => {
-                    return (
-                      <Menu.Item
-                        key={izd}
-                        style={{ display: 'flex', alignItems: 'center' }}
-                        onClick={izdItemClicked}
-                      >
-                        {izd}
-                      </Menu.Item>
-                    );
-                  })}
-                </SubMenu>
-              );
+              if (props.lvl != '4') {
+                props.setAllUpper(props.filters[filter]);
+                return (
+                  <SubMenu key={filter} title={title}>
+                    {props.filters[filter].map(izd => {
+                      return (
+                        <Menu.Item
+                          key={izd}
+                          style={{ display: 'flex', alignItems: 'center' }}
+                          onClick={izdItemClicked}
+                        >
+                          {izd}
+                        </Menu.Item>
+                      );
+                    })}
+                  </SubMenu>
+                );
+              } else {
+                return <></>;
+              }
             } else if (filter == 'prices') {
               if (props.cur === 'rub') {
                 toggleCost([
@@ -288,43 +292,51 @@ const Filter = props => {
                 <SubMenu key={filter} title={title}>
                   {props.filters[filter].map((material, ind) => {
                     if (filter === 'materials') {
-                      return (
-                        <Menu.Item
-                          key={material}
-                          style={{ display: 'flex', alignItems: 'center' }}
-                          onClick={materialsItemClicked}
-                        >
-                          {material}
-                        </Menu.Item>
-                      );
+                      if (props.lvl != '3') {
+                        return (
+                          <Menu.Item
+                            key={material}
+                            style={{ display: 'flex', alignItems: 'center' }}
+                            onClick={materialsItemClicked}
+                          >
+                            {material}
+                          </Menu.Item>
+                        );
+                      } else {
+                        return <></>;
+                      }
                     } else if (filter === 'colors' || filter === 'countries') {
-                      return (
-                        <Menu.Item
-                          key={`${index}${ind}`}
-                          style={{ display: 'flex', alignItems: 'center' }}
-                          onClick={filterItemClicked}
-                        >
-                          {index == 2 && material === 'Белый' ? (
-                            <>
-                              <div
-                                className="filter__color border-color"
-                                style={{ background: colors[material] }}
-                              />
-                              {material}
-                            </>
-                          ) : index == 2 && material !== 'Белый' ? (
-                            <>
-                              <div
-                                className="filter__color"
-                                style={{ background: colors[material] }}
-                              />
-                              {material}
-                            </>
-                          ) : (
-                            material
-                          )}
-                        </Menu.Item>
-                      );
+                      if (props.lvl != '3') {
+                        return (
+                          <Menu.Item
+                            key={`${index}${ind}`}
+                            style={{ display: 'flex', alignItems: 'center' }}
+                            onClick={filterItemClicked}
+                          >
+                            {index == 2 && material === 'Белый' ? (
+                              <>
+                                <div
+                                  className="filter__color border-color"
+                                  style={{ background: colors[material] }}
+                                />
+                                {material}
+                              </>
+                            ) : index == 2 && material !== 'Белый' ? (
+                              <>
+                                <div
+                                  className="filter__color"
+                                  style={{ background: colors[material] }}
+                                />
+                                {material}
+                              </>
+                            ) : (
+                              material
+                            )}
+                          </Menu.Item>
+                        );
+                      } else {
+                        return <></>;
+                      }
                     } else if (
                       filter === 'obrabotka' ||
                       filter === 'thickness'

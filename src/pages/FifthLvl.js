@@ -13,8 +13,6 @@ import Preloader from 'components/Preloader/Preloader';
 import { Breadcrumb } from 'antd';
 import { Link } from 'react-router-dom';
 import {
-  MobileView,
-  BrowserView,
   isTablet,
   isBrowser,
   isMobile
@@ -31,6 +29,7 @@ const FifthLvl = props => {
     axios
       .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
       .then(response => {
+        console.log(response.data)
         // setImages([response.data.itms[0].prs.photo_product]);
         setItem(response.data.itms[0]);
         setLoading(false);
