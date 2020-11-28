@@ -2,6 +2,7 @@ import {
   Page,
   Text,
   View,
+  Font,
   Image,
   Document,
   StyleSheet
@@ -9,127 +10,38 @@ import {
 import React from 'react';
 import axios from 'axios';
 
-const styles = StyleSheet.create({
-  body: {
-    paddingTop: 35,
-    paddingBottom: 45,
-    paddingHorizontal: 35
-  },
-  title: {
-    fontSize: 24,
-    textAlign: 'center',
-    fontFamily: 'Roboto'
-  },
-  author: {
-    fontSize: 12,
-    textAlign: 'center',
-    marginBottom: 40,
-    fontFamily: 'Roboto'
-  },
-  subtitle: {
-    fontSize: 16,
-    margin: 12,
-    fontFamily: 'Roboto'
-  },
-  text: {
-    margin: 12,
-    fontSize: 12,
-    fontFamily: 'Roboto',
-    textAlign: 'justify'
-  },
-  image: {
-    height: 150,
-    marginBottom: 30,
-    marginHorizontal: 100
-  },
-  header: {
-    fontSize: 12,
-    color: 'grey',
-    marginBottom: 15,
-    textAlign: 'center',
-    fontFamily: 'Roboto'
-  },
-  footer: {
-    position: 'absolute',
-    fontSize: 12,
-    bottom: 25,
-    left: 35,
-    right: 0,
-    textAlign: 'center',
-    color: 'grey',
-    fontFamily: 'Roboto'
-  }
-});
+import font from '/work/front/veneziastones/new/venezia_stone/src/fonts/Roboto/Roboto-Regular.ttf';
+import font_thin from '/work/front/veneziastones/new/venezia_stone/src/fonts/Roboto/Roboto-Thin.ttf';
 
 const PDFCreator = props => {
-  console.log(props.item);
-  const [imgData, setImgData] = React.useState('');
-  React.useEffect(() => {
-    // axios
-    //   .post(`https://catalog-veneziastone.ru/api_v0/get_photo_bytes/`, {
-    //     ps: props.item.ps
-    //   })
-    //   .then(response => {
-    //     setImgData(response.data.bytes);
-    //   })
-    //   .catch(err => {
-    //     if (err.response) {
-    //       // client received an error response (5xx, 4xx)
-    //       console.log(1, err.response);
-    //       // props.setAuth(false);
-    //     } else if (err.request) {
-    //       // client never received a response, or request never left
-    //       console.log(2, err.request);
-    //     } else {
-    //       // anything else
-    //       console.log(3, err);
-    //     }
-    //   });
-  });
-  // console.log(imgData)
-
+  Font.register({ family: 'Roboto', src: font });
+  Font.register({ family: 'RobotoThin', src: font_thin });
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          {/* <Image src={imgData} /> */}
+      <Page size="A4" style={{ fontFamily: 'RobotoThin', fontSize: 14 }}>
+        <View>
           <Image
-            source={() => {
-              axios
-                .post(
-                  `https://catalog-veneziastone.ru/api_v0/get_photo_bytes/`,
-                  {
-                    ps: props.item.ps
-                  }
-                )
-                .then(response => {
-                  console.log(111111, {
-                    data: 'data:image/jpg;base64,' + response.data.bytes,
-                    format: 'jpg'
-                  });
-                  return {
-                    data: 'data:image/jpg;base64,' + response.data.bytes,
-                    format: 'jpg'
-                  };
-                })
-                .catch(err => {
-                  if (err.response) {
-                    // client received an error response (5xx, 4xx)
-                    console.log(1, err.response);
-                    // props.setAuth(false);
-                  } else if (err.request) {
-                    // client never received a response, or request never left
-                    console.log(2, err.request);
-                  } else {
-                    // anything else
-                    console.log(3, err);
-                  }
-                });
-            }}
+            style={{ height: '400px', width: '100%' }}
+            src={props.imgData}
           />
         </View>
-        <View style={styles.section}>
-          <Text>Section #2</Text>
+        <Text style={{ margin: '20px 40px', fontSize: 12 }}>
+          Тип фото: {props.item.typeFoto}
+        </Text>
+        <View style={{ margin: '30px auto' }}>
+          <Text style={{ fontFamily: 'Roboto', marginBottom: '30px' }}>
+            {props.item.itms_name}{' '}
+          </Text>
+          <Text>Пачка №{props.item.bl} </Text>
+          <Text>
+            {props.item.itms_izd} №{props.item.ps}
+          </Text>
+          <Text style={{ marginTop: '20px' }}>
+            Страна: {props.item.country}
+          </Text>
+          <Text style={{ marginTop: '20px' }}>Длина: {props.item.le}"</Text>
+          <Text>Ширина: {props.item.he}"</Text>
+          <Text style={{ marginTop: '20px' }}>Склад: {props.item.sklad}</Text>
         </View>
       </Page>
     </Document>

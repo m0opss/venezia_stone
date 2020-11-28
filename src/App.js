@@ -12,12 +12,29 @@ import './components/Content/Content.scss';
 
 import authActions from './actions/authActions';
 import userActions from './actions/userActions';
+import filterActions from 'actions/filterActions';
 import izbrActions from './actions/izbrActions';
 
 const App = props => {
   React.useEffect(() => {
     let isSubscr = true;
     if (isSubscr) {
+      axios
+        .get('https://catalog-veneziastone.ru/api_v0/getUpperFilters/', {
+          token: localStorage.getItem('auth_token')
+        })
+        .then(response => {
+          props.setAllUpper(response.data.izd)
+        })
+        .catch(err => {
+          if (err.response) {
+            console.log(1, err.response);
+          } else if (err.request) {
+            console.log(2, err.request);
+          } else {
+            console.log(3, err);
+          }
+        });
       if (localStorage.getItem('auth_token') !== null) {
         axios
           .post('https://catalog-veneziastone.ru/account/get_user_info/', {
@@ -53,7 +70,7 @@ const App = props => {
               'selectedFavourite',
               JSON.stringify(response.data.products)
             );
-          })
+          });
       }
     }
     return () => (isSubscr = false);
@@ -84,6 +101,9 @@ const mapDispatchToProps = dispatch => {
     },
     setAuth: data => {
       dispatch(authActions.setAuth(data));
+    },
+    setAllUpper: data => {
+      dispatch(filterActions.setAllUpper(data));
     },
     setToken: data => {
       dispatch(authActions.setToken(data));

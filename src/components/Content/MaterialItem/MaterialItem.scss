@@ -1,3 +1,19 @@
+.material_empty {
+  height: 220px;
+  width: 370px;
+  @media screen and (max-width: 1665px) {
+    width: 301px;
+  }
+  @media screen and (max-width: 1227px) {
+    width: 370px;
+  }
+  @media screen and (max-width: 1044px) {
+    width: 310px;
+  }
+  
+  position: relative;
+  margin: 1% 10px;
+}
 .catalog-item {
   height: 220px;
   width: 370px;

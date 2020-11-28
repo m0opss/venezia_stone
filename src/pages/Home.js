@@ -19,6 +19,8 @@ import {
 } from 'react-device-detect';
 import './Home.scss';
 
+var CancelToken = axios.CancelToken;
+var cancel;
 const Home = props => {
   const [isMatLoading, setMatLoading] = React.useState(true);
   const [isNewLoading, setNewLoading] = React.useState(true);
@@ -26,11 +28,13 @@ const Home = props => {
   const [matList, setMatList] = React.useState([]);
   const [saleList, setSaleList] = React.useState([]);
   const [newList, setNewList] = React.useState([]);
+
   React.useEffect(() => {
     document.body.scrollIntoView({
       block: 'start',
       behavior: 'smooth'
     });
+
     setMatLoading(true);
     setNewLoading(true);
     setSaleLoading(true);
@@ -58,8 +62,10 @@ const Home = props => {
           on_sale: []
         })
       );
-      axios
-        .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
+      axios({
+        method: 'post',
+        url: 'https://catalog-veneziastone.ru/api_v0/Filter/',
+        data: {
           ...header,
           items: [],
           level: [1],
@@ -67,24 +73,61 @@ const Home = props => {
           token: [],
           nw: [],
           on_sale: []
+        },
+        cancelToken: new CancelToken(function executor(c) {
+          // An executor function receives a cancel function as a parameter
+          cancel = c;
         })
-        .then(response => {
-          setMatList(response.data.mts);
+      })
+        .then(res => {
+          cancel();
+          console.log(res.data);
+          setMatList(res.data.mts);
           setMatLoading(false);
         })
-        .catch(err => {
-          if (err.response) {
-            // client received an error response (5xx, 4xx)
-            console.log(1, err.response);
-            // props.setAuth(false);
-          } else if (err.request) {
-            // client never received a response, or request never left
-            console.log(2, err.request);
+        .catch(function(err) {
+          if (axios.isCancel(err)) {
+            console.log(err);
           } else {
-            // anything else
-            console.log(3, err);
+            console.log('im server response error', err);
           }
         });
+      // this cancel the request
+
+      // axios
+      //   .post(
+      //     'https://catalog-veneziastone.ru/api_v0/Filter/',
+      //     {
+      //       ...header,
+      //       items: [],
+      //       level: [1],
+      //       groups: [],
+      //       token: [],
+      //       nw: [],
+      //       on_sale: []
+      //     },
+      //     {
+      //       cancelToken: source.token
+      //     }
+      //   )
+      //   .then(response => {
+      //     console.log(response.data);
+      //     setMatList(response.data.mts);
+      //     setMatLoading(false);
+      //   })
+      //   .catch(err => {
+      //     if (err.response) {
+      //       // client received an error response (5xx, 4xx)
+      //       console.log(1, err.response);
+      //       // props.setAuth(false);
+      //     } else if (err.request) {
+      //       // client never received a response, or request never left
+      //       console.log(2, err.request);
+      //     } else {
+      //       // anything else
+      //       console.log(3, err);
+      //     }
+      //   });
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -140,6 +183,7 @@ const Home = props => {
           }
         });
     }
+
     return () => (isSubscr = false);
   }, [props.activeFilters, props.upper_izd, props.cost, props.le, props.he]);
   // }, []);
@@ -154,7 +198,7 @@ const Home = props => {
   const clickItem = (itemName, type) => {
     setActiveFields(itemName);
     let newArr = { ...props.activeFilters };
-    console.log('Home newarr', newArr)
+    console.log('Home newarr', newArr);
     if (newArr['materials'] && !newArr['materials'].includes(itemName)) {
       newArr['materials'].push(itemName);
     }
@@ -190,6 +234,18 @@ const Home = props => {
                 ) : (
                   <></>
                 )}
+                {matList.length % 4 == 1 ? (
+                  <>
+                    <div className="material_empty"></div>
+                    <div className="material_empty"></div>
+                  </>
+                ) : matList.length % 4 == 2 ? (
+                  <>
+                    <div className="material_empty"></div>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </Preloader>
           </TreeItem>
@@ -210,6 +266,18 @@ const Home = props => {
                 ) : (
                   <></>
                 )}
+                {matList.length % 4 == 1 ? (
+                  <>
+                    <div className="material_empty"></div>
+                    <div className="material_empty"></div>
+                  </>
+                ) : matList.length % 4 == 2 ? (
+                  <>
+                    <div className="material_empty"></div>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </Preloader>
           </TreeItem>
@@ -227,6 +295,18 @@ const Home = props => {
                       key={item.mt}
                     />
                   ))
+                ) : (
+                  <></>
+                )}
+                {matList.length % 4 == 1 ? (
+                  <>
+                    <div className="material_empty"></div>
+                    <div className="material_empty"></div>
+                  </>
+                ) : matList.length % 4 == 2 ? (
+                  <>
+                    <div className="material_empty"></div>
+                  </>
                 ) : (
                   <></>
                 )}

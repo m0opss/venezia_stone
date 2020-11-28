@@ -55,4 +55,4 @@ const MobileHeader = props => {
   );
 };
 
-export default withRouter(MobileHeader);
+export default MobileHeader;

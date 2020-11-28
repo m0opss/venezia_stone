@@ -15,15 +15,18 @@ import telegram from 'images/telegram.svg';
 import mail from 'images/mail.svg';
 import facebook from 'images/facebook.svg';
 import pdf from 'images/pdf.svg';
+import axios from 'axios';
 
 import './OptionLine.scss';
-import PDFCreator from './PDFCreator'
+import PDFCreator from './PDFCreator';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 
 const OptionLine = props => {
   const [isOpen, setOpen] = React.useState(false);
   const [isOpenBook, setOpenBook] = React.useState(false);
   const [dropVisible, setDropVisible] = React.useState(false);
+  const [imgData, setImgData] = React.useState('');
+
   const openBook = () => {
     setOpenBook(true);
   };
@@ -34,22 +37,46 @@ const OptionLine = props => {
   const openDropdown = e => {
     setDropVisible(true);
   };
-
+  React.useEffect(() => {
+    axios
+      .post(`https://catalog-veneziastone.ru/api_v0/get_photo_for_pdf/`, {
+        ps: props.item.ps
+      })
+      .then(response => {
+        setImgData('data:image/jpg;base64,' + response.data);
+      })
+      .catch(err => {
+        if (err.response) {
+          // client received an error response (5xx, 4xx)
+          console.log(1, err.response);
+          // props.setAuth(false);
+        } else if (err.request) {
+          // client never received a response, or request never left
+          console.log(2, err.request);
+        } else {
+          // anything else
+          console.log(3, err);
+        }
+      });
+  });
   const menu = (
     <div className="soc-drop">
       <a className="soc-drop__item" href="/">
         <img src={mail} />
       </a>
       <div className="soc-drop__item" style={{ cursor: 'pointer' }}>
-      
-        <PDFDownloadLink
-          document={<PDFCreator item={props.item} />}
-          fileName={props.item.itms_name + ' Пачка ' + props.item.bl}
-        >
-          {({ blob, url, loading, error }) =>
-            loading ? 'Loading document...' : <img src={pdf} />
-          }
-        </PDFDownloadLink>
+        {imgData != '' ? (
+          <PDFDownloadLink
+            document={<PDFCreator item={props.item} imgData={imgData} />}
+            fileName={props.item.itms_name + ' Пачка ' + props.item.bl}
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? <img src={pdf} /> : <img src={pdf} />
+            }
+          </PDFDownloadLink>
+        ) : (
+          <img src={pdf} />
+        )}
       </div>
       <a className="soc-drop__item" href="https://www.viber.com/ru/">
         <img src={viber} />

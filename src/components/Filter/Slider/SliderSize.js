@@ -4,7 +4,6 @@ import { Slider, InputNumber } from 'antd';
 import './Slider.scss';
 
 const SliderSize = props => {
-  
   let def_le_min = props.defVal['le'].length__min;
   let def_le_max = props.defVal['le'].length__max;
   let def_he_min = props.defVal['he'].height__min;
@@ -23,14 +22,25 @@ const SliderSize = props => {
     le_setMaxVal(value[1]);
   };
   const le_onAChange = () => {
-    props.onChange_le([le_minVal, le_maxVal])
+    if (le_minVal == def_le_min && le_maxVal == def_le_max) {
+      props.onChange_le([0, Number.MAX_SAFE_INTEGER]);
+    } else {
+      props.onChange_le([le_minVal, le_maxVal]);
+    }
   };
   const he_onChange = value => {
     he_setMinVal(value[0]);
     he_setMaxVal(value[1]);
   };
+
   const he_onAChange = () => {
-    props.onChange_he([he_minVal, he_maxVal])
+    if (he_minVal == def_he_min && he_maxVal == def_he_max) {
+      console.log(111111111111111111)
+      props.onChange_he([0, Number.MAX_SAFE_INTEGER]);
+    } else {
+      console.log(2222222222222222222)
+      props.onChange_he([he_minVal, he_maxVal]);
+    }
   };
 
   return (

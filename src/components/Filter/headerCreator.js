@@ -10,6 +10,12 @@ export const headerCreator = (activeFilters, upper_izd, cur, cost, le, he) => {
   let obrabotka = [];
   let thickness = [];
   let sklad = [];
+  let le_max = le[1] != null ? [le[0]] : [];
+  let le_min = he[0] != null ? [le[1]] : [];
+  let he_max = he[1] != null ? [he[0]] : [];
+  let he_min = le[0] != null ? [he[1]] : [];
+  let cnt_min = cost[0] != null ? [cost[0]] : [];
+  let cnt_max = cost[1] != null ? [cost[1]] : [];
 
   if (typeof headers['colors'] !== 'undefined' && headers['colors'].length > 0)
     colors = headers.colors;
@@ -40,12 +46,12 @@ export const headerCreator = (activeFilters, upper_izd, cur, cost, le, he) => {
     thickness: thickness,
     sklad: sklad,
     cnt: [cur],
-    cnt_min: [cost[0]],
-    cnt_max: [cost[1]],
-    le_min: [le[0]],
-    le_max: [le[1]],
-    he_min: [he[0]],
-    he_max: [he[1]]
+    cnt_min: cnt_min,
+    cnt_max: cnt_max,
+    le_min: le_max,
+    le_max: le_min,
+    he_min: he_max,
+    he_max: he_min
   };
 };
 headerCreator;

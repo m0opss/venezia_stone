@@ -16,6 +16,7 @@ import {
   isMobile,
   isBrowser
 } from 'react-device-detect';
+
 import './Filter.scss';
 import 'antd/dist/antd.css';
 
@@ -223,7 +224,7 @@ const Filter = props => {
             });
             if (filter == 'izdelie') {
               if (props.lvl != '4') {
-                props.setAllUpper(props.filters[filter]);
+                // props.setAllUpper(props.filters[filter]);
                 return (
                   <SubMenu key={filter} title={title}>
                     {props.filters[filter].map(izd => {
@@ -244,20 +245,11 @@ const Filter = props => {
               }
             } else if (filter == 'prices') {
               if (props.cur === 'rub') {
-                toggleCost([
-                  parseFloat(props.filters[filter].price_RUB.rub__min),
-                  parseFloat(props.filters[filter].price_RUB.rub__max)
-                ]);
+                toggleCost([0, Number.MAX_SAFE_INTEGER]);
               } else if (props.cur === 'usd') {
-                toggleCost([
-                  parseFloat(props.filters[filter].price_USD.usd__min),
-                  parseFloat(props.filters[filter].price_USD.usd__max)
-                ]);
+                toggleCost([0, Number.MAX_SAFE_INTEGER]);
               } else {
-                toggleCost([
-                  parseFloat(props.filters[filter].price_EUR.eur__min),
-                  parseFloat(props.filters[filter].price_EUR.eur__max)
-                ]);
+                toggleCost([0, Number.MAX_SAFE_INTEGER]);
               }
 
               return (
@@ -270,13 +262,10 @@ const Filter = props => {
                 </SubMenu>
               );
             } else if (filter == 'sizas') {
-              toggle_le([
-                props.filters[filter]['le'].length__min,
-                props.filters[filter]['le'].length__max
-              ]);
+              toggle_le([0, Number.MAX_SAFE_INTEGER]);
               toggle_he([
-                props.filters[filter]['he'].height__min,
-                props.filters[filter]['he'].height__max
+                props.filters[filter]['he'].height__min0,
+                Number.MAX_SAFE_INTEGER
               ]);
               return (
                 <SubMenu key="size-sub" title="Размеры">
@@ -341,15 +330,19 @@ const Filter = props => {
                       filter === 'obrabotka' ||
                       filter === 'thickness'
                     ) {
-                      return (
-                        <Menu.Item
-                          key={`${index}${ind}`}
-                          style={{ display: 'flex', alignItems: 'center' }}
-                          onClick={filterItemClicked}
-                        >
-                          {material}
-                        </Menu.Item>
-                      );
+                      if (props.lvl != '4') {
+                        return (
+                          <Menu.Item
+                            key={`${index}${ind}`}
+                            style={{ display: 'flex', alignItems: 'center' }}
+                            onClick={filterItemClicked}
+                          >
+                            {material}
+                          </Menu.Item>
+                        );
+                      } else {
+                        return <></>;
+                      }
                     } else if (filter === 'sklad') {
                       return (
                         <Menu.Item

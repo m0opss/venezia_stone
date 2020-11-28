@@ -190,7 +190,7 @@ const Numenclature = props => {
         <Breadcrumb.Item>{breadPath.group}</Breadcrumb.Item>
       </Breadcrumb>
       <div style={{ display: 'flex' }} className="">
-        {isTablet || isBrowser ? <Filter lvl='3'/> : <></>}
+        {isTablet || isBrowser ? <Filter lvl="3" /> : <></>}
         <div style={{ width: '100%' }} className="">
           <div
             className={
@@ -275,18 +275,18 @@ const Numenclature = props => {
               )}
               {numenclature.length % 4 == 1 ? (
                 <>
-                  <p>aaaaaaaa</p>
-                  <p>aaaaaaaa</p>
-                  <p>aaaaaaaa</p>
+                  <div className="numGroup_empty"></div>
+                  <div className="numGroup_empty"></div>
+                  <div className="numGroup_empty"></div>
                 </>
               ) : numenclature.length % 4 == 2 ? (
                 <>
-                  <p>aaaaaaaa</p>
-                  <p>aaaaaaaa</p>
+                  <div className="numGroup_empty"></div>
+                  <div className="numGroup_empty"></div>
                 </>
               ) : numenclature.length % 4 == 3 ? (
                 <>
-                  <p>aaaaaaaa</p>
+                  <div className="numGroup_empty"></div>
                 </>
               ) : (
                 <></>

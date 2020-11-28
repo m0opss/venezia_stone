@@ -3,17 +3,19 @@ import React from 'react';
 import filterActions from 'actions/filterActions';
 import { isMobile, isTablet } from 'react-device-detect';
 
-export const TopFilter = props => {
+const TopFilter = props => {
   React.useEffect(() => {
-    console.log(props.upper_izd);
-    props.all_upper.map(izd => {
-      if (props.upper_izd.includes(izd)) {
-        document.getElementById(izd).setAttribute('style', 'color: #c98505');
-      } else {
-        document.getElementById(izd).setAttribute('style', 'color: black');
-      }
-    });
-  }, [props.upper_izd]);
+    console.log(props, props.upper_izd);
+    if (props.all_upper) {
+      props.all_upper.map(izd => {
+        if (props.upper_izd.includes(izd)) {
+          document.getElementById(izd).setAttribute('style', 'color: #c98505');
+        } else {
+          document.getElementById(izd).setAttribute('style', 'color: black');
+        }
+      });
+    }
+  });
 
   const setFilterParam = e => {
     let t = [...props.activeFields];
@@ -42,23 +44,26 @@ export const TopFilter = props => {
       newArr.splice(newArr.indexOf(e.target.id), 1);
     }
     props.setUpper(newArr);
-    // props.f_share();
   };
 
   if (isMobile && !isTablet) {
     return (
       <>
-        {props.all_upper.map(i => (
-          <div className="top-mobile-filter-line" key={i}>
-            <div
-              id={i}
-              className="second-line__filter-button"
-              onClick={setFilterParam}
-            >
-              {i}
+        {props.all_upper ? (
+          props.all_upper.map(i => (
+            <div className="top-mobile-filter-line" key={i}>
+              <div
+                id={i}
+                className="second-line__filter-button"
+                onClick={setFilterParam}
+              >
+                {i}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <></>
+        )}
       </>
     );
   } else {
@@ -81,7 +86,6 @@ export const TopFilter = props => {
 
 const mapStateToProps = store => {
   return {
-    f_share: store.filter_data.f_share,
     activeFields: store.filter_data.activeFields,
     upper_izd: store.filter_data.upper_izd,
     all_upper: store.filter_data.all_upper

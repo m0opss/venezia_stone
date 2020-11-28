@@ -8,6 +8,7 @@ import {
   MobileView,
   BrowserView,
   isTablet,
+  isBrowser
 } from 'react-device-detect';
 
 const Header = props => {
@@ -20,24 +21,19 @@ const Header = props => {
             <SecondLine />
           </div>
         </div>
+      ) : isBrowser ? (
+        <div className="header-container">
+          <div className="container">
+            <TopLine />
+            <SecondLine />
+          </div>
+        </div>
       ) : (
-        <>
-          <BrowserView>
-            <div className="header-container">
-              <div className="container">
-                <TopLine />
-                <SecondLine />
-              </div>
-            </div>
-          </BrowserView>
-          <MobileView>
-            <div className="header-container">
-              <div className="container">
-                <MobileHeader isAuth={props.isAuth}/>
-              </div>
-            </div>
-          </MobileView>
-        </>
+        <div className="header-container">
+          <div className="container">
+            <MobileHeader isAuth={props.isAuth} />
+          </div>
+        </div>
       )}
     </>
   );

@@ -9,7 +9,7 @@ import MobileAuth from './MobileAuth';
 import Auth from '../TopLine/AccountButton/UnauthoredAccountButton/Auth/Auth';
 
 import './MobileHeader.scss';
-import { TopFilter } from '../../Filter/TopFilter';
+import TopFilter from '../../Filter/TopFilter';
 
 function ucFirst(str) {
   if (!str) return str;
@@ -143,12 +143,7 @@ const MenuList = props => {
       )}
       <br />
       <br />
-      <TopFilter
-        activeFields={props.active_fields}
-        upper_izd={props.upper_izd}
-        setUpper={props.setUpper}
-        setActiveFields={props.setActiveFields}
-      />
+      <TopFilter />
       <br />
       <br />
       <Menu.Item {...other} key="15">

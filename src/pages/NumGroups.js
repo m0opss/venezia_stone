@@ -15,8 +15,10 @@ import Valute from 'components/Valute/Valute';
 import Sort from 'components/Sort/Sort';
 import NumGroupItem from 'components/Content/NumGroupItem/NumGroupItem';
 import { Breadcrumb } from 'antd';
-import './NumGroups.scss';
 import Filter from 'components/Filter/Filter';
+
+import './NumGroups.scss';
+import 'components/Content/NumGroupItem/NumGroupEmtyItem.scss'
 
 import { headerCreator } from 'components/Filter/headerCreator';
 
@@ -41,7 +43,6 @@ const NumGroups = props => {
   const [loadCnt, setLoadCnt] = React.useState(12);
 
   React.useEffect(() => {
-    console.log(props);
     document.body.scrollIntoView({
       block: 'start',
       behavior: 'smooth'
@@ -57,7 +58,17 @@ const NumGroups = props => {
         props.le,
         props.he
       );
-
+      console.log(
+        JSON.stringify({
+          ...header,
+          items: [],
+          level: [2],
+          groups: [],
+          token: [],
+          nw: props.nw,
+          on_sale: props.sale
+        })
+      );
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -146,7 +157,7 @@ const NumGroups = props => {
         )}
       </div>
       <div className="second-lvl-wrapper">
-        {isTablet || isBrowser ? <Filter lvl='2'/> : <></>}
+        {isTablet || isBrowser ? <Filter lvl="2" /> : <></>}
         <Preloader isLoading={isLoading}>
           <div style={{ width: '100%' }}>
             <div className={num_groups_items}>
@@ -175,6 +186,24 @@ const NumGroups = props => {
                   ))
               ) : (
                 <div className="goods-none">Товаров не найдено</div>
+              )}
+              {numGroups.length % 4 == 1 ? (
+                <>
+                  <div className="numGroup_empty"></div>
+                  <div className="numGroup_empty"></div>
+                  <div className="numGroup_empty"></div>
+                </>
+              ) : numGroups.length % 4 == 2 ? (
+                <>
+                  <div className="numGroup_empty"></div>
+                  <div className="numGroup_empty"></div>
+                </>
+              ) : numGroups.length % 4 == 3 ? (
+                <>
+                  <div className="numGroup_empty"></div>
+                </>
+              ) : (
+                <></>
               )}
             </div>
             {loadCnt < numGroups.length ? (
