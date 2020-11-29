@@ -9,6 +9,7 @@ import { isMobile, isTablet } from 'react-device-detect';
 import axios from 'axios';
 const CropperBook = props => {
   const [imgData, setImgData] = React.useState('');
+
   useEffect(() => {
     axios
       .post(`https://catalog-veneziastone.ru/api_v0/get_photo_bytes/`, {
@@ -31,9 +32,15 @@ const CropperBook = props => {
         }
       });
   }, []);
+  
   const [cropData, setCropData] = React.useState('#');
+  const [cropData1, setCropData1] = React.useState('#');
   const [cropper, setCropper] = React.useState('');
   const [mode, setMode] = React.useState('-two');
+  const [sides, setSides] = React.useState({
+    1: 'right',
+    2: 'down'
+  });
 
   const getCropData = () => {
     if (typeof cropper !== 'undefined') {
@@ -46,17 +53,18 @@ const CropperBook = props => {
     }
   };
 
-  const pushOnServer = () => {
+  const pushOnServer = (obj) => {
+    console.log("sides", obj, sides)
     if (typeof cropper !== 'undefined') {
-      let mod = mode == '-two' ? 2 : mode == '-four' ? 4 : 2;
       axios
         .post(`https://catalog-veneziastone.ru/api_v0/Bookmatch/`, {
-          bytes: cropData,
-          mode: mod
+          image: cropData,
+          sides: obj
         })
         .then(response => {
           var a = document.createElement('a');
           a.href = 'data:application/octet-stream;base64,' + response.data;
+          setCropData1('data:application/octet-stream;base64,' + response.data)
           a.download = 'bookmatch.jpg';
           document.body.appendChild(a);
           a.click();
@@ -88,8 +96,7 @@ const CropperBook = props => {
       <div className="cropper">
         <Cropper
           src={`data:image/jpg;base64,${imgData}`}
-          initialAspectRatio={1 / 1}
-          initialAspectRatio={2}
+          initialAspectRatio={16 / 9}
           style={
             isTablet
               ? { height: 400 }
@@ -112,6 +119,7 @@ const CropperBook = props => {
         <CropperPanel
           type="book"
           mode={mode}
+          setSides={setSides}
           pushOnServer={pushOnServer}
           setCropData={setCropData}
           getCropData={getCropData}
@@ -120,7 +128,9 @@ const CropperBook = props => {
       </div>
       <div className="dialog-cropper__res-wrapper">
         <h2>Результат</h2>
-        <div className={`dialog-cropper__res ${mode}`} onClick={getCropper()}>
+        <div className={`dialog-cropper__res ${mode} `} onClick={() => getCropper()}>
+          <img className="dialog-cropper__preview-item" src={cropData} />
+          <img className="dialog-cropper__preview-item" src={cropData} />
           <img className="dialog-cropper__preview-item" src={cropData} />
           <img className="dialog-cropper__preview-item" src={cropData} />
           <img className="dialog-cropper__preview-item" src={cropData} />

@@ -33,11 +33,16 @@ const { titles, cities, materials, colors, izdelie } = data;
 
 const Filter = props => {
   const [state, setState] = React.useState({
-    collapsed: isMobile ? true : false
+    collapsed: isMobile ? true : props.lvl == 4 ? true : false
   });
+  const [sale, setSale] = React.useState(false);
+  const [news, setNew] = React.useState(props.nw.length == 1 ? true : false);
 
   useEffect(() => {
     let isSubscr = true;
+    if (props.sale.length == 1) {
+      setSale(true);
+    }
     if (isSubscr) {
       axios
         .get(`https://catalog-veneziastone.ru/api_v0/getFilters/`)
@@ -84,7 +89,7 @@ const Filter = props => {
       }
     }
     return () => (isSubscr = false);
-  }, [props.nw]);
+  }, [sale, props.sale]);
 
   const handleClick = e => {
     setState({ collapsed: !state.collapsed });
@@ -156,12 +161,15 @@ const Filter = props => {
         Object.fromEntries(Object.keys(props.filters).map(key => [key, []]))
       )
     );
-    
+
     props.setActiveFields([]);
     props.setUpper([]);
     props.setCost([]);
     props.setLe([]);
     props.setHe([]);
+    console.log(sale);
+    setSale(false);
+    setNew(false);
     props.setSale([]);
     props.setNew([]);
 
@@ -383,7 +391,7 @@ const Filter = props => {
             }}
           >
             Распродажа
-            {props.sale && props.sale.length == 1 ? (
+            {sale ? (
               <Switch
                 defaultChecked
                 className="filter-switch"
@@ -402,7 +410,7 @@ const Filter = props => {
             }}
           >
             Новинки
-            {props.nw && props.nw.length == 1 ? (
+            {news ? (
               <Switch
                 defaultChecked
                 className="filter-switch"

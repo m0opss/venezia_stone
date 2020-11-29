@@ -7,6 +7,7 @@ import FullScreenDialog from 'components/FullScreenDialog/FullScreenDialog';
 import CropperBook from 'components/Cropper/CropperBook';
 import MyCropper from 'components/Cropper/MyCropper';
 import DropdownSearch from 'components/Dropdown/DropdownSearch';
+import { Icon } from '@iconify/react';
 
 import vk from 'images/vk.svg';
 import whatsapp from 'images/whatsapp.svg';
@@ -15,6 +16,13 @@ import telegram from 'images/telegram.svg';
 import mail from 'images/mail.svg';
 import facebook from 'images/facebook.svg';
 import pdf from 'images/pdf.svg';
+
+import vkIcon from '@iconify/icons-mdi/vk';
+import facebookIcon from '@iconify/icons-mdi/facebook';
+import instagrammIcon from '@iconify/icons-mdi/instagram';
+import viberIcon from '@iconify/icons-whh/youtube';
+import whatsappIcon from '@iconify/icons-whh/whatsapp';
+
 import axios from 'axios';
 
 import './OptionLine.scss';
@@ -27,6 +35,8 @@ const OptionLine = props => {
   const [dropVisible, setDropVisible] = React.useState(false);
   const [imgData, setImgData] = React.useState('');
 
+  const [itemData, setItemData] = React.useState('');
+
   const openBook = () => {
     setOpenBook(true);
   };
@@ -37,7 +47,11 @@ const OptionLine = props => {
   const openDropdown = e => {
     setDropVisible(true);
   };
+
   React.useEffect(() => {
+    let res = `${props.item.itms_izd} ${props.item.ps}\nПачка: ${props.item.bl}\n${props.item.itms_name}\nФото: ${props.item.photo_product}`;
+    res = encodeURI(res);
+    setItemData(res);
     axios
       .post(`https://catalog-veneziastone.ru/api_v0/get_photo_for_pdf/`, {
         ps: props.item.ps
@@ -59,11 +73,12 @@ const OptionLine = props => {
         }
       });
   });
+
   const menu = (
     <div className="soc-drop">
-      <a className="soc-drop__item" href="/">
+      {/* <a className="soc-drop__item" href="/">
         <img src={mail} />
-      </a>
+      </a> */}
       <div className="soc-drop__item" style={{ cursor: 'pointer' }}>
         {imgData != '' ? (
           <PDFDownloadLink
@@ -78,20 +93,38 @@ const OptionLine = props => {
           <img src={pdf} />
         )}
       </div>
-      <a className="soc-drop__item" href="https://www.viber.com/ru/">
-        <img src={viber} />
-      </a>
-      <a className="soc-drop__item" href="https://www.vk.com">
+      {/* <a
+        className="soc-drop__item"
+        target="_blank"
+        href={`https://vk.com/venezia.stone`}
+      >
         <img src={vk} />
       </a>
-      <a className="soc-drop__item" href="https://www.facebook.com/">
+      <a
+        className="soc-drop__item"
+        target="_blank"
+        href={`https://www.facebook.com/veneziastone`}
+      >
         <img src={facebook} />
       </a>
-      <a className="soc-drop__item" href="https://web.telegram.org/#/im">
-        <img src={telegram} />
-      </a>
-      <a className="soc-drop__item" href="https://www.whatsapp.com/?lang=ru">
-        <img src={whatsapp} />
+      <a
+        className="soc-drop__item"
+        href="https://www.instagram.com/venezia.stone.company/"
+        target="_blank"
+      >
+        <Icon icon={instagrammIcon} width="2.3em" height="2.3em" />
+      </a> */}
+      <a
+        className="soc-drop__item"
+        href={`https://wa.me/+79771005888?text=${itemData}`}
+        target="_blank"
+      >
+        <Icon
+          icon={whatsappIcon}
+          color="#4CAF50"
+          width="2.0em"
+          height="2.0em"
+        />
       </a>
     </div>
   );
