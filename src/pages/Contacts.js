@@ -10,7 +10,7 @@ import viberIcon from '@iconify/icons-whh/viber';
 import whatsappIcon from '@iconify/icons-whh/whatsapp';
 
 import './Contacts.scss';
-import { isMobile } from 'react-device-detect';
+import { isMobile, isTablet } from 'react-device-detect';
 
 const AddressCard = props => {
   return (
