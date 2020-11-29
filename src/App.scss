@@ -13,6 +13,10 @@ body {
 body {
   overflow-y: visible;
 }
+.ant-menu-sub.ant-menu-inline > .ant-menu-item,
+.ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+  height: 30px;
+}
 .container {
   max-width: 1230px;
   padding: 0 15px;

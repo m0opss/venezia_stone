@@ -70,7 +70,6 @@ const Numenclature = props => {
           groups: [props.match.params.numGroups]
         })
         .then(response => {
-          console.log(response.data.path);
           setLoading(false);
           setNumemclature(response.data.itms);
           setdefNum(response.data.itms);
@@ -121,7 +120,15 @@ const Numenclature = props => {
         });
     }
     return () => (isSubscr = false);
-  }, [props.activeFilters, props.upper_izd, props.cost, props.le, props.he]);
+  }, [
+    props.activeFilters,
+    props.upper_izd,
+    props.cost,
+    props.le,
+    props.he,
+    props.nw,
+    props.sale
+  ]);
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -175,20 +182,24 @@ const Numenclature = props => {
   return (
     <>
       {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
-      <Breadcrumb separator=">">
-        <Breadcrumb.Item>
-          <Link to="/">Главная </Link>
-        </Breadcrumb.Item>
-        {props.nw.length != 0 ? (
-          <Breadcrumb.Item>Новые поступления</Breadcrumb.Item>
-        ) : props.sale.length != 0 ? (
-          <Breadcrumb.Item>Распродажа</Breadcrumb.Item>
-        ) : (
-          <></>
-        )}
-        <Breadcrumb.Item>{breadPath.material}</Breadcrumb.Item>
-        <Breadcrumb.Item>{breadPath.group}</Breadcrumb.Item>
-      </Breadcrumb>
+      {isMobile && !isTablet ? (
+        <></>
+      ) : (
+        <Breadcrumb separator=">">
+          <Breadcrumb.Item>
+            <Link to="/">Главная </Link>
+          </Breadcrumb.Item>
+          {props.nw.length != 0 ? (
+            <Breadcrumb.Item>Новые поступления</Breadcrumb.Item>
+          ) : props.sale.length != 0 ? (
+            <Breadcrumb.Item>Распродажа</Breadcrumb.Item>
+          ) : (
+            <></>
+          )}
+          <Breadcrumb.Item>{breadPath.material}</Breadcrumb.Item>
+          <Breadcrumb.Item>{breadPath.group}</Breadcrumb.Item>
+        </Breadcrumb>
+      )}
       <div style={{ display: 'flex' }} className="">
         {isTablet || isBrowser ? <Filter lvl="3" /> : <></>}
         <div style={{ width: '100%' }} className="">

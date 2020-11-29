@@ -47,8 +47,8 @@ const FourLvl = props => {
           level: [4],
           groups: [props.match.params.numGroups],
           // token: [props.auth_token]
-          nw: [],
-          on_sale: [],
+          nw: props.nw,
+          on_sale: props.sale,
           token: []
         })
         .then(response => {
@@ -56,32 +56,32 @@ const FourLvl = props => {
           setBreadPath(response.data.path)
           setItem(response.data.prs);
           setLoading(false);
-          // if (
-          //   response.data.prs[0].itms_izd !== 'Слэбы' ||
-          //   response.data.prs[0].itms_izd !== 'Полоса'
-          // ) {
-          //   axios
-          //     .post('https://catalog-veneziastone.ru/api_v0/addViewed/', {
-          //       token: props.auth_token,
-          //       id_product: response.data.itms[0].prs[0].ps
-          //     })
-          //     .then(response => {
-          //       console.log(response);
-          //     })
-          //     .catch(err => {
-          //       if (err.response) {
-          //         // client received an error response (5xx, 4xx)
-          //         console.log(1, err.response);
-          //         // props.setAuth(false);
-          //       } else if (err.request) {
-          //         // client never received a response, or request never left
-          //         console.log(2, err.request);
-          //       } else {
-          //         // anything else
-          //         console.log(3, err);
-          //       }
-          //     });
-          // }
+          if (
+            response.data.prs[0].itms_izd !== 'Слэбы' ||
+            response.data.prs[0].itms_izd !== 'Полоса'
+          ) {
+            axios
+              .post('https://catalog-veneziastone.ru/api_v0/addViewed/', {
+                token: props.auth_token,
+                id_product: response.data.prs[0].ps
+              })
+              .then(response => {
+                console.log(response);
+              })
+              .catch(err => {
+                if (err.response) {
+                  // client received an error response (5xx, 4xx)
+                  console.log(1, err.response);
+                  // props.setAuth(false);
+                } else if (err.request) {
+                  // client never received a response, or request never left
+                  console.log(2, err.request);
+                } else {
+                  // anything else
+                  console.log(3, err);
+                }
+              });
+          }
         })
         .catch(err => {
           if (err.response) {

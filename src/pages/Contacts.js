@@ -10,6 +10,7 @@ import viberIcon from '@iconify/icons-whh/viber';
 import whatsappIcon from '@iconify/icons-whh/whatsapp';
 
 import './Contacts.scss';
+import { isMobile } from 'react-device-detect';
 
 const AddressCard = props => {
   return (
@@ -26,7 +27,7 @@ const AddressCard = props => {
       </div>
 
       <div className="address-card__soc">
-        <a href={props.socLinks} target='_blank' >
+        <a href={props.socLinks} target="_blank">
           <Icon
             icon={whatsappIcon}
             color="#4CAF50"
@@ -71,10 +72,15 @@ const Contacts = () => {
 
   return (
     <div className="contacts-container">
-      <Breadcrumb separator=">">
-        <Breadcrumb.Item href="/">Главная</Breadcrumb.Item>
-        <Breadcrumb.Item>Корзина</Breadcrumb.Item>
-      </Breadcrumb>
+      {isMobile && !isTablet ? (
+        <></>
+      ) : (
+        <Breadcrumb separator=">">
+          <Breadcrumb.Item href="/">Главная</Breadcrumb.Item>
+          <Breadcrumb.Item>Корзина</Breadcrumb.Item>
+        </Breadcrumb>
+      )}
+
       <h1 className="contacts-h1">Контакты</h1>
       <div className="map">
         <YMaps>

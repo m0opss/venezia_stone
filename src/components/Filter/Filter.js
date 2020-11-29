@@ -1,5 +1,7 @@
 import React, { Suspense } from 'react';
 
+import { Switch } from 'antd';
+
 import { connect } from 'react-redux';
 import filter_icon from 'images/filter-icon.svg';
 import filter_icon_hz from 'images/filter-icon_hz.png';
@@ -82,7 +84,7 @@ const Filter = props => {
       }
     }
     return () => (isSubscr = false);
-  }, []);
+  }, [props.nw]);
 
   const handleClick = e => {
     setState({ collapsed: !state.collapsed });
@@ -154,12 +156,17 @@ const Filter = props => {
         Object.fromEntries(Object.keys(props.filters).map(key => [key, []]))
       )
     );
+    
     props.setActiveFields([]);
     props.setUpper([]);
+    props.setCost([]);
+    props.setLe([]);
+    props.setHe([]);
+    props.setSale([]);
+    props.setNew([]);
 
     localStorage.removeItem('3lvl_active_field');
     localStorage.removeItem('activeFieldKeys');
-    // document.location.href('http://localhost:8080/');
   };
 
   const toggleCost = cost => {
@@ -171,6 +178,22 @@ const Filter = props => {
   };
   const toggle_he = sizes => {
     props.setHe(sizes);
+  };
+
+  const toggleSale = checked => {
+    if (checked) {
+      props.setSale([1]);
+    } else {
+      props.setSale([]);
+    }
+  };
+
+  const toggleNew = checked => {
+    if (checked) {
+      props.setNew([1]);
+    } else {
+      props.setNew([]);
+    }
   };
 
   return (
@@ -244,14 +267,6 @@ const Filter = props => {
                 return <></>;
               }
             } else if (filter == 'prices') {
-              if (props.cur === 'rub') {
-                toggleCost([0, Number.MAX_SAFE_INTEGER]);
-              } else if (props.cur === 'usd') {
-                toggleCost([0, Number.MAX_SAFE_INTEGER]);
-              } else {
-                toggleCost([0, Number.MAX_SAFE_INTEGER]);
-              }
-
               return (
                 <SubMenu key="cost-sub" title="Цена за м2">
                   <SliderCost
@@ -262,11 +277,6 @@ const Filter = props => {
                 </SubMenu>
               );
             } else if (filter == 'sizas') {
-              toggle_le([0, Number.MAX_SAFE_INTEGER]);
-              toggle_he([
-                props.filters[filter]['he'].height__min0,
-                Number.MAX_SAFE_INTEGER
-              ]);
               return (
                 <SubMenu key="size-sub" title="Размеры">
                   <SliderSize
@@ -365,15 +375,57 @@ const Filter = props => {
           })}
 
           <Menu.Item
-            key="reset_all"
+            key="switch_sale"
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between'
             }}
+          >
+            Распродажа
+            {props.sale && props.sale.length == 1 ? (
+              <Switch
+                defaultChecked
+                className="filter-switch"
+                onChange={toggleSale}
+              />
+            ) : (
+              <Switch className="filter-switch" onChange={toggleSale} />
+            )}
+          </Menu.Item>
+          <Menu.Item
+            key="switch_new"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            Новинки
+            {props.nw && props.nw.length == 1 ? (
+              <Switch
+                defaultChecked
+                className="filter-switch"
+                onChange={toggleNew}
+              />
+            ) : (
+              <Switch className="filter-switch" onChange={toggleNew} />
+            )}
+          </Menu.Item>
+          <Menu.Item
+            key="reset_all"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
             onClick={resetAll}
           >
-            Сбросить все
+            <p
+              style={{ color: '#be9344', fontSize: '16px', fontWeight: 'bold' }}
+            >
+              СБРОСИТЬ ВСЁ
+            </p>
           </Menu.Item>
         </Menu>
       </div>
@@ -389,7 +441,9 @@ const mapStateToProps = store => {
     level: store.filter_data.level,
     items: store.filter_data.items,
     groups: store.filter_data.groups,
-    upper_izd: store.filter_data.upper_izd
+    upper_izd: store.filter_data.upper_izd,
+    sale: store.filter_data.sale,
+    nw: store.filter_data.nw
   };
 };
 
@@ -397,6 +451,12 @@ const mapDispatchToProps = dispatch => {
   return {
     setFilters: data => {
       dispatch(filterActions.setFilters(data));
+    },
+    setSale: data => {
+      dispatch(filterActions.setSale(data));
+    },
+    setNew: data => {
+      dispatch(filterActions.setNew(data));
     },
     setAllUpper: data => {
       dispatch(filterActions.setAllUpper(data));

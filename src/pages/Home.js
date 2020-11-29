@@ -38,8 +38,8 @@ const Home = props => {
     setMatLoading(true);
     setNewLoading(true);
     setSaleLoading(true);
-    props.setNew([]);
-    props.setSale([]);
+    // props.setNew([]);
+    // props.setSale([]);
 
     let isSubscr = true;
     if (isSubscr) {
@@ -58,8 +58,8 @@ const Home = props => {
           level: [1],
           groups: [],
           token: [],
-          nw: [],
-          on_sale: []
+          nw: props.nw,
+          on_sale: props.sale
         })
       );
       axios({
@@ -71,8 +71,8 @@ const Home = props => {
           level: [1],
           groups: [],
           token: [],
-          nw: [],
-          on_sale: []
+          nw: props.nw,
+          on_sale: props.sale,
         },
         cancelToken: new CancelToken(function executor(c) {
           // An executor function receives a cancel function as a parameter
@@ -81,9 +81,10 @@ const Home = props => {
       })
         .then(res => {
           cancel();
-          console.log(res.data);
+          // setMatLoading(false);
+          setTimeout(() => setMatLoading(false), 600);
+          console.log(res.data)
           setMatList(res.data.mts);
-          setMatLoading(false);
         })
         .catch(function(err) {
           if (axios.isCancel(err)) {
@@ -92,42 +93,6 @@ const Home = props => {
             console.log('im server response error', err);
           }
         });
-      // this cancel the request
-
-      // axios
-      //   .post(
-      //     'https://catalog-veneziastone.ru/api_v0/Filter/',
-      //     {
-      //       ...header,
-      //       items: [],
-      //       level: [1],
-      //       groups: [],
-      //       token: [],
-      //       nw: [],
-      //       on_sale: []
-      //     },
-      //     {
-      //       cancelToken: source.token
-      //     }
-      //   )
-      //   .then(response => {
-      //     console.log(response.data);
-      //     setMatList(response.data.mts);
-      //     setMatLoading(false);
-      //   })
-      //   .catch(err => {
-      //     if (err.response) {
-      //       // client received an error response (5xx, 4xx)
-      //       console.log(1, err.response);
-      //       // props.setAuth(false);
-      //     } else if (err.request) {
-      //       // client never received a response, or request never left
-      //       console.log(2, err.request);
-      //     } else {
-      //       // anything else
-      //       console.log(3, err);
-      //     }
-      //   });
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -141,19 +106,6 @@ const Home = props => {
         .then(response => {
           setNewList(response.data.mts);
           setNewLoading(false);
-        })
-        .catch(err => {
-          if (err.response) {
-            // client received an error response (5xx, 4xx)
-            console.log(1, err.response);
-            // props.setAuth(false);
-          } else if (err.request) {
-            // client never received a response, or request never left
-            console.log(2, err.request);
-          } else {
-            // anything else
-            console.log(3, err);
-          }
         });
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
@@ -168,25 +120,11 @@ const Home = props => {
         .then(response => {
           setSaleList(response.data.mts);
           setSaleLoading(false);
-        })
-        .catch(err => {
-          if (err.response) {
-            // client received an error response (5xx, 4xx)
-            console.log(1, err.response);
-            // props.setAuth(false);
-          } else if (err.request) {
-            // client never received a response, or request never left
-            console.log(2, err.request);
-          } else {
-            // anything else
-            console.log(3, err);
-          }
         });
     }
 
     return () => (isSubscr = false);
-  }, [props.activeFilters, props.upper_izd, props.cost, props.le, props.he]);
-  // }, []);
+  }, [props.activeFilters, props.upper_izd, props.cost, props.le, props.he, props.nw, props.sale]);
 
   const setActiveFields = key => {
     let t = [...props.activeFields];
@@ -198,7 +136,6 @@ const Home = props => {
   const clickItem = (itemName, type) => {
     setActiveFields(itemName);
     let newArr = { ...props.activeFilters };
-    console.log('Home newarr', newArr);
     if (newArr['materials'] && !newArr['materials'].includes(itemName)) {
       newArr['materials'].push(itemName);
     }
@@ -225,7 +162,6 @@ const Home = props => {
                     <MaterialItem
                       onClick={clickItem}
                       img={item.photo_material}
-                      // link={item.ph}
                       item={item}
                       itemName={item.mt}
                       key={item.mt}
@@ -234,12 +170,12 @@ const Home = props => {
                 ) : (
                   <></>
                 )}
-                {matList.length % 4 == 1 ? (
+                {matList.length % 3 == 1 ? (
                   <>
                     <div className="material_empty"></div>
                     <div className="material_empty"></div>
                   </>
-                ) : matList.length % 4 == 2 ? (
+                ) : matList.length % 3 == 2 ? (
                   <>
                     <div className="material_empty"></div>
                   </>
@@ -266,12 +202,12 @@ const Home = props => {
                 ) : (
                   <></>
                 )}
-                {matList.length % 4 == 1 ? (
+                {matList.length % 3 == 1 ? (
                   <>
                     <div className="material_empty"></div>
                     <div className="material_empty"></div>
                   </>
-                ) : matList.length % 4 == 2 ? (
+                ) : matList.length % 3 == 2 ? (
                   <>
                     <div className="material_empty"></div>
                   </>
@@ -298,12 +234,12 @@ const Home = props => {
                 ) : (
                   <></>
                 )}
-                {matList.length % 4 == 1 ? (
+                {matList.length % 3 == 1 ? (
                   <>
                     <div className="material_empty"></div>
                     <div className="material_empty"></div>
                   </>
-                ) : matList.length % 4 == 2 ? (
+                ) : matList.length % 3 == 2 ? (
                   <>
                     <div className="material_empty"></div>
                   </>

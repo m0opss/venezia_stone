@@ -90,10 +90,15 @@ const MyBasket = props => {
 
   return (
     <div className="basket">
-      <Breadcrumb separator=">">
-        <Breadcrumb.Item href="/">Главная</Breadcrumb.Item>
-        <Breadcrumb.Item>Корзина</Breadcrumb.Item>
-      </Breadcrumb>
+      {isMobile && !isTablet ? (
+        <></>
+      ) : (
+        <Breadcrumb separator=">">
+          <Breadcrumb.Item href="/">Главная</Breadcrumb.Item>
+          <Breadcrumb.Item>Корзина</Breadcrumb.Item>
+        </Breadcrumb>
+      )}
+
       <OrderModal
         visible={visibleModal}
         onCancel={() => setVisibleModal(false)}
@@ -110,7 +115,6 @@ const MyBasket = props => {
       <div className="basket__items">
         {basket.length > 0 ? (
           basket.map(item => {
-            console.log(item.itms_izd);
             return (
               <BasketItem
                 setBasket={setBasket}

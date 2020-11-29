@@ -93,6 +93,7 @@ const BasketItem = props => {
     }
   };
   if (props.kind == 'izbr') {
+    console.log(123123, props.item);
     return (
       <RenderIzbrItem
         link={props.link}
@@ -101,7 +102,6 @@ const BasketItem = props => {
         key={props.item.ps}
         item={props.item}
         id={props.item.ps}
-        type={props.type}
         cnt={cnt}
         kw={kw}
         sum={sum}
@@ -111,6 +111,7 @@ const BasketItem = props => {
       />
     );
   }
+  console.log(2222, props.item);
   return (
     <RenderBasketItem
       link={props.link}

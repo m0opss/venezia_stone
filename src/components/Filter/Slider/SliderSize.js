@@ -23,7 +23,7 @@ const SliderSize = props => {
   };
   const le_onAChange = () => {
     if (le_minVal == def_le_min && le_maxVal == def_le_max) {
-      props.onChange_le([0, Number.MAX_SAFE_INTEGER]);
+      props.onChange_le([]);
     } else {
       props.onChange_le([le_minVal, le_maxVal]);
     }
@@ -35,10 +35,8 @@ const SliderSize = props => {
 
   const he_onAChange = () => {
     if (he_minVal == def_he_min && he_maxVal == def_he_max) {
-      console.log(111111111111111111)
-      props.onChange_he([0, Number.MAX_SAFE_INTEGER]);
+      props.onChange_he([]);
     } else {
-      console.log(2222222222222222222)
       props.onChange_he([he_minVal, he_maxVal]);
     }
   };

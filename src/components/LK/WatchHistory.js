@@ -5,11 +5,9 @@ import axios from 'axios';
 
 const Izbrannoe = props => {
   const [izbr, setIzbr] = React.useState([]);
-  const [defIzbr, setDefIzbr] = React.useState([]);
 
   let isSubscr = true;
   React.useEffect(() => {
-    console.log(props.token)
     axios
       .post(`https://catalog-veneziastone.ru/api_v0/showViewed/`, {
         token: props.token

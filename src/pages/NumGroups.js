@@ -18,7 +18,7 @@ import { Breadcrumb } from 'antd';
 import Filter from 'components/Filter/Filter';
 
 import './NumGroups.scss';
-import 'components/Content/NumGroupItem/NumGroupEmtyItem.scss'
+import 'components/Content/NumGroupItem/NumGroupEmtyItem.scss';
 
 import { headerCreator } from 'components/Filter/headerCreator';
 
@@ -102,7 +102,15 @@ const NumGroups = props => {
     }
 
     return () => (isSubscr = false);
-  }, [props.activeFilters, props.upper_izd, props.cost, props.le, props.he]);
+  }, [
+    props.activeFilters,
+    props.upper_izd,
+    props.cost,
+    props.le,
+    props.he,
+    props.nw,
+    props.sale
+  ]);
 
   const toggleStyle_pltk = () => {
     setHover_pltk(true);
@@ -121,19 +129,23 @@ const NumGroups = props => {
   return (
     <>
       {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
-      <Breadcrumb separator=">">
-        <Breadcrumb.Item>
-          <Link to="/">Главная </Link>
-        </Breadcrumb.Item>
-        {props.nw.length != 0 ? (
-          <Breadcrumb.Item>Новые поступления</Breadcrumb.Item>
-        ) : props.sale.length != 0 ? (
-          <Breadcrumb.Item>Распродажа</Breadcrumb.Item>
-        ) : (
-          <></>
-        )}
-        <Breadcrumb.Item>Материалы</Breadcrumb.Item>
-      </Breadcrumb>
+      {isMobile && !isTablet ? (
+        <></>
+      ) : (
+        <Breadcrumb separator=">">
+          <Breadcrumb.Item>
+            <Link to="/">Главная </Link>
+          </Breadcrumb.Item>
+          {props.nw.length != 0 ? (
+            <Breadcrumb.Item>Новые поступления</Breadcrumb.Item>
+          ) : props.sale.length != 0 ? (
+            <Breadcrumb.Item>Распродажа</Breadcrumb.Item>
+          ) : (
+            <></>
+          )}
+          <Breadcrumb.Item>Материалы</Breadcrumb.Item>
+        </Breadcrumb>
+      )}
       <div className="num-gr-options">
         <Valute />
         <Sort

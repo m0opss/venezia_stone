@@ -36,7 +36,7 @@ const SliderCost = props => {
     if (isNaN(value)) {
       return;
     }
-    setMinVal(value);
+    setMinVal(value);``
     props.onChange([value, maxVal]);
   };
 
@@ -52,7 +52,12 @@ const SliderCost = props => {
     setMaxVal(value[1]);
   };
   const onAChange = () => {
-    props.onChange([minVal, maxVal]);
+    if(minVal == minDefVal && maxVal == maxDefVal) {
+      props.onChange([]);
+    } else {
+
+      props.onChange([minVal, maxVal]);
+    }
   };
 
   return (
