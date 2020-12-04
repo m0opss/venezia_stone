@@ -27,6 +27,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SliderCost from './Slider/SliderCost';
 import SliderSize from './Slider/SliderSize';
+import FilterItem from './FilterItems/FilterItem';
 
 const { SubMenu } = Menu;
 const { titles, cities, materials, colors, izdelie } = data;
@@ -97,8 +98,8 @@ const Filter = props => {
 
   const setActiveFields = e => {
     let t = [...props.activeFields];
-    if (t.indexOf(e.key) !== -1) t.splice(t.indexOf(e.key), 1);
-    else t.push(e.key);
+    if (t.indexOf(e) !== -1) t.splice(t.indexOf(e), 1);
+    else t.push(e);
     props.setActiveFields(t);
     localStorage.setItem('activeFieldKeys', JSON.stringify(t));
   };
@@ -115,40 +116,6 @@ const Filter = props => {
     }
     props.setUpper(newArr);
     localStorage.setItem('upper_izd', JSON.stringify(newArr));
-  };
-
-  const materialsItemClicked = e => {
-    setActiveFields(e);
-    let newArr = { ...props.activeFilters };
-    console.log('filter newarr', newArr);
-    if (newArr['materials']) {
-      if (newArr['materials'].includes(e.key)) {
-        newArr['materials'].splice(newArr['materials'].indexOf(e.key), 1);
-      } else {
-        newArr['materials'].push(e.key);
-      }
-    }
-    props.setActiveFilters(newArr);
-    localStorage.setItem('activeFilters', JSON.stringify(newArr));
-  };
-
-  const filterItemClicked = e => {
-    setActiveFields(e);
-    let f = Object.keys(props.filters)[parseFloat(e.key[0])];
-    let param =
-      props.filters[f][
-        parseFloat(e.key.length > 2 ? e.key[1] + e.key[2] : e.key[1])
-      ];
-
-    Object.keys(props.activeFilters).map(field => {
-      if (f == field) {
-        let tmp = { ...props.activeFilters };
-        if (tmp[field].indexOf(param) === -1) tmp[field].push(param);
-        else tmp[field].splice(tmp[field].indexOf(param), 1);
-        props.setActiveFilters(tmp);
-        localStorage.setItem('activeFilters', JSON.stringify(tmp));
-      }
-    });
   };
 
   const resetAll = () => {
@@ -181,13 +148,6 @@ const Filter = props => {
     props.setCost(cost);
   };
 
-  const toggle_le = sizes => {
-    props.setLe(sizes);
-  };
-  const toggle_he = sizes => {
-    props.setHe(sizes);
-  };
-
   const toggleSale = checked => {
     if (checked) {
       props.setSale([1]);
@@ -212,21 +172,21 @@ const Filter = props => {
         }`}
       >
         <div className="filter__button">
+          <img
+            src={filter_icon}
+            className="filter__button-click -icon"
+            onClick={handleClick}
+          />
           {!state.collapsed && !isMobile ? (
             <>
-              <img src={filter_icon} className="-icon" />
               <img
                 className="filter__button-click"
                 src={filter_icon_hz}
-                onClick={handleClick}
+                onClick={resetAll}
               />
             </>
           ) : (
-            <img
-              src={filter_icon}
-              className="filter__button-click -icon"
-              onClick={handleClick}
-            />
+            <></>
           )}
         </div>
 
@@ -248,138 +208,26 @@ const Filter = props => {
             <></>
           )}
 
-          {Object.keys(props.filters).map((filter, index) => {
+          {Object.keys(props.filters).map(filter => {
             let title = '';
             Object.keys(titles).map(t => {
               if (filter == t) title = titles[t];
             });
-            if (filter == 'izdelie') {
-              if (props.lvl != '4') {
-                // props.setAllUpper(props.filters[filter]);
-                return (
-                  <SubMenu key={filter} title={title}>
-                    {props.filters[filter].map(izd => {
-                      return (
-                        <Menu.Item
-                          key={izd}
-                          style={{ display: 'flex', alignItems: 'center' }}
-                          onClick={izdItemClicked}
-                        >
-                          {izd}
-                        </Menu.Item>
-                      );
-                    })}
-                  </SubMenu>
-                );
-              } else {
-                return <></>;
-              }
-            } else if (filter == 'prices') {
-              return (
-                <SubMenu key="cost-sub" title="Цена за м2">
-                  <SliderCost
-                    cur={props.cur}
-                    defVal={props.filters[filter]}
-                    onChange={toggleCost}
-                  />
-                </SubMenu>
-              );
-            } else if (filter == 'sizas') {
-              return (
-                <SubMenu key="size-sub" title="Размеры">
-                  <SliderSize
-                    defVal={props.filters[filter]}
-                    onChange_le={toggle_le}
-                    onChange_he={toggle_he}
-                  />
-                </SubMenu>
-              );
-            } else {
-              return (
-                <SubMenu key={filter} title={title}>
-                  {props.filters[filter].map((material, ind) => {
-                    if (filter === 'materials') {
-                      if (props.lvl != '3') {
-                        return (
-                          <Menu.Item
-                            key={material}
-                            style={{ display: 'flex', alignItems: 'center' }}
-                            onClick={materialsItemClicked}
-                          >
-                            {material}
-                          </Menu.Item>
-                        );
-                      } else {
-                        return <></>;
-                      }
-                    } else if (filter === 'colors' || filter === 'countries') {
-                      if (props.lvl != '3') {
-                        return (
-                          <Menu.Item
-                            key={`${index}${ind}`}
-                            style={{ display: 'flex', alignItems: 'center' }}
-                            onClick={filterItemClicked}
-                          >
-                            {index == 2 && material === 'Белый' ? (
-                              <>
-                                <div
-                                  className="filter__color border-color"
-                                  style={{ background: colors[material] }}
-                                />
-                                {material}
-                              </>
-                            ) : index == 2 && material !== 'Белый' ? (
-                              <>
-                                <div
-                                  className="filter__color"
-                                  style={{ background: colors[material] }}
-                                />
-                                {material}
-                              </>
-                            ) : (
-                              material
-                            )}
-                          </Menu.Item>
-                        );
-                      } else {
-                        return <></>;
-                      }
-                    } else if (
-                      filter === 'obrabotka' ||
-                      filter === 'thickness'
-                    ) {
-                      if (props.lvl != '4') {
-                        return (
-                          <Menu.Item
-                            key={`${index}${ind}`}
-                            style={{ display: 'flex', alignItems: 'center' }}
-                            onClick={filterItemClicked}
-                          >
-                            {material}
-                          </Menu.Item>
-                        );
-                      } else {
-                        return <></>;
-                      }
-                    } else if (filter === 'sklad') {
-                      return (
-                        <Menu.Item
-                          key={`${index}${ind}`}
-                          style={{ display: 'flex', alignItems: 'center' }}
-                          onClick={filterItemClicked}
-                        >
-                          {Object.keys(cities).map(k => {
-                            if (k == material) {
-                              return cities[k];
-                            }
-                          })}
-                        </Menu.Item>
-                      );
-                    }
-                  })}
-                </SubMenu>
-              );
-            }
+            // 1 -й уровень
+            return (
+              <FilterItem
+                key={filter}
+                sub_name={filter}
+                sub_elements={props.filters[filter]}
+                sub_title={title}
+                setCost={props.setCost}
+                setLe={props.setLe}
+                setHe={props.setHe}
+                activeFilters={props.activeFilters}
+                setActiveFields={setActiveFields}
+                setActiveFilters={props.setActiveFilters}
+              />
+            );
           })}
 
           <Menu.Item
@@ -419,21 +267,6 @@ const Filter = props => {
             ) : (
               <Switch className="filter-switch" onChange={toggleNew} />
             )}
-          </Menu.Item>
-          <Menu.Item
-            key="reset_all"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            onClick={resetAll}
-          >
-            <p
-              style={{ color: '#be9344', fontSize: '16px', fontWeight: 'bold' }}
-            >
-              СБРОСИТЬ ВСЁ
-            </p>
           </Menu.Item>
         </Menu>
       </div>
