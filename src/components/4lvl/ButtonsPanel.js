@@ -36,7 +36,7 @@ const ButtonsPanel = props => {
         isMobile && !isTablet ? 'buttons-panel_mob' : ''
       }`}
     >
-      <div
+      {/* <div
         className="button button-text slab-item-info__button"
         onClick={() => setVisiblePhotos(true)}
       >
@@ -48,7 +48,7 @@ const ButtonsPanel = props => {
         onClick={() => setVisibleComments(true)}
       >
         Комментарии
-      </div>
+      </div> */}
       <div
         className="button button-text slab-item-info__button"
         onClick={() => setVisibleOrder(true)}

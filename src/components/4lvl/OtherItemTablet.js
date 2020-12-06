@@ -39,16 +39,14 @@ const GroupItem = props => {
       val = Math.ceil(parseFloat(val));
 
       setCnt(val);
-      setKw(
-        // parseFloat(props.item.le) *
-        //   parseFloat(props.item.he) *
-        2 * 3 * val
-      );
+      setKw(parseFloat(props.item.le) * parseFloat(props.item.he) * val);
     } else {
       setKw(e.target.value);
       setCnt(
-        // (parseFloat(props.item.le) * parseFloat(props.item.he))
-        Math.ceil(parseFloat(e.target.value) / (2 * 3))
+        Math.ceil(
+          parseFloat(e.target.value) /
+            (parseFloat(props.item.le) * parseFloat(props.item.he))
+        )
       );
     }
   };
@@ -187,18 +185,6 @@ const OtherItemTablet = props => {
                 Общая площадь, м<sup>2</sup> : {ob_S ? ob_S : '-'}
               </p>
               <p>Количество, шт: {ob_sht ? ob_sht : '-'}</p>
-              <p>
-                Сумма:{' '}
-                {ob_sum
-                  ? props.cur === 'rub'
-                    ? `${ob_sum}₽`
-                    : props.cur === 'usd'
-                    ? `${ob_sum}$`
-                    : props.cur === 'eur'
-                    ? `${ob_sum}€`
-                    : ''
-                  : '-'}
-              </p>
             </div>
           </div>
           <div className="slab-item-info__slab-img">

@@ -32,12 +32,15 @@ const NumenclatureItem = props => {
         </Link>
         <div className="num-gr-item__descr -num">
           <div className="num-gr-item__line -f">
-            {props.item.izd === 'Плитка' ? (
-              <p></p>
+            {props.item.cp != 0 ? (
+              <p className="num-gr-item__line">
+                Количество пачек: {props.item.cp}
+              </p>
             ) : (
-              <p>Количество слэбов: {props.item.cs}</p>
+              <p className="num-gr-item__line" style={{ color: 'white' }}>
+                .
+              </p>
             )}
-
             <p>
               Цена от{' '}
               {props.cur === 'rub'
@@ -49,7 +52,12 @@ const NumenclatureItem = props => {
                 : ''}
             </p>
           </div>
-          {props.item.cp != 0 ? (
+          {props.item.izd === 'Плитка' ? (
+            <p></p>
+          ) : (
+            <p>Количество слэбов: {props.item.cs}</p>
+          )}
+          {/* {props.item.cp != 0 ? (
             <p className="num-gr-item__line">
               Количество пачек: {props.item.cp}
             </p>
@@ -57,7 +65,7 @@ const NumenclatureItem = props => {
             <p className="num-gr-item__line" style={{ color: 'white' }}>
               .
             </p>
-          )}
+          )} */}
 
           <div className="num-gr-item__line --s">
             <p>

@@ -185,32 +185,30 @@ const NumGroups = props => {
                 <p></p>
               </div>
               {numGroups.length > 0 ? (
-                numGroups
-                  .slice(0, loadCnt)
-                  .map(item => (
-                    <NumGroupItem
-                      pltk={style_pltk}
-                      key={item.ps}
-                      link={item.url}
-                      item={item}
-                      cur={props.cur}
-                    />
-                  ))
+                numGroups.map(item => (
+                  <NumGroupItem
+                    pltk={style_pltk}
+                    key={item.ps}
+                    link={item.url}
+                    item={item}
+                    cur={props.cur}
+                  />
+                ))
               ) : (
                 <div className="goods-none">Товаров не найдено</div>
               )}
-              {numGroups.length % 4 == 1 ? (
+              {isMobile && !isTablet && numGroups.length % 4 == 1 ? (
                 <>
                   <div className="numGroup_empty"></div>
                   <div className="numGroup_empty"></div>
                   <div className="numGroup_empty"></div>
                 </>
-              ) : numGroups.length % 4 == 2 ? (
+              ) : isMobile && !isTablet && numGroups.length % 4 == 2 ? (
                 <>
                   <div className="numGroup_empty"></div>
                   <div className="numGroup_empty"></div>
                 </>
-              ) : numGroups.length % 4 == 3 ? (
+              ) : isMobile && !isTablet && numGroups.length % 4 == 3 ? (
                 <>
                   <div className="numGroup_empty"></div>
                 </>
@@ -218,13 +216,13 @@ const NumGroups = props => {
                 <></>
               )}
             </div>
-            {loadCnt < numGroups.length ? (
+            {/* {loadCnt < numGroups.length ? (
               <div className="button-text button load-more" onClick={loadMore}>
                 Загрузить еще
               </div>
             ) : (
               <></>
-            )}
+            )} */}
           </div>
         </Preloader>
       </div>

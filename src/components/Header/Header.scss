@@ -1,4 +1,8 @@
 .header-container {
     padding-top: 15px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 999;
 }
 

@@ -155,13 +155,13 @@ const SlabItem = props => {
                 <div className="slab-item-info__options">
                   {/* <img src={lamp} />
                   <img src={book} /> */}
-                  <OptionLine
+                  {/* <OptionLine
                     // lamp = {selectedEl.} поле для просветленного фото
                     style={{ width: 'unset', marginBottom: 'unset' }}
                     item={selectedEl}
                     // img={`data:image/jpg;base64,${selectedEl.photo_bytes}`}
                     // img={selectedEl.photobl}
-                  />
+                  /> */}
                 </div>
               </div>
               <div className="slab-item-info__slab-img">

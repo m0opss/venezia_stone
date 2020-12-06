@@ -1,13 +1,35 @@
 .filter-switch.ant-switch-checked {
   background-color: #be9344;
 }
-.filter {
+
+.filter-wrapper {
+  // height: 999999px;
+  width: 320px;
+  // overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
   @media screen and (min-width: 768px) {
     position: absolute;
-    z-index: 2;
-    top: 175px;
+    top: 170px;
     left: 15px;
   }
+  @media screen and (max-width: 1690px) {
+    position: static;
+  }
+}
+
+.browser-filter {
+}
+
+.filter {
+  @media screen and (min-width: 768px) {
+    position: sticky;
+    top: 0px;
+    // z-index: 2;
+    // left: 15px;
+  }
+
   a {
     color: black !important;
     &:hover {
@@ -137,10 +159,4 @@
   display: flex;
   flex-direction: column;
   font-size: 22px;
-}
-
-.browser-filter{
-  @media screen and (max-width: 1690px) {
-    position: static;
-  }
 }

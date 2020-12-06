@@ -11,7 +11,6 @@ import AllAddIzbr from '../MyBasket/AllAddIzbr';
 
 import { isTablet, isBrowser } from 'react-device-detect';
 
-import lamp from 'images/lamp.png';
 
 const PlitkaMainImg = props => {
   return (
@@ -111,18 +110,6 @@ const OtherItem = props => {
                   Общая площадь, м<sup>2</sup> : {ob_S ? ob_S : '-'}
                 </p>
                 <p>Количество, шт: {ob_sht ? ob_sht : '-'}</p>
-                <p>
-                  Сумма:{' '}
-                  {ob_sum
-                    ? props.cur === 'rub'
-                      ? `${ob_sum}₽`
-                      : props.cur === 'usd'
-                      ? `${ob_sum}$`
-                      : props.cur === 'eur'
-                      ? `${ob_sum}€`
-                      : ''
-                    : '-'}
-                </p>
               </div>
               <ColorRange colors={props.item ? props.item[0] : []} />
             </div>

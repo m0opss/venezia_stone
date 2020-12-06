@@ -27,26 +27,22 @@
       align-items: center;
       justify-content: center;
       color: black;
-      font-family: 'Roboto Condensed', sans-serif;
-      font-style: normal;
-      font-weight: normal;
+      // font-family: 'Roboto Condensed', sans-serif;
+      // font-style: normal;
+      // font-weight: normal;
       font-size: 16px;
       line-height: 19px;
     }
     .num-gr-item__descr {
       margin-top: 8px;
-
+      font-size: 12px;
+      font-size: 12px;
+      line-height: 100%;
       .num-gr-item__line {
         display: flex;
         justify-content: space-between;
-        font-family: 'Roboto Condensed', sans-serif;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 12px;
-        line-height: 100%;
         color: black;
       }
-
       a {
         color: #be9344;
       }
@@ -92,9 +88,9 @@
     }
   }
   .num-gr-item {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-style: normal;
-    font-weight: normal;
+    // font-family: 'Roboto Condensed', sans-serif;
+    // font-style: normal;
+    // font-weight: normal;
     font-size: 16px;
     line-height: 19px;
     color: #000;

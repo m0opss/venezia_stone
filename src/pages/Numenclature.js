@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import BackArrow from 'components/BackArrow/BackArrow';
-import materialActions from '../actions/materialAction';
 import filterActions from '../actions/filterActions';
 
 import Valute from 'components/Valute/Valute';
@@ -14,18 +13,13 @@ import pltk from 'images/pltk.png';
 import listIcon_a from 'images/str_a.png';
 import pltk_a from 'images/pltk_a.png';
 import Preloader from 'components/Preloader/Preloader';
-import './Numenclature.scss';
 import { headerCreator } from 'components/Filter/headerCreator';
 import NumenclatureItem from '../components/Content/NumenclatureItem/NumenclatureItem';
 import Filter from 'components/Filter/Filter';
 import { Breadcrumb } from 'antd';
-import {
-  MobileView,
-  BrowserView,
-  isTablet,
-  isMobile,
-  isBrowser
-} from 'react-device-detect';
+import { isTablet, isMobile, isBrowser } from 'react-device-detect';
+
+import './Numenclature.scss';
 
 const Numenclature = props => {
   const [numenclature, setNumemclature] = React.useState([]);
@@ -37,9 +31,6 @@ const Numenclature = props => {
   const [num_groups_items, setNum_groups_items] = React.useState(
     'num-gr-items-group'
   );
-  const [loadCnt, setLoadCnt] = React.useState(12);
-
-  const arrFilt = ['_Слэбы', '_Полоса', '_Плитка'];
 
   React.useEffect(() => {
     document.body.scrollIntoView({
@@ -58,6 +49,15 @@ const Numenclature = props => {
         props.le,
         props.he
       );
+      console.log({
+        ...header,
+        token: [],
+        items: [],
+        level: [3],
+        nw: props.nw,
+        on_sale: props.sale,
+        groups: [props.match.params.numGroups]
+      });
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -72,38 +72,12 @@ const Numenclature = props => {
         .then(response => {
           setLoading(false);
           setNumemclature(response.data.itms);
+          console.log(response.data.itms);
           setdefNum(response.data.itms);
           setBreadPath(response.data.path);
-          if (localStorage.getItem('3lvl_active_field') != null) {
-            let arr = [
-              ...JSON.parse(localStorage.getItem('3lvl_active_field'))
-            ];
-            if (arr.length == 0 && document.getElementById('Все') != null) {
-              document
-                .getElementById('Все')
-                .setAttribute('style', 'color: #c98505');
-              arrFilt.map(i => {
-                document
-                  .getElementById(i)
-                  .setAttribute('style', 'color: black');
-              });
-            } else {
-              arrFilt.map(i => {
-                document
-                  .getElementById('Все')
-                  .setAttribute('style', 'color: black');
-                if (arr.includes(i)) {
-                  document
-                    .getElementById(i)
-                    .setAttribute('style', 'color: #c98505');
-                } else {
-                  document
-                    .getElementById(i)
-                    .setAttribute('style', 'color: black');
-                }
-              });
-            }
-          }
+          document
+            .getElementById('Все')
+            .setAttribute('style', 'color: #c98505');
         })
         .catch(err => {
           if (err.response) {
@@ -140,43 +114,30 @@ const Numenclature = props => {
     setNum_groups_items('num-gr-items-group-list');
   };
 
+  const arrFilt = ['Все', '_Слэбы', '_Полоса', '_Плитка'];
+
   const filterIzd = e => {
-    let t = [...props.activeFields];
+    const id = e.target.id;
+    const s_id = id.slice(1, id.length);
+
+    arrFilt.map(f => {
+      if (f == s_id || f == id) {
+        document.getElementById(f).setAttribute('style', 'color: #c98505');
+      } else {
+        document.getElementById(f).setAttribute('style', 'color: black');
+      }
+    });
+
     if (e.target.id === 'Все') {
-      localStorage.setItem('3lvl_active_field', JSON.stringify([]));
-      props.setUpper([]);
-      props.all_upper.map(i => {
-        t.splice(t.indexOf(i), 1);
-      });
-      props.setActiveFields(t);
-      localStorage.setItem('activeFieldKeys', JSON.stringify(t));
+      setNumemclature(defNum);
     } else {
-      const id = e.target.id;
-      const s_id = id.slice(1, id.length);
-
-      if (t.indexOf(s_id) !== -1) {
-        t.splice(t.indexOf(s_id), 1);
-      } else {
-        t.push(s_id);
-      }
-      props.setActiveFields(t);
-      localStorage.setItem('activeFieldKeys', JSON.stringify(t));
-
-      let newArr = [...props.upper_izd];
-      let ls_3lvl = [];
-      if (newArr.indexOf(s_id) === -1) {
-        newArr.push(s_id);
-      } else {
-        newArr.splice(newArr.indexOf(s_id), 1);
-      }
-      ls_3lvl = newArr.map(i => '_' + i);
-      localStorage.setItem('3lvl_active_field', JSON.stringify(ls_3lvl));
-      props.setUpper(newArr);
+      let newArr = defNum.filter(num => {
+        if (num.izd == s_id) {
+          return num;
+        }
+      });
+      setNumemclature(newArr);
     }
-  };
-
-  const loadMore = () => {
-    setLoadCnt(loadCnt => loadCnt + 12);
   };
 
   return (
@@ -196,7 +157,9 @@ const Numenclature = props => {
           ) : (
             <></>
           )}
-          <Breadcrumb.Item>{breadPath.material}</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to="/materials">{breadPath.material}</Link>
+          </Breadcrumb.Item>
           <Breadcrumb.Item>{breadPath.group}</Breadcrumb.Item>
         </Breadcrumb>
       )}
@@ -270,32 +233,30 @@ const Numenclature = props => {
               </div>
 
               {numenclature.length > 0 ? (
-                numenclature
-                  .slice(0, loadCnt)
-                  .map(item => (
-                    <NumenclatureItem
-                      pltk={style_pltk}
-                      cur={props.cur}
-                      key={item.ps}
-                      link={item.url}
-                      item={item}
-                    />
-                  ))
+                numenclature.map(item => (
+                  <NumenclatureItem
+                    pltk={style_pltk}
+                    cur={props.cur}
+                    key={item.ps}
+                    link={item.url}
+                    item={item}
+                  />
+                ))
               ) : (
                 <div className="goods-none">Товаров не найдено</div>
               )}
-              {numenclature.length % 4 == 1 ? (
+              {isMobile && !isTablet && numenclature.length % 4 == 1 ? (
                 <>
                   <div className="numGroup_empty"></div>
                   <div className="numGroup_empty"></div>
                   <div className="numGroup_empty"></div>
                 </>
-              ) : numenclature.length % 4 == 2 ? (
+              ) : isMobile && !isTablet && numenclature.length % 4 == 2 ? (
                 <>
                   <div className="numGroup_empty"></div>
                   <div className="numGroup_empty"></div>
                 </>
-              ) : numenclature.length % 4 == 3 ? (
+              ) : isMobile && !isTablet && numenclature.length % 4 == 3 ? (
                 <>
                   <div className="numGroup_empty"></div>
                 </>
@@ -303,13 +264,6 @@ const Numenclature = props => {
                 <></>
               )}
             </div>
-            {loadCnt < numenclature.length ? (
-              <div className="button-text button load-more" onClick={loadMore}>
-                Загрузить еще
-              </div>
-            ) : (
-              <></>
-            )}
           </Preloader>
         </div>
       </div>

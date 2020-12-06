@@ -7,6 +7,7 @@ const BackArrow = (props) => {
       {!isTablet && isMobile ? (
         <div
           className="back-arr"
+          style={{display:'none'}}
           onClick={() => {
             props.history.goBack();
           }}

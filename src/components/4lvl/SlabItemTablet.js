@@ -130,12 +130,12 @@ const SlabItemTablet = props => {
             <div className="slab-item-info__rb-top">
               <div className="slab-item-info__slab-title">{selectedEl.bl}</div>
               <div className="slab-item-info__options">
-                <OptionLine
+                {/* <OptionLine
                   // lamp = {selectedEl.} поле для просветленного фото
                   style={{ width: 'unset', marginBottom: 'unset' }}
                   item={selectedEl}
                   img={`data:image/jpg;base64,${selectedEl.photo_bytes}`}
-                />
+                /> */}
               </div>
             </div>
             <div className="slab-item-info__slab-img">

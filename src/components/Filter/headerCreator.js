@@ -10,6 +10,7 @@ export const headerCreator = (activeFilters, upper_izd, cur, cost, le, he) => {
   let obrabotka = [];
   let thickness = [];
   let sklad = [];
+  let izdelie = [];
   let le_min = le[0] != null ? [le[0]] : [];
   let le_max = le[1] != null ? [le[1]] : [];
   let he_min = he[0] != null ? [he[0]] : [];
@@ -36,12 +37,14 @@ export const headerCreator = (activeFilters, upper_izd, cur, cost, le, he) => {
     thickness = headers.thickness;
   if (typeof headers['sklad'] !== 'undefined' && headers['sklad'].length > 0)
     sklad = headers.sklad;
+  if (typeof headers['izdelie'] !== 'undefined' && headers['izdelie'].length > 0)
+    izdelie = headers.izdelie;
 
   return {
     materials: res_materials,
     colors: colors,
     countries: countries,
-    izdelie: upper_izd,
+    izdelie: izdelie,
     obrabotka: obrabotka,
     thickness: thickness,
     sklad: sklad,

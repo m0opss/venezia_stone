@@ -166,109 +166,111 @@ const Filter = props => {
 
   return (
     <Suspense>
-      <div
-        className={`filter ${
-          isBrowser && !props.built_in ? 'browser-filter' : ''
-        }`}
-      >
-        <div className="filter__button">
-          <img
-            src={filter_icon}
-            className="filter__button-click -icon"
-            onClick={handleClick}
-          />
-          {!state.collapsed && !isMobile ? (
-            <>
-              <img
-                className="filter__button-click"
-                src={filter_icon_hz}
-                onClick={resetAll}
-              />
-            </>
-          ) : (
-            <></>
-          )}
-        </div>
-
-        <Menu
-          style={{ width: 230 }}
-          mode="inline"
-          multiple={true}
-          inlineCollapsed={state.collapsed}
-          selectedKeys={JSON.parse(localStorage.getItem('activeFieldKeys'))}
-          defaultOpenKeys={props.activeFields}
+      <div className={isMobile ? '' : `filter-wrapper`}>
+        <div
+          className={`filter ${
+            isBrowser && !props.built_in ? 'browser-filter' : ''
+          }`}
         >
-          {isMobile && !isTablet ? (
+          <div className="filter__button">
             <img
-              src={close_icon}
-              className="close-filter"
-              onClick={() => setState({ collapsed: !state.collapsed })}
+              src={filter_icon}
+              className="filter__button-click -icon"
+              onClick={handleClick}
             />
-          ) : (
-            <></>
-          )}
+            {!state.collapsed && !isMobile ? (
+              <>
+                <img
+                  className="filter__button-click"
+                  src={filter_icon_hz}
+                  onClick={resetAll}
+                />
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
 
-          {Object.keys(props.filters).map(filter => {
-            let title = '';
-            Object.keys(titles).map(t => {
-              if (filter == t) title = titles[t];
-            });
-            // 1 -й уровень
-            return (
-              <FilterItem
-                key={filter}
-                sub_name={filter}
-                sub_elements={props.filters[filter]}
-                sub_title={title}
-                setCost={props.setCost}
-                setLe={props.setLe}
-                setHe={props.setHe}
-                activeFilters={props.activeFilters}
-                setActiveFields={setActiveFields}
-                setActiveFilters={props.setActiveFilters}
-              />
-            );
-          })}
-
-          <Menu.Item
-            key="switch_sale"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
+          <Menu
+            style={{ width: 230 }}
+            mode="inline"
+            multiple={true}
+            inlineCollapsed={state.collapsed}
+            selectedKeys={JSON.parse(localStorage.getItem('activeFieldKeys'))}
+            defaultOpenKeys={props.activeFields}
           >
-            Распродажа
-            {sale ? (
-              <Switch
-                defaultChecked
-                className="filter-switch"
-                onChange={toggleSale}
+            {isMobile && !isTablet ? (
+              <img
+                src={close_icon}
+                className="close-filter"
+                onClick={() => setState({ collapsed: !state.collapsed })}
               />
             ) : (
-              <Switch className="filter-switch" onChange={toggleSale} />
+              <></>
             )}
-          </Menu.Item>
-          <Menu.Item
-            key="switch_new"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
-            Новинки
-            {news ? (
-              <Switch
-                defaultChecked
-                className="filter-switch"
-                onChange={toggleNew}
-              />
-            ) : (
-              <Switch className="filter-switch" onChange={toggleNew} />
-            )}
-          </Menu.Item>
-        </Menu>
+
+            {Object.keys(props.filters).map(filter => {
+              let title = '';
+              Object.keys(titles).map(t => {
+                if (filter == t) title = titles[t];
+              });
+              // 1 -й уровень
+              return (
+                <FilterItem
+                  key={filter}
+                  sub_name={filter}
+                  sub_elements={props.filters[filter]}
+                  sub_title={title}
+                  setCost={props.setCost}
+                  setLe={props.setLe}
+                  setHe={props.setHe}
+                  activeFilters={props.activeFilters}
+                  setActiveFields={setActiveFields}
+                  setActiveFilters={props.setActiveFilters}
+                />
+              );
+            })}
+
+            <Menu.Item
+              key="switch_sale"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              Распродажа
+              {sale ? (
+                <Switch
+                  defaultChecked
+                  className="filter-switch"
+                  onChange={toggleSale}
+                />
+              ) : (
+                <Switch className="filter-switch" onChange={toggleSale} />
+              )}
+            </Menu.Item>
+            <Menu.Item
+              key="switch_new"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              Новинки
+              {news ? (
+                <Switch
+                  defaultChecked
+                  className="filter-switch"
+                  onChange={toggleNew}
+                />
+              ) : (
+                <Switch className="filter-switch" onChange={toggleNew} />
+              )}
+            </Menu.Item>
+          </Menu>
+        </div>
       </div>
     </Suspense>
   );

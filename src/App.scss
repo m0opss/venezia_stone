@@ -9,6 +9,9 @@ body {
     cursor: pointer;
     margin-top: 20px;
   }
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 }
 body {
   overflow-y: visible;
