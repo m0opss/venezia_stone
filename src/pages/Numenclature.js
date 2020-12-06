@@ -49,15 +49,6 @@ const Numenclature = props => {
         props.le,
         props.he
       );
-      console.log({
-        ...header,
-        token: [],
-        items: [],
-        level: [3],
-        nw: props.nw,
-        on_sale: props.sale,
-        groups: [props.match.params.numGroups]
-      });
       axios
         .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
           ...header,
@@ -72,7 +63,6 @@ const Numenclature = props => {
         .then(response => {
           setLoading(false);
           setNumemclature(response.data.itms);
-          console.log(response.data.itms);
           setdefNum(response.data.itms);
           setBreadPath(response.data.path);
           document

@@ -9,11 +9,8 @@ import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import SlabItemTablet from 'components/4lvl/SlabItemTablet';
 import SlabItemMobile from 'components/4lvl/SlabItemMobile';
-import OptionLine from 'components/5lvl/OptionLine';
 
 import {
-  MobileView,
-  BrowserView,
   isTablet,
   isBrowser
 } from 'react-device-detect';

@@ -33,23 +33,43 @@ const GroupItem = props => {
     }
   }, [cnt, kw, sum]);
 
+  const onBlurVal = e => {
+    setKw(
+      (
+        Math.ceil(
+          parseFloat(e.target.value) /
+            (parseFloat(props.item.le) * parseFloat(props.item.he))
+        ) *
+        parseFloat(props.item.le) *
+        parseFloat(props.item.he)
+      ).toFixed(3)
+    );
+  };
+
   const onChangeVal = e => {
     if (e.target.id == 'cnt') {
       let val = e.target.value;
       val = Math.ceil(parseFloat(val));
 
+      // if (val > parseFloat(props.item.kolvo)) {
+      //   val = parseFloat(props.item.kolvo);
+      // }
+      setKw(
+        (parseFloat(props.item.le) * parseFloat(props.item.he) * val).toFixed(3)
+      );
       setCnt(val);
-      setKw(parseFloat(props.item.le) * parseFloat(props.item.he) * val);
     } else {
-      setKw(e.target.value);
+      let tmp = parseFloat(e.target.value);
+      if (tmp > parseFloat(props.item.os)) {
+        tmp = parseFloat(props.item.os);
+      }
+      setKw(tmp);
       setCnt(
-        Math.ceil(
-          parseFloat(e.target.value) /
-            (parseFloat(props.item.le) * parseFloat(props.item.he))
-        )
+        Math.ceil(tmp / (parseFloat(props.item.le) * parseFloat(props.item.he)))
       );
     }
   };
+
   return (
     <div className="other-items-group__item">
       <div className="other-items-group__line">
@@ -89,6 +109,7 @@ const GroupItem = props => {
               value={kw}
               style={{ borderBottom: '1px solid black' }}
               onChange={onChangeVal}
+              onBlur={onBlurVal}
             />
           ) : props.type == 'Ступени' ? (
             <input

@@ -30,7 +30,7 @@ const FourLvl = props => {
   React.useEffect(() => {
     window.scrollTo(0, 0);
     let isSubscr = true;
-    
+
     if (isSubscr) {
       let header = headerCreator(
         props.activeFilters,
@@ -53,7 +53,7 @@ const FourLvl = props => {
         })
         .then(response => {
           console.log(response.data);
-          setBreadPath(response.data.path)
+          setBreadPath(response.data.path);
           setItem(response.data.prs);
           setLoading(false);
           if (
@@ -116,7 +116,9 @@ const FourLvl = props => {
           ) : (
             <></>
           )}
-          <Breadcrumb.Item>{breadPath.material}</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to="/materials">{breadPath.material} </Link>
+          </Breadcrumb.Item>
           <Breadcrumb.Item>
             <Link
               to={`/${props.match.params.material}/${props.match.params.numGroups}`}
@@ -127,7 +129,7 @@ const FourLvl = props => {
           <Breadcrumb.Item>{breadPath.item}</Breadcrumb.Item>
         </Breadcrumb>
       )}
-      {isTablet || isBrowser ? <Filter built_in={true} lvl='4'/> : <></>}
+      {isTablet || isBrowser ? <Filter built_in={true} lvl="4" /> : <></>}
       <Preloader isLoading={isLoading}>
         <div className="four-lvl-container">
           <BackArrow history={props.history} />

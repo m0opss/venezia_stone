@@ -82,7 +82,7 @@ const OtherItem = props => {
     ob_sum = 0;
   console.log(props.item);
   ob_S += parseFloat(props.item.map(i => i.os));
-  ob_sht += parseFloat(props.item.map(i => i.ossht));
+  // ob_sht += parseFloat(props.item.map(i => i.kolvo));
   ob_sum += parseFloat(
     props.item.map(i =>
       props.cur === 'rub'
@@ -109,7 +109,7 @@ const OtherItem = props => {
                 <p>
                   Общая площадь, м<sup>2</sup> : {ob_S ? ob_S : '-'}
                 </p>
-                <p>Количество, шт: {ob_sht ? ob_sht : '-'}</p>
+                <p>Количество, шт: {props.item ? props.item[0].kolvo : '-'}</p>
               </div>
               <ColorRange colors={props.item ? props.item[0] : []} />
             </div>
@@ -137,6 +137,13 @@ const OtherItem = props => {
                 Цена за м<sup>2</sup>
               </p>
             </div>
+            <div className="table-row__item">
+              <p>
+                <div className="">
+                  Наличие, м<sup>2</sup>
+                </div>
+              </p>
+            </div>
             <div className="table-row__item table-row__item_l">
               <p>
                 <div className="">
@@ -145,14 +152,7 @@ const OtherItem = props => {
               </p>
             </div>
             <div className="table-row__item table-row__item_l">
-              <p>
-                <div className="">
-                  Общий остаток, м<sup>2</sup>
-                </div>
-              </p>
-            </div>
-            <div className="table-row__item">
-              <p>Наличие, шт</p>
+              <p>Свободный остаток, шт</p>
             </div>
             <div className="table-row__item table-row__item-count">
               <div className="table-row__item-count_title-t">Рассчитать</div>

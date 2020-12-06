@@ -1,20 +1,14 @@
 import React, { useEffect } from 'react';
 
-import basket from 'images/basket-4lvl.png';
+import basket from 'images/basket_icon_black.svg';
+import basket_a from 'images/basket_icon_accent.svg';
+
 import arr from 'images/arr-4lvl.png';
 import basketActions from 'actions/basketActions';
 import { connect } from 'react-redux';
 
 const AllAddBasket = props => {
   const [state, setState] = React.useState(true);
-  console.log(props.goods)
-  // useEffect(() => {
-  //   props.basket.map(item => {
-  //     props.goods.map(g => {
-  //       if (item.ps == g.ps) setState(false);
-  //     });
-  //   });
-  // });
 
   const onClickItem = e => {
     if (e.target.id == 'add') {
@@ -49,7 +43,7 @@ const AllAddBasket = props => {
     return (
       <>
         <img src={arr} />
-        <img id="delete" src={basket} onClick={onClickItem} />
+        <img id="delete" src={basket_a} onClick={onClickItem} />
       </>
     );
   }

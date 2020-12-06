@@ -27,20 +27,39 @@ const OtherTableRow = props => {
     }
   }, [cnt, kw, sum]);
 
+  const onBlurVal = e => {
+    setKw(
+      (
+        Math.ceil(
+          parseFloat(e.target.value) /
+            (parseFloat(props.item.le) * parseFloat(props.item.he))
+        ) *
+        parseFloat(props.item.le) *
+        parseFloat(props.item.he)
+      ).toFixed(3)
+    );
+  };
+
   const onChangeVal = e => {
     if (e.target.id == 'cnt') {
       let val = e.target.value;
       val = Math.ceil(parseFloat(val));
 
+      // if (val > parseFloat(props.item.kolvo)) {
+      //   val = parseFloat(props.item.kolvo);
+      // }
+      setKw(
+        (parseFloat(props.item.le) * parseFloat(props.item.he) * val).toFixed(3)
+      );
       setCnt(val);
-      setKw(parseFloat(props.item.le) * parseFloat(props.item.he) * val);
     } else {
-      setKw(e.target.value);
+      let tmp = parseFloat(e.target.value);
+      if (tmp > parseFloat(props.item.os)) {
+        tmp = parseFloat(props.item.os);
+      }
+      setKw(tmp);
       setCnt(
-        Math.ceil(
-          parseFloat(e.target.value) /
-            (parseFloat(props.item.le) * parseFloat(props.item.he))
-        )
+        Math.ceil(tmp / (parseFloat(props.item.le) * parseFloat(props.item.he)))
       );
     }
   };
@@ -73,14 +92,14 @@ const OtherTableRow = props => {
             : ''}
         </p>
       </div>
+      <div className="table-row__item">
+        <p>{props.item.kw ? props.item.kw : 0}</p>
+      </div>
       <div className="table-row__item table-row__item_l">
         <p>{props.item.os}</p>
       </div>
       <div className="table-row__item table-row__item_l">
-        <p>{props.item.kw}</p>
-      </div>
-      <div className="table-row__item">
-        <p>{props.item.ossht ? props.item.ossht : '-'}</p>
+        <p>{props.item.kolvo ? props.item.kolvo : 0}</p>
       </div>
       <div className="table-row__item table-row__item_count-panel">
         <div className="table-count-input">
@@ -94,6 +113,7 @@ const OtherTableRow = props => {
               value={kw}
               style={{ borderBottom: '1px solid black' }}
               onChange={onChangeVal}
+              onBlur={onBlurVal}
             />
           ) : props.type == 'Ступени' ? (
             <input
@@ -113,7 +133,7 @@ const OtherTableRow = props => {
             type="number"
             step="1"
             min="0"
-            max={props.item.ossht}
+            max={props.item.kolvo}
             value={cnt}
             style={{ borderBottom: '1px solid black' }}
             onChange={onChangeVal}

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './NumenclatureItem.scss';
 
 const NumenclatureItem = props => {
+  console.log(props.item)
   if (props.pltk) {
     return (
       <div key={props.ps} className="num-gr-item">
@@ -52,7 +53,9 @@ const NumenclatureItem = props => {
                 : ''}
             </p>
           </div>
-          {props.item.izd === 'Плитка' ? (
+          {props.item.izd === 'Плитка' ||
+          props.item.izd === 'Ступени' ||
+          props.item.izd === 'Брусчатка' ? (
             <p></p>
           ) : (
             <p>Количество слэбов: {props.item.cs}</p>

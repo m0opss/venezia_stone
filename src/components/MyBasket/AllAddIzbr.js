@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 
 import arr from 'images/arr-4lvl.png';
-import like from 'images/like-4lvl.png';
+import like from 'images/izbr_icon.svg';
+import like_a from 'images/izbr_icon_accent.svg';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import izbrActions from 'actions/izbrActions';
@@ -75,7 +76,7 @@ const AllAddIzbr = props => {
       return (
         <>
           <img src={arr} />
-          <img id="deleteFavourite" src={like} onClick={onClickItem} />
+          <img id="deleteFavourite" src={like_a} onClick={onClickItem} />
         </>
       );
     }

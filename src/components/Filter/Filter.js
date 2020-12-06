@@ -24,9 +24,6 @@ import 'antd/dist/antd.css';
 
 import data from './filterData';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import SliderCost from './Slider/SliderCost';
-import SliderSize from './Slider/SliderSize';
 import FilterItem from './FilterItems/FilterItem';
 
 const { SubMenu } = Menu;
@@ -139,8 +136,7 @@ const Filter = props => {
     setNew(false);
     props.setSale([]);
     props.setNew([]);
-
-    localStorage.removeItem('3lvl_active_field');
+    
     localStorage.removeItem('activeFieldKeys');
   };
 
