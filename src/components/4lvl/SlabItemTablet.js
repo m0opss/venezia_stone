@@ -119,8 +119,8 @@ const SlabItemTablet = props => {
         pz = false;
       tmp[bl]['slabs'].map(slab => {
         if (slab.nw == '1') nw = true;
-        if (slab.onSale == '1') nw = true;
-        if (slab.pz == '1') nw = true;
+        if (slab.onSale == '1') onSale = true;
+        if (slab.pz == '1') pz = true;
       });
       if (nw) tmp[bl]['nw'] = 1;
       else tmp[bl]['nw'] = 0;

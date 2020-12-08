@@ -136,7 +136,7 @@ const Filter = props => {
     setNew(false);
     props.setSale([]);
     props.setNew([]);
-    
+
     localStorage.removeItem('activeFieldKeys');
   };
 
@@ -204,7 +204,26 @@ const Filter = props => {
             ) : (
               <></>
             )}
-
+            <Menu.Item
+              key="res_kw"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              Всего, м²: {props.all_kw}
+            </Menu.Item>
+            <Menu.Item
+              key="res_cnt"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}
+            >
+              Всего, шт: {props.all_cnt}
+            </Menu.Item>
             {Object.keys(props.filters).map(filter => {
               let title = '';
               Object.keys(titles).map(t => {

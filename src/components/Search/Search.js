@@ -31,11 +31,7 @@ const Search = props => {
 
   const checkresponse = result => {
     let arr = Object.keys(result).map(k =>
-      k == 'mts' ? (
-        <Link key={k} to="/search/materials" className="search-drop-line">
-          Материалы <span>совпадений - {result[k].length}</span>
-        </Link>
-      ) : k == 'grs' ? (
+      k == 'grs' ? (
         <Link key={k} to="/search/nom-groups" className="search-drop-line">
           Номенклатурные группы <span>совпадений - {result[k].length}</span>
         </Link>
@@ -45,7 +41,7 @@ const Search = props => {
         </Link>
       ) : k == 'prs' ? (
         <Link key={k} to="/search/products" className="search-drop-line">
-          Продукты <span>совпадений - {result[k].length}</span>
+          Слэбы <span>совпадений - {result[k].length}</span>
         </Link>
       ) : (
         <></>

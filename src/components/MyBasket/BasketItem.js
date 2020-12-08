@@ -12,7 +12,7 @@ const BasketItem = props => {
   const [cnt, setCnt] = React.useState(
     props.item.cnt ? parseFloat(props.item.cnt) : 0
   );
-  const [sum, setSum] = React.useState('');
+  const [sum, setSum] = React.useState(0);
 
   const checkCur = () => {
     if (props.item.price) return props.item.price;
@@ -35,33 +35,31 @@ const BasketItem = props => {
           (
             parseFloat(props.item.le) *
             parseFloat(props.item.he) *
-            pr *
+            parseFloat(pr) *
             cnt
-          ).toFixed(2)
+          ).toFixed(0)
         );
       } else {
         if (props.type == 'Слэбы' || props.type == 'Полоса') {
           if (props.item.sco) {
-            console.log('sco', props.item.sco);
             setSum(
               (
                 (parseFloat(props.item.le) * parseFloat(props.item.he) -
                   parseFloat(props.item.sco)) *
-                pr
-              ).toFixed(2)
+                parseFloat(pr)
+              ).toFixed(0)
             );
           } else {
-            console.log('sco==================', cnt);
             setSum(
               (
                 parseFloat(props.item.le) *
                 parseFloat(props.item.he) *
                 pr
-              ).toFixed(2)
+              ).toFixed(0)
             );
           }
         } else {
-          setSum((kw * pr).toFixed(2));
+          setSum((kw * parseFloat(pr)).toFixed(0));
         }
       }
     }
@@ -75,25 +73,43 @@ const BasketItem = props => {
     }
   }, [cnt, kw, sum]);
 
+  const onBlurVal = e => {
+    setKw(
+      (
+        Math.ceil(
+          parseFloat(e.target.value) /
+            (parseFloat(props.item.le) * parseFloat(props.item.he))
+        ) *
+        parseFloat(props.item.le) *
+        parseFloat(props.item.he)
+      ).toFixed(3)
+    );
+  };
+
   const onChangeVal = e => {
     if (e.target.id == 'cnt') {
       let val = e.target.value;
       val = Math.ceil(parseFloat(val));
+
+      if (val > parseFloat(props.item.kolvo)) {
+        val = parseFloat(props.item.kolvo);
+      }
+      setKw(
+        (parseFloat(props.item.le) * parseFloat(props.item.he) * val).toFixed(3)
+      );
       setCnt(val);
-      setKw(parseFloat(props.item.le) * parseFloat(props.item.he) * val);
     } else {
-      setKw(e.target.value);
+      let tmp = parseFloat(e.target.value);
+      if (tmp > parseFloat(props.item.os)) {
+        tmp = parseFloat(props.item.os);
+      }
+      setKw(tmp);
       setCnt(
-        // (parseFloat(props.item.le) * parseFloat(props.item.he))
-        Math.ceil(
-          parseFloat(e.target.value) /
-            (parseFloat(props.item.le) * parseFloat(props.item.he))
-        )
+        Math.ceil(tmp / (parseFloat(props.item.le) * parseFloat(props.item.he)))
       );
     }
   };
   if (props.kind == 'izbr') {
-    console.log(123123, props.item);
     return (
       <RenderIzbrItem
         link={props.link}
@@ -108,10 +124,11 @@ const BasketItem = props => {
         cur={props.cur}
         deleteGood={props.deleteGood}
         onChangeVal={onChangeVal}
+        onBlurVal={onBlurVal}
       />
     );
   }
-  console.log(2222, props.item);
+
   return (
     <RenderBasketItem
       link={props.link}
@@ -127,6 +144,7 @@ const BasketItem = props => {
       cur={props.cur}
       deleteGood={props.deleteGood}
       onChangeVal={onChangeVal}
+      onBlurVal={onBlurVal}
     />
   );
 };

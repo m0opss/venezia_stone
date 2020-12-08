@@ -52,6 +52,7 @@ const FourLvl = props => {
           token: []
         })
         .then(response => {
+          console.log(111, response.data.prs)
           setBreadPath(response.data.path);
           setItem(response.data.prs);
           setLoading(false);
@@ -128,7 +129,16 @@ const FourLvl = props => {
           <Breadcrumb.Item>{breadPath.item}</Breadcrumb.Item>
         </Breadcrumb>
       )}
-      {isTablet || isBrowser ? <Filter built_in={true} lvl="4" /> : <></>}
+      {isTablet || isBrowser ? (
+        <Filter
+          built_in={true}
+          lvl="4"
+          // all_cnt={ response.data.prs.length}
+          // all_kw={all_kw.toFixed(3)}
+        />
+      ) : (
+        <></>
+      )}
       <Preloader isLoading={isLoading}>
         <div className="four-lvl-container">
           <BackArrow history={props.history} />

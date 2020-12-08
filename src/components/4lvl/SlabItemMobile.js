@@ -116,8 +116,8 @@ const SlabItemMobile = props => {
         pz = false;
       tmp[bl]['slabs'].map(slab => {
         if (slab.nw == '1') nw = true;
-        if (slab.onSale == '1') nw = true;
-        if (slab.pz == '1') nw = true;
+        if (slab.onSale == '1') onSale = true;
+        if (slab.pz == '1') pz = true;
       });
       if (nw) tmp[bl]['nw'] = 1;
       else tmp[bl]['nw'] = 0;
@@ -148,20 +148,19 @@ const SlabItemMobile = props => {
       <Slider {...settings}>
         {Object.keys(itemDict).map(item => {
           return (
-          <div
-            key={item}
-            className="slab-item-carousel__item"
-            onClick={() => setSelectedEl(item)}
-          > 
-            <p>Пачка №{item}</p>
-            <img
-              className={`${selectedEl == item ? 'selected-img' : ''}`}
-              src={itemDict[item]['slabs'][0].photobl}
-            />
-          </div>
-        )}
-        
-        )}
+            <div
+              key={item}
+              className="slab-item-carousel__item"
+              onClick={() => setSelectedEl(item)}
+            >
+              <p>Пачка №{item}</p>
+              <img
+                className={`${selectedEl == item ? 'selected-img' : ''}`}
+                src={itemDict[item]['slabs'][0].photobl}
+              />
+            </div>
+          );
+        })}
       </Slider>
       <div className="slab-item-mobile__main">
         <div className="slab-item-mobile__main-title">{selectedEl}</div>

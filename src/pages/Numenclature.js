@@ -129,7 +129,10 @@ const Numenclature = props => {
       setNumemclature(newArr);
     }
   };
-
+  let all_kw = 0;
+  numenclature.map(el => {
+    all_kw += el.kw;
+  });
   return (
     <>
       {isMobile && !isTablet ? <BackArrow history={props.history} /> : <></>}
@@ -154,7 +157,15 @@ const Numenclature = props => {
         </Breadcrumb>
       )}
       <div style={{ display: 'flex' }} className="">
-        {isTablet || isBrowser ? <Filter lvl="3" /> : <></>}
+        {isTablet || isBrowser ? (
+          <Filter
+            lvl="3"
+            all_cnt={numenclature.length}
+            all_kw={all_kw.toFixed(3)}
+          />
+        ) : (
+          <></>
+        )}
         <div style={{ width: '100%' }} className="">
           <div
             className={

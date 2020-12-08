@@ -20,10 +20,10 @@ const OtherTableRow = props => {
           parseFloat(props.item.he) *
           parseFloat(pr) *
           cnt
-        ).toFixed(2)
+        ).toFixed(0)
       );
     } else {
-      setSum((kw * parseFloat(pr)).toFixed(2));
+      setSum((kw * parseFloat(pr)).toFixed(0));
     }
   }, [cnt, kw, sum]);
 
@@ -45,9 +45,9 @@ const OtherTableRow = props => {
       let val = e.target.value;
       val = Math.ceil(parseFloat(val));
 
-      // if (val > parseFloat(props.item.kolvo)) {
-      //   val = parseFloat(props.item.kolvo);
-      // }
+      if (val > parseFloat(props.item.kolvo)) {
+        val = parseFloat(props.item.kolvo);
+      }
       setKw(
         (parseFloat(props.item.le) * parseFloat(props.item.he) * val).toFixed(3)
       );

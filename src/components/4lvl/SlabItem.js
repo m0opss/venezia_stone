@@ -138,8 +138,8 @@ const SlabItem = props => {
         pz = false;
       tmp[bl]['slabs'].map(slab => {
         if (slab.nw == '1') nw = true;
-        if (slab.onSale == '1') nw = true;
-        if (slab.pz == '1') nw = true;
+        if (slab.onSale == '1') onSale = true;
+        if (slab.pz == '1') pz = true;
       });
       if (nw) tmp[bl]['nw'] = 1;
       else tmp[bl]['nw'] = 0;
@@ -184,17 +184,23 @@ const SlabItem = props => {
               <div className="slab-item-info__slab-img">
                 <div className="num-gr-item__labels">
                   {itemDict[selectedEl].nw != 0 ? (
-                    <div className="item-label item-label-new">Новинка</div>
+                    <div className="item-label  item-label_gallery item-label-new">
+                      Новинка
+                    </div>
                   ) : (
                     <></>
                   )}
                   {itemDict[selectedEl].onSale != 0 ? (
-                    <div className="item-label item-label-sale">Распродажа</div>
+                    <div className="item-label  item-label_gallery item-label-sale">
+                      Распродажа
+                    </div>
                   ) : (
                     <></>
                   )}
                   {itemDict[selectedEl].pz != 0 ? (
-                    <div className="item-label item-label-order">Под заказ</div>
+                    <div className="item-label  item-label_gallery item-label-order">
+                      Под заказ
+                    </div>
                   ) : (
                     <></>
                   )}

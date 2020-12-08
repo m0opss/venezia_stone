@@ -9,12 +9,11 @@ const ItemAddBasket = props => {
   const [state, setState] = React.useState(true);
 
   useEffect(() => {
-    setState(true)
+    setState(true);
     props.basket.map(item => {
-      if(item.ps == props.item.ps) setState(false)
-
-    })
-  })
+      if (item.ps == props.item.ps) setState(false);
+    });
+  });
 
   const onClickItem = e => {
     if (e.target.id == 'add') {
@@ -25,9 +24,23 @@ const ItemAddBasket = props => {
     setState(!state);
   };
   if (state) {
-    return <img id="add" src={basket_icon_black} onClick={onClickItem} />;
+    return (
+      <img
+        id="add"
+        style={{ cursor: 'pointer' }}
+        src={basket_icon_black}
+        onClick={onClickItem}
+      />
+    );
   } else {
-    return <img id="delete" src={basket_icon_accent} onClick={onClickItem} />;
+    return (
+      <img
+        id="delete"
+        style={{ cursor: 'pointer' }}
+        src={basket_icon_accent}
+        onClick={onClickItem}
+      />
+    );
   }
 };
 const mapStateToProps = store => {

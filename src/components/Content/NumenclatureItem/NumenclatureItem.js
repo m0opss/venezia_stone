@@ -1,14 +1,20 @@
 import React from 'react';
+import { isMobile, isTablet } from 'react-device-detect';
 import { Link } from 'react-router-dom';
 
 import './NumenclatureItem.scss';
 
 const NumenclatureItem = props => {
-  console.log(props.item)
+  console.log(props.item);
   if (props.pltk) {
     return (
       <div key={props.ps} className="num-gr-item">
         <Link to={props.link}>
+          {isMobile && !isTablet ? (
+            <div className="num-gr-item__name">{`${props.item.name}`}</div>
+          ) : (
+            <></>
+          )}
           <div className="num-gr-item__img">
             <div className="num-gr-item__labels">
               {props.item.nw != null ? (
@@ -29,7 +35,11 @@ const NumenclatureItem = props => {
             </div>
             <img src={props.item.photo_item} />
           </div>
-          <div className="num-gr-item__name">{`${props.item.name}`}</div>
+          {isMobile && !isTablet ? (
+            <></>
+          ) : (
+            <div className="num-gr-item__name">{`${props.item.name}`}</div>
+          )}
         </Link>
         <div className="num-gr-item__descr -num">
           <div className="num-gr-item__line -f">

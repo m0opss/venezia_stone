@@ -25,7 +25,7 @@ const FifthLvl = props => {
     axios
       .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
       .then(response => {
-        console.log(response.data);
+        console.log(response.data.itms[0]);
         // setImages([response.data.itms[0].prs.photo_product]);
         setItem(response.data.itms[0]);
         setLoading(false);
@@ -92,7 +92,9 @@ const FifthLvl = props => {
             </div>
             <div className="main-content">
               <div className="main-content__left">
-                <h1 className="main-content__name">{item.name}</h1>
+                <h1 className="main-content__name">
+                  {item.name} {item.prs ? item.prs.ps : ''}
+                </h1>
                 <div className="main-content__info">
                   <div className="main-content__text-block">
                     <p>Пачка {item.prs ? item.prs.bl : '-'}</p>
@@ -100,6 +102,7 @@ const FifthLvl = props => {
                       {item.prs ? item.prs.le : '-'} м X{' '}
                       {item.prs ? item.prs.he : '-'} м
                     </p>
+                    <p>Скол: {item.prs && item.prs.sco ? item.prs.sco : '-'}</p>
                     <p>
                       Площадь:{' '}
                       {item.prs
@@ -152,7 +155,6 @@ const FifthLvl = props => {
                           ).toFixed(3)}€`
                         : '-'}
                     </p>
-                    <p>Скол: {item.prs && item.prs.sco ? item.prs.sco : '-'}</p>
                     <p className="-wrapped">
                       Комментарий:{' '}
                       {item.prs && item.prs.komment ? item.prs.komment : '-'}
@@ -169,15 +171,53 @@ const FifthLvl = props => {
                 </div>
               </div>
               <div className="main-content__right">
-                {item.prs ? (
-                  <OptionLine item={item.prs} fullscreen={<></>} />
-                ) : (
-                  <></>
-                )}
-                <div style={{ marginRight: '30px' }}>
-                  {item.typeFoto == null ? 'NULL' : item.typeFoto}
+                <div className="main-content__options">
+                  <div
+                    style={{ marginTop: 0 }}
+                    className="main-content__add-icons"
+                  >
+                    <div className="main-content__add-icon">
+                      {item.prs ? <ItemAddIzbr item={item.prs} /> : <></>}
+                    </div>
+                    <div className="main-content__add-icon">
+                      {item.prs ? <ItemAddBasket item={item.prs} /> : <></>}
+                    </div>
+                  </div>
+                  {item.prs ? (
+                    <OptionLine item={item.prs} fullscreen={<></>} />
+                  ) : (
+                    <></>
+                  )}
                 </div>
-                <ImageGallery item={item} />
+                <div style={{ marginRight: '30px' }}>
+                  {item.prs ? item.prs.typeFoto : ''}
+                </div>
+                <div style={{ position: 'relative', width:'100%' }}>
+                  <div className="num-gr-item__labels">
+                    {item.prs && item.prs.nw != 0 ? (
+                      <div className="item-label item-label_gallery item-label-new">
+                        Новинка
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                    {item.prs && item.prs.onSale != 0 ? (
+                      <div className="item-label item-label_gallery item-label-sale">
+                        Распродажа
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                    {item.prs && item.prs.pz != 0 ? (
+                      <div className="item-label item-label_gallery item-label-order">
+                        Под заказ
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                  <ImageGallery item={[item.prs]} />
+                </div>
               </div>
             </div>
           </div>
@@ -191,10 +231,8 @@ const FifthLvl = props => {
                 <p>Пачка {item.prs ? item.prs.bl : '-'}</p>
                 <p>СЛЭБ {item.prs ? item.prs.ps : '-'}</p>
               </div>
-              <div className="">
-                {item.typeFoto == null ? 'NULL' : item.typeFoto}
-              </div>
-              <ImageGallery item={item} />
+              <div className="">{item.prs ? item.prs.typeFoto : ''}</div>
+              <ImageGallery item={[item.prs]} />
               <div className="main-content__info-tablet">
                 <div className="main-content__text-block">
                   <p>
@@ -275,10 +313,8 @@ const FifthLvl = props => {
                 <p>СЛЭБ {item.prs ? item.prs.ps : '-'}</p>
               </div>
 
-              <ImageGallery item={item} />
-              <div className="">
-                {item.typeFoto == null ? 'NULL' : item.typeFoto}
-              </div>
+              <ImageGallery item={[item.prs]} />
+              <div className="">{item.prs ? item.prs.typeFoto : ''}</div>
               <div className="fifth-lvl__opt">
                 {item.prs ? (
                   <OptionLine item={item.prs} fullscreen={<></>} />

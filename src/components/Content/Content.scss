@@ -41,8 +41,8 @@
   // top: 70px;
   background: rgba(158, 250, 178, 0.85);
   &::before {
-    border-left: 10px solid #A6F4B6;;
-    border-top: 10px solid #A6F4B6;
+    border-left: 10px solid #a6f4b6;
+    border-top: 10px solid #a6f4b6;
   }
 }
 
@@ -50,17 +50,19 @@
   // top: 40px;
   background: rgba(158, 217, 250, 0.85);
   &::before {
-    border-left: 10px solid #8ABCD7;
-    border-top: 10px solid #8ABCD7;
-  } 
+    border-left: 10px solid #8abcd7;
+    border-top: 10px solid #8abcd7;
+  }
 }
-
 .item-label-sale {
   // top: 10px;
   background: rgba(252, 90, 90, 0.85);
   color: white;
   &::before {
-    border-left: 10px solid #FC6E61;
-    border-top: 10px solid #FC6E61;
+    border-left: 10px solid #fc6e61;
+    border-top: 10px solid #fc6e61;
   }
+}
+.item-label_gallery {
+  z-index: 1;
 }

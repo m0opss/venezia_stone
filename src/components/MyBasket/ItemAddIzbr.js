@@ -8,7 +8,7 @@ const ItemAddIzbr = props => {
   const [state, setState] = React.useState(true);
 
   useEffect(() => {
-    setState(true)
+    setState(true);
     if (props.izbr.includes(props.item.ps)) {
       setState(false);
     }
@@ -20,9 +20,7 @@ const ItemAddIzbr = props => {
         token: props.auth_token,
         id_product: props.item.ps
       })
-      .then(response => {
-
-      });
+      .then(response => {});
   };
   const clickItemIzbr = e => {
     onFetchItem(e.target.id);
@@ -34,12 +32,20 @@ const ItemAddIzbr = props => {
       return (
         <img
           id="deleteFavourite"
+          style={{ cursor: 'pointer' }}
           src={izbr_icon_accent}
           onClick={clickItemIzbr}
         />
       );
     } else {
-      return <img id="addFavourite" src={izbr_icon} onClick={clickItemIzbr} />;
+      return (
+        <img
+          id="addFavourite"
+          style={{ cursor: 'pointer' }}
+          src={izbr_icon}
+          onClick={clickItemIzbr}
+        />
+      );
     }
   } else {
     return <></>;

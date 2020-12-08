@@ -72,7 +72,7 @@ const Home = props => {
           groups: [],
           token: [],
           nw: props.nw,
-          on_sale: props.sale,
+          on_sale: props.sale
         },
         cancelToken: new CancelToken(function executor(c) {
           // An executor function receives a cancel function as a parameter
@@ -83,7 +83,7 @@ const Home = props => {
           cancel();
           // setMatLoading(false);
           setTimeout(() => setMatLoading(false), 600);
-          console.log(res.data)
+          console.log(res.data);
           setMatList(res.data.mts);
         })
         .catch(function(err) {
@@ -124,7 +124,15 @@ const Home = props => {
     }
 
     return () => (isSubscr = false);
-  }, [props.activeFilters, props.upper_izd, props.cost, props.le, props.he, props.nw, props.sale]);
+  }, [
+    props.activeFilters,
+    props.upper_izd,
+    props.cost,
+    props.le,
+    props.he,
+    props.nw,
+    props.sale
+  ]);
 
   const setActiveFields = key => {
     let t = [...props.activeFields];
@@ -148,11 +156,19 @@ const Home = props => {
       props.setNew([1]);
     }
   };
+  let all_kw = 0;
+  matList.map(el => {
+    all_kw += el.kw;
+  });
 
   return (
     <div className="">
       <div className="home-container">
-        {isTablet || isBrowser ? <Filter /> : <></>}
+        {isTablet || isBrowser ? (
+          <Filter all_cnt={matList.length} all_kw={(all_kw).toFixed(3)} />
+        ) : (
+          <></>
+        )}
         <TreeView defaultExpanded={['main']}>
           <TreeItem nodeId="main" label="Натуральный камень в наличии">
             <Preloader isLoading={isMatLoading}>

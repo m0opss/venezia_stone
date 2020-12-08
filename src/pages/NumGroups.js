@@ -122,9 +122,10 @@ const NumGroups = props => {
     setNum_groups_items('num-gr-items-group-list');
   };
 
-  const loadMore = () => {
-    setLoadCnt(loadCnt => loadCnt + 12);
-  };
+  let all_kw = 0;
+  numGroups.map(el => {
+    all_kw += el.kw;
+  });
 
   return (
     <>
@@ -169,7 +170,15 @@ const NumGroups = props => {
         )}
       </div>
       <div className="second-lvl-wrapper">
-        {isTablet || isBrowser ? <Filter lvl="2" /> : <></>}
+        {isTablet || isBrowser ? (
+          <Filter
+            lvl="2"
+            all_cnt={numGroups.length}
+            all_kw={all_kw.toFixed(3)}
+          />
+        ) : (
+          <></>
+        )}
         <Preloader isLoading={isLoading}>
           <div style={{ width: '100%' }}>
             <div className={num_groups_items}>
@@ -216,13 +225,6 @@ const NumGroups = props => {
                 <></>
               )}
             </div>
-            {/* {loadCnt < numGroups.length ? (
-              <div className="button-text button load-more" onClick={loadMore}>
-                Загрузить еще
-              </div>
-            ) : (
-              <></>
-            )} */}
           </div>
         </Preloader>
       </div>

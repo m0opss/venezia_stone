@@ -18,14 +18,16 @@ const RenderBasketItem = props => {
   }
   return (
     <div className="basket-item basket-item-root basket-item-typography">
-      <div className="basket-item__name">{props.item.itms_name ? props.item.itms_name : props.item.name}</div>
+      <div className="basket-item__name">
+        {props.item.itms_name ? props.item.itms_name : props.item.name}
+      </div>
       <div className="basket-item__type">
         {props.type
-          ? `${props.type} №${props.item.ps}`
-          : `${props.item.izd} №${props.item.ps}`}
+          ? `${props.type == 'Слэбы' ? `Слэб №${props.item.ps}` : ''}`
+          : `${props.item.izd == 'Слэбы' ? `Слэб №${props.item.ps}` : ''}`}
       </div>
       <div className="basket-item__info">
-        <a href={props.link}>
+        <Link to={props.item.url}>
           <img
             src={
               props.item.photo_product
@@ -33,7 +35,7 @@ const RenderBasketItem = props => {
                 : props.item.photo
             }
           />
-        </a>
+        </Link>
         {props.type != 'Слэбы' && props.type != 'Полоса' ? (
           <>
             <div className="basket-item__text">
@@ -63,8 +65,11 @@ const RenderBasketItem = props => {
                       : props.os}
                   </p>
                   <p>
-                    Наличие, шт: {props.item.ossht ? props.item.ossht : '-'}
+                    Наличие, шт: {props.item.kolvo ? props.item.kolvo : '0'}
                   </p>
+                </div>
+                <div className="basket-item__line">
+                  <p>Тип фото: {props.item.typeFoto}</p>
                 </div>
               </div>
               <div className="basket-item__line -price">
@@ -80,6 +85,7 @@ const RenderBasketItem = props => {
                         value={props.kw}
                         step="0.01"
                         onChange={props.onChangeVal}
+                        onBlur={props.onBlurVal}
                       />
                     ) : props.type == 'Ступени' ? (
                       <input
@@ -103,7 +109,7 @@ const RenderBasketItem = props => {
                       id="cnt"
                       type="number"
                       min="0"
-                      max={props.item.ossht}
+                      max={props.item.kolvo}
                       value={props.cnt}
                       onChange={props.onChangeVal}
                     />
@@ -143,6 +149,18 @@ const RenderBasketItem = props => {
             <div className="basket-item__line-wrapper">
               <div className="basket-item__line">
                 <p>Склад: {props.item.sklad}</p>
+                <p>
+                  Цена за м<sup>2</sup>:{' '}
+                  {props.item.price
+                    ? `${props.item.price} ₽`
+                    : props.cur === 'rub'
+                    ? `${props.item.cntRUB} ₽`
+                    : props.cur === 'usd'
+                    ? `${props.item.cntUSD} $`
+                    : props.cur === 'eur'
+                    ? `${props.item.cntEUR} €`
+                    : ''}
+                </p>
                 <p>Длина: {props.item.le} м</p>
                 <p>Ширина: {props.item.he} м</p>
               </div>
@@ -159,6 +177,12 @@ const RenderBasketItem = props => {
                       ).toFixed(2)}
                 </p>
                 <p>Пачка {props.item.bl}</p>
+              </div>
+              <div className="basket-item__line">
+                <p>
+                  Скол, м<sup>2</sup>: {props.item.sco}
+                </p>
+                <p>Тип фото: {props.item.typeFoto}</p>
               </div>
             </div>
             <div className="basket-item__line -price">

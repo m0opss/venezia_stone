@@ -14,7 +14,7 @@ const ImageGallery = props => {
     adaptiveHeight: true,
     className: 'image-gallery-slick'
   };
-
+  console.log(props.item)
   const images = props.item.map(el => ({
     src: el.photo_product,
     title: '',
