@@ -5,7 +5,7 @@ import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import Valute from 'components/Valute/Valute';
 import ItemAddBasket from 'components/MyBasket/ItemAddBasket';
 import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
-
+import ImageGallery from 'components/5lvl/ImageGallery';
 import Slider from 'react-slick';
 
 import './SlabItemMobile.scss';
@@ -101,7 +101,38 @@ const GroupItem = props => {
 };
 
 const SlabItemMobile = props => {
-  const [selectedEl, setSelectedEl] = React.useState(props.item[0]);
+  const [itemDict, setItemDict] = React.useState(() => {
+    let tmp = {};
+    props.item.map(slab => {
+      if (!(slab.bl in tmp)) {
+        tmp[slab.bl] = { slabs: [slab] };
+      } else {
+        tmp[slab.bl]['slabs'].push(slab);
+      }
+    });
+    Object.keys(tmp).map(bl => {
+      let nw = false,
+        onSale = false,
+        pz = false;
+      tmp[bl]['slabs'].map(slab => {
+        if (slab.nw == '1') nw = true;
+        if (slab.onSale == '1') nw = true;
+        if (slab.pz == '1') nw = true;
+      });
+      if (nw) tmp[bl]['nw'] = 1;
+      else tmp[bl]['nw'] = 0;
+      if (onSale) tmp[bl]['onSale'] = 1;
+      else tmp[bl]['onSale'] = 0;
+      if (pz) tmp[bl]['pz'] = 1;
+      else tmp[bl]['pz'] = 0;
+    });
+    return tmp;
+  });
+
+  const [selectedEl, setSelectedEl] = React.useState(
+    Object.keys(itemDict).length > 0 ? Object.keys(itemDict)[0] : ''
+  );
+
   const settings = {
     dots: true,
     infinite: true,
@@ -111,29 +142,29 @@ const SlabItemMobile = props => {
   };
 
   let images = [];
-  const [loadCnt, setLoadCnt] = React.useState(12);
-  const loadMore = () => {
-    setLoadCnt(loadCnt => loadCnt + 12);
-  };
   return (
     <div className="slab-item-mobile">
       <ButtonsPanel images={images} />
       <Slider {...settings}>
-        {props.item.map(item => (
+        {Object.keys(itemDict).map(item => {
+          return (
           <div
-            key={item.ps}
+            key={item}
             className="slab-item-carousel__item"
             onClick={() => setSelectedEl(item)}
-          >
+          > 
+            <p>Пачка №{item}</p>
             <img
-              className={`${selectedEl.ps == item.ps ? 'selected-img' : ''}`}
-              src={item.photo_product}
+              className={`${selectedEl == item ? 'selected-img' : ''}`}
+              src={itemDict[item]['slabs'][0].photobl}
             />
           </div>
-        ))}
+        )}
+        
+        )}
       </Slider>
       <div className="slab-item-mobile__main">
-        <div className="slab-item-mobile__main-title">{selectedEl.bl}</div>
+        <div className="slab-item-mobile__main-title">{selectedEl}</div>
         <div className="slab-item-mobile__main-img">
           <div className="num-gr-item__labels">
             {selectedEl.nw != 0 ? (
@@ -153,12 +184,18 @@ const SlabItemMobile = props => {
             )}
           </div>
           <div className="">
-            {selectedEl.typeFoto == null ? 'NULL' : selectedEl.typeFoto}
+            {itemDict[selectedEl]['slabs'][0].typeFoto == null
+              ? 'NULL'
+              : itemDict[selectedEl]['slabs'][0].typeFoto}
           </div>
-          <img src={selectedEl.photo_product} />
+          <ImageGallery
+            item={itemDict[selectedEl]['slabs']}
+            title={props.item[0].itms_name}
+            lvl="4"
+          />
         </div>
       </div>
-      <ColorRange colors={selectedEl} />
+      <ColorRange colors={itemDict[selectedEl]['slabs'][0].color_range} />
 
       <div className="slab-item-mobile__options-group">
         <div className=""></div>
@@ -166,22 +203,19 @@ const SlabItemMobile = props => {
       </div>
 
       <div className="slab-items-group">
-        {props.item.slice(0, loadCnt).map(item => (
-          <GroupItem
-            key={item.ps}
-            type={props.type}
-            item={item}
-            cur={props.cur}
-          />
-        ))}
+        {itemDict[selectedEl]['slabs'].length > 0 ? (
+          itemDict[selectedEl]['slabs'].map(item => (
+            <GroupItem
+              key={item.ps}
+              type={props.type}
+              item={item}
+              cur={props.cur}
+            />
+          ))
+        ) : (
+          <></>
+        )}
       </div>
-      {loadCnt < props.item.length ? (
-        <div className="button-text button load-more" onClick={loadMore}>
-          Загрузить еще
-        </div>
-      ) : (
-        <></>
-      )}
     </div>
   );
 };

@@ -5,22 +5,20 @@ import './ScrollImage.scss';
 const ScrollImage = props => {
   const ScrollItem = props => {
     const [active, setActive] = React.useState(
-      props.selectedItem.ps == props.id ? true : false
+      props.selectedItem == props.id ? true : false
     );
     // console.log(props.selectedItem.ps, props.id)
 
     const chooseItem = () => {
-      props.selectItem(props.item);
+      props.selectItem(props.id);
     };
-
     return (
       <div className="scroll__item" onClick={chooseItem}>
-        <p>{props.item.bl}</p>
-        
+        <p>{props.id}</p>
         <img
           className={`${active ? 'selected-img' : ''}`}
           id={props.id}
-          src={props.item.photo_product ? props.item.photo_product : ''}
+          src={props.item[0].photobl}
         />
       </div>
     );
@@ -39,12 +37,11 @@ const ScrollImage = props => {
     >
       <div className={`scroll-root ${props.scrollStyle}`}>
         <div id="scroll__wrapper" className="scroll__wrapper">
-          {props.elements.map(item => (
+          {Object.keys(props.elements).map(item => (
             <ScrollItem
-              key={item.ps}
-              id={item.ps}
-              item={item}
-              photobl={item.photobl}
+              key={item}
+              id={item}
+              item={props.elements[item]['slabs']}
               selectItem={props.selectItem}
               selectedItem={props.selectedItem}
             />

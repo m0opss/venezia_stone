@@ -12,11 +12,7 @@ import OptionLine from 'components/5lvl/OptionLine';
 import Preloader from 'components/Preloader/Preloader';
 import { Breadcrumb } from 'antd';
 import { Link } from 'react-router-dom';
-import {
-  isTablet,
-  isBrowser,
-  isMobile
-} from 'react-device-detect';
+import { isTablet, isBrowser, isMobile } from 'react-device-detect';
 
 import './FifthLvl.scss';
 
@@ -29,7 +25,7 @@ const FifthLvl = props => {
     axios
       .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
       .then(response => {
-        console.log(response.data)
+        console.log(response.data);
         // setImages([response.data.itms[0].prs.photo_product]);
         setItem(response.data.itms[0]);
         setLoading(false);
@@ -67,7 +63,10 @@ const FifthLvl = props => {
           ) : (
             <></>
           )}
-          <Breadcrumb.Item>{props.match.params.material}</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            {' '}
+            <Link to="/materials"> {props.match.params.material} </Link>
+          </Breadcrumb.Item>
           <Breadcrumb.Item>
             <Link
               to={`/${props.match.params.material}/${props.match.params.numGroups}`}

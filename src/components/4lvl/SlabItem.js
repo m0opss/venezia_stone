@@ -9,11 +9,9 @@ import ItemAddIzbr from 'components/MyBasket/ItemAddIzbr.js';
 import ButtonsPanel from 'components/4lvl/ButtonsPanel';
 import SlabItemTablet from 'components/4lvl/SlabItemTablet';
 import SlabItemMobile from 'components/4lvl/SlabItemMobile';
+import ImageGallery from 'components/5lvl/ImageGallery';
 
-import {
-  isTablet,
-  isBrowser
-} from 'react-device-detect';
+import { isTablet, isBrowser } from 'react-device-detect';
 
 import AllAddBasket from '../MyBasket/AllAddBasket';
 import AllAddIzbr from '../MyBasket/AllAddIzbr';
@@ -26,11 +24,17 @@ const SlabTableRow = props => {
           <div className="table-row__item">
             <p>{props.item.ps}</p>
           </div>
+          <div className="table-row__item">
+            <p>{props.item.bl}</p>
+          </div>
           <div className="table-row__item table-row__item_s">
             <p>{props.item.le}</p>
           </div>
           <div className="table-row__item table-row__item_s">
             <p>{props.item.he}</p>
+          </div>
+          <div className="table-row__item table-row__item_s">
+            <p>{props.item.sco ? props.item.sco : 0}</p>
           </div>
           <div className="table-row__item table-row__item_s">
             <p>
@@ -43,9 +47,6 @@ const SlabTableRow = props => {
                     parseFloat(props.item.le) * parseFloat(props.item.he)
                   ).toFixed(2)}
             </p>
-          </div>
-          <div className="table-row__item table-row__item_s">
-            <p>{props.item.sco ? props.item.sco : 0}</p>
           </div>
           <div className="table-row__item table-row__item_l">
             <p>{props.item.sklad}</p>
@@ -108,7 +109,11 @@ const SlabTableRow = props => {
         )}
 
         <div className="table-row__item good-items-table__title-icons">
-          <ItemAddBasket item={{ ...props.item, type: props.type }} />
+          {props.item.cntRUB == 'По запросу' ? (
+            <p>По запросу</p>
+          ) : (
+            <ItemAddBasket item={{ ...props.item, type: props.type }} />
+          )}
         </div>
       </div>
     );
@@ -118,13 +123,40 @@ const SlabTableRow = props => {
 };
 
 const SlabItem = props => {
+  const [itemDict, setItemDict] = React.useState(() => {
+    let tmp = {};
+    props.item.map(slab => {
+      if (!(slab.bl in tmp)) {
+        tmp[slab.bl] = { slabs: [slab] };
+      } else {
+        tmp[slab.bl]['slabs'].push(slab);
+      }
+    });
+    Object.keys(tmp).map(bl => {
+      let nw = false,
+        onSale = false,
+        pz = false;
+      tmp[bl]['slabs'].map(slab => {
+        if (slab.nw == '1') nw = true;
+        if (slab.onSale == '1') nw = true;
+        if (slab.pz == '1') nw = true;
+      });
+      if (nw) tmp[bl]['nw'] = 1;
+      else tmp[bl]['nw'] = 0;
+      if (onSale) tmp[bl]['onSale'] = 1;
+      else tmp[bl]['onSale'] = 0;
+      if (pz) tmp[bl]['pz'] = 1;
+      else tmp[bl]['pz'] = 0;
+    });
+    console.log(tmp);
+    return tmp;
+  });
+
   const [selectedEl, setSelectedEl] = React.useState(
-    props.item.length > 0 ? props.item[0] : {}
+    Object.keys(itemDict).length > 0 ? Object.keys(itemDict)[0] : ''
   );
-  const [loadCnt, setLoadCnt] = React.useState(12);
-  const loadMore = () => {
-    setLoadCnt(loadCnt => loadCnt + 12);
-  };
+
+  // console.log(itemDict[selectedEl])
 
   let images = [];
   if (isBrowser) {
@@ -133,7 +165,7 @@ const SlabItem = props => {
         <div className="slab-item-info">
           <div className="slab-item-info__top">
             <h1 className="slab-item-info__title">{props.item[0].itms_name}</h1>
-            <ButtonsPanel images={images} goods={selectedEl} />
+            <ButtonsPanel images={images} />
           </div>
           <div className="slab-item-info__bottom">
             <div className="slab-item-info__left-block">
@@ -141,51 +173,45 @@ const SlabItem = props => {
                 scrollStyle="slab-item-info-scroll"
                 selectItem={setSelectedEl}
                 selectedItem={selectedEl}
-                elements={props.item}
+                elements={itemDict}
               />
             </div>
             <div className="slab-item-info__right-block">
               <div className="slab-item-info__rb-top">
-                <div className="slab-item-info__slab-title">
-                  {selectedEl.bl}
-                </div>
-                <div className="slab-item-info__options">
-                  {/* <img src={lamp} />
-                  <img src={book} /> */}
-                  {/* <OptionLine
-                    // lamp = {selectedEl.} поле для просветленного фото
-                    style={{ width: 'unset', marginBottom: 'unset' }}
-                    item={selectedEl}
-                    // img={`data:image/jpg;base64,${selectedEl.photo_bytes}`}
-                    // img={selectedEl.photobl}
-                  /> */}
-                </div>
+                <div className="slab-item-info__slab-title">{selectedEl}</div>
+                <div className="slab-item-info__options"></div>
               </div>
               <div className="slab-item-info__slab-img">
                 <div className="num-gr-item__labels">
-                  {selectedEl.nw != 0 ? (
+                  {itemDict[selectedEl].nw != 0 ? (
                     <div className="item-label item-label-new">Новинка</div>
                   ) : (
                     <></>
                   )}
-                  {selectedEl.onSale != 0 ? (
+                  {itemDict[selectedEl].onSale != 0 ? (
                     <div className="item-label item-label-sale">Распродажа</div>
                   ) : (
                     <></>
                   )}
-                  {selectedEl.pz != 0 ? (
+                  {itemDict[selectedEl].pz != 0 ? (
                     <div className="item-label item-label-order">Под заказ</div>
                   ) : (
                     <></>
                   )}
                 </div>
                 <div className="">
-                  {selectedEl.typeFoto == null ? 'NULL' : selectedEl.typeFoto}
+                  {itemDict[selectedEl]['slabs'][0].typeFoto == null
+                    ? 'NULL'
+                    : itemDict[selectedEl]['slabs'][0].typeFoto}
                 </div>
-                <img
-                  src={selectedEl.photo_product ? selectedEl.photo_product : ''}
+                <ImageGallery
+                  item={itemDict[selectedEl]['slabs']}
+                  title={props.item[0].itms_name}
+                  lvl="4"
                 />
-                <ColorRange colors={selectedEl.color_range} />
+                <ColorRange
+                  colors={itemDict[selectedEl]['slabs'][0].color_range}
+                />
               </div>
             </div>
           </div>
@@ -196,19 +222,24 @@ const SlabItem = props => {
               <div className="table-row__item">
                 <p>Слэб</p>
               </div>
+              <div className="table-row__item">
+                <p>Пачка</p>
+              </div>
               <div className="table-row__item table-row__item_s">
                 <p>Длина,м</p>
               </div>
               <div className="table-row__item table-row__item_s">
-                <p>Высота</p>
+                <p>Высота,м</p>
+              </div>
+              <div className="table-row__item table-row__item_s">
+                <p>
+                  Скол,м<sup>2</sup>
+                </p>
               </div>
               <div className="table-row__item table-row__item_s">
                 <p>
                   Площадь,м<sup>2</sup>
                 </p>
-              </div>
-              <div className="table-row__item table-row__item_s">
-                <p>Скол</p>
               </div>
               <div className="table-row__item table-row__item_l">
                 <p>Склад</p>
@@ -233,31 +264,22 @@ const SlabItem = props => {
               <AllAddBasket goods={props.item} />
             </div>
           </div>
-          {props.item.length > 0 ? (
-            props.item
-              .slice(0, loadCnt)
-              .map(item => (
-                <SlabTableRow
-                  isAuth={props.isAuth}
-                  cur={props.cur}
-                  key={item.ps}
-                  type={props.type}
-                  item={item}
-                  url={props.url}
-                  addGood={props.addGood}
-                />
-              ))
+          {itemDict[selectedEl]['slabs'].length > 0 ? (
+            itemDict[selectedEl]['slabs'].map(item => (
+              <SlabTableRow
+                isAuth={props.isAuth}
+                cur={props.cur}
+                key={item.ps}
+                type={props.type}
+                item={item}
+                url={props.url}
+                addGood={props.addGood}
+              />
+            ))
           ) : (
             <></>
           )}
         </div>
-        {loadCnt < props.item.length ? (
-          <div className="button-text button load-more" onClick={loadMore}>
-            Загрузить еще
-          </div>
-        ) : (
-          <></>
-        )}
       </div>
     );
   } else if (isTablet) {

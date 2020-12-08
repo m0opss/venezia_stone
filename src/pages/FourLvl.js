@@ -52,7 +52,6 @@ const FourLvl = props => {
           token: []
         })
         .then(response => {
-          console.log(response.data);
           setBreadPath(response.data.path);
           setItem(response.data.prs);
           setLoading(false);
@@ -66,7 +65,7 @@ const FourLvl = props => {
                 id_product: response.data.prs[0].ps
               })
               .then(response => {
-                console.log(response);
+                // console.log(response);
               })
               .catch(err => {
                 if (err.response) {
