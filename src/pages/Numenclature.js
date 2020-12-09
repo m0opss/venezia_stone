@@ -159,7 +159,7 @@ const Numenclature = props => {
       <div style={{ display: 'flex' }} className="">
         {isTablet || isBrowser ? (
           <Filter
-            lvl="3"
+            lvl={3}
             all_cnt={numenclature.length}
             all_kw={all_kw.toFixed(3)}
           />

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './NumenclatureItem.scss';
 
 const NumenclatureItem = props => {
-  console.log(props.item);
+  // console.log(props.item);
   if (props.pltk) {
     return (
       <div key={props.ps} className="num-gr-item">

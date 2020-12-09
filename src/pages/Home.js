@@ -165,7 +165,7 @@ const Home = props => {
     <div className="">
       <div className="home-container">
         {isTablet || isBrowser ? (
-          <Filter all_cnt={matList.length} all_kw={(all_kw).toFixed(3)} />
+          <Filter lvl={1} all_cnt={matList.length} all_kw={(all_kw).toFixed(3)} />
         ) : (
           <></>
         )}

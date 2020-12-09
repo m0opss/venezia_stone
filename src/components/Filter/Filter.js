@@ -12,8 +12,6 @@ import axios from 'axios';
 import filterActions from 'actions/filterActions';
 
 import {
-  MobileView,
-  BrowserView,
   isTablet,
   isMobile,
   isBrowser
@@ -26,8 +24,8 @@ import data from './filterData';
 import { useEffect } from 'react';
 import FilterItem from './FilterItems/FilterItem';
 
-const { SubMenu } = Menu;
-const { titles, cities, materials, colors, izdelie } = data;
+
+const { titles } = data;
 
 const Filter = props => {
   const [state, setState] = React.useState({
@@ -40,6 +38,9 @@ const Filter = props => {
     let isSubscr = true;
     if (props.sale.length == 1) {
       setSale(true);
+    }
+    if(props.lvl == 1) {
+      resetAll()
     }
     if (isSubscr) {
       axios
@@ -87,7 +88,7 @@ const Filter = props => {
       }
     }
     return () => (isSubscr = false);
-  }, [sale, props.sale]);
+  }, []);
 
   const handleClick = e => {
     setState({ collapsed: !state.collapsed });
@@ -99,20 +100,6 @@ const Filter = props => {
     else t.push(e);
     props.setActiveFields(t);
     localStorage.setItem('activeFieldKeys', JSON.stringify(t));
-  };
-
-  const izdItemClicked = e => {
-    setActiveFields(e);
-    let newArr = [...props.upper_izd];
-    if (newArr.indexOf(e.key) === -1) {
-      newArr.push(e.key);
-      document.getElementById(e.key).setAttribute('style', 'color: #c98505');
-    } else {
-      document.getElementById(e.key).setAttribute('style', 'color: black');
-      newArr.splice(newArr.indexOf(e.key), 1);
-    }
-    props.setUpper(newArr);
-    localStorage.setItem('upper_izd', JSON.stringify(newArr));
   };
 
   const resetAll = () => {
@@ -138,10 +125,6 @@ const Filter = props => {
     props.setNew([]);
 
     localStorage.removeItem('activeFieldKeys');
-  };
-
-  const toggleCost = cost => {
-    props.setCost(cost);
   };
 
   const toggleSale = checked => {
@@ -229,10 +212,10 @@ const Filter = props => {
               Object.keys(titles).map(t => {
                 if (filter == t) title = titles[t];
               });
-              // 1 -й уровень
               return (
                 <FilterItem
                   key={filter}
+                  lvl={props.lvl}
                   sub_name={filter}
                   sub_elements={props.filters[filter]}
                   sub_title={title}

@@ -172,7 +172,7 @@ const NumGroups = props => {
       <div className="second-lvl-wrapper">
         {isTablet || isBrowser ? (
           <Filter
-            lvl="2"
+            lvl={2}
             all_cnt={numGroups.length}
             all_kw={all_kw.toFixed(3)}
           />

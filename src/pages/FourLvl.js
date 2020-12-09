@@ -52,7 +52,7 @@ const FourLvl = props => {
           token: []
         })
         .then(response => {
-          console.log(111, response.data.prs)
+          console.log(111, response.data.prs);
           setBreadPath(response.data.path);
           setItem(response.data.prs);
           setLoading(false);
@@ -132,7 +132,7 @@ const FourLvl = props => {
       {isTablet || isBrowser ? (
         <Filter
           built_in={true}
-          lvl="4"
+          lvl={4}
           // all_cnt={ response.data.prs.length}
           // all_kw={all_kw.toFixed(3)}
         />

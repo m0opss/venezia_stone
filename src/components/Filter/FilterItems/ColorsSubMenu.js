@@ -17,16 +17,26 @@ const ColorsSubMenu = ({
 }) => {
   const { colors } = data;
 
-
   return (
     <>
-      <SubMenu key={sub_name} title={sub_title} {...props}>
+      <SubMenu
+        key={sub_name}
+        title={
+          Object.keys(activeFilters).length > 0 &&
+          activeFilters[sub_name].length == 0
+            ? sub_title
+            : activeFilters[sub_name]
+            ? `${sub_title}: ${activeFilters[sub_name].length}`
+            : sub_title
+        }
+        {...props}
+      >
         {sub_elements.map(color => {
           return (
             <Menu.Item
               key={color}
               style={{ display: 'flex', alignItems: 'center' }}
-              onClick={(e) => filterItemClicked(e, 'colors')}
+              onClick={e => filterItemClicked(e, 'colors')}
             >
               {color === 'Белый' ? (
                 <>

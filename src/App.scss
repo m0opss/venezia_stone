@@ -40,6 +40,22 @@ a {
   margin-top: 10px;
   margin-bottom: 20px;
 }
+.ant-slider-track {
+  background-color: #be93449f;
+  height: 2px;
+}
+.ant-slider-handle.ant-tooltip-open {
+  border: 1px solid black;
+}
+.ant-slider:hover.ant-slider-handle:not(.ant-slider-handle.ant-tooltip-open) {
+  background-color: black;
+}
+.ant-slider-handle {
+  border: 1px solid rgb(44, 44, 44);
+}
+.ant-slider:hover .ant-slider-track {
+  background-color: #be9344;
+}
 .ant-breadcrumb a:hover {
   color: #be9344;
 }

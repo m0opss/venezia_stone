@@ -3,8 +3,9 @@ import React from 'react';
 import { Menu } from 'antd';
 const { SubMenu } = Menu;
 import data from '../filterData';
+import { Link } from 'react-router-dom';
 
-const CommonSubMenu = ({
+const MaterialsSubMenu = ({
   sub_name,
   sub_elements,
   sub_title,
@@ -14,7 +15,6 @@ const CommonSubMenu = ({
   filterItemClicked,
   ...props
 }) => {
-  const { cities } = data;
   if (Array.isArray(sub_elements))
     return (
       <>
@@ -37,13 +37,7 @@ const CommonSubMenu = ({
                 style={{ display: 'flex', alignItems: 'center' }}
                 onClick={e => filterItemClicked(e, sub_name)}
               >
-                {sub_name != 'cities'
-                  ? elem
-                  : Object.keys(cities).map(k => {
-                      if (k == material) {
-                        return cities[k];
-                      }
-                    })}
+                {props.lvl != 1 ? elem : <Link to="/materials">{elem}</Link>}
               </Menu.Item>
             );
           })}
@@ -53,4 +47,4 @@ const CommonSubMenu = ({
   else return <></>;
 };
 
-export default CommonSubMenu;
+export default MaterialsSubMenu;
