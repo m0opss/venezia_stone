@@ -29,7 +29,6 @@ const FilterItem = ({
     setActiveFilters(newArr);
     localStorage.setItem('activeFilters', JSON.stringify(newArr));
   };
-
   return sub_name == 'prices' ? (
     <PriceSubMenu setCost={setCost} {...props} />
   ) : sub_name == 'sizas' ? (

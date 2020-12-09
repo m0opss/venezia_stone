@@ -2,6 +2,52 @@ import { connect } from 'react-redux';
 import React from 'react';
 import filterActions from 'actions/filterActions';
 import { isMobile, isTablet } from 'react-device-detect';
+import axios from 'axios';
+
+import { Menu, MenuItem, MenuButton, SubMenu } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
+import { Link } from 'react-router-dom';
+
+const TopFilterItem = props => {
+  const [state, setState] = React.useState({});
+
+  const fetchIzd = e => {
+    console.log(e);
+    axios
+      .get(`http://92.63.103.180:8000/api_v0/upperFilter/${e}/`)
+      .then(res => {
+        console.log(res.data);
+        setState(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  return (
+    <div
+      id={props.elem}
+      className="second-line__filter-button"
+      onClick={() => fetchIzd(props.elem)}
+    >
+      <Menu menuButton={<MenuButton>{props.elem}</MenuButton>}>
+        {Object.keys(state).length > 0 ? (
+          Object.keys(state).map(mat => (
+            <SubMenu label={mat} key={mat}>
+              {state[mat].map(gr => (
+                <MenuItem key={gr['gr']}>
+                  <Link to={gr['route']}>{gr['gr']}</Link>
+                </MenuItem>
+              ))}
+            </SubMenu>
+          ))
+        ) : (
+          <MenuItem></MenuItem>
+        )}
+      </Menu>
+    </div>
+  );
+};
 
 const TopFilter = props => {
   React.useEffect(() => {
@@ -17,48 +63,13 @@ const TopFilter = props => {
     }
   });
 
-  const setFilterParam = e => {
-    let t = [...props.activeFields];
-    if (t.indexOf(e.target.id) !== -1) {
-      t.splice(t.indexOf(e.target.id), 1);
-    } else {
-      t.push(e.target.id);
-    }
-    props.setActiveFields(t);
-    localStorage.setItem('activeFieldKeys', JSON.stringify(t));
-
-    let newArr = [...props.upper_izd];
-    if (newArr.indexOf(e.target.id) === -1) {
-      newArr.push(e.target.id);
-      // if (!isMobile) {
-      // document
-      //   .getElementById(e.target.id)
-      //   .setAttribute('style', 'color: #c98505');
-      // }
-    } else {
-      // if (!isMobile) {
-      // document
-      //   .getElementById(e.target.id)
-      //   .setAttribute('style', 'color: black');
-      // }
-      newArr.splice(newArr.indexOf(e.target.id), 1);
-    }
-    props.setUpper(newArr);
-  };
-
   if (isMobile && !isTablet) {
     return (
       <>
         {props.all_upper ? (
           props.all_upper.map(i => (
             <div className="top-mobile-filter-line" key={i}>
-              <div
-                id={i}
-                className="second-line__filter-button"
-                onClick={setFilterParam}
-              >
-                {i}
-              </div>
+              <TopFilterItem elem={i} />
             </div>
           ))
         ) : (
@@ -70,14 +81,7 @@ const TopFilter = props => {
     return (
       <>
         {props.all_upper.map(i => (
-          <div
-            id={i}
-            key={i}
-            className="second-line__filter-button"
-            onClick={setFilterParam}
-          >
-            {i}
-          </div>
+          <TopFilterItem elem={i} />
         ))}
       </>
     );

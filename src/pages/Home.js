@@ -10,13 +10,7 @@ import { headerCreator } from 'components/Filter/headerCreator';
 import Preloader from 'components/Preloader/Preloader';
 
 import Filter from 'components/Filter/Filter';
-import {
-  MobileView,
-  BrowserView,
-  isTablet,
-  TabletView,
-  isBrowser
-} from 'react-device-detect';
+import { isMobile, isTablet, isBrowser } from 'react-device-detect';
 import './Home.scss';
 
 var CancelToken = axios.CancelToken;
@@ -30,6 +24,7 @@ const Home = props => {
   const [newList, setNewList] = React.useState([]);
 
   React.useEffect(() => {
+    props.setLvl(1)
     document.body.scrollIntoView({
       block: 'start',
       behavior: 'smooth'
@@ -165,7 +160,7 @@ const Home = props => {
     <div className="">
       <div className="home-container">
         {isTablet || isBrowser ? (
-          <Filter lvl={1} all_cnt={matList.length} all_kw={(all_kw).toFixed(3)} />
+          <Filter lvl={1} all_cnt={matList.length} all_kw={all_kw.toFixed(3)} />
         ) : (
           <></>
         )}
@@ -186,12 +181,12 @@ const Home = props => {
                 ) : (
                   <></>
                 )}
-                {matList.length % 3 == 1 ? (
+                {(isTablet || isBrowser) && matList.length % 3 == 1 ? (
                   <>
                     <div className="material_empty"></div>
                     <div className="material_empty"></div>
                   </>
-                ) : matList.length % 3 == 2 ? (
+                ) : (isTablet || isBrowser) && matList.length % 3 == 2 ? (
                   <>
                     <div className="material_empty"></div>
                   </>
@@ -218,12 +213,12 @@ const Home = props => {
                 ) : (
                   <></>
                 )}
-                {matList.length % 3 == 1 ? (
+                {(isTablet || isBrowser) && matList.length % 3 == 1 ? (
                   <>
                     <div className="material_empty"></div>
                     <div className="material_empty"></div>
                   </>
-                ) : matList.length % 3 == 2 ? (
+                ) : (isTablet || isBrowser) && matList.length % 3 == 2 ? (
                   <>
                     <div className="material_empty"></div>
                   </>
@@ -250,12 +245,12 @@ const Home = props => {
                 ) : (
                   <></>
                 )}
-                {matList.length % 3 == 1 ? (
+                {(isTablet || isBrowser) && matList.length % 3 == 1 ? (
                   <>
                     <div className="material_empty"></div>
                     <div className="material_empty"></div>
                   </>
-                ) : matList.length % 3 == 2 ? (
+                ) : (isTablet || isBrowser) && matList.length % 3 == 2 ? (
                   <>
                     <div className="material_empty"></div>
                   </>
@@ -315,7 +310,11 @@ const mapDispatchToProps = dispatch => {
     },
     setActiveFilters: data => {
       dispatch(filterActions.setActiveFilters(data));
-    }
+    },
+    setLvl: data => {
+      dispatch(filterActions.setLvl(data));
+    },
+
   };
 };
 

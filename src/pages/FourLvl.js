@@ -24,6 +24,7 @@ import SlabItem from '../components/4lvl/SlabItem';
 import OtherItem from '../components/4lvl/OtherItem';
 
 const FourLvl = props => {
+  props.setLvl(4);
   const [isLoading, setLoading] = React.useState(true);
   const [item, setItem] = React.useState([]);
   const [breadPath, setBreadPath] = React.useState({});
@@ -188,7 +189,11 @@ const mapStateToProps = store => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    setLvl: data => {
+      dispatch(filterActions.setLvl(data));
+    }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FourLvl);

@@ -22,13 +22,7 @@ import 'components/Content/NumGroupItem/NumGroupEmtyItem.scss';
 
 import { headerCreator } from 'components/Filter/headerCreator';
 
-import {
-  MobileView,
-  BrowserView,
-  isTablet,
-  isMobile,
-  isBrowser
-} from 'react-device-detect';
+import { isTablet, isMobile, isBrowser } from 'react-device-detect';
 
 const NumGroups = props => {
   const [numGroups, setNumGroups] = React.useState([]);
@@ -40,9 +34,8 @@ const NumGroups = props => {
     'num-gr-items-group'
   );
 
-  const [loadCnt, setLoadCnt] = React.useState(12);
-
   React.useEffect(() => {
+    props.setLvl(2);
     document.body.scrollIntoView({
       block: 'start',
       behavior: 'smooth'
@@ -206,18 +199,31 @@ const NumGroups = props => {
               ) : (
                 <div className="goods-none">Товаров не найдено</div>
               )}
-              {isMobile && !isTablet && numGroups.length % 4 == 1 ? (
+              {window.innerWidth >= '1690px' ? (
+                (isTablet || isBrowser) && numGroups.length % 4 == 1 ? (
+                  <>
+                    <div className="numGroup_empty"></div>
+                    <div className="numGroup_empty"></div>
+                    <div className="numGroup_empty"></div>
+                  </>
+                ) : (isTablet || isBrowser) && numGroups.length % 4 == 2 ? (
+                  <>
+                    <div className="numGroup_empty"></div>
+                    <div className="numGroup_empty"></div>
+                  </>
+                ) : (isTablet || isBrowser) && numGroups.length % 4 == 3 ? (
+                  <>
+                    <div className="numGroup_empty"></div>
+                  </>
+                ) : (
+                  <></>
+                )
+              ) : (isTablet || isBrowser) && numGroups.length % 3 == 1 ? (
                 <>
                   <div className="numGroup_empty"></div>
                   <div className="numGroup_empty"></div>
-                  <div className="numGroup_empty"></div>
                 </>
-              ) : isMobile && !isTablet && numGroups.length % 4 == 2 ? (
-                <>
-                  <div className="numGroup_empty"></div>
-                  <div className="numGroup_empty"></div>
-                </>
-              ) : isMobile && !isTablet && numGroups.length % 4 == 3 ? (
+              ) : (isTablet || isBrowser) && numGroups.length % 3 == 2 ? (
                 <>
                   <div className="numGroup_empty"></div>
                 </>
@@ -247,7 +253,11 @@ const mapStateToProps = store => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    setLvl: data => {
+      dispatch(filterActions.setLvl(data));
+    }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NumGroups);

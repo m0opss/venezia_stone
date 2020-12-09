@@ -13,10 +13,6 @@ const SliderSize = props => {
   const [he_minVal, he_setMinVal] = React.useState(def_he_min);
   const [he_maxVal, he_setMaxVal] = React.useState(def_he_max);
 
-  // React.useEffect(() => {
-  //   props.onChange([minVal, maxVal]);
-  // });
-
   const le_onChange = value => {
     le_setMinVal(value[0]);
     le_setMaxVal(value[1]);

@@ -11,11 +11,7 @@ import { Menu } from 'antd';
 import axios from 'axios';
 import filterActions from 'actions/filterActions';
 
-import {
-  isTablet,
-  isMobile,
-  isBrowser
-} from 'react-device-detect';
+import { isTablet, isMobile, isBrowser } from 'react-device-detect';
 
 import './Filter.scss';
 import 'antd/dist/antd.css';
@@ -23,7 +19,6 @@ import 'antd/dist/antd.css';
 import data from './filterData';
 import { useEffect } from 'react';
 import FilterItem from './FilterItems/FilterItem';
-
 
 const { titles } = data;
 
@@ -39,8 +34,8 @@ const Filter = props => {
     if (props.sale.length == 1) {
       setSale(true);
     }
-    if(props.lvl == 1) {
-      resetAll()
+    if (props.lvl == 1) {
+      resetAll();
     }
     if (isSubscr) {
       axios
@@ -145,7 +140,15 @@ const Filter = props => {
 
   return (
     <Suspense>
-      <div className={isMobile ? '' : `filter-wrapper`}>
+      <div
+        className={`filter-wrapper ${
+          isBrowser
+            ? 'filter-wrapper_browser'
+            : isTablet
+            ? 'filter-wrapper_tablet'
+            : 'filter-wrapper_mobile'
+        }`}
+      >
         <div
           className={`filter ${
             isBrowser && !props.built_in ? 'browser-filter' : ''
@@ -191,6 +194,7 @@ const Filter = props => {
               key="res_kw"
               style={{
                 display: 'flex',
+                marginTop: '30px',
                 alignItems: 'center',
                 justifyContent: 'space-between'
               }}
@@ -284,7 +288,8 @@ const mapStateToProps = store => {
     groups: store.filter_data.groups,
     upper_izd: store.filter_data.upper_izd,
     sale: store.filter_data.sale,
-    nw: store.filter_data.nw
+    nw: store.filter_data.nw,
+    lvl: store.filter_data.lvl
   };
 };
 

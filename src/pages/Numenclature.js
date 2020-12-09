@@ -33,6 +33,7 @@ const Numenclature = props => {
   );
 
   React.useEffect(() => {
+    props.setLvl(3)
     document.body.scrollIntoView({
       block: 'start',
       behavior: 'smooth'
@@ -295,7 +296,10 @@ const mapDispatchToProps = dispatch => {
     },
     setActiveFields: data => {
       dispatch(filterActions.setActiveFields(data));
-    }
+    },
+    setLvl: data => {
+      dispatch(filterActions.setLvl(data));
+    },
   };
 };
 

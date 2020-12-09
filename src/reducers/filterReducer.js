@@ -8,11 +8,17 @@ const initialState = {
   all_upper: [],
   cost: [],
   le: [],
-  he: []
+  he: [],
+  lvl: null
 };
 
 export function filterReducer(state = initialState, action) {
   switch (action.type) {
+    case 'SET_LVL':
+      return {
+        ...state,
+        lvl: action.payload
+      }
     case 'SET_ALL_UPPER':
       return {
         ...state,

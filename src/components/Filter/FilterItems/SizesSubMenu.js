@@ -12,7 +12,6 @@ const SizesSubMenu = ({ sub_name, sub_elements, setLe, setHe, ...props }) => {
   const toggle_he = sizes => {
     setHe(sizes);
   };
-  console.log()
   return (
     <SubMenu key="size-sub" title="Размеры" {...props}>
       <SliderSize

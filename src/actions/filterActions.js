@@ -11,6 +11,12 @@ const filterActions = {
       payload: data
     };
   },
+  setLvl: data => {
+    return {
+      type: 'SET_LVL',
+      payload: data
+    };
+  },
   setUpper: data => {
     return {
       type: 'SET_UPPER',
