@@ -17,8 +17,6 @@
   }
 }
 
-
-
 .city-card {
   flex: 0 1 48%;
   display: flex;
@@ -35,6 +33,13 @@
   font-size: 16px;
   line-height: 140%;
 
+  .address-card__address {
+    cursor: pointer;
+    &:hover {
+      color: #be9344;
+    }
+  }
+
   h1 {
     cursor: pointer;
     color: #000;
@@ -44,7 +49,7 @@
       line-height: 19px;
     }
   }
-  .city-active{
+  .city-active {
     color: #be9344;
   }
 

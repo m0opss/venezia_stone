@@ -28,8 +28,11 @@ const FourLvl = props => {
   const [isLoading, setLoading] = React.useState(true);
   const [item, setItem] = React.useState([]);
   const [breadPath, setBreadPath] = React.useState({});
+  document.body.scrollIntoView({
+    block: 'start',
+    behavior: 'smooth'
+  });
   React.useEffect(() => {
-    window.scrollTo(0, 0);
     let isSubscr = true;
 
     if (isSubscr) {
