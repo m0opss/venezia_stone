@@ -1,8 +1,8 @@
 .dialog-cropper-crop {
   // width: 470px;
   display: flex;
-  justify-content: space-around;
-  margin: 30px auto;
+  // justify-content: space-around;
+  margin: 30px 30px;
   .cropper {
     display: flex;
     width: 55%;
@@ -17,6 +17,30 @@
   .cropper {
     width: 90%;
     margin: auto;
+  }
+}
+.dialog-cropper-crop-mobile {
+  padding-top: 30px;
+  flex-direction: column;
+  justify-content: center;
+  .cropper {
+    width: 90%;
+    flex-direction: column;
+    .cropper-container {
+      width: 100%;
+    }
+    .cropper-panel {
+      flex-direction: row;
+      margin: auto;
+      width: auto;
+    }
+  }
+  .dialog-cropper__res {
+    max-width: 480px;
+  }
+  .dialog-cropper__preview-item {
+    width: 140px;
+    height: 120px;
   }
 }
 .dialog-cropper-crop__res {

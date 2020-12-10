@@ -101,7 +101,7 @@ const CropperBook = props => {
   return (
     <div
       className={`dialog-cropper-crop ${
-        isMobile ? 'dialog-cropper-crop-tablet' : ''
+        isTablet ? 'dialog-cropper-crop-tablet' : ''
       } ${!isTablet && isMobile ? 'dialog-cropper-crop-mobile' : ''}`}
     >
       <div className="cropper">
@@ -111,7 +111,7 @@ const CropperBook = props => {
             isTablet
               ? { height: 300, width: 470 }
               : isMobile
-              ? { height: 200, width: 470 }
+              ? { height: 200, width: 300 }
               : { height: 400, width: 470 }
           }
           ref={cropperRef}
