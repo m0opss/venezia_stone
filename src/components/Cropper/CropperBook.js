@@ -12,7 +12,7 @@ const CropperBook = props => {
   const cropperRef = React.useRef(null);
   const [cropData, setCropData] = React.useState('#');
   const [cropper, setCropper] = React.useState();
-  const [mode, setMode] = React.useState('-two');
+  const [mode, setMode] = React.useState('-eight');
   const [sides, setSides] = React.useState({
     1: 'right',
     2: 'down'
@@ -56,35 +56,29 @@ const CropperBook = props => {
       imageElement === null || imageElement === void 0
         ? void 0
         : imageElement.cropper;
-    console.log(cropper)
-    // if (typeof cropper !== 'undefined') {
-    //   cropper.getCroppedCanvas().toBlob(blob => {
-    //     let url = URL.createObjectURL(blob);
-    //     URL.revokeObjectURL(url);
 
-    //     console.log(url)
-    //     setCropData(url)
-    //     // newImg.onload = function() {
-    //     //   // no longer need to read the blob so it's revoked
-    //     // };
-
-    //   })
-    //   // setCropData(cropper.getCroppedCanvas().toDataURL());
-    //   // setBookImg(cropper.getCroppedCanvas().toDataURL());
-    // }
+    // setCropData(cropper.getCroppedCanvas().toDataURL());
   };
 
   const pushOnServer = obj => {
+    const imageElement =
+      cropperRef === null || cropperRef === void 0
+        ? void 0
+        : cropperRef.current;
+    const cropper =
+      imageElement === null || imageElement === void 0
+        ? void 0
+        : imageElement.cropper;
     if (typeof cropper !== 'undefined') {
       axios
         .post(`https://catalog-veneziastone.ru/api_v0/Bookmatch/`, {
-          image: cropData,
+          image: cropper.getCroppedCanvas().toDataURL(),
           sides: obj
         })
         .then(response => {
           var a = document.createElement('a');
           a.href = 'data:application/octet-stream;base64,' + response.data;
-          setCropData1('data:application/octet-stream;base64,' + response.data);
+          setCropData('data:application/octet-stream;base64,' + response.data);
           a.download = 'bookmatch.jpg';
           document.body.appendChild(a);
           a.click();
@@ -135,6 +129,7 @@ const CropperBook = props => {
         />
         <CropperPanel
           type="book"
+          sides={sides}
           mode={mode}
           setSides={setSides}
           pushOnServer={pushOnServer}
@@ -145,12 +140,12 @@ const CropperBook = props => {
       </div>
       <div className="dialog-cropper__res-wrapper">
         <h2>Результат</h2>
-        <div className={`dialog-cropper__res ${mode} `}>
+        <div className={`dialog-cropper__res ${mode} h-normal v-normal`}>
           <div className="row">
-            <div className="col">
+            <div className="col col_1">
               <div className="dialog-cropper__preview-item" />
             </div>
-            <div className="col">
+            <div className="col col_1">
               <div className="dialog-cropper__preview-item" />
             </div>
           </div>
@@ -163,18 +158,18 @@ const CropperBook = props => {
             </div>
           </div>
           <div className="row">
-            <div className="col col_3">
+            <div className="col col_1">
               <div className="dialog-cropper__preview-item" />
             </div>
-            <div className="col col_3">
+            <div className="col col_1">
               <div className="dialog-cropper__preview-item" />
             </div>
           </div>
           <div className="row">
-            <div className="col col_4">
+            <div className="col col_2">
               <div className="dialog-cropper__preview-item" />
             </div>
-            <div className="col col_4">
+            <div className="col col_2">
               <div className="dialog-cropper__preview-item" />
             </div>
           </div>

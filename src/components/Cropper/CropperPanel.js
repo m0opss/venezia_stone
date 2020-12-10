@@ -9,12 +9,12 @@ import {
 } from 'react-device-detect';
 import 'react-toastify/dist/ReactToastify.css';
 
-const CropperPanel = props => {
-  const [sides, setSides] = React.useState({ '1': 'right', '2': 'down' });
+const CropperPanel = ({ sides, setSides, ...props }) => {
+  // const [sides, setSides] = React.useState({ '1': 'right', '2': 'down' });
 
   let d = document.getElementsByClassName('cropper-crop-box')[0];
+  let w = document.getElementsByClassName('dialog-cropper__res')[0];
   React.useEffect(() => {
-    console.log(sides);
     if (d) {
       if (sides[0] == 'right') d.style.borderRight = '3px solid red';
       if (sides[0] == 'left') d.style.borderLeft = '3px solid red';
@@ -25,11 +25,11 @@ const CropperPanel = props => {
       if (d) {
         d.style.borderTop = null;
         d.style.borderBottom = null;
-        toggleHBorder();
+        // toggleHBorder();
       }
     } else if (props.mode == '-four') {
-      toggleVBorder();
-      toggleHBorder();
+      // toggleVBorder();
+      // toggleHBorder();
     } else {
     }
   }, [props.mode]);
@@ -60,6 +60,7 @@ const CropperPanel = props => {
       a.style.borderBottom = null;
     }
     if (sides['1'] == 'right') {
+      w.classList.replace('h-normal', 'h-reverse');
       a.style.borderLeft = '3px solid red';
       a.style.borderRight = null;
       setSides(sides => {
@@ -68,13 +69,8 @@ const CropperPanel = props => {
           1: 'left'
         };
       });
-      props.setSides(sides => {
-        return {
-          ...sides,
-          1: 'left'
-        };
-      });
     } else {
+      w.classList.replace('h-reverse', 'h-normal');
       a.style.borderRight = '3px solid red';
       a.style.borderLeft = null;
       setSides(sides => {
@@ -83,13 +79,8 @@ const CropperPanel = props => {
           1: 'right'
         };
       });
-      props.setSides(sides => {
-        return {
-          ...sides,
-          1: 'right'
-        };
-      });
     }
+    console.log(sides);
   };
 
   const toggleVBorder = () => {
@@ -99,6 +90,7 @@ const CropperPanel = props => {
       a.style.borderBottom = '3px solid red';
     }
     if (sides['2'] == 'down') {
+      w.classList.replace('v-normal', 'v-reverse');
       a.style.borderTop = '3px solid red';
       a.style.borderBottom = null;
       setSides(sides => {
@@ -107,16 +99,11 @@ const CropperPanel = props => {
           2: 'up'
         };
       });
-      props.setSides(sides => {
-        return {
-          ...sides,
-          2: 'up'
-        };
-      });
     } else if (sides['2'] == 'up') {
+      w.classList.replace('v-reverse', 'v-normal');
       a.style.borderBottom = '3px solid red';
       a.style.borderTop = null;
-      props.setSides(sides => {
+      setSides(sides => {
         return {
           ...sides,
           2: 'down'
@@ -127,7 +114,7 @@ const CropperPanel = props => {
 
   return (
     <div className={isMobile ? `cropper-panel` : 'cropper-panel'}>
-      <div className="cropper-panel__item" onClick={props.getCropData}>
+      {/* <div className="cropper-panel__item" onClick={props.getCropData}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -149,8 +136,8 @@ const CropperPanel = props => {
         >
           <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z" />
         </svg>
-      </div>
-      <div className="cropper-panel__item" onClick={saveData}>
+      </div> */}
+      {/* <div className="cropper-panel__item" onClick={saveData}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -159,7 +146,7 @@ const CropperPanel = props => {
         >
           <path d="M15.003 3h2.997v5h-2.997v-5zm8.997 1v20h-24v-24h20l4 4zm-19 5h14v-7h-14v7zm16 4h-18v9h18v-9z" />
         </svg>
-      </div>
+      </div> */}
       {props.type == 'book' ? (
         <>
           <div
@@ -179,10 +166,12 @@ const CropperPanel = props => {
             x4
           </div>
           <div
-            className="cropper-panel__item"
+            className={`cropper-panel__item ${
+              props.mode == '-eight' ? 'active-mode' : ''
+            }`}
             onClick={() => props.setMode('-eight')}
           >
-            x6
+            x8
           </div>
           <div className="cropper-panel__item" onClick={toggleHBorder}>
             <svg
