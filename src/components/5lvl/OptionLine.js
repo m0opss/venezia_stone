@@ -207,7 +207,7 @@ const OptionLine = props => {
       ) : (
         <></>
       )}
-      {props.item.bty == 0 ? (
+      {props.item.bty != 0 ? (
         <div className="option-line__item" onClick={openBook}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
