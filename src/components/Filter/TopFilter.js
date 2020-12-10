@@ -16,7 +16,6 @@ const TopFilterItem = props => {
     axios
       .get(`http://92.63.103.180:8000/api_v0/upperFilter/${e}/`)
       .then(res => {
-        console.log(res.data);
         setState(res.data);
       })
       .catch(err => {
@@ -42,7 +41,7 @@ const TopFilterItem = props => {
             </SubMenu>
           ))
         ) : (
-          <MenuItem></MenuItem>
+          <MenuItem> </MenuItem>
         )}
       </Menu>
     </div>
@@ -68,8 +67,8 @@ const TopFilter = props => {
       <>
         {props.all_upper ? (
           props.all_upper.map(i => (
-            <div className="top-mobile-filter-line" key={i}>
-              <TopFilterItem elem={i} />
+            <div className="top-mobile-filter-line">
+              <TopFilterItem key={i} elem={i} />
             </div>
           ))
         ) : (
@@ -81,7 +80,7 @@ const TopFilter = props => {
     return (
       <>
         {props.all_upper.map(i => (
-          <TopFilterItem elem={i} />
+          <TopFilterItem key={i} elem={i} />
         ))}
       </>
     );

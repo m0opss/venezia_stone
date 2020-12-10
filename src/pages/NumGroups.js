@@ -24,6 +24,9 @@ import { headerCreator } from 'components/Filter/headerCreator';
 
 import { isTablet, isMobile, isBrowser } from 'react-device-detect';
 
+const CancelToken = axios.CancelToken;
+let source = CancelToken.source();
+
 const NumGroups = props => {
   const [numGroups, setNumGroups] = React.useState([]);
   const [defGroups, setdefNumGroups] = React.useState([]);
@@ -40,6 +43,7 @@ const NumGroups = props => {
       block: 'start',
       behavior: 'smooth'
     });
+
     setLoading(true);
     let isSubscr = true;
     if (isSubscr) {
@@ -62,8 +66,12 @@ const NumGroups = props => {
           on_sale: props.sale
         })
       );
-      axios
-        .post('https://catalog-veneziastone.ru/api_v0/Filter/', {
+
+      source = axios.CancelToken.source();
+      axios({
+        method: 'post',
+        url: 'https://catalog-veneziastone.ru/api_v0/Filter/',
+        data: {
           ...header,
           items: [],
           level: [2],
@@ -71,9 +79,11 @@ const NumGroups = props => {
           token: [],
           nw: props.nw,
           on_sale: props.sale
-        })
+        },
+        cancelToken: source.token
+      })
         .then(response => {
-          // console.log(response.data);
+          
           setNumGroups(response.data.grs);
           setdefNumGroups(response.data.grs);
           setLoading(false);

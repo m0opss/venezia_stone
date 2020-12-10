@@ -34,6 +34,7 @@ const Filter = props => {
     if (props.sale.length == 1) {
       setSale(true);
     }
+    console.log(props.lvl, props.toplvl);
     if (props.lvl == 1) {
       resetAll();
     }
@@ -83,7 +84,7 @@ const Filter = props => {
       }
     }
     return () => (isSubscr = false);
-  }, []);
+  }, [props.toplvl]);
 
   const handleClick = e => {
     setState({ collapsed: !state.collapsed });
@@ -113,7 +114,6 @@ const Filter = props => {
     props.setCost([]);
     props.setLe([]);
     props.setHe([]);
-    console.log(sale);
     setSale(false);
     setNew(false);
     props.setSale([]);
@@ -289,7 +289,7 @@ const mapStateToProps = store => {
     upper_izd: store.filter_data.upper_izd,
     sale: store.filter_data.sale,
     nw: store.filter_data.nw,
-    lvl: store.filter_data.lvl
+    toplvl: store.filter_data.lvl
   };
 };
 
@@ -298,17 +298,18 @@ const mapDispatchToProps = dispatch => {
     setFilters: data => {
       dispatch(filterActions.setFilters(data));
     },
+    setAllUpper: data => {
+      dispatch(filterActions.setAllUpper(data));
+    },
+    // убрать
+    setUpper: data => {
+      dispatch(filterActions.setUpper(data));
+    },
     setSale: data => {
       dispatch(filterActions.setSale(data));
     },
     setNew: data => {
       dispatch(filterActions.setNew(data));
-    },
-    setAllUpper: data => {
-      dispatch(filterActions.setAllUpper(data));
-    },
-    setUpper: data => {
-      dispatch(filterActions.setUpper(data));
     },
     setActiveFilters: data => {
       dispatch(filterActions.setActiveFilters(data));

@@ -178,12 +178,12 @@ const CropperPanel = props => {
           >
             x4
           </div>
-          {/* <div
+          <div
             className="cropper-panel__item"
-            onClick={() => props.setMode('-six')}
+            onClick={() => props.setMode('-eight')}
           >
             x6
-          </div> */}
+          </div>
           <div className="cropper-panel__item" onClick={toggleHBorder}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

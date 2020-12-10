@@ -24,7 +24,7 @@ const Home = props => {
   const [newList, setNewList] = React.useState([]);
 
   React.useEffect(() => {
-    props.setLvl(1)
+    props.setLvl(1);
     document.body.scrollIntoView({
       block: 'start',
       behavior: 'smooth'
@@ -155,6 +155,30 @@ const Home = props => {
   matList.map(el => {
     all_kw += el.kw;
   });
+
+  // const resetAll = () => {
+  //   props.setActiveFilters(
+  //     Object.fromEntries(Object.keys(props.filters).map(key => [key, []]))
+  //   );
+  //   localStorage.setItem(
+  //     'activeFilters',
+  //     JSON.stringify(
+  //       Object.fromEntries(Object.keys(props.filters).map(key => [key, []]))
+  //     )
+  //   );
+  //   props.setActiveFields([]);
+  //   props.setCost([]);
+  //   props.setLe([]);
+  //   props.setHe([]);
+  //   setSale(false);
+  //   setNew(false);
+  //   props.setSale([]);
+  //   props.setNew([]);
+  //   localStorage.removeItem('activeFieldKeys');
+  // };
+  // if (props.lvl == 1) {
+  //   resetAll();
+  // }
 
   return (
     <div className="">
@@ -293,7 +317,8 @@ const mapStateToProps = store => {
     le: store.filter_data.le,
     he: store.filter_data.he,
     sale: store.filter_data.sale,
-    nw: store.filter_data.nw
+    nw: store.filter_data.nw,
+    filters: store.filter_data.filters
   };
 };
 
@@ -314,7 +339,15 @@ const mapDispatchToProps = dispatch => {
     setLvl: data => {
       dispatch(filterActions.setLvl(data));
     },
-
+    setCost: data => {
+      dispatch(filterActions.setCost(data));
+    },
+    setLe: data => {
+      dispatch(filterActions.setLe(data));
+    },
+    setHe: data => {
+      dispatch(filterActions.setHe(data));
+    }
   };
 };
 

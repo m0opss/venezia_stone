@@ -10,13 +10,7 @@
   flex-wrap: wrap;
 }
 .dialog-cropper__res {
-  display: flex;
-  flex-wrap: wrap;
-  width: 600px;
-  margin: auto;
-  margin-top: 30px;
-  justify-content: center;
-  align-items: center;
+  max-width: 600px;
 }
 .dialog-cropper__res-wrapper {
   h2 {

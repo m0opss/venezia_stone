@@ -14,10 +14,6 @@ import { isMobile, isTablet } from 'react-device-detect';
 
 const AddressCard = props => {
   const onRouteClick = e => {
-    document.body.scrollIntoView({
-      block: 'start',
-      behavior: 'smooth'
-    });
     props.onClickRoute(props.address);
   };
   return (
@@ -31,14 +27,14 @@ const AddressCard = props => {
             Адрес:
             <br />
           </p>
-          <p className="address-card__address" onClick={onRouteClick}>
+          <div className="address-card__address" onClick={onRouteClick}>
             {props.address}
-          </p>
+          </div>
         </div>
-        <p className="address-card__sklad-address">{props.skladAddress}</p>
-        <p className="address-card__tel">{props.tel}</p>
-        <p className="address-card__time">{props.time}</p>
-        <p className="address-card__email">{props.email}</p>
+        <div className="address-card__sklad-address">{props.skladAddress}</div>
+        <div className="address-card__tel">{props.tel}</div>
+        <div className="address-card__time">{props.time}</div>
+        <div className="address-card__email">{props.email}</div>
       </div>
 
       <div className="address-card__soc">
@@ -58,10 +54,26 @@ const Contacts = () => {
   const [center, setCenter] = React.useState([55.602576, 37.436086]);
   const [zoom, setZoom] = React.useState(3);
   const [active, setActive] = React.useState([55.602576, 37.436086]);
-  const [route, setRoute] = React.useState('');
   const [route_active, setRouteActive] = React.useState(false);
 
+  const [map, setMap] = React.useState(null);
+  const [ymaps, setYMaps] = React.useState(null);
+  const [route, setRoute] = React.useState(null);
+
+  const coordinates = [
+    [55.602576, 37.436086],
+    [45.055212, 39.293164],
+    [56.908104, 60.630532],
+    [59.869955, 30.49139],
+    [55.938667, 49.320851],
+    [45.389194, 33.993751]
+  ];
+
   useEffect(() => {
+    document.body.scrollIntoView({
+      block: 'start',
+      behavior: 'smooth'
+    });
     setCenter(active);
   });
 
@@ -86,18 +98,30 @@ const Contacts = () => {
       setActive([45.389194, 33.993751]);
     }
   };
+
   const onClickRoute = str => {
-    setRouteActive(true);
+    // setRouteActive(true);
+    // console.log(ymap);
+    // map.controls.add('routePanelControl');
+    // map.controls.add('routePanelControl', {
+    //   maxWidth: 300
+    // });
+
+    // <RoutePanel
+    //   defaultState={{
+    //     from: 'Москва, Льва Толстого 16',
+    //     to: 'метро Черемушки'
+    //   }}
+    //   state={{
+    //     from: 'Москва, Льва Толстого 16',
+    //     to: 'метро Черемушки'
+    //   }}
+    //   options={{ float: 'right' }}
+    // />;
+
     setRoute(str);
   };
-  const coordinates = [
-    [55.602576, 37.436086],
-    [45.055212, 39.293164],
-    [56.908104, 60.630532],
-    [59.869955, 30.49139],
-    [55.938667, 49.320851],
-    [45.389194, 33.993751]
-  ];
+
   return (
     <div className="contacts-container">
       {isMobile && !isTablet ? (
@@ -111,40 +135,29 @@ const Contacts = () => {
 
       <h1 className="contacts-h1">Контакты</h1>
       <div className="map">
-        <YMaps query={{ apikey: '1db1bd5b-a62b-4767-bcfe-cc05a08186a6' }}>
+        <YMaps
+          query={{ apikey: '1db1bd5b-a62b-4767-bcfe-cc05a08186a6' }}
+          onLoad={ymaps => setYMaps(ymaps)}
+        >
           <Map
             width="100%"
             height="350px"
+            instanceRef={ref => setMap(ref)}
             state={{
               center: center,
               zoom: zoom
             }}
           >
-            {coordinates.map(coordinate => (
-              <Placemark geometry={coordinate} />
+            {coordinates.map((coordinate, index) => (
+              <Placemark key={index} geometry={coordinate} />
             ))}
-
-            {route_active ? (
-              <RoutePanel
-                defaultState={{
-                  from: 'Москва, Льва Толстого 16',
-                  to: 'метро Черемушки'
-                }}
-                state={{
-                  from: 'Москва, Льва Толстого 16',
-                  to: 'метро Черемушки'
-                }}
-                options={{ float: 'right' }}
-              />
-            ) : (
-              <></>
-            )}
           </Map>
         </YMaps>
       </div>
       <div className="city-cards">
         <AddressCard
           onClick={onSetCity}
+          key="Москва"
           onClickRoute={onClickRoute}
           city="Москва"
           socLinks="https://api.whatsapp.com/send?phone=+79771005888"
@@ -184,6 +197,7 @@ const Contacts = () => {
           }
         />
         <AddressCard
+          key="Санкт-Петербург"
           onClick={onSetCity}
           onClickRoute={onClickRoute}
           city="Санкт-Петербург"
@@ -218,6 +232,7 @@ const Contacts = () => {
           onClick={onSetCity}
           onClickRoute={onClickRoute}
           city="Краснодар"
+          key="Краснодар"
           socLinks="https://api.whatsapp.com/send?phone=+79771005888"
           address="Краснодар, станица Старокорсунская, ул. Красная, 5А`"
           socLinks=""
@@ -249,6 +264,7 @@ const Contacts = () => {
         <AddressCard
           onClick={onSetCity}
           onClickRoute={onClickRoute}
+          key="Екатеринбург"
           city="Екатеринбург"
           socLinks="https://api.whatsapp.com/send?phone=+79771005888"
           address="620057, Екатеринбург, ул. Таганская, 60"
@@ -282,6 +298,7 @@ const Contacts = () => {
           onClick={onSetCity}
           onClickRoute={onClickRoute}
           city="Казань"
+          key="Казань"
           socLinks="https://api.whatsapp.com/send?phone=+79771005888"
           address="422700, Республика Татарстан, Высокогорский район, поселок железнодорожной станции Высокая Гора, ул. Чернышевского д.67
               (Станционная д.1)"
@@ -314,6 +331,7 @@ const Contacts = () => {
           onClick={onSetCity}
           onClickRoute={onClickRoute}
           city="Крым"
+          key="Крым"
           socLinks="https://api.whatsapp.com/send?phone=+79771005888"
           address="Региональный представитель - Кармазин Денис Анатольевич"
           tel={
