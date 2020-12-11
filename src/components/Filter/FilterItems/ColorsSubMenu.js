@@ -3,6 +3,7 @@ import React from 'react';
 import { Menu } from 'antd';
 const { SubMenu } = Menu;
 
+import mult from 'images/multi.png';
 import data from '../filterData';
 
 const ColorsSubMenu = ({
@@ -48,20 +49,17 @@ const ColorsSubMenu = ({
                 </>
               ) : color === 'Мультиколор' ? (
                 <>
-                  <div
-                    className="filter__color"
-                    style={{
-                      background:
-                        'radial-gradient(circle, orange , yellow, green, cyan, blue, violet)'
-                    }}
-                  />
+                  <img className="filter__color" src={mult} />
                   {color}
                 </>
               ) : color === 'Эксклюзивный' ? (
                 <>
                   <div
                     className="filter__color"
-                    style={{ background: colors[color] }}
+                    style={{
+                      background:
+                        'linear-gradient(blue, pink, rgb(252, 74, 74), orange)'
+                    }}
                   />
                   {color}
                 </>

@@ -122,6 +122,47 @@ const SlabTableRow = props => {
   }
 };
 
+const SortArr = (arr, param) => {
+  let tmp = [...arr];
+  tmp.sort((a, b) => {
+    let nameA, nameB;
+
+    if (param == 'le' || param == 'he' || param == 'sco') {
+      nameA = parseFloat(a[param]);
+      nameB = parseFloat(b[param]);
+    } else if (param == 'S') {
+      if (a.sco) {
+        nameA = parseFloat(a.le) * parseFloat(a.he) - parseFloat(a.sco);
+      } else {
+        nameA = parseFloat(a.le) * parseFloat(a.he);
+      }
+      if (b.sco) {
+        nameB = parseFloat(b.le) * parseFloat(b.he) - parseFloat(b.sco);
+      } else {
+        nameB = parseFloat(b.le) * parseFloat(b.he);
+      }
+    } else if (param == 'cost') {
+      console.log(a.cntRUB)
+      if (a.cntRUB == 'По запросу') {
+        nameA = a[param].toLowerCase();
+        nameB = b[param].toLowerCase();
+      } else {
+        nameA = parseFloat(a.cntRUB) * parseFloat(a.le) * parseFloat(a.he);
+        nameB = parseFloat(b.cntRUB) * parseFloat(b.le) * parseFloat(b.he);
+      }
+    } else {
+      nameA = a[param].toLowerCase();
+      nameB = b[param].toLowerCase();
+    }
+
+    if (nameA < nameB) return -1;
+    if (nameA > nameB) return 1;
+    return 0;
+  });
+  console.log(1, tmp);
+  return tmp;
+};
+
 const SlabItem = props => {
   const [itemDict, setItemDict] = React.useState(() => {
     let tmp = {};
@@ -132,6 +173,7 @@ const SlabItem = props => {
         tmp[slab.bl]['slabs'].push(slab);
       }
     });
+
     Object.keys(tmp).map(bl => {
       let nw = false,
         onSale = false,
@@ -148,7 +190,7 @@ const SlabItem = props => {
       if (pz) tmp[bl]['pz'] = 1;
       else tmp[bl]['pz'] = 0;
     });
-    console.log(tmp);
+    // console.log(tmp);
     return tmp;
   });
 
@@ -157,6 +199,13 @@ const SlabItem = props => {
   );
 
   // console.log(itemDict[selectedEl])
+  const sorter = param => {
+    let tmp = { ...itemDict };
+    // console.log(tmp[selectedEl]['slabs']);
+    tmp[selectedEl]['slabs'] = SortArr(tmp[selectedEl]['slabs'], param);
+    // console.log(tmp)
+    setItemDict(tmp);
+  };
 
   let images = [];
   if (isBrowser) {
@@ -225,37 +274,58 @@ const SlabItem = props => {
         <div className="good-items-table">
           <div className="good-items-table__item slabs-title">
             <div className="good-items-table__title-wrapper">
-              <div className="table-row__item">
+              <div className="table-row__item" onClick={() => sorter('ps')}>
                 <p>Слэб</p>
               </div>
-              <div className="table-row__item">
+              <div className="table-row__item" onClick={() => sorter('bl')}>
                 <p>Пачка</p>
               </div>
-              <div className="table-row__item table-row__item_s">
+              <div
+                className="table-row__item table-row__item_s"
+                onClick={() => sorter('le')}
+              >
                 <p>Длина,м</p>
               </div>
-              <div className="table-row__item table-row__item_s">
+              <div
+                className="table-row__item table-row__item_s"
+                onClick={() => sorter('he')}
+              >
                 <p>Высота,м</p>
               </div>
-              <div className="table-row__item table-row__item_s">
+              <div
+                className="table-row__item table-row__item_s"
+                onClick={() => sorter('sco')}
+              >
                 <p>
                   Скол,м<sup>2</sup>
                 </p>
               </div>
-              <div className="table-row__item table-row__item_s">
+              <div
+                className="table-row__item table-row__item_s"
+                onClick={() => sorter('S')}
+              >
                 <p>
                   Площадь,м<sup>2</sup>
                 </p>
               </div>
-              <div className="table-row__item table-row__item_l">
+              <div
+                className="table-row__item table-row__item_l"
+                onClick={() => sorter('sklad')}
+              >
                 <p>Склад</p>
               </div>
-              <div className="table-row__item table-row__item_l">
+              <div
+                className="table-row__item table-row__item_l"
+                onClick={() => sorter('cntRUB')}
+              >
                 <p>
                   Цена за м<sup>2</sup>
                 </p>
               </div>
-              <div className="table-row__item table-row__item_l">
+              <div
+                className="table-row__item table-row__item_l"
+                onClick={() => sorter('cost')}
+              >
                 <p>Стоимость</p>
               </div>
             </div>

@@ -19,13 +19,29 @@ import './FifthLvl.scss';
 const FifthLvl = props => {
   const [item, setItem] = React.useState({});
   const [isLoading, setLoading] = React.useState(true);
+  const [breadPath, setBreadPath] = React.useState({});
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
+    if (props.auth_token != '')
+      console.log({
+        material: [props.match.params.material],
+        item: [props.match.params.num],
+        group: [props.match.params.numGroups],
+        product: [props.match.params.last],
+        token: [props.auth_token]
+      });
     axios
-      .get(`https://catalog-veneziastone.ru/api_v0${props.match.url}/`)
+      .post(`https://catalog-veneziastone.ru/api_v0/Product/`, {
+        material: [props.match.params.material],
+        item: [props.match.params.num],
+        group: [props.match.params.numGroups],
+        product: [props.match.params.last],
+        token: props.auth_token == '' ? [] : [props.auth_token]
+      })
       .then(response => {
-        console.log(response.data.itms[0]);
+        console.log(response.data);
+        setBreadPath(response.data.path);
         // setImages([response.data.itms[0].prs.photo_product]);
         setItem(response.data.itms[0]);
         setLoading(false);
@@ -33,7 +49,7 @@ const FifthLvl = props => {
       .catch(e => {
         console.log(e);
       });
-  }, []);
+  }, [props.auth_token]);
 
   const ColorsItem = props => {
     return (
@@ -64,24 +80,23 @@ const FifthLvl = props => {
             <></>
           )}
           <Breadcrumb.Item>
-            {' '}
-            <Link to="/materials"> {props.match.params.material} </Link>
+            <Link to="/materials">{breadPath.material} </Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
             <Link
               to={`/${props.match.params.material}/${props.match.params.numGroups}`}
             >
-              {props.match.params.numGroups}
+              {breadPath.group}
             </Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
             <Link
               to={`/${props.match.params.material}/${props.match.params.numGroups}/${props.match.params.num}`}
             >
-              {props.match.params.num}
+              {breadPath.item}
             </Link>
           </Breadcrumb.Item>
-          <Breadcrumb.Item>{props.match.params.last}</Breadcrumb.Item>
+          <Breadcrumb.Item>{breadPath.product}</Breadcrumb.Item>
         </Breadcrumb>
       )}
       <Preloader isLoading={isLoading}>
@@ -192,7 +207,7 @@ const FifthLvl = props => {
                 <div style={{ marginRight: '30px' }}>
                   {item.prs ? item.prs.typeFoto : ''}
                 </div>
-                <div style={{ position: 'relative', width:'100%' }}>
+                <div style={{ position: 'relative', width: '100%' }}>
                   <div className="num-gr-item__labels">
                     {item.prs && item.prs.nw != 0 ? (
                       <div className="item-label item-label_gallery item-label-new">

@@ -33,7 +33,7 @@ const Numenclature = props => {
   );
 
   React.useEffect(() => {
-    props.setLvl(3)
+    props.setLvl(3);
     document.body.scrollIntoView({
       block: 'start',
       behavior: 'smooth'
@@ -62,10 +62,10 @@ const Numenclature = props => {
           groups: [props.match.params.numGroups]
         })
         .then(response => {
-          setLoading(false);
           setNumemclature(response.data.itms);
           setdefNum(response.data.itms);
           setBreadPath(response.data.path);
+          setTimeout(() => setLoading(false), 600);
           document
             .getElementById('Все')
             .setAttribute('style', 'color: #c98505');
@@ -299,7 +299,7 @@ const mapDispatchToProps = dispatch => {
     },
     setLvl: data => {
       dispatch(filterActions.setLvl(data));
-    },
+    }
   };
 };
 

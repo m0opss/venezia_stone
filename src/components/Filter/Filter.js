@@ -84,7 +84,7 @@ const Filter = props => {
       }
     }
     return () => (isSubscr = false);
-  }, [props.toplvl]);
+  }, []);
 
   const handleClick = e => {
     setState({ collapsed: !state.collapsed });

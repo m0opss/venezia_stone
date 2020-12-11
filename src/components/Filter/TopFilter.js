@@ -12,9 +12,8 @@ const TopFilterItem = props => {
   const [state, setState] = React.useState({});
 
   const fetchIzd = e => {
-    console.log(e);
     axios
-      .get(`http://92.63.103.180:8000/api_v0/upperFilter/${e}/`)
+      .get(`https://catalog-veneziastone.ru/api_v0/upperFilter/${e}/`)
       .then(res => {
         setState(res.data);
       })

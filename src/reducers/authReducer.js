@@ -3,7 +3,7 @@
 
 const initialState = {
   isAuth: false,
-  auth_token : ''
+  auth_token : '',
 }
 
 export function authReducer(state = initialState, action) {

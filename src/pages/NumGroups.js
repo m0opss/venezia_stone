@@ -79,11 +79,10 @@ const NumGroups = props => {
           token: [],
           nw: props.nw,
           on_sale: props.sale
-        },
-        cancelToken: source.token
+        }
+        // cancelToken: source.token
       })
         .then(response => {
-          
           setNumGroups(response.data.grs);
           setdefNumGroups(response.data.grs);
           setLoading(false);
@@ -107,7 +106,6 @@ const NumGroups = props => {
     return () => (isSubscr = false);
   }, [
     props.activeFilters,
-    props.upper_izd,
     props.cost,
     props.le,
     props.he,

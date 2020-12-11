@@ -116,6 +116,9 @@
   align-items: center;
   text-align: center;
   flex: 0 1 86%;
+  .table-row__item {
+    cursor: pointer;
+  }
 }
 .good-items-table__item {
   display: flex;

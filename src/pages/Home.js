@@ -25,6 +25,7 @@ const Home = props => {
 
   React.useEffect(() => {
     props.setLvl(1);
+    console.log("EFFFFFF", props.activeFilters)
     document.body.scrollIntoView({
       block: 'start',
       behavior: 'smooth'
@@ -139,9 +140,11 @@ const Home = props => {
   const clickItem = (itemName, type) => {
     setActiveFields(itemName);
     let newArr = { ...props.activeFilters };
+    // let newArr = { ...act };
     if (newArr['materials'] && !newArr['materials'].includes(itemName)) {
       newArr['materials'].push(itemName);
     }
+    console.log(123123123, newArr)
     props.setActiveFilters(newArr);
     localStorage.setItem('activeFilters', JSON.stringify(newArr));
     if (type == 'sale') {
@@ -156,29 +159,6 @@ const Home = props => {
     all_kw += el.kw;
   });
 
-  // const resetAll = () => {
-  //   props.setActiveFilters(
-  //     Object.fromEntries(Object.keys(props.filters).map(key => [key, []]))
-  //   );
-  //   localStorage.setItem(
-  //     'activeFilters',
-  //     JSON.stringify(
-  //       Object.fromEntries(Object.keys(props.filters).map(key => [key, []]))
-  //     )
-  //   );
-  //   props.setActiveFields([]);
-  //   props.setCost([]);
-  //   props.setLe([]);
-  //   props.setHe([]);
-  //   setSale(false);
-  //   setNew(false);
-  //   props.setSale([]);
-  //   props.setNew([]);
-  //   localStorage.removeItem('activeFieldKeys');
-  // };
-  // if (props.lvl == 1) {
-  //   resetAll();
-  // }
 
   return (
     <div className="">
@@ -196,6 +176,7 @@ const Home = props => {
                   matList.map(item => (
                     <MaterialItem
                       onClick={clickItem}
+                      activeFilters={props.activeFilters}
                       img={item.photo_material}
                       item={item}
                       itemName={item.mt}
