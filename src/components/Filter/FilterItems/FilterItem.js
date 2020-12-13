@@ -25,9 +25,11 @@ const FilterItem = ({
       } else {
         newArr[sub_key].push(e.key);
       }
+    } else {
+      newArr[sub_key]= [e.key];
     }
     setActiveFilters(newArr);
-    localStorage.setItem('activeFilters', JSON.stringify(newArr));
+    // localStorage.setItem('activeFilters', JSON.stringify(newArr));
   };
   return sub_name == 'prices' ? (
     <PriceSubMenu setCost={setCost} {...props} />

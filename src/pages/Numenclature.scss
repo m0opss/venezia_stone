@@ -56,7 +56,7 @@
 .num-options-mobile {
   flex-flow: column;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   .filter-options-mobile {
     display: flex;
     align-items: center;
@@ -79,8 +79,7 @@
       // align-items: center;
       text-align: center;
       &:hover {
-        background-color: #c98505;
-        color: white;
+        color: #c98505;
       }
     }
   }

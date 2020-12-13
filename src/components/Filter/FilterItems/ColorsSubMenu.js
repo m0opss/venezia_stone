@@ -23,7 +23,7 @@ const ColorsSubMenu = ({
       <SubMenu
         key={sub_name}
         title={
-          Object.keys(activeFilters).length > 0 &&
+          Object.keys(activeFilters).length > 0 && activeFilters[sub_name] && 
           activeFilters[sub_name].length == 0
             ? sub_title
             : activeFilters[sub_name]

@@ -34,7 +34,7 @@ const Filter = props => {
     if (props.sale.length == 1) {
       setSale(true);
     }
-    console.log(props.lvl, props.toplvl);
+    console.log('RESET!', props.lvl, props.toplvl);
     if (props.lvl == 1) {
       resetAll();
     }
@@ -43,25 +43,6 @@ const Filter = props => {
         .get(`https://catalog-veneziastone.ru/api_v0/getFilters/`)
         .then(response => {
           props.setFilters(response.data.filters);
-          if (localStorage.getItem('activeFilters') !== null) {
-            props.setActiveFilters(
-              JSON.parse(localStorage.getItem('activeFilters'))
-            );
-          } else {
-            props.setActiveFilters(
-              Object.fromEntries(
-                Object.keys(response.data.filters).map(key => [key, []])
-              )
-            );
-            localStorage.setItem(
-              'activeFilters',
-              JSON.stringify(
-                Object.fromEntries(
-                  Object.keys(response.data.filters).map(key => [key, []])
-                )
-              )
-            );
-          }
         })
         .catch(err => {
           if (err.response) {
@@ -99,16 +80,7 @@ const Filter = props => {
   };
 
   const resetAll = () => {
-    props.setActiveFilters(
-      Object.fromEntries(Object.keys(props.filters).map(key => [key, []]))
-    );
-    localStorage.setItem(
-      'activeFilters',
-      JSON.stringify(
-        Object.fromEntries(Object.keys(props.filters).map(key => [key, []]))
-      )
-    );
-
+    props.setActiveFilters({});
     props.setActiveFields([]);
     props.setUpper([]);
     props.setCost([]);
@@ -139,142 +111,140 @@ const Filter = props => {
   };
 
   return (
-    <Suspense>
+    <div
+      className={`filter-wrapper ${
+        isBrowser
+          ? 'filter-wrapper_browser'
+          : isTablet
+          ? 'filter-wrapper_tablet'
+          : 'filter-wrapper_mobile'
+      }`}
+    >
       <div
-        className={`filter-wrapper ${
-          isBrowser
-            ? 'filter-wrapper_browser'
-            : isTablet
-            ? 'filter-wrapper_tablet'
-            : 'filter-wrapper_mobile'
+        className={`filter ${
+          isBrowser && !props.built_in ? 'browser-filter' : ''
         }`}
       >
-        <div
-          className={`filter ${
-            isBrowser && !props.built_in ? 'browser-filter' : ''
-          }`}
-        >
-          <div className="filter__button">
-            <img
-              src={filter_icon}
-              className="filter__button-click -icon"
-              onClick={handleClick}
-            />
-            {!state.collapsed && !isMobile ? (
-              <>
-                <img
-                  className="filter__button-click"
-                  src={filter_icon_hz}
-                  onClick={resetAll}
-                />
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
-
-          <Menu
-            style={{ width: 230 }}
-            mode="inline"
-            multiple={true}
-            inlineCollapsed={state.collapsed}
-            selectedKeys={JSON.parse(localStorage.getItem('activeFieldKeys'))}
-            defaultOpenKeys={props.activeFields}
-          >
-            {isMobile && !isTablet ? (
+        <div className="filter__button">
+          <img
+            src={filter_icon}
+            className="filter__button-click -icon"
+            onClick={handleClick}
+          />
+          {!state.collapsed && !isMobile ? (
+            <>
               <img
-                src={close_icon}
-                className="close-filter"
-                onClick={() => setState({ collapsed: !state.collapsed })}
+                className="filter__button-click"
+                src={filter_icon_hz}
+                onClick={resetAll}
+              />
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
+
+        <Menu
+          style={{ width: 230 }}
+          mode="inline"
+          multiple={true}
+          inlineCollapsed={state.collapsed}
+          selectedKeys={JSON.parse(localStorage.getItem('activeFieldKeys'))}
+          defaultOpenKeys={props.activeFields}
+        >
+          {isMobile && !isTablet ? (
+            <img
+              src={close_icon}
+              className="close-filter"
+              onClick={() => setState({ collapsed: !state.collapsed })}
+            />
+          ) : (
+            <></>
+          )}
+          <Menu.Item
+            key="res_kw"
+            style={{
+              display: 'flex',
+              marginTop: '30px',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            Всего, м²: {props.all_kw}
+          </Menu.Item>
+          <Menu.Item
+            key="res_cnt"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            Всего, шт: {props.all_cnt}
+          </Menu.Item>
+          {Object.keys(props.filters).map(filter => {
+            let title = '';
+            Object.keys(titles).map(t => {
+              if (filter == t) title = titles[t];
+            });
+            return (
+              <FilterItem
+                key={filter}
+                lvl={props.lvl}
+                sub_name={filter}
+                sub_elements={props.filters[filter]}
+                sub_title={title}
+                setCost={props.setCost}
+                setLe={props.setLe}
+                setHe={props.setHe}
+                activeFilters={props.activeFilters}
+                setActiveFields={setActiveFields}
+                setActiveFilters={props.setActiveFilters}
+              />
+            );
+          })}
+
+          <Menu.Item
+            key="switch_sale"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            Распродажа
+            {sale ? (
+              <Switch
+                defaultChecked
+                className="filter-switch"
+                onChange={toggleSale}
               />
             ) : (
-              <></>
+              <Switch className="filter-switch" onChange={toggleSale} />
             )}
-            <Menu.Item
-              key="res_kw"
-              style={{
-                display: 'flex',
-                marginTop: '30px',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              Всего, м²: {props.all_kw}
-            </Menu.Item>
-            <Menu.Item
-              key="res_cnt"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              Всего, шт: {props.all_cnt}
-            </Menu.Item>
-            {Object.keys(props.filters).map(filter => {
-              let title = '';
-              Object.keys(titles).map(t => {
-                if (filter == t) title = titles[t];
-              });
-              return (
-                <FilterItem
-                  key={filter}
-                  lvl={props.lvl}
-                  sub_name={filter}
-                  sub_elements={props.filters[filter]}
-                  sub_title={title}
-                  setCost={props.setCost}
-                  setLe={props.setLe}
-                  setHe={props.setHe}
-                  activeFilters={props.activeFilters}
-                  setActiveFields={setActiveFields}
-                  setActiveFilters={props.setActiveFilters}
-                />
-              );
-            })}
-
-            <Menu.Item
-              key="switch_sale"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              Распродажа
-              {sale ? (
-                <Switch
-                  defaultChecked
-                  className="filter-switch"
-                  onChange={toggleSale}
-                />
-              ) : (
-                <Switch className="filter-switch" onChange={toggleSale} />
-              )}
-            </Menu.Item>
-            <Menu.Item
-              key="switch_new"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              Новинки
-              {news ? (
-                <Switch
-                  defaultChecked
-                  className="filter-switch"
-                  onChange={toggleNew}
-                />
-              ) : (
-                <Switch className="filter-switch" onChange={toggleNew} />
-              )}
-            </Menu.Item>
-          </Menu>
-        </div>
+          </Menu.Item>
+          <Menu.Item
+            key="switch_new"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
+            Новинки
+            {news ? (
+              <Switch
+                defaultChecked
+                className="filter-switch"
+                onChange={toggleNew}
+              />
+            ) : (
+              <Switch className="filter-switch" onChange={toggleNew} />
+            )}
+          </Menu.Item>
+        </Menu>
       </div>
-    </Suspense>
+    </div>
   );
 };
 const mapStateToProps = store => {

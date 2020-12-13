@@ -25,17 +25,15 @@ const Home = props => {
 
   React.useEffect(() => {
     props.setLvl(1);
-    console.log("EFFFFFF", props.activeFilters)
-    document.body.scrollIntoView({
-      block: 'start',
-      behavior: 'smooth'
-    });
-
+    if (!isMobile) {
+      document.body.scrollIntoView({
+        block: 'start',
+        behavior: 'smooth'
+      });
+    }
     setMatLoading(true);
     setNewLoading(true);
     setSaleLoading(true);
-    // props.setNew([]);
-    // props.setSale([]);
 
     let isSubscr = true;
     if (isSubscr) {
@@ -69,15 +67,9 @@ const Home = props => {
           token: [],
           nw: props.nw,
           on_sale: props.sale
-        },
-        cancelToken: new CancelToken(function executor(c) {
-          // An executor function receives a cancel function as a parameter
-          cancel = c;
-        })
+        }
       })
         .then(res => {
-          cancel();
-          // setMatLoading(false);
           setTimeout(() => setMatLoading(false), 600);
           console.log(res.data);
           setMatList(res.data.mts);
@@ -134,19 +126,21 @@ const Home = props => {
     let t = [...props.activeFields];
     if (t.indexOf(key) === -1) t.push(key);
     props.setActiveFields(t);
-    localStorage.setItem('activeFieldKeys', JSON.stringify(t));
+    // localStorage.setItem('activeFieldKeys', JSON.stringify(t));
   };
 
   const clickItem = (itemName, type) => {
     setActiveFields(itemName);
     let newArr = { ...props.activeFilters };
-    // let newArr = { ...act };
-    if (newArr['materials'] && !newArr['materials'].includes(itemName)) {
-      newArr['materials'].push(itemName);
+    if (newArr['materials']) {
+      if (!newArr['materials'].includes(itemName)) {
+        newArr['materials'].push(itemName);
+      }
+    } else {
+      newArr['materials'] = [itemName];
     }
-    console.log(123123123, newArr)
     props.setActiveFilters(newArr);
-    localStorage.setItem('activeFilters', JSON.stringify(newArr));
+    // localStorage.setItem('activeFilters', JSON.stringify(newArr));
     if (type == 'sale') {
       props.setSale([1]);
     }
@@ -158,7 +152,6 @@ const Home = props => {
   matList.map(el => {
     all_kw += el.kw;
   });
-
 
   return (
     <div className="">

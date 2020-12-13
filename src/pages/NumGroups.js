@@ -38,6 +38,7 @@ const NumGroups = props => {
   );
 
   React.useEffect(() => {
+    console.log(999999999999999, props.activeFilters)
     props.setLvl(2);
     document.body.scrollIntoView({
       block: 'start',

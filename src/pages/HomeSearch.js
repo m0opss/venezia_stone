@@ -7,20 +7,18 @@ import filterActions from '../actions/filterActions';
 
 import MaterialItem from '../components/Content/MaterialItem/MaterialItem';
 import Filter from 'components/Filter/Filter';
-import {
-  MobileView,
-  BrowserView,
-  isTablet,
-  TabletView,
-  isBrowser
-} from 'react-device-detect';
+import { isTablet, isBrowser, isMobile } from 'react-device-detect';
 
 import './Home.scss';
 
 const Home = props => {
-
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!isMobile) {
+      document.body.scrollIntoView({
+        block: 'start',
+        behavior: 'smooth'
+      });
+    }
     if (localStorage.getItem('activeFilters') !== null) {
       let tmp = JSON.parse(localStorage.getItem('activeFilters'));
       tmp.materials = [];
@@ -36,7 +34,6 @@ const Home = props => {
       props.setActiveFields(tmp);
       localStorage.setItem('activeFieldKeys', JSON.stringify(tmp));
     }
-    console.log(JSON.parse(localStorage.getItem('searchData')).mts)
     props.setData(JSON.parse(localStorage.getItem('searchData')).mts);
   }, [localStorage.getItem('searchData')]);
 
@@ -73,7 +70,6 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-
     setMatList: data => {
       dispatch(filterActions.setMatList(data));
     },
