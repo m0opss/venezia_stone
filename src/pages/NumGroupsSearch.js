@@ -51,7 +51,12 @@ const NumGroups = props => {
       props.setActiveFields(tmp);
       localStorage.setItem('activeFieldKeys', JSON.stringify(tmp));
     }
-    window.scrollTo(0, 0);
+    if (!isMobile) {
+      document.body.scrollIntoView({
+        block: 'start',
+        behavior: 'smooth'
+      });
+    }
 
     setNumGroups(JSON.parse(localStorage.getItem('searchData')).grs);
     setdefNumGroups(JSON.parse(localStorage.getItem('searchData')).grs);

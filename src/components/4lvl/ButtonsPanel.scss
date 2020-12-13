@@ -6,8 +6,9 @@
 }
 .buttons-panel_mob {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 15px;
   .slab-item-info__button {
     flex: 0 1 47%;
     margin-top: 15px;

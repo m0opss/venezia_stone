@@ -12,8 +12,6 @@ import { Breadcrumb } from 'antd';
 
 import { Link } from 'react-router-dom';
 import {
-  MobileView,
-  BrowserView,
   isTablet,
   isBrowser,
   isMobile
@@ -28,10 +26,12 @@ const FourLvl = props => {
   const [isLoading, setLoading] = React.useState(true);
   const [item, setItem] = React.useState([]);
   const [breadPath, setBreadPath] = React.useState({});
-  document.body.scrollIntoView({
-    block: 'start',
-    behavior: 'smooth'
-  });
+  if (!isMobile) {
+    document.body.scrollIntoView({
+      block: 'start',
+      behavior: 'smooth'
+    });
+  }
   React.useEffect(() => {
     let isSubscr = true;
 

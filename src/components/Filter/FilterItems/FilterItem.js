@@ -5,6 +5,7 @@ import PriceSubMenu from './PriceSubMenu';
 import SizesSubMenu from './SizesSubMenu';
 import CommonSubMenu from './CommonSubMenu';
 import MaterialsSubMenu from './MaterialsSubMenu';
+import { isMobile } from 'react-device-detect';
 
 const FilterItem = ({
   setActiveFields,
@@ -26,31 +27,52 @@ const FilterItem = ({
         newArr[sub_key].push(e.key);
       }
     } else {
-      newArr[sub_key]= [e.key];
+      newArr[sub_key] = [e.key];
     }
     setActiveFilters(newArr);
     // localStorage.setItem('activeFilters', JSON.stringify(newArr));
   };
-  return sub_name == 'prices' ? (
-    <PriceSubMenu setCost={setCost} {...props} />
-  ) : sub_name == 'sizas' ? (
-    <SizesSubMenu setLe={setLe} setHe={setHe} {...props} />
-  ) : sub_name == 'colors' && parseFloat(props.lvl) < 3 ? (
-    <ColorsSubMenu filterItemClicked={filterItemClicked} {...props} />
-  ) : sub_name == 'countries' && parseFloat(props.lvl) < 3 ? (
-    <CommonSubMenu filterItemClicked={filterItemClicked} {...props} />
-  ) : sub_name == 'materials' && parseFloat(props.lvl) < 3 ? (
-    <MaterialsSubMenu filterItemClicked={filterItemClicked} {...props} />
-  ) : (sub_name == 'izdelie' ||
+  if (isMobile) {
+    return sub_name == 'prices' ? (
+      <PriceSubMenu setCost={setCost} {...props} />
+    ) : sub_name == 'sizas' ? (
+      <SizesSubMenu setLe={setLe} setHe={setHe} {...props} />
+    ) : sub_name == 'colors' ? (
+      <ColorsSubMenu filterItemClicked={filterItemClicked} {...props} />
+    ) : sub_name == 'countries' ? (
+      <CommonSubMenu filterItemClicked={filterItemClicked} {...props} />
+    ) : sub_name == 'materials' ? (
+      <MaterialsSubMenu filterItemClicked={filterItemClicked} {...props} />
+    ) : sub_name == 'izdelie' ||
       sub_name == 'thickness' ||
-      sub_name == 'obrabotka') &&
-    parseFloat(props.lvl) < 4 ? (
-    <CommonSubMenu filterItemClicked={filterItemClicked} {...props} />
-  ) : sub_name == 'sklad' ? (
-    <CommonSubMenu filterItemClicked={filterItemClicked} {...props} />
-  ) : (
-    <></>
-  );
+      sub_name == 'obrabotka' ? (
+      <CommonSubMenu filterItemClicked={filterItemClicked} {...props} />
+    ) : sub_name == 'sklad' ? (
+      <CommonSubMenu filterItemClicked={filterItemClicked} {...props} />
+    ) : (
+      <></>
+    );
+  } else
+    return sub_name == 'prices' ? (
+      <PriceSubMenu setCost={setCost} {...props} />
+    ) : sub_name == 'sizas' ? (
+      <SizesSubMenu setLe={setLe} setHe={setHe} {...props} />
+    ) : sub_name == 'colors' && parseFloat(props.lvl) < 3 ? (
+      <ColorsSubMenu filterItemClicked={filterItemClicked} {...props} />
+    ) : sub_name == 'countries' && parseFloat(props.lvl) < 3 ? (
+      <CommonSubMenu filterItemClicked={filterItemClicked} {...props} />
+    ) : sub_name == 'materials' && parseFloat(props.lvl) < 3 ? (
+      <MaterialsSubMenu filterItemClicked={filterItemClicked} {...props} />
+    ) : (sub_name == 'izdelie' ||
+        sub_name == 'thickness' ||
+        sub_name == 'obrabotka') &&
+      parseFloat(props.lvl) < 4 ? (
+      <CommonSubMenu filterItemClicked={filterItemClicked} {...props} />
+    ) : sub_name == 'sklad' ? (
+      <CommonSubMenu filterItemClicked={filterItemClicked} {...props} />
+    ) : (
+      <></>
+    );
 };
 
 export default FilterItem;

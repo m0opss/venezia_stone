@@ -35,7 +35,12 @@ const Numenclature = props => {
   );
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!isMobile) {
+      document.body.scrollIntoView({
+        block: 'start',
+        behavior: 'smooth'
+      });
+    }
 
     if (localStorage.getItem('activeFilters') !== null) {
       let tmp = JSON.parse(localStorage.getItem('activeFilters'));

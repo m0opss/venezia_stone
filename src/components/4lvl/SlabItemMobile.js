@@ -144,7 +144,6 @@ const SlabItemMobile = props => {
   let images = [];
   return (
     <div className="slab-item-mobile">
-      <ButtonsPanel images={images} />
       <Slider {...settings}>
         {Object.keys(itemDict).map(item => {
           return (
@@ -194,14 +193,15 @@ const SlabItemMobile = props => {
           />
         </div>
       </div>
-      <ColorRange colors={itemDict[selectedEl]['slabs'][0].color_range} />
+      <ColorRange colors={itemDict[selectedEl]['slabs'][0]} />
 
+      <ButtonsPanel images={images} />
       <div className="slab-item-mobile__options-group">
         <div className=""></div>
         <Valute />
       </div>
 
-      <div className="slab-items-group">
+      <div className="slab-items-group slab-items-group_mobile">
         {itemDict[selectedEl]['slabs'].length > 0 ? (
           itemDict[selectedEl]['slabs'].map(item => (
             <GroupItem

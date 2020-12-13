@@ -52,16 +52,20 @@ const NumenclatureItem = props => {
                 .
               </p>
             )}
-            <p>
-              Цена от{' '}
-              {props.cur === 'rub'
-                ? `${props.item.prRUB}₽`
-                : props.cur === 'usd'
-                ? `${props.item.prUSD}$`
-                : props.cur === 'eur'
-                ? `${props.item.prEUR}€`
-                : ''}
-            </p>
+            {props.item.prRUB == 'По запросу' ? (
+              <p>{props.item.prRUB}</p>
+            ) : (
+              <p>
+                Цена от{' '}
+                {props.cur === 'rub'
+                  ? `${props.item.prRUB}₽`
+                  : props.cur === 'usd'
+                  ? `${props.item.prUSD}$`
+                  : props.cur === 'eur'
+                  ? `${props.item.prEUR}€`
+                  : ''}
+              </p>
+            )}
           </div>
           {props.item.izd === 'Плитка' ||
           props.item.izd === 'Ступени' ||

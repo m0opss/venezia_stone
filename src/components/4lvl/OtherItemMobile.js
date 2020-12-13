@@ -47,7 +47,7 @@ const GroupItem = props => {
       ).toFixed(3)
     );
   };
-  
+
   const onChangeVal = e => {
     if (e.target.id == 'cnt') {
       let val = e.target.value;
@@ -184,8 +184,7 @@ const OtherItemTablet = props => {
       <div className="slab-item-mobile__main-title">
         {props.item[0].itms_name}
       </div>
-      <ButtonsPanel images={images} />
-      <div className="slab-item-mobile__main">
+      <div className="slab-item-mobile__main slab-item-mobile__main_other">
         <div className="slab-item-info__options">
           {/* <img src={lamp} />
           <img src={book} /> */}
@@ -198,6 +197,7 @@ const OtherItemTablet = props => {
         </div>
       </div>
 
+      <ButtonsPanel images={images} />
       <div className="slab-item-mobile__options-group">
         <div className="slab-item-mobile__country">{props.item[0].country}</div>
         <Valute />

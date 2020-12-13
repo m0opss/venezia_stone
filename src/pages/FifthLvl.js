@@ -22,7 +22,12 @@ const FifthLvl = props => {
   const [breadPath, setBreadPath] = React.useState({});
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!isMobile) {
+      document.body.scrollIntoView({
+        block: 'start',
+        behavior: 'smooth'
+      });
+    }
     if (props.auth_token != '')
       console.log({
         material: [props.match.params.material],

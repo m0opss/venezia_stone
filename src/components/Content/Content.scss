@@ -27,6 +27,7 @@
   text-align: center;
   color: black;
   position: relative;
+
   &::before {
     content: '';
     position: absolute;
@@ -36,7 +37,11 @@
     border: 10px solid transparent;
   }
 }
-
+.slab-item-mobile__main-img {
+  .item-label {
+    z-index: 1;
+  }
+}
 .item-label-new {
   // top: 70px;
   background: rgba(158, 250, 178, 0.85);

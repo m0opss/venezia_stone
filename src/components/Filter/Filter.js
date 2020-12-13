@@ -34,7 +34,6 @@ const Filter = props => {
     if (props.sale.length == 1) {
       setSale(true);
     }
-    console.log('RESET!', props.lvl, props.toplvl);
     if (props.lvl == 1) {
       resetAll();
     }
@@ -161,27 +160,35 @@ const Filter = props => {
           ) : (
             <></>
           )}
-          <Menu.Item
-            key="res_kw"
-            style={{
-              display: 'flex',
-              marginTop: '30px',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
-            Всего, м²: {props.all_kw}
-          </Menu.Item>
-          <Menu.Item
-            key="res_cnt"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
-            Всего, шт: {props.all_cnt}
-          </Menu.Item>
+          {isMobile ? (
+            <></>
+          ) : (
+            <>
+              <Menu.Item
+                key="res_kw"
+                style={{
+                  display: 'flex',
+                  marginTop: '30px',
+                  alignItems: 'center',
+                  height: '20px',
+                  justifyContent: 'space-between'
+                }}
+              >
+                Всего, м²: {props.all_kw}
+              </Menu.Item>
+              <Menu.Item
+                key="res_cnt"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  height: '20px',
+                  justifyContent: 'space-between'
+                }}
+              >
+                Всего, шт: {props.all_cnt}
+              </Menu.Item>
+            </>
+          )}
           {Object.keys(props.filters).map(filter => {
             let title = '';
             Object.keys(titles).map(t => {
@@ -189,6 +196,7 @@ const Filter = props => {
             });
             return (
               <FilterItem
+                cur={props.cur}
                 key={filter}
                 lvl={props.lvl}
                 sub_name={filter}

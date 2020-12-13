@@ -34,10 +34,12 @@ const Numenclature = props => {
 
   React.useEffect(() => {
     props.setLvl(3);
-    document.body.scrollIntoView({
-      block: 'start',
-      behavior: 'smooth'
-    });
+    if (!isMobile) {
+      document.body.scrollIntoView({
+        block: 'start',
+        behavior: 'smooth'
+      });
+    }
     setLoading(true);
     let isSubscr = true;
 
